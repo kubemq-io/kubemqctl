@@ -1,3 +1,5 @@
+healthAddress: "http://localhost:8080/health"
+metricsAddress: "http://localhost:8080/metrics"
 connections:
   - kind: 1 # 1 - grpc 2- rest
     host: "localhost" # host destination
@@ -9,3 +11,5 @@ connections:
     port: 9090
     isSecured: false
     certFile: ""
+
+

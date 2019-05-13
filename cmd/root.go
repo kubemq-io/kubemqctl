@@ -11,8 +11,13 @@ import (
 	"github.com/spf13/viper"
 )
 
+type Control struct {
+	Address string
+}
 type Config struct {
-	Connections []*option.Options
+	Connections    []*option.Options
+	HealthAddress  string
+	MetricsAddress string
 }
 
 var cfg *Config
@@ -20,8 +25,9 @@ var rootCmd = &cobra.Command{
 	Use:   "kubetools",
 	Short: "Set of tools for kubemq",
 	Long: `Set of tools for kubemq:
-			1. kubetest - test kubemq installation
-			2. kiubemon - monitor channel traffic
+			1. test - test kubemq installation
+			2. health - call kubemq health endpoint
+			3. metrics - call kubemq prometheus metrics endpoint
 			`,
 }
 

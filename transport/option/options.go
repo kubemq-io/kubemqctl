@@ -19,6 +19,7 @@ type Options struct {
 	Kind      ConnectionType
 	Host      string
 	Port      int
+	ApiPort   int
 	IsSecured bool
 	CertFile  string
 }
