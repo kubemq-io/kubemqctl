@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cmd/metrics.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.config.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Taskfile.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/version.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/mon.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/health.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/transport/option/options.go" beforeDir="false" afterPath="$PROJECT_DIR$/transport/option/options.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,28 +18,37 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/kubetest/scenario.go">
+        <entry file="file://$PROJECT_DIR$/cmd/root.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="758">
-              <caret line="77" selection-start-line="77" selection-end-line="77" />
+            <state relative-caret-position="624">
+              <caret line="36" selection-start-line="36" selection-end-line="36" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/root.go">
+        <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="12" selection-start-line="12" selection-end-line="12" />
+            <state relative-caret-position="182">
+              <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmd/health.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2366">
+              <caret line="91" selection-start-line="91" selection-end-line="91" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cmd/health.go">
+        <entry file="file://$PROJECT_DIR$/Taskfile.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
-              <caret line="91" selection-start-line="91" selection-end-line="91" />
+            <state relative-caret-position="778">
+              <caret line="38" column="88" selection-start-line="38" selection-start-column="88" selection-end-line="38" selection-end-column="88" />
             </state>
           </provider>
         </entry>
@@ -63,15 +72,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/transport/option/options.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
-              <caret line="22" selection-start-line="22" selection-end-line="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.config.yaml">
           <provider selected="true" editor-type-id="text-editor">
             <state>
@@ -90,19 +90,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/transport/rest/client.go">
+        <entry file="file://$PROJECT_DIR$/cmd/version.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="780">
-              <caret line="150" column="16" selection-start-line="150" selection-start-column="16" selection-end-line="150" selection-end-column="16" />
+            <state relative-caret-position="416">
+              <caret line="16" column="1" lean-forward="true" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/kubetest/result.go">
+        <entry file="file://$PROJECT_DIR$/transport/rest/client.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="66" column="29" selection-start-line="66" selection-start-column="29" selection-end-line="66" selection-end-column="29" />
+            <state relative-caret-position="780">
+              <caret line="150" column="16" selection-start-line="150" selection-start-column="16" selection-end-line="150" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -136,17 +136,19 @@
         <option value="$PROJECT_DIR$/cmd/kubetest/report.go" />
         <option value="$PROJECT_DIR$/transport/grpc/client.go" />
         <option value="$PROJECT_DIR$/go.mod" />
-        <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/cmd/test.go" />
         <option value="$PROJECT_DIR$/cmd/kubetest/scenario.go" />
         <option value="$PROJECT_DIR$/cmd/kubetest/result.go" />
         <option value="$PROJECT_DIR$/transport/rest/monitor.go" />
         <option value="$PROJECT_DIR$/transport/option/options.go" />
-        <option value="$PROJECT_DIR$/cmd/root.go" />
         <option value="$PROJECT_DIR$/transport/rest/health.go" />
         <option value="$PROJECT_DIR$/.config.yaml" />
         <option value="$PROJECT_DIR$/cmd/metrics.go" />
         <option value="$PROJECT_DIR$/cmd/health.go" />
+        <option value="$PROJECT_DIR$/cmd/version.go" />
+        <option value="$PROJECT_DIR$/cmd/root.go" />
+        <option value="$PROJECT_DIR$/main.go" />
+        <option value="$PROJECT_DIR$/Taskfile.yml" />
       </list>
     </option>
   </component>
@@ -172,12 +174,6 @@
               <item name="kubetools" type="b2602c69:ProjectViewProjectNode" />
               <item name="kubetools" type="462c0819:PsiDirectoryNode" />
               <item name="cmd" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="kubetools" type="b2602c69:ProjectViewProjectNode" />
-              <item name="kubetools" type="462c0819:PsiDirectoryNode" />
-              <item name="cmd" type="462c0819:PsiDirectoryNode" />
-              <item name="kubetest" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="kubetools" type="b2602c69:ProjectViewProjectNode" />
@@ -226,6 +222,7 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -250,7 +247,7 @@
       <window_info anchor="bottom" id="Docker" />
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Terminal" visible="true" weight="0.32977304" />
+      <window_info anchor="bottom" id="Terminal" visible="true" weight="0.32843792" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32977304" />
@@ -270,7 +267,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add kubetest module" />
-    <option name="LAST_COMMIT_MESSAGE" value="add kubetest module" />
+    <MESSAGE value="add health and metrics commands" />
+    <option name="LAST_COMMIT_MESSAGE" value="add health and metrics commands" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -305,13 +303,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/transport/transport_test.go">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cmd/kubetest/report.go">
       <provider selected="true" editor-type-id="text-editor">
@@ -362,13 +353,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/root.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/transport/rest/health.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
@@ -404,6 +388,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/health.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2366">
+          <caret line="91" selection-start-line="91" selection-end-line="91" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cmd/metrics.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
@@ -411,10 +402,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/health.go">
+    <entry file="file://$PROJECT_DIR$/cmd/version.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="91" selection-start-line="91" selection-end-line="91" />
+        <state relative-caret-position="416">
+          <caret line="16" column="1" lean-forward="true" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/root.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="624">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Taskfile.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="778">
+          <caret line="38" column="88" selection-start-line="38" selection-start-column="88" selection-end-line="38" selection-end-column="88" />
         </state>
       </provider>
     </entry>
