@@ -1,5 +1,5 @@
-healthAddress: "http://localhost:8080/health"
-metricsAddress: "http://localhost:8080/metrics"
+healthAddress: "http://localhost:8080/health" # the address of Health endpoint , you can replace the localhost:8080 with your address
+metricsAddress: "http://localhost:8080/metrics" #the address of Health endpoint, you can replace the localhost:8080 with your address
 connections:
   - kind: 1 # 1 - grpc 2- rest
     host: "localhost" # host destination
@@ -7,9 +7,7 @@ connections:
     isSecured: false # set using https
     certFile: "" # set location of cert file
   - kind: 2 # 1 - grpc 2- rest
-    host: "localhost"
-    port: 9090
-    isSecured: false
-    certFile: ""
-
-
+    host: "localhost" # host destination
+    port: 9090  # port destination
+    isSecured: false  # set using https
+    certFile: "" # set location of cert file - not in use for Rest
