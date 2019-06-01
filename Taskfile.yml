@@ -19,21 +19,22 @@ tasks:
       GOARCH: amd64
     cmds:
       - go build -o "{{.BINARY_NAME}}.exe" -ldflags "-X main.version={{.VERSION}}"
+      - go build -o "./bin/windows/{{.BINARY_NAME}}.exe" -ldflags "-X main.version={{.VERSION}}"
   build_mac:
     env:
       GOOS: darwin
       GOARCH: amd64
     cmds:
-      - go build -o "{{.BINARY_NAME}}_mac" -ldflags "-X main.version={{.VERSION}}"
+      - go build -o "./bin/macos/{{.BINARY_NAME}}" -ldflags "-X main.version={{.VERSION}}"
   build_linux_64:
     env:
       GOOS: linux
       GOARCH: amd64
     cmds:
-      - go build -o "{{.BINARY_NAME}}_linux_64" -ldflags "-X main.version={{.VERSION}}"
+      - go build -o "./bin/linux64/{{.BINARY_NAME}}" -ldflags "-X main.version={{.VERSION}}"
   build_linux_32:
     env:
       GOOS: linux
       GOARCH: 386
     cmds:
-      - go build -o "{{.BINARY_NAME}}_linux_386" -ldflags "-X main.version={{.VERSION}}"
+      - go build -o "./bin/linux32/{{.BINARY_NAME}}" -ldflags "-X main.version={{.VERSION}}"

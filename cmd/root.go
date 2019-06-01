@@ -18,6 +18,7 @@ type Config struct {
 	Connections    []*option.Options
 	HealthAddress  string
 	MetricsAddress string
+	MonitorAddress string
 }
 
 var cfg *Config
@@ -29,6 +30,7 @@ var rootCmd = &cobra.Command{
 			1. test - test kubemq installation
 			2. health - call kubemq health endpoint
 			3. metrics - call kubemq prometheus metrics endpoint
+			4. monitor - call kubemq monitor points to watch channel content
 			`,
 }
 
