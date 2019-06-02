@@ -26,6 +26,7 @@ tasks:
       GOARCH: amd64
     cmds:
       - go build -o "./bin/macos/{{.BINARY_NAME}}" -ldflags "-X main.version={{.VERSION}}"
+      - git update-index --chmod=+x "./bin/macos/{{.BINARY_NAME}}"
   build_linux_64:
     env:
       GOOS: linux
@@ -39,3 +40,4 @@ tasks:
       GOARCH: 386
     cmds:
       - go build -o "./bin/linux32/{{.BINARY_NAME}}" -ldflags "-X main.version={{.VERSION}}"
+      - git update-index --chmod=+x "./bin/linux32/{{.BINARY_NAME}}"
