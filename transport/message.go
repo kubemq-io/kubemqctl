@@ -1,7 +1,6 @@
 package transport
 
 import (
-	"crypto/sha256"
 	"encoding/json"
 	"errors"
 	"time"
@@ -66,9 +65,9 @@ func (m *Message) Latency() time.Duration {
 }
 
 func (m *Message) Validate() error {
-	if sha256.Sum256(m.Payload) != m.CRC {
-		return errors.New("message corrupted, invalid crc ")
-	}
+	//if sha256.Sum256(m.Payload) != m.CRC {
+	//	return errors.New("message corrupted, invalid crc ")
+	//}
 	return nil
 }
 

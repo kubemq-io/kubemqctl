@@ -120,8 +120,8 @@ func init() {
 	rootCmd.AddCommand(sendCmd)
 	sendCmd.AddCommand(sendEventsCmd, sendEventsStoreCmd, sendCommandsCmd, sendQueriesCmd)
 	sendCmd.PersistentFlags().StringVarP(&sendTransport, "sendTransport", "t", "grpc", "set transport type, grpc or rest")
-	sendCommandsCmd.PersistentFlags().IntVarP(&sendTimeout, "sendTimout", "o", 1000, "set command timeout in MSec")
-	sendQueriesCmd.PersistentFlags().IntVarP(&sendTimeout, "sendTimout", "o", 1000, "set query timeout in MSec")
+	sendCommandsCmd.PersistentFlags().IntVarP(&sendTimeout, "sendTimout", "o", 10000, "set command timeout in MSec")
+	sendQueriesCmd.PersistentFlags().IntVarP(&sendTimeout, "sendTimout", "o", 10000, "set query timeout in MSec")
 
 }
 

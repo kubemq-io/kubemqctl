@@ -97,9 +97,9 @@ func runSubscribe(args []string, kind string) {
 	for {
 		select {
 		case msg := <-msgCh:
-			log.Printf("Message:\n%s\n", msg.Payload)
+			log.Printf("Message:\n\t%s\n", msg.Payload)
 		case err := <-errCh:
-			log.Printf("Error:\n%s\n", err.Error())
+			log.Printf("Error:\n\t%s\n", err.Error())
 		case <-ctx.Done():
 			return
 		}
