@@ -40,7 +40,6 @@ var monEventsStoreCmd = &cobra.Command{
 	},
 }
 
-// monCmd represents the pub commandלונק
 var monCommandsCmd = &cobra.Command{
 	Use:     "commands",
 	Aliases: []string{"c"},
@@ -50,13 +49,21 @@ var monCommandsCmd = &cobra.Command{
 	},
 }
 
-// monCmd represents the pub command
 var monQueriesCmd = &cobra.Command{
 	Use:     "queries",
 	Aliases: []string{"q"},
 	Short:   "monitor query channels",
 	Run: func(cmd *cobra.Command, args []string) {
 		runMon(args, "queries")
+	},
+}
+
+var monQueuesCmd = &cobra.Command{
+	Use:     "queue",
+	Aliases: []string{"qu"},
+	Short:   "monitor queue channels",
+	Run: func(cmd *cobra.Command, args []string) {
+		runMon(args, "queue")
 	},
 }
 
@@ -98,7 +105,7 @@ func runMon(args []string, kind string) {
 
 func init() {
 	rootCmd.AddCommand(monCmd)
-	monCmd.AddCommand(monEventsCmd, monEventsStoreCmd, monCommandsCmd, monQueriesCmd)
+	monCmd.AddCommand(monEventsCmd, monEventsStoreCmd, monCommandsCmd, monQueriesCmd, monQueuesCmd)
 
 }
 
