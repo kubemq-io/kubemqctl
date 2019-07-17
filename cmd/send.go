@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/kubemq-io/kubemq-go"
 	"log"
 	"time"
 
@@ -86,12 +87,14 @@ func runSend(args []string, kind string) {
 
 	switch kind {
 	case "events":
-		err = client.SendEvent(ctx, args[0], msg)
+		err:=client.E().SetChannel(args[0]).SetBody(msg.Marshal()).SetId(msg.Id).Send(ctx)
+
 		if err != nil {
 			log.Printf("error sending event: %s", err.Error())
 		}
 
 	case "events_store":
+		err:=client.ES().SetChannel(args[0]).SetBody(msg.Marshal()).SetId(msg.Id).Send(ctx)
 		err = client.SendEventStore(ctx, args[0], msg)
 		if err != nil {
 			log.Printf("error sending event_store: %s", err.Error())
@@ -125,18 +128,27 @@ func init() {
 
 }
 
-func getSendClient(ctx context.Context) (transport.Transport, error) {
+func getSendClient(ctx context.Context) (*kubemq.Client, error) {
 	switch sendTransport {
 	case "grpc":
 		for _, conn := range cfg.Connections {
 			if conn.Kind == option.ConnectionTypeGrpc {
-				return grpc.New(ctx, conn)
+				client,err:=kubemq.NewClient(ctx,
+					kubemq.WithAddress(conn.Host,conn.Port),
+					kubemq.WithClientId(uuid.New().String()),
+					kubemq.WithTransportType(kubemq.TransportTypeGRPC))
+
+				return client,err
 			}
 		}
 	case "rest":
 		for _, conn := range cfg.Connections {
 			if conn.Kind == option.ConnectionTypeRest {
-				return rest.New(ctx, conn)
+				client,err:=kubemq.NewClient(ctx,
+					kubemq.WithUri(conn.Uri()),
+					kubemq.WithClientId(uuid.New().String()),
+					kubemq.WithTransportType(kubemq.TransportTypeRest))
+				return client,err
 			}
 		}
 
