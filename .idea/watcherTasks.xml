@@ -3,7 +3,6 @@
   <component name="ProjectTasksOptions">
     <enabled-global>
       <option value="go fmt" />
-      <option value="goimports" />
     </enabled-global>
   </component>
 </project>
