@@ -11,32 +11,36 @@ import (
 	"github.com/kubemq-io/kubetools/transport/option"
 )
 
+//ScenarioType
 type ScenarioType int
 
 const (
-	ScenarioTypeUndefind ScenarioType = iota
+	ScenarioTypeUndefined ScenarioType = iota
 	ScenarioTypeEvents
 	ScenarioTypeEventsStore
 	ScenarioTypeCommands
 	ScenarioTypeQueries
 )
 
+//ScenarioTypesNames
 var ScenarioTypesNames = map[string]ScenarioType{
-	"undefined":    ScenarioTypeUndefind,
+	"undefined":    ScenarioTypeUndefined,
 	"events":       ScenarioTypeEvents,
 	"events_store": ScenarioTypeEventsStore,
 	"commands":     ScenarioTypeCommands,
 	"queries":      ScenarioTypeQueries,
 }
 
+//ScenarioTypesStrings
 var ScenarioTypesStrings = map[ScenarioType]string{
-	ScenarioTypeUndefind:    "undefined",
+	ScenarioTypeUndefined:   "undefined",
 	ScenarioTypeEvents:      "events",
 	ScenarioTypeEventsStore: "events_store",
 	ScenarioTypeCommands:    "commands",
 	ScenarioTypeQueries:     "queries",
 }
 
+//Scenario
 type Scenario struct {
 	Name           string       `json:"name"`
 	Type           ScenarioType `json:"type"`
