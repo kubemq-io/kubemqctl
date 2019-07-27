@@ -58,7 +58,8 @@ func runTest() {
 		Timeout:        30000,
 	}
 
-	ctx, _ := context.WithTimeout(context.Background(), 5*time.Minute)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+	defer cancel()
 	for _, conn := range cfg.Connections {
 		kubetest.Execute(ctx, eventsTest, conn)
 		kubetest.Execute(ctx, eventsStoreTest, conn)

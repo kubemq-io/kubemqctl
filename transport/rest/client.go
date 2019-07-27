@@ -32,9 +32,9 @@ func newWebsocketConn(ctx context.Context, uri string, readCh chan string, ready
 		if res != nil {
 			n, _ := res.Body.Read(buf)
 			return nil, errors.New(string(buf[:n]))
-		} else {
-			return nil, err
 		}
+		return nil, err
+
 	} else {
 		c = conn
 	}

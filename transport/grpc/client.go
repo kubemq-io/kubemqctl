@@ -13,10 +13,12 @@ import (
 	"github.com/kubemq-io/kubetools/transport/option"
 )
 
+// Client
 type Client struct {
 	client *kubemq.Client
 }
 
+// New - create new client
 func New(ctx context.Context, opts *option.Options) (*Client, error) {
 	c := &Client{
 		client: nil,
@@ -41,10 +43,12 @@ func New(ctx context.Context, opts *option.Options) (*Client, error) {
 	return c, nil
 }
 
+// Close - close client connection
 func (c *Client) Close() error {
 	return c.client.Close()
 }
 
+// SendEvent - send event message
 func (c *Client) SendEvent(ctx context.Context, channel string, m *transport.Message) error {
 	m.SetSendTime()
 	return c.client.E().
@@ -55,6 +59,7 @@ func (c *Client) SendEvent(ctx context.Context, channel string, m *transport.Mes
 
 }
 
+// SendEventStore - send event store message
 func (c *Client) SendEventStore(ctx context.Context, channel string, m *transport.Message) error {
 	m.SetSendTime()
 	result, err := c.client.ES().
@@ -71,6 +76,7 @@ func (c *Client) SendEventStore(ctx context.Context, channel string, m *transpor
 	return result.Err
 }
 
+// Send Command - send command message
 func (c *Client) SendCommand(ctx context.Context, channel string, m *transport.Message, timeout time.Duration) error {
 	m.SetSendTime()
 	result, err := c.client.C().
@@ -88,6 +94,7 @@ func (c *Client) SendCommand(ctx context.Context, channel string, m *transport.M
 	return errors.New(result.Error)
 }
 
+// Send Query - send query message
 func (c *Client) SendQuery(ctx context.Context, channel string, m *transport.Message, timeout time.Duration) (*transport.Message, error) {
 	m.SetSendTime()
 	result, err := c.client.Q().
@@ -114,6 +121,7 @@ func (c *Client) SendQuery(ctx context.Context, channel string, m *transport.Mes
 	return nil, errors.New(result.Error)
 }
 
+// ReceiveEvent - start receiving event messages
 func (c *Client) ReceiveEvent(ctx context.Context, channel string, group string, rxCh chan *transport.Message, errCh chan error) error {
 
 	eventsCh, err := c.client.SubscribeToEvents(ctx, channel, group, errCh)
@@ -149,6 +157,7 @@ func (c *Client) ReceiveEvent(ctx context.Context, channel string, group string,
 	return nil
 }
 
+// ReceiveEventStore - start receiving events store messages
 func (c *Client) ReceiveEventStore(ctx context.Context, channel string, group string, rxCh chan *transport.Message, errCh chan error) error {
 
 	eventsStoreCh, err := c.client.SubscribeToEventsStore(ctx, channel, group, errCh, kubemq.StartFromNewEvents())
@@ -184,6 +193,7 @@ func (c *Client) ReceiveEventStore(ctx context.Context, channel string, group st
 	return nil
 }
 
+// ReceiveCommand - start receiving command messages
 func (c *Client) ReceiveCommand(ctx context.Context, channel string, group string, rxCh chan *transport.Message, errCh chan error) error {
 	commandChannel, err := c.client.SubscribeToCommands(ctx, channel, group, errCh)
 	if err != nil {
@@ -225,6 +235,7 @@ func (c *Client) ReceiveCommand(ctx context.Context, channel string, group strin
 	return nil
 }
 
+// ReceiveQuery - start receiving query messages
 func (c *Client) ReceiveQuery(ctx context.Context, channel string, group string, rxCh chan *transport.Message, errCh chan error) error {
 	queryChannel, err := c.client.SubscribeToQueries(ctx, channel, group, errCh)
 	if err != nil {

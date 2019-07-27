@@ -169,6 +169,5 @@ func runWebsocketClientReaderWriter(ctx context.Context, uri string, chRead chan
 			chRead <- string(message)
 		}
 	}
-	return
 
 }
