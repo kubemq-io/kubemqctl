@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-//Result
+//Result - represent Result struct
 type Result struct {
 	ID        string
 	Kind      ClientType

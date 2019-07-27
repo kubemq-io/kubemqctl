@@ -13,6 +13,7 @@ import (
 	"github.com/google/uuid"
 )
 
+//ClientType - represent client type
 type ClientType int
 
 const (
@@ -39,6 +40,7 @@ var ClientTypeNames = map[ClientType]string{
 	ClientTypeQueryConsumer:      "Query Consumer",
 }
 
+//InstanceConfig - represents instance config
 type InstanceConfig struct {
 	Kind              ClientType
 	Channel           string
@@ -48,6 +50,7 @@ type InstanceConfig struct {
 	MessageTimeout    time.Duration
 }
 
+//InstanceGroupConfig - represents instance group configuration
 type InstanceGroupConfig struct {
 	ScenarioType      ScenarioType
 	Producers         int
@@ -59,12 +62,14 @@ type InstanceGroupConfig struct {
 	MessageTimeout    time.Duration
 }
 
+//Instance - represent an instance
 type Instance struct {
 	id     string
 	cfg    *InstanceConfig
 	client transport.Transport
 }
 
+//NewInstance
 func NewInstance(ctx context.Context, cfg *InstanceConfig, connOpts *option.Options) (*Instance, error) {
 	ins := &Instance{
 		id:     uuid.New().String(),
@@ -188,6 +193,7 @@ func (ins *Instance) Execute(ctx context.Context, results chan *Result) {
 	}
 }
 
+//InstanceGroup - represents an instance group struct
 type InstanceGroup struct {
 	producers []*Instance
 	consumers []*Instance
@@ -228,6 +234,8 @@ func getInstanceConfig(cfg *InstanceGroupConfig, isProducer bool) *InstanceConfi
 	}
 	return insCfg
 }
+
+//NewInstanceGroup
 func NewInstanceGroup(ctx context.Context, cfg *InstanceGroupConfig, connOpts *option.Options) (*InstanceGroup, error) {
 
 	ig := &InstanceGroup{
@@ -251,6 +259,7 @@ func NewInstanceGroup(ctx context.Context, cfg *InstanceGroupConfig, connOpts *o
 	return ig, nil
 }
 
+//Execute
 func (ig *InstanceGroup) Execute(ctx context.Context) *Results {
 	producerResults := NewResultsSet()
 	consumerResults := NewResultsSet()

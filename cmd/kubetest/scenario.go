@@ -11,7 +11,7 @@ import (
 	"github.com/kubemq-io/kubetools/transport/option"
 )
 
-//ScenarioType
+//ScenarioType - represents scenario type
 type ScenarioType int
 
 const (
@@ -40,7 +40,7 @@ var ScenarioTypesStrings = map[ScenarioType]string{
 	ScenarioTypeQueries:     "queries",
 }
 
-//Scenario
+//Scenario - represent scenario struct
 type Scenario struct {
 	Name           string       `json:"name"`
 	Type           ScenarioType `json:"type"`
@@ -51,6 +51,7 @@ type Scenario struct {
 	Timeout        int          `json:"timeout"`
 }
 
+//Execute
 func Execute(ctx context.Context, sc *Scenario, conn *option.Options) {
 
 	if sc.Type == 0 || sc.Type > 4 {
