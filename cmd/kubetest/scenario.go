@@ -22,7 +22,7 @@ const (
 	ScenarioTypeQueries
 )
 
-//ScenarioTypesNames
+// ScenarioTypesNames
 var ScenarioTypesNames = map[string]ScenarioType{
 	"undefined":    ScenarioTypeUndefined,
 	"events":       ScenarioTypeEvents,
@@ -31,7 +31,7 @@ var ScenarioTypesNames = map[string]ScenarioType{
 	"queries":      ScenarioTypeQueries,
 }
 
-//ScenarioTypesStrings
+// ScenarioTypesStrings
 var ScenarioTypesStrings = map[ScenarioType]string{
 	ScenarioTypeUndefined:   "undefined",
 	ScenarioTypeEvents:      "events",
@@ -51,7 +51,7 @@ type Scenario struct {
 	Timeout        int          `json:"timeout"`
 }
 
-//Execute
+// Execute
 func Execute(ctx context.Context, sc *Scenario, conn *option.Options) {
 
 	if sc.Type == 0 || sc.Type > 4 {

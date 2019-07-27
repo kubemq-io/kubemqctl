@@ -28,6 +28,7 @@ const (
 	ClientTypeQueryConsumer
 )
 
+//ClientTypeNames
 var ClientTypeNames = map[ClientType]string{
 	ClientTypeEventUnknown:       "Unknown",
 	ClientTypeEventProducer:      "Event Producer",
