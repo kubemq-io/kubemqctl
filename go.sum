@@ -9,6 +9,7 @@ contrib.go.opencensus.io/exporter/stackdriver v0.8.0/go.mod h1:hNe5qQofPbg6bLQY5
 git.apache.org/thrift.git v0.0.0-20180902110319-2566ecd5d999/go.mod h1:fPE2ZNJGynbRyZ4dJvy6G277gSllfV2HJqblrnkyeyg=
 github.com/AndreasBriese/bbloom v0.0.0-20180913140656-343706a395b7 h1:PqzgE6kAMi81xWQA2QIVxjWkFHptGgC547vchpUbtFo=
 github.com/AndreasBriese/bbloom v0.0.0-20180913140656-343706a395b7/go.mod h1:bOvUY6CB00SOBii9/FifXqc0awNKxLFCL/+pkDPuyl8=
+github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/DataDog/datadog-go v0.0.0-20180822151419-281ae9f2d895 h1:dmc/C8bpE5VkQn65PNbbyACDC8xw8Hpp/NEurdPmQDQ=
 github.com/DataDog/datadog-go v0.0.0-20180822151419-281ae9f2d895/go.mod h1:LButxg5PwREeZtORoXG3tL4fMGNddJ+vMq1mwgfaqoQ=
@@ -120,8 +121,6 @@ github.com/kubemq-io/go-nats-streaming v0.4.1 h1:35JNj1Pgem+/Srw2UHYdYAFJ6IRDA3m
 github.com/kubemq-io/go-nats-streaming v0.4.1/go.mod h1:wGL+yHBRJ6QzK03bt7ekoMTvutMzwgDHF1ao3C2FbJI=
 github.com/kubemq-io/kubemq v1.5.1 h1:3DRhQ0GAngqLQxbDeOMx9jnmR+oNCpi7hBvzGHOlLT0=
 github.com/kubemq-io/kubemq v1.5.1/go.mod h1:YIiiwRhpE1rVo1fZ412R1xaUkMczMOoOU3U4pt7do68=
-github.com/kubemq-io/kubemq-go v1.2.0 h1:zpfGU2x+obz2doxqCtPmNvJDZbY58JxmAKI8xJOtdZw=
-github.com/kubemq-io/kubemq-go v1.2.0/go.mod h1:unZkfZWSd/nIjRpz8gW6nsFHrqs+b00dYKjNOmM+4PE=
 github.com/kubemq-io/kubemq-go v1.2.1 h1:Uwl0TFJDiflPNjydKrx1QEBpqRqwxyCJsjcH5ZGAXxA=
 github.com/kubemq-io/kubemq-go v1.2.1/go.mod h1:unZkfZWSd/nIjRpz8gW6nsFHrqs+b00dYKjNOmM+4PE=
 github.com/kubemq-io/nats-streaming-server v0.10.5 h1:xebkBU2qbj1aXrZhqlQYTu7t09qmdAX+aK2nvpeXbz8=

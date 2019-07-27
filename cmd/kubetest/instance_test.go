@@ -95,7 +95,8 @@ func TestInstanceGroup_EventsExecute(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ctx, _ := context.WithTimeout(context.Background(), tt.timeout)
+			ctx, cancel := context.WithTimeout(context.Background(), tt.timeout)
+			defer cancel()
 			ig, err := NewInstanceGroup(ctx, tt.cfg, tt.connOpts)
 			require.NoError(t, err)
 			results := ig.Execute(ctx)
@@ -190,7 +191,8 @@ func TestInstanceGroup_EventsStoreExecute(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ctx, _ := context.WithTimeout(context.Background(), tt.timeout)
+			ctx, cancel := context.WithTimeout(context.Background(), tt.timeout)
+			defer cancel()
 			ig, err := NewInstanceGroup(ctx, tt.cfg, tt.connOpts)
 			require.NoError(t, err)
 			results := ig.Execute(ctx)
@@ -285,7 +287,8 @@ func TestInstanceGroup_CommandExecute(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ctx, _ := context.WithTimeout(context.Background(), tt.timeout)
+			ctx, cancel := context.WithTimeout(context.Background(), tt.timeout)
+			defer cancel()
 			ig, err := NewInstanceGroup(ctx, tt.cfg, tt.connOpts)
 			require.NoError(t, err)
 			results := ig.Execute(ctx)
@@ -379,7 +382,8 @@ func TestInstanceGroup_QueryExecute(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ctx, _ := context.WithTimeout(context.Background(), tt.timeout)
+			ctx, cancel := context.WithTimeout(context.Background(), tt.timeout)
+			defer cancel()
 			ig, err := NewInstanceGroup(ctx, tt.cfg, tt.connOpts)
 			require.NoError(t, err)
 			results := ig.Execute(ctx)
