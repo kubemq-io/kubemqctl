@@ -7,6 +7,7 @@ import (
 	"time"
 )
 
+//Result
 type Result struct {
 	ID        string
 	Kind      ClientType
@@ -15,6 +16,7 @@ type Result struct {
 	Latencies []time.Duration
 }
 
+//NewResult
 func NewResult(id string, n int) *Result {
 	return &Result{
 		ID:        id,
@@ -25,18 +27,25 @@ func NewResult(id string, n int) *Result {
 	}
 }
 
+//SetKind
 func (r *Result) SetKind(kind ClientType) *Result {
 	r.Kind = kind
 	return r
 }
+
+//AddError
 func (r *Result) AddError(err error) *Result {
 	r.Errors = append(r.Errors, err)
 	return r
 }
+
+//AddLatency
 func (r *Result) AddLatency(t time.Duration) *Result {
 	r.Latencies = append(r.Latencies, t)
 	return r
 }
+
+//Latency
 func (r *Result) Latency() time.Duration {
 	var sum int64 = 0
 	for i := 0; i < len(r.Latencies); i++ {
@@ -49,9 +58,12 @@ func (r *Result) Latency() time.Duration {
 	return 0
 }
 
+//String
 func (r *Result) String() string {
 	return fmt.Sprintf("Results for %s: Messages: %d Errors: %d Latency: %s", ClientTypeNames[r.Kind], len(r.Errors), r.Messages, r.Latency().String())
 }
+
+//Verbose
 func (r *Result) Verbose() string {
 
 	list := []string{
@@ -71,26 +83,34 @@ func (r *Result) Verbose() string {
 	}
 	return strings.Join(list, "\n\t")
 }
+
+//HasError
 func (r *Result) HasError() bool {
 	return len(r.Errors) > 0
 }
 
+//ResultsSet
 type ResultsSet struct {
 	sync.Mutex
 	list []*Result
 }
 
+//NewResultsSet
 func NewResultsSet() *ResultsSet {
 	return &ResultsSet{
 		Mutex: sync.Mutex{},
 		list:  nil,
 	}
 }
+
+//Add
 func (rs *ResultsSet) Add(r *Result) {
 	rs.Lock()
 	defer rs.Unlock()
 	rs.list = append(rs.list, r)
 }
+
+//Count
 func (rs *ResultsSet) Count() int {
 	rs.Lock()
 	defer rs.Unlock()
@@ -98,6 +118,7 @@ func (rs *ResultsSet) Count() int {
 	return c
 }
 
+//Success
 func (rs *ResultsSet) Success() int {
 	rs.Lock()
 	defer rs.Unlock()
@@ -110,6 +131,7 @@ func (rs *ResultsSet) Success() int {
 	return c
 }
 
+//Errors
 func (rs *ResultsSet) Errors() int {
 	rs.Lock()
 	defer rs.Unlock()
@@ -120,6 +142,7 @@ func (rs *ResultsSet) Errors() int {
 	return c
 }
 
+//Latency
 func (rs *ResultsSet) Latency() time.Duration {
 	rs.Lock()
 	defer rs.Unlock()
@@ -139,15 +162,18 @@ func (rs *ResultsSet) Latency() time.Duration {
 	return time.Duration(avg) * time.Nanosecond
 }
 
+//HasErrors
 func (rs *ResultsSet) HasErrors() bool {
 	return rs.Errors() > 0
 }
 
+//Results
 type Results struct {
 	Producers *ResultsSet
 	Consumers *ResultsSet
 }
 
+//NewResults
 func NewResults(producers, consumers *ResultsSet) *Results {
 	return &Results{
 		Producers: producers,
@@ -155,6 +181,7 @@ func NewResults(producers, consumers *ResultsSet) *Results {
 	}
 }
 
+//String
 func (r *Results) String() string {
 	var lines []string
 	lines = append(lines,
@@ -163,10 +190,13 @@ func (r *Results) String() string {
 
 	return strings.Join(lines, "\n\t")
 }
+
+//HasErrors
 func (r *Results) HasErrors() bool {
 	return r.Producers.HasErrors() || r.Consumers.HasErrors()
 }
 
+//Errors
 func (r *Results) Errors() string {
 	var lines []string
 	lines = append(lines, fmt.Sprintf("\tProducers Results - Success: %d, Errors: %d, Average Latency: %s", r.Producers.Success(), r.Producers.Errors(), r.Producers.Latency().String()))
