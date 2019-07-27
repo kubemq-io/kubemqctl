@@ -1,5 +1,5 @@
 # KubeTools
-Kubetools is a CLI application for testing KubeMQ server or cluster installation. In addition Kubetools provides several utilities such monitoring channel traffic, send messages and subscribe to channels.
+Kubetools is a CLI application for testing KubeMQ server or cluster installation. In addition, Kubetools provides several utilities such as monitoring channel traffic, send messages, and subscribe to channels.
 
 ## Download / Installation
 KubeTools executable can be downloaded from bin folder for 4 operating systems:
@@ -34,10 +34,10 @@ Use "kubetools [command] --help" for more information about a command.
 ```
 
 ### Test
-Run `kubetools test` or `kubetools t` for running various tests ,checking KubeMQ installation and proper configuration.
+Run `kubetools test` or `kubetools t` for running various tests, checking KubeMQ installation and proper configuration.
 
 ### Monitor
-Run `kubetools mon` or `kubetools m` to enter monitoring channels mode.
+Run `kubetools mon` or `kubetools m` to enter into a monitoring channels mode.
 
 Available sub commands:
 
@@ -62,19 +62,19 @@ Use "kubetools mon [command] --help" for more information about a command.
 ```
 
 #### Monitor Events Channel
-Run `kubetools mon events <ChannelName>` or `kubetools m e <ChannelName>` will monitor and show all traffic in <ChannelName> Events channel.
+Run `kubetools mon events <ChannelName>` or `kubetools m e <ChannelName>` will monitor and show all traffic in `<ChannelName>` Events channel.
 
 #### Monitor Events Store Channel
-Run `kubetools mon events_store <ChannelName>` or `kubetools m es <ChannelName>` will monitor and show all traffic in <ChannelName> Events Store channel.
+Run `kubetools mon events_store <ChannelName>` or `kubetools m es <ChannelName>` will monitor and show all traffic in `<ChannelName>` Events Store channel.
 
 #### Monitor Commands Channel
-Run `kubetools mon commands <ChannelName>` or `kubetools m c <ChannelName>` will monitor and show all traffic in <ChannelName> Commands channel.
+Run `kubetools mon commands <ChannelName>` or `kubetools m c <ChannelName>` will monitor and show all traffic in `<ChannelName>` Commands channel.
 
 #### Monitor Query Channel
-Run `kubetools mon queries <ChannelName>` or `kubetools m q <ChannelName>` will monitor and show all traffic in <ChannelName> Queries channel.
+Run `kubetools mon queries <ChannelName>` or `kubetools m q <ChannelName>` will monitor and show all traffic in `<ChannelName>` Queries channel.
 
 #### Monitor Queue Channel
-Run `kubetools mon queue <ChannelName>` or `kubetools m qu <ChannelName>` will monitor and show all traffic in <ChannelName> Queue channel.
+Run `kubetools mon queue <ChannelName>` or `kubetools m qu <ChannelName>` will monitor and show all traffic in `<ChannelName>` Queue channel.
 
 
 ### PubSub
@@ -102,7 +102,7 @@ Use "kubetools pubsub [command] --help" for more information about a command.
 
 
 ### PubSub Send
-Run `kubetools pubsub send` or `kubetools p s` for publish real-time and persistent events.
+Run `kubetools pubsub send` or `kubetools p s` to publish real-time and persistent events.
 
 ```
 Usage:
@@ -125,14 +125,14 @@ Use "kubetools pubsub send [command] --help" for more information about a comman
 ```
 
 ##### Send Message to an Events Channel
-Run `kubetools pubsub send event <ChannelName> <YourMessage>` or `kubetools p s e <ChannelName> <YourMessage>` for sending <YourMessage> to Events channel <ChannelName>
+Run `kubetools pubsub send event <ChannelName> <YourMessage>` or `kubetools p s e <ChannelName> <YourMessage>` for sending `<YourMessage>` to Events channel `<ChannelName>`
 
 ##### Send Message to an Events Store Channel
-Run `kubetools pubsub send events_store <ChannelName> <YourMessage>` or `kubetools p s es <ChannelName> <YourMessage>` for sending <YourMessage> to Events Store channel <ChannelName>
+Run `kubetools pubsub send events_store <ChannelName> <YourMessage>` or `kubetools p s es <ChannelName> <YourMessage>` for sending `<YourMessage>` to Events Store channel `<ChannelName>`
 
 
 ### PubSub Receive
-Run `kubetools pubsub receive` or `kubetools p r` for for receiving real-time and persistent events.
+Run `kubetools pubsub receive` or `kubetools p r` for receiving real-time and persistent events.
 
 ```
 Usage:
@@ -143,7 +143,7 @@ Aliases:
 
 Available Commands:
   events       subscribe to receive real-time events from a channel
-  events_store subscribe to receive persistent events from channel
+  events_store subscribe to receive persistent events from a channel
 
 Flags:
   -h, --help   help for receive
@@ -155,14 +155,14 @@ Use "kubetools pubsub receive [command] --help" for more information about a com
 ```
 
 ##### Receive PubSub Events From Channel
-Run `Kubetools pubsub receive event <ChannelName>` or `Kubetools p r e <ChannelName>` for receiving messages in Events channel <ChannelName>.
+Run `Kubetools pubsub receive event <ChannelName>` or `Kubetools p r e <ChannelName>` for receiving messages in Events channel `<ChannelName>`.
 
 ##### Receive PubSub Events Store From Channel
-Run `Kubetools pubsub receive events_store <ChannelName>` or `Kubetools p r es <ChannelName>` for receiving messages in Events Store channel <ChannelName>.
+Run `Kubetools pubsub receive events_store <ChannelName>` or `Kubetools p r es <ChannelName>` for receiving messages in Events Store channel `<ChannelName>`.
 
 
 ### RPC
-Run `kubetools rpc` or `kubetools r` for sending and receiving rpc calls of commands and queries.
+Run `kubetools rpc` or `kubetools r` for sending and receiving RPC calls of commands and queries.
 
 Available RPC commands:
 
@@ -209,7 +209,7 @@ Use "kubetools rpc send [command] --help" for more information about a command.
 ```
 
 ##### Send RPC Commands To Channel
-Run `kubetools rpc send command <ChannelName> <YourMessage>` or `kubetools r s c <ChannelName> <YourMessage>` for sending <YourMessage> to Commands channel <ChannelName>
+Run `kubetools rpc send command <ChannelName> <YourMessage>` or `kubetools r s c <ChannelName> <YourMessage>` for sending `<YourMessage>` to Commands channel `<ChannelName>`
 
 Additional configuration available:
 
@@ -230,7 +230,7 @@ Global Flags:
 ```
 
 ##### Send RPC Query To Channel
-Run `kubetools rpc send query <ChannelName> <YourMessage>` or `kubetools r s q <ChannelName> <YourMessage>` for sending <YourMessage> to Queries channel <ChannelName>
+Run `kubetools rpc send query <ChannelName> <YourMessage>` or `kubetools r s q <ChannelName> <YourMessage>` for sending `<YourMessage>` to Queries channel `<ChannelName>`
 
 Additional configuration available:
 
@@ -263,7 +263,7 @@ Aliases:
 
 Available Commands:
   command     subscribe to receive commands from a channel
-  query       subscribe to receive queries from channel
+  query       subscribe to receive queries from a channel
 
 Flags:
   -h, --help   help for receive
@@ -276,10 +276,10 @@ Use "kubetools rpc receive [command] --help" for more information about a comman
 ```
 
 ##### Receive RPC Commands From Channel
-Run `Kubetools rpc receive command <ChannelName>` or `Kubetools r r c <ChannelName>` for receiving messages in Commands channel <ChannelName> and send acknowledge back to the sender.
+Run `Kubetools rpc receive command <ChannelName>` or `Kubetools r r c <ChannelName>` for receiving messages in Commands channel `<ChannelName>` and send an acknowledge back to the sender.
 
 ##### Receive RPC Queries From Channel
-Run `Kubetools rpc receive query <ChannelName>` or `Kubetools r r q <ChannelName>` for receiving messages in Queries channel <ChannelName> and echo back the same message to the sender.
+Run `Kubetools rpc receive query <ChannelName>` or `Kubetools r r q <ChannelName>` for receiving messages in Queries channel `<ChannelName>` and echo back the same message to the sender.
 
 
 ### Queue
@@ -393,7 +393,7 @@ Run `kubetools metrics` or `kubetools m`
 
 
 ## Configuration
-KubeTools require `.config.yaml` file for connections variables. Default configuration:
+KubeTools require `.config.yaml` File for connections variables. Default configuration:
 
 ```
 healthAddress: "http://localhost:8080/health" # the address of Health endpoint , you can replace the localhost:8080 with your address
