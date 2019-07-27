@@ -9,7 +9,6 @@ import (
 	"github.com/kubemq-io/kubemq-go/pb"
 )
 
-//
 type Event = pb.Event
 type EventReceive = pb.EventReceive
 type Request = pb.Request
