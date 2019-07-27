@@ -106,17 +106,3 @@ func Unmarshal(data []byte) (*Message, error) {
 	return nil, errors.New("empty body received")
 
 }
-
-
-//func UnmarshalEventProto(data []byte) (*Message, error) {
-//
-//	pbEvent := &kubepb.Event{}
-//	err := pbEvent.Unmarshal(data)
-//	if err != nil {
-//		return nil, err
-//	}
-//	pbEvent.String()
-//	m := &Message{}
-//	err = json.Unmarshal(data, pbEvent.Body)
-//	return m, err
-//}
