@@ -43,6 +43,7 @@ func Execute(ver string) {
 }
 
 func init() {
+	checkConfigFile()
 	cfg = &Config{}
 	viper.AddConfigPath("./")
 	viper.SetConfigName(".config")
