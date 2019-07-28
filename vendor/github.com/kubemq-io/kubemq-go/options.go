@@ -139,14 +139,14 @@ func GetDefaultOptions() *Options {
 func (o *Options) Validate() error {
 	switch o.transportType {
 	case TransportTypeGRPC:
-		if o.host == "" {
+		if o.host== "" {
 			return errors.New("invalid host")
 		}
-		if o.port <= 0 {
+		if o.port<=0 {
 			return errors.New("invalid port")
 		}
 	case TransportTypeRest:
-		if o.restUri == "" {
+		if o.restUri== "" {
 			return errors.New("invalid address uri")
 		}
 	default:

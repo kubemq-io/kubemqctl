@@ -3,9 +3,27 @@
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/kubetest/instance.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/kubetest/instance.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/kubetest/result.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/kubetest/result.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/kubetest/scenario.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/kubetest/scenario.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Taskfile.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Taskfile.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/linux32/.config.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/linux32/kubetools" beforeDir="false" afterPath="$PROJECT_DIR$/bin/linux32/kubetools_linux_386" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/linux64/.config.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/linux64/kubetools" beforeDir="false" afterPath="$PROJECT_DIR$/bin/linux64/kubetools_linux_amd64" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/macos/.config.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/macos/kubetools" beforeDir="false" afterPath="$PROJECT_DIR$/bin/macos/kubetools_darwin_amd64" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/windows/.config.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/windows/kubetools.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/windows/kubetools.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/github.com/google/uuid/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/github.com/google/uuid/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/github.com/kubemq-io/kubemq-go/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/github.com/kubemq-io/kubemq-go/command.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/github.com/kubemq-io/kubemq-go/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/github.com/kubemq-io/kubemq-go/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/github.com/kubemq-io/kubemq-go/options.go" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/github.com/kubemq-io/kubemq-go/options.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/github.com/kubemq-io/kubemq-go/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/github.com/kubemq-io/kubemq-go/query.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/github.com/mitchellh/mapstructure/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/github.com/mitchellh/mapstructure/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/github.com/spf13/afero/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/github.com/spf13/afero/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/github.com/spf13/jwalterweatherman/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/github.com/spf13/jwalterweatherman/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/yaml.v2/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/gopkg.in/yaml.v2/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/yaml.v2/readerc.go" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/gopkg.in/yaml.v2/readerc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/yaml.v2/resolve.go" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/gopkg.in/yaml.v2/resolve.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/yaml.v2/sorter.go" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/gopkg.in/yaml.v2/sorter.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,13 +55,8 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
-    <option name="y" value="-10" />
-    <option name="width" value="3860" />
-    <option name="height" value="2130" />
-  </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="GO_FMT" value="true" />
@@ -61,6 +74,9 @@
     <property name="settings.editor.selected.configurable" value="watcher.settings" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cmd" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools" />
@@ -77,6 +93,36 @@
         </RuleState>
       </list>
     </option>
+  </component>
+  <component name="RunManager" selected="Go Build.go build github.com/kubemq-io/kubetools">
+    <configuration name="go build github.com/kubemq-io/kubetools" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="kubetools" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <package value="github.com/kubemq-io/kubetools" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build kubetools" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
+      <module name="kubetools" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <go_parameters value="-i" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/" />
+      <package value="github.com/kubemq-io/kubetools" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Go Build.go build kubetools" />
+      <item itemvalue="Go Build.go build github.com/kubemq-io/kubetools" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build github.com/kubemq-io/kubetools" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -177,7 +223,35 @@
       <option name="project" value="LOCAL" />
       <updated>1564240915655</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="fixes after linting">
+      <created>1564241583742</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1564241583742</updated>
+    </task>
+    <task id="LOCAL-00015" summary="fixes after linting">
+      <created>1564241720581</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1564241720581</updated>
+    </task>
+    <task id="LOCAL-00016" summary="create config file if not exist">
+      <created>1564290915501</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1564290915501</updated>
+    </task>
+    <task id="LOCAL-00017" summary="add vendor folder">
+      <created>1564291078096</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1564291078096</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -225,7 +299,9 @@
     <MESSAGE value="go fmt" />
     <MESSAGE value="add cancel func" />
     <MESSAGE value="fixes after linting" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixes after linting" />
+    <MESSAGE value="create config file if not exist" />
+    <MESSAGE value="add vendor folder" />
+    <option name="LAST_COMMIT_MESSAGE" value="add vendor folder" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

@@ -9,6 +9,8 @@ vars:
 tasks:
   default:
     cmds:
+      - go mod tidy
+      - go mod vendor
       - task: build_win
       - task: build_mac
       - task: build_linux_64
