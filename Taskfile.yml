@@ -4,7 +4,7 @@ version: '2'
 
 vars:
   BINARY_NAME: kubetools
-  VERSION: v1.1.0
+  VERSION: v1.1.1
 
 tasks:
   default:
@@ -28,18 +28,15 @@ tasks:
       GOARCH: amd64
     cmds:
       - go build -o "./bin/macos/{{.BINARY_NAME}}_darwin_amd64" -ldflags "-X main.version={{.VERSION}}"
- #   - git update-index --chmod=+x "./bin/macos/{{.BINARY_NAME}}_darwin_amd64"
   build_linux_64:
     env:
       GOOS: linux
       GOARCH: amd64
     cmds:
       - go build -o "./bin/linux64/{{.BINARY_NAME}}_linux_amd64" -ldflags "-X main.version={{.VERSION}}"
- #     - git update-index --chmod=+x "./bin/linux64/{{.BINARY_NAME}}_linux_amd64"
   build_linux_32:
     env:
       GOOS: linux
       GOARCH: 386
     cmds:
       - go build -o "./bin/linux32/{{.BINARY_NAME}}_linux_386" -ldflags "-X main.version={{.VERSION}}"
-  #    - git update-index --chmod=+x "./bin/linux32/{{.BINARY_NAME}}_linux_386"

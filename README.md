@@ -78,3 +78,10 @@ connections:
 
 ## Documantation
 Please visit our [docs](https://docs.kubemq.io/tutorials/kubetools.html) for detailed Kubetools documentation.
+
+
+## Support
+if you encounter any issues, please open an issue here,
+In addition, you can reach us for support by:
+- [**Email**](mailto://support@kubemq.io)
+- [**Slack**](https://kubmq.slack.com)

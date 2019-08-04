@@ -121,8 +121,8 @@ github.com/kubemq-io/go-nats-streaming v0.4.1 h1:35JNj1Pgem+/Srw2UHYdYAFJ6IRDA3m
 github.com/kubemq-io/go-nats-streaming v0.4.1/go.mod h1:wGL+yHBRJ6QzK03bt7ekoMTvutMzwgDHF1ao3C2FbJI=
 github.com/kubemq-io/kubemq v1.5.1 h1:3DRhQ0GAngqLQxbDeOMx9jnmR+oNCpi7hBvzGHOlLT0=
 github.com/kubemq-io/kubemq v1.5.1/go.mod h1:YIiiwRhpE1rVo1fZ412R1xaUkMczMOoOU3U4pt7do68=
-github.com/kubemq-io/kubemq-go v1.2.1 h1:Uwl0TFJDiflPNjydKrx1QEBpqRqwxyCJsjcH5ZGAXxA=
-github.com/kubemq-io/kubemq-go v1.2.1/go.mod h1:unZkfZWSd/nIjRpz8gW6nsFHrqs+b00dYKjNOmM+4PE=
+github.com/kubemq-io/kubemq-go v1.2.4 h1:M81uvysSc4lKYagA6yR54YEy/qO3unXBlYD49zxHs18=
+github.com/kubemq-io/kubemq-go v1.2.4/go.mod h1:unZkfZWSd/nIjRpz8gW6nsFHrqs+b00dYKjNOmM+4PE=
 github.com/kubemq-io/nats-streaming-server v0.10.5 h1:xebkBU2qbj1aXrZhqlQYTu7t09qmdAX+aK2nvpeXbz8=
 github.com/kubemq-io/nats-streaming-server v0.10.5/go.mod h1:6R59bFIs3gvuERQhTVEYqZ1fq/bCFqRQNAHFQYul2HI=
 github.com/kubemq-io/nuid v1.0.1 h1:oHYQFfAii/C7rnGqpWqY0vXIgbaesDm4TWHEw7bA6m0=

@@ -34,7 +34,7 @@ github.com/hashicorp/hcl/json/scanner
 github.com/hashicorp/hcl/json/token
 # github.com/inconshreveable/mousetrap v1.0.0
 github.com/inconshreveable/mousetrap
-# github.com/kubemq-io/kubemq-go v1.2.1
+# github.com/kubemq-io/kubemq-go v1.2.4
 github.com/kubemq-io/kubemq-go
 github.com/kubemq-io/kubemq-go/pb
 # github.com/magiconair/properties v1.8.0
