@@ -1,11 +1,8 @@
 package cmd
 
 import (
-	"fmt"
-	"log"
-	"os"
-
 	"github.com/kubemq-io/kubetools/transport/option"
+	"log"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -37,8 +34,7 @@ var rootCmd = &cobra.Command{
 func Execute(ver string) {
 	version = ver
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		log.Fatal(err)
 	}
 }
 

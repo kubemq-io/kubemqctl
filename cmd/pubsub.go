@@ -133,7 +133,10 @@ func runPubSub(args []string, kind string) {
 		}
 		for {
 			select {
-			case event := <-eventsCh:
+			case event, more := <-eventsCh:
+				if !more {
+					return
+				}
 				msg, err := transport.Unmarshal(event.Body)
 				if err != nil {
 					log.Printf("Error:\n\t%s\n", err.Error())
@@ -161,7 +164,10 @@ func runPubSub(args []string, kind string) {
 		}
 		for {
 			select {
-			case eventStore := <-eventsStoreCh:
+			case eventStore, more := <-eventsStoreCh:
+				if !more {
+					return
+				}
 				msg, err := transport.Unmarshal(eventStore.Body)
 				if err != nil {
 					log.Printf("Error:\n\t%s\n", err.Error())

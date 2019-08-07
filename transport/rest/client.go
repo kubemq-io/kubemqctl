@@ -165,7 +165,6 @@ func (c *Client) SendQuery(ctx context.Context, channel string, m *transport.Mes
 		return nil, err
 	}
 	if !r.IsSuccess() || resp.Error {
-		fmt.Println(r.StatusCode())
 		return nil, errors.New(resp.ErrorString)
 	}
 	queryResult := &transport.Response{}

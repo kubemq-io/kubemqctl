@@ -2,9 +2,10 @@ package transport
 
 import (
 	"context"
-	"fmt"
 	"testing"
 	"time"
+
+	"github.com/labstack/gommon/log"
 
 	"github.com/kubemq-io/kubetools/transport/grpc"
 	"github.com/kubemq-io/kubetools/transport/option"
@@ -70,7 +71,7 @@ func TestClient_Event(t *testing.T) {
 			case err := <-errCh:
 				require.NoError(t, err)
 			case msgIn := <-msgCh:
-				fmt.Println(msgIn.Latency())
+				log.Print(msgIn.Latency())
 			case <-ctx.Done():
 				require.NoError(t, ctx.Err())
 			}
@@ -119,7 +120,7 @@ func TestClient_EventStore(t *testing.T) {
 			case err := <-errCh:
 				require.NoError(t, err)
 			case msgIn := <-msgCh:
-				fmt.Println(msgIn.Latency())
+				log.Print(msgIn.Latency())
 			case <-ctx.Done():
 				require.NoError(t, ctx.Err())
 			}
@@ -171,7 +172,7 @@ func TestClient_Command(t *testing.T) {
 			case err := <-errCh:
 				require.NoError(t, err)
 			case msgIn := <-msgCh:
-				fmt.Println(msgIn.Latency())
+				log.Error(msgIn.Latency())
 			case <-ctx.Done():
 				require.NoError(t, ctx.Err())
 			}
@@ -217,12 +218,12 @@ func TestClient_Query(t *testing.T) {
 			case err := <-errCh:
 				require.NoError(t, err)
 			case msgIn := <-msgCh:
-				fmt.Println(msgIn.Latency())
+				log.Print(msgIn.Latency())
 			case <-ctx.Done():
 				require.NoError(t, ctx.Err())
 			}
 			require.NotNil(t, resp)
-			fmt.Println(resp.Latency())
+			log.Print(resp.Latency())
 			cancel()
 			err = tt.clientProducer.Close()
 			require.NoError(t, err)

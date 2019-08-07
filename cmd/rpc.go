@@ -5,11 +5,11 @@ package cmd
 import (
 	"context"
 	"errors"
-	"fmt"
-	"github.com/google/uuid"
 	"github.com/kubemq-io/kubemq-go"
 	"log"
 	"time"
+
+	"github.com/google/uuid"
 
 	"github.com/kubemq-io/kubetools/transport"
 	"github.com/kubemq-io/kubetools/transport/option"
@@ -142,7 +142,10 @@ func runRpc(args []string, kind string) {
 		}
 		for {
 			select {
-			case command := <-commandsCh:
+			case command, more := <-commandsCh:
+				if !more {
+					return
+				}
 				msg, err := transport.Unmarshal(command.Body)
 				if err != nil {
 					log.Printf("Error:\n\t%s\n", err.Error())
@@ -174,7 +177,10 @@ func runRpc(args []string, kind string) {
 		}
 		for {
 			select {
-			case query := <-queriesCh:
+			case query, more := <-queriesCh:
+				if !more {
+					return
+				}
 				msg, err := transport.Unmarshal(query.Body)
 				if err != nil {
 					log.Printf("Error:\n\t%s\n", err.Error())
@@ -212,7 +218,6 @@ func init() {
 }
 
 func getRpcClient(ctx context.Context) (*kubemq.Client, error) {
-	fmt.Println(rpcTransport)
 	switch rpcTransport {
 	case "grpc":
 		for _, conn := range cfg.Connections {

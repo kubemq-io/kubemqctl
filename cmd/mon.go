@@ -8,6 +8,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/labstack/gommon/log"
+
 	"github.com/gorilla/websocket"
 
 	"github.com/spf13/cobra"
@@ -74,7 +76,7 @@ func runMon(args []string, kind string) {
 	}()
 
 	if len(args) != 1 {
-		fmt.Println("invalid args, should be channel name")
+		log.Error("invalid args, should be channel name")
 		return
 	}
 
@@ -83,7 +85,7 @@ func runMon(args []string, kind string) {
 	txChan := make(chan string, 10)
 	ready := make(chan struct{})
 	errCh := make(chan error, 10)
-	fmt.Println(fmt.Sprintf("connecting to %s ...", uri))
+	log.Print(fmt.Sprintf("connecting to %s ...", uri))
 	go runWebsocketClientReaderWriter(ctx, uri, rxChan, txChan, ready, errCh)
 	<-ready
 	txChan <- "start"
@@ -91,7 +93,7 @@ func runMon(args []string, kind string) {
 	for {
 		select {
 		case msg := <-rxChan:
-			fmt.Println(msg)
+			log.Print(msg)
 		case <-ctx.Done():
 			return
 		case <-errCh:
@@ -121,9 +123,9 @@ func runWebsocketClientReaderWriter(ctx context.Context, uri string, chRead chan
 			if res != nil {
 				n, _ := res.Body.Read(buf)
 				//	errCh <- errors.New(string(buf[:n]))
-				fmt.Println(string(buf[:n]))
+				log.Print(string(buf[:n]))
 			} else {
-				fmt.Println(err)
+				log.Error(err)
 			}
 			time.Sleep(1 * time.Second)
 		} else {
@@ -144,7 +146,7 @@ func runWebsocketClientReaderWriter(ctx context.Context, uri string, chRead chan
 			case msg := <-chWrite:
 				err := c.WriteMessage(1, []byte(msg))
 				if err != nil {
-					fmt.Println(err)
+					log.Error(err)
 					errCh <- err
 					return
 				}
@@ -162,7 +164,7 @@ func runWebsocketClientReaderWriter(ctx context.Context, uri string, chRead chan
 	for {
 		_, message, err := c.ReadMessage()
 		if err != nil {
-			fmt.Println(err)
+			log.Error(err)
 			errCh <- err
 			return
 		} else {
