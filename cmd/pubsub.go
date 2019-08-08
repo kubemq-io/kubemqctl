@@ -1,5 +1,3 @@
-// Copyright © 2018 NAME HERE <EMAIL ADDRESS>
-
 package cmd
 
 import (
@@ -7,12 +5,9 @@ import (
 	"errors"
 	"github.com/google/uuid"
 	"github.com/kubemq-io/kubemq-go"
-	"log"
-	"time"
-
-	"github.com/kubemq-io/kubetools/transport"
 	"github.com/kubemq-io/kubetools/transport/option"
 	"github.com/spf13/cobra"
+	"log"
 )
 
 var pubsubTransport string
@@ -90,14 +85,8 @@ func runPubSub(args []string, kind string) {
 			log.Fatal("invalid args, should be a channel name and message body")
 			return
 		}
-		msg := &transport.Message{
-			Id:       uuid.New().String(),
-			SendTime: time.Now().Unix(),
-			Payload:  []byte(args[1]),
-		}
-		msg.SetSendTime()
 
-		err := client.E().SetChannel(args[0]).SetBody(msg.Marshal()).SetId(msg.Id).Send(ctx)
+		err := client.E().SetChannel(args[0]).SetBody([]byte(args[1])).Send(ctx)
 		if err != nil {
 			log.Printf("error sending event: %s", err.Error())
 		}
@@ -106,13 +95,7 @@ func runPubSub(args []string, kind string) {
 			log.Fatal("invalid args, should be a channel name and message body")
 			return
 		}
-		msg := &transport.Message{
-			Id:       uuid.New().String(),
-			SendTime: time.Now().Unix(),
-			Payload:  []byte(args[1]),
-		}
-		msg.SetSendTime()
-		res, err := client.ES().SetChannel(args[0]).SetBody(msg.Marshal()).SetId(msg.Id).Send(ctx)
+		res, err := client.ES().SetChannel(args[0]).SetBody([]byte(args[1])).Send(ctx)
 
 		if err != nil {
 			log.Printf("error sending event_store: %s", err.Error())
@@ -137,13 +120,7 @@ func runPubSub(args []string, kind string) {
 				if !more {
 					return
 				}
-				msg, err := transport.Unmarshal(event.Body)
-				if err != nil {
-					log.Printf("Error:\n\t%s\n", err.Error())
-					return
-				}
-				msg.SetReceiveTime()
-				log.Printf("Message:\n\t%s\n", msg.Payload)
+				log.Printf("Message:\n\t%s\n", event.Body)
 			case err := <-errCh:
 				log.Printf("Error:\n\t%s\n", err.Error())
 			case <-ctx.Done():
@@ -168,13 +145,7 @@ func runPubSub(args []string, kind string) {
 				if !more {
 					return
 				}
-				msg, err := transport.Unmarshal(eventStore.Body)
-				if err != nil {
-					log.Printf("Error:\n\t%s\n", err.Error())
-					return
-				}
-				msg.SetReceiveTime()
-				log.Printf("Message:\n\t%s\n", msg.Payload)
+				log.Printf("Message:\n\t%s\n", eventStore.Body)
 			case err := <-errCh:
 				log.Printf("Error:\n\t%s\n", err.Error())
 			case <-ctx.Done():

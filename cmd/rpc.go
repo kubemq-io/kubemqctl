@@ -11,7 +11,6 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/kubemq-io/kubetools/transport"
 	"github.com/kubemq-io/kubetools/transport/option"
 	"github.com/spf13/cobra"
 )
@@ -90,13 +89,8 @@ func runRpc(args []string, kind string) {
 			log.Fatal("invalid args, should be a channel name and message body")
 			return
 		}
-		msg := &transport.Message{
-			Id:       uuid.New().String(),
-			SendTime: time.Now().Unix(),
-			Payload:  []byte(args[1]),
-		}
-		msg.SetSendTime()
-		res, err := client.C().SetChannel(args[0]).SetBody(msg.Marshal()).SetId(msg.Id).SetTimeout(time.Duration(rpcSendTimeout) * 1000).Send(ctx)
+
+		res, err := client.C().SetChannel(args[0]).SetBody([]byte(args[1])).SetTimeout(time.Duration(rpcSendTimeout) * 1000).Send(ctx)
 		if err != nil {
 			log.Printf("error sending command: %s", err.Error())
 			return
@@ -109,13 +103,8 @@ func runRpc(args []string, kind string) {
 			log.Fatal("invalid args, should be a channel name and message body")
 			return
 		}
-		msg := &transport.Message{
-			Id:       uuid.New().String(),
-			SendTime: time.Now().Unix(),
-			Payload:  []byte(args[1]),
-		}
-		msg.SetSendTime()
-		res, err := client.Q().SetChannel(args[0]).SetBody(msg.Marshal()).SetId(msg.Id).SetTimeout(time.Duration(rpcSendTimeout) * 1000).Send(ctx)
+
+		res, err := client.Q().SetChannel(args[0]).SetBody([]byte(args[1])).SetTimeout(time.Duration(rpcSendTimeout) * 1000).Send(ctx)
 		if err != nil {
 			log.Printf("error sending query: %s", err.Error())
 			return
@@ -146,13 +135,8 @@ func runRpc(args []string, kind string) {
 				if !more {
 					return
 				}
-				msg, err := transport.Unmarshal(command.Body)
-				if err != nil {
-					log.Printf("Error:\n\t%s\n", err.Error())
-					return
-				}
-				msg.SetReceiveTime()
-				log.Printf("Command Received:\n\t%s\n", msg.Payload)
+
+				log.Printf("Command Received:\n\t%s\n", command.Body)
 				log.Println("Sending Response")
 				err = client.R().SetRequestId(command.Id).
 					SetExecutedAt(time.Now()).
@@ -181,13 +165,7 @@ func runRpc(args []string, kind string) {
 				if !more {
 					return
 				}
-				msg, err := transport.Unmarshal(query.Body)
-				if err != nil {
-					log.Printf("Error:\n\t%s\n", err.Error())
-					return
-				}
-				msg.SetReceiveTime()
-				log.Printf("Query Received:\n\t%s\n", msg.Payload)
+				log.Printf("Query Received:\n\t%s\n", query.Body)
 				log.Println("Sending Response")
 				err = client.R().SetRequestId(query.Id).
 					SetExecutedAt(time.Now()).

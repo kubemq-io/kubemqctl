@@ -28,6 +28,9 @@ var rootCmd = &cobra.Command{
 			2. health - call kubemq health endpoint
 			3. metrics - call kubemq prometheus metrics endpoint
 			4. monitor - call kubemq monitor points to watch channel content
+			5. pubsub - sending and receiving Pub/Sub messages
+			6. queue - sending and receiving Queue messages
+			7. rpc - sending and receiving RPC messages
 			`,
 }
 

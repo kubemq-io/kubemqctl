@@ -3,10 +3,9 @@ package transport
 import (
 	"encoding/json"
 	"errors"
-	"time"
-
 	"github.com/google/uuid"
 	"github.com/kubemq-io/kubemq-go/pb"
+	"time"
 )
 
 // Event

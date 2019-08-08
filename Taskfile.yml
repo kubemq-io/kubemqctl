@@ -4,7 +4,7 @@ version: '2'
 
 vars:
   BINARY_NAME: kubetools
-  VERSION: v1.1.1
+  VERSION: v1.2.0
 
 tasks:
   default:

@@ -37,8 +37,15 @@ github.com/inconshreveable/mousetrap
 # github.com/kubemq-io/kubemq-go v1.2.4
 github.com/kubemq-io/kubemq-go
 github.com/kubemq-io/kubemq-go/pb
+# github.com/labstack/gommon v0.2.1
+github.com/labstack/gommon/log
+github.com/labstack/gommon/color
 # github.com/magiconair/properties v1.8.0
 github.com/magiconair/properties
+# github.com/mattn/go-colorable v0.0.9
+github.com/mattn/go-colorable
+# github.com/mattn/go-isatty v0.0.4
+github.com/mattn/go-isatty
 # github.com/mitchellh/mapstructure v1.1.2
 github.com/mitchellh/mapstructure
 # github.com/pelletier/go-toml v1.2.0
@@ -61,6 +68,10 @@ github.com/spf13/viper
 # github.com/stretchr/testify v1.2.2
 github.com/stretchr/testify/assert
 github.com/stretchr/testify/require
+# github.com/valyala/bytebufferpool v1.0.0
+github.com/valyala/bytebufferpool
+# github.com/valyala/fasttemplate v1.0.1
+github.com/valyala/fasttemplate
 # go.opencensus.io v0.21.0
 go.opencensus.io/trace
 go.opencensus.io/internal

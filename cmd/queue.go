@@ -7,7 +7,6 @@ import (
 	"errors"
 	"github.com/google/uuid"
 	"github.com/kubemq-io/kubemq-go"
-	"github.com/kubemq-io/kubetools/transport"
 	"github.com/kubemq-io/kubetools/transport/option"
 	"github.com/spf13/cobra"
 	"log"
@@ -80,18 +79,12 @@ func runQueue(args []string, kind string) {
 			log.Fatal("invalid args, should be a channel name and message body")
 			return
 		}
-		msg := &transport.Message{
-			Id:       uuid.New().String(),
-			SendTime: time.Now().Unix(),
-			Payload:  []byte(args[1]),
-		}
-		msg.SetSendTime()
+
 		res, err := client.QM().
 			SetChannel(args[0]).
-			SetBody(msg.Marshal()).
+			SetBody([]byte(args[1])).
 			SetPolicyExpirationSeconds(sendQueueExpiration).
 			SetPolicyDelaySeconds(sendQueueDelay).
-			SetId(msg.Id).
 			Send(ctx)
 		if err != nil {
 			log.Printf("error sending queue message: %s", err.Error())
@@ -127,12 +120,7 @@ func runQueue(args []string, kind string) {
 		}
 		log.Printf("received %d messages, %d messages Expired \n", res.MessagesReceived, res.MessagesExpired)
 		for _, item := range res.Messages {
-			msg, err := transport.Unmarshal(item.Body)
-			if err != nil {
-				log.Printf("Error:\n\t%s\n", err.Error())
-				return
-			}
-			log.Printf("queue message received:\n\t%s\n", msg.Payload)
+			log.Printf("queue message received:\n\t%s\n", item.Body)
 		}
 
 	case "peak":
@@ -157,12 +145,7 @@ func runQueue(args []string, kind string) {
 		}
 		log.Printf("peaked %d messages, %d messages Expired \n", res.MessagesReceived, res.MessagesExpired)
 		for _, item := range res.Messages {
-			msg, err := transport.Unmarshal(item.Body)
-			if err != nil {
-				log.Printf("Error:\n\t%s\n", err.Error())
-				return
-			}
-			log.Printf("queue message peaked:\n\t%s\n", msg.Payload)
+			log.Printf("queue message peaked:\n\t%s\n", item.Body)
 		}
 	case "ack":
 		if len(args) != 1 {
