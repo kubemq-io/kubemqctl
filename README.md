@@ -60,6 +60,7 @@ Or manually:
 Kubetools require `.config.yaml` File for connections variables. Default configuration:
 
 ```
+statsAddress: "http://localhost:8080/v1/stats" #the address of Stats endpoint, you can replace the localhost:8080 with your address
 healthAddress: "http://localhost:8080/health" # the address of Health endpoint , you can replace the localhost:8080 with your address
 metricsAddress: "http://localhost:8080/metrics" #the address of Health endpoint, you can replace the localhost:8080 with your address
 monitorAddress: "ws://localhost:8080/v1/stats" #the address of Monitor endpoint, you can replace the localhost:8080 with your address
