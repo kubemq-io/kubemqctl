@@ -3,6 +3,7 @@ package cmd
 import (
 	"github.com/kubemq-io/kubetools/transport/option"
 	"log"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -13,6 +14,7 @@ type Control struct {
 }
 type Config struct {
 	Connections    []*option.Options
+	StatsAddress   string
 	HealthAddress  string
 	MetricsAddress string
 	MonitorAddress string
@@ -31,6 +33,7 @@ var rootCmd = &cobra.Command{
 			5. pubsub - sending and receiving Pub/Sub messages
 			6. queue - sending and receiving Queue messages
 			7. rpc - sending and receiving RPC messages
+			8. get - get list of resources
 			`,
 }
 
@@ -53,5 +56,9 @@ func init() {
 	err = viper.Unmarshal(cfg)
 	if err != nil {
 		log.Fatal(err)
+	}
+	//this is for backwards compatible in case yaml config for stats address is not exist
+	if cfg.StatsAddress == "" {
+		cfg.StatsAddress = strings.Replace(cfg.MonitorAddress, "ws", "http", 1)
 	}
 }
