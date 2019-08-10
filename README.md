@@ -10,6 +10,7 @@ It currently provides the ability to:
 - **Monitor Channels** and view messages.
 - **Check Health** and get simple stats.
 - **Get Metrics** detailed data
+- **Get List of Resources** of Queues and Events Stores data
 
 If there is something you'd like to see Kubetools be able to do from the CLI, let us know! :)
 
