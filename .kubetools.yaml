@@ -1,0 +1,10 @@
+autointegrated: true
+currentnamespace: default
+currentstatefulset: kubemq-cluster
+host: localhost
+grpcport: 50000
+restport: 9090
+apiport: 8080
+issecured: false
+certfile: ""
+kubeconfigpath: ""

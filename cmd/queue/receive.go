@@ -74,6 +74,7 @@ func (o *QueueReceiveOptions) Run(ctx context.Context) error {
 		return fmt.Errorf("create send client, %s", err.Error())
 
 	}
+	defer utils.CheckErr(client.Close())
 	res, err := client.RQM().
 		SetChannel(o.channel).
 		SetWaitTimeSeconds(o.wait).

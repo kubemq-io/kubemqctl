@@ -86,6 +86,7 @@ func (o *QueueSendOptions) Run(ctx context.Context) error {
 		return fmt.Errorf("create send client, %s", err.Error())
 
 	}
+	defer utils.CheckErr(client.Close())
 	res, err := client.QM().
 		SetChannel(o.channel).
 		SetBody([]byte(o.message)).

@@ -69,6 +69,7 @@ func (o *QueueAckOptions) Run(ctx context.Context) error {
 		return fmt.Errorf("create send client, %s", err.Error())
 
 	}
+	defer utils.CheckErr(client.Close())
 	res, err := client.AQM().
 		SetChannel(o.channel).
 		SetWaitTimeSeconds(o.wait).
