@@ -1,9 +1,11 @@
 package main
 
-import "github.com/kubemq-io/kubetools/cmd"
+import (
+	"github.com/kubemq-io/kubetools/cmd/root"
+)
 
 var version string
 
 func main() {
-	cmd.Execute(version)
+	root.Execute(version)
 }
