@@ -1,6 +1,7 @@
 package root
 
 import (
+	"github.com/kubemq-io/kubetools/cmd/events"
 	"github.com/kubemq-io/kubetools/cmd/logs"
 	"github.com/kubemq-io/kubetools/cmd/proxy"
 	"github.com/kubemq-io/kubetools/cmd/queue"
@@ -39,4 +40,5 @@ func init() {
 	rootCmd.AddCommand(queue.NewCmdQueue(cfg))
 	rootCmd.AddCommand(logs.NewCmdLogs(cfg))
 	rootCmd.AddCommand(proxy.NewCmdProxy(cfg))
+	rootCmd.AddCommand(events.NewCmdEvents(cfg))
 }

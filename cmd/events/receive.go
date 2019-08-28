@@ -1,0 +1,100 @@
+package events
+
+import (
+	"context"
+	"fmt"
+	"github.com/kubemq-io/kubetools/pkg/config"
+	"github.com/kubemq-io/kubetools/pkg/k8s"
+	"github.com/kubemq-io/kubetools/pkg/kubemq"
+	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/spf13/cobra"
+	"os"
+	"text/tabwriter"
+)
+
+type EventsReceiveOptions struct {
+	cfg       *config.Config
+	transport string
+	channel   string
+	group     string
+}
+
+var eventsReceiveExamples = `
+	# receive messages from a events (blocks until next message)
+	kubetools events receive some-channel
+
+`
+var eventsReceiveLong = `receive a message from a events`
+var eventsReceiveShort = `receive a message from a events`
+
+func NewCmdEventsReceive(cfg *config.Config, opts *EventsOptions) *cobra.Command {
+	o := &EventsReceiveOptions{
+		cfg: cfg,
+	}
+	cmd := &cobra.Command{
+
+		Use:     "receive",
+		Aliases: []string{"r", "rec"},
+		Short:   eventsReceiveShort,
+		Long:    eventsReceiveLong,
+		Example: eventsReceiveExamples,
+		Run: func(cmd *cobra.Command, args []string) {
+			ctx, cancel := context.WithCancel(context.Background())
+			defer cancel()
+			utils.CheckErr(o.Complete(args, opts.transport))
+			utils.CheckErr(o.Validate())
+			utils.CheckErr(k8s.SetTransport(ctx, cfg))
+			utils.CheckErr(o.Run(ctx))
+		},
+	}
+
+	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "set group")
+	return cmd
+}
+
+func (o *EventsReceiveOptions) Complete(args []string, transport string) error {
+	o.transport = transport
+	if len(args) >= 1 {
+		o.channel = args[0]
+		return nil
+	}
+	return fmt.Errorf("missing channel argument")
+}
+
+func (o *EventsReceiveOptions) Validate() error {
+	return nil
+}
+
+func (o *EventsReceiveOptions) Run(ctx context.Context) error {
+	client, err := kubemq.GetKubeMQClient(ctx, o.transport, o.cfg)
+	if err != nil {
+		return fmt.Errorf("create kubemq client, %s", err.Error())
+
+	}
+	defer func() {
+		client.Close()
+	}()
+	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.TabIndent)
+
+	errChan := make(chan error, 1)
+	eventsChan, err := client.SubscribeToEvents(ctx, o.channel, o.group, errChan)
+
+	if err != nil {
+		utils.Println(fmt.Errorf("receive events messagess, %s", err.Error()).Error())
+	}
+	firstEvent := true
+	for {
+		select {
+		case ev := <-eventsChan:
+			if firstEvent {
+				fmt.Fprintln(w, "CHANNEL\tID\tMETADATA\tBODY")
+				firstEvent = false
+			}
+			fmt.Fprintf(w, "%s\t%s\t%s\t%s\n", ev.Channel, ev.Id, ev.Metadata, ev.Body)
+			w.Flush()
+		case <-ctx.Done():
+			return nil
+		}
+	}
+
+}

@@ -36,8 +36,8 @@ var queueAttachExamples = `
 	# attach to some-queue queue and output running messages filter by exclude regex (not-some*)
 	kubetools queue attach some-queue -e not-some*
 `
-var queueAttachLong = `attach to all messages in a queue`
-var queueAttachShort = `attach to all messages in a queue`
+var queueAttachLong = `attach to queue channels`
+var queueAttachShort = `attach to queue channels`
 
 func NewCmdQueueAttach(cfg *config.Config, opts *QueueOptions) *cobra.Command {
 	o := &QueueAttachOptions{

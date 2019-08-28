@@ -71,7 +71,7 @@ func (o *QueuePeakOptions) Validate() error {
 func (o *QueuePeakOptions) Run(ctx context.Context) error {
 	client, err := kubemq.GetKubeMQClient(ctx, o.transport, o.cfg)
 	if err != nil {
-		return fmt.Errorf("create send client, %s", err.Error())
+		return fmt.Errorf("create kubemq client, %s", err.Error())
 
 	}
 	defer func() {

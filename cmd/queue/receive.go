@@ -76,7 +76,7 @@ func (o *QueueReceiveOptions) Validate() error {
 func (o *QueueReceiveOptions) Run(ctx context.Context) error {
 	client, err := kubemq.GetKubeMQClient(ctx, o.transport, o.cfg)
 	if err != nil {
-		return fmt.Errorf("create send client, %s", err.Error())
+		return fmt.Errorf("create kubemq client, %s", err.Error())
 
 	}
 	defer func() {
@@ -116,7 +116,6 @@ func (o *QueueReceiveOptions) Run(ctx context.Context) error {
 
 func printItems(items []*kubemq2.QueueMessage) {
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.TabIndent)
-
 	for _, item := range items {
 		fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\n", item.ClientId, item.Channel, item.Id, item.Metadata, item.Body)
 	}

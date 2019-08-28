@@ -8,6 +8,7 @@ import (
 	"github.com/kubemq-io/kubetools/pkg/utils"
 	"regexp"
 	"strings"
+	"text/tabwriter"
 
 	"os"
 	"time"
@@ -83,6 +84,9 @@ type Message struct {
 }
 
 func Run(ctx context.Context, cfg *config.Config, resources []string, include []string, exclude []string) error {
+	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.TabIndent)
+	fmt.Fprintln(w, "RESOURCE\tCHANNEL\tMESSAGE")
+	w.Flush()
 	for _, rsc := range resources {
 		pair := strings.Split(rsc, "/")
 		if len(pair) != 2 {
@@ -120,6 +124,8 @@ func runner(ctx context.Context, cfg *config.Config, resType, resChannel string,
 	go runWebsocketClientReaderWriter(ctx, uri, rxChan, txChan, ready, errCh)
 	<-ready
 	txChan <- "start"
+	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.TabIndent)
+
 OUTER:
 	for {
 		select {
@@ -142,7 +148,10 @@ OUTER:
 					continue OUTER
 				}
 			}
-			utils.Printlnf("[%s] -> [%s] -> %s", resType, resChannel, msg)
+			msg = strings.Replace(msg, "\n", "", -1)
+			msg = strings.Replace(msg, "\t", " ", -1)
+			fmt.Fprintf(w, "%s\t%s\t%s\n", resType, resChannel, msg)
+			w.Flush()
 		case <-ctx.Done():
 			return
 		case <-errCh:

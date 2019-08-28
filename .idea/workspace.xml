@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="- update readme">
-      <change afterPath="$PROJECT_DIR$/cmd/queue/attach.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/attach/attach.go" afterDir="false" />
+    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/cmd/events/attach.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/events/events.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/events/receive.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/events/send.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/queue/ack.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/ack.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/list.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/list.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/queue/attach.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/attach.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/queue/peak.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/peak.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/queue/queue.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/queue.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/queue/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/receive.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/queue/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/send.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/watch.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/stream.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/logs/logs.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/logs/logs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/logs/watch.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/logs/watch.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/transport.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/queue/stream.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/stream.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/root/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root/root.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/attach/attach.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/attach/attach.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,18 +45,18 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/queue" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/events" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="watcher.settings" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\events" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\pkg\prompt" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\root" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\pkg\config" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\pkg" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\config" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\queue" />
@@ -291,7 +289,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566923997804</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="- complete queue">
+      <created>1566999216094</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1566999216094</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -376,7 +381,8 @@
     <MESSAGE value="- update readme" />
     <MESSAGE value="refactoring to v2" />
     <MESSAGE value="- update queue commands" />
-    <option name="LAST_COMMIT_MESSAGE" value="- update queue commands" />
+    <MESSAGE value="- complete queue" />
+    <option name="LAST_COMMIT_MESSAGE" value="- complete queue" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
