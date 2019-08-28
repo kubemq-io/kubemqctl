@@ -10,6 +10,7 @@ import (
 	"github.com/kubemq-io/kubetools/pkg/utils"
 	"github.com/spf13/cobra"
 	"os"
+	"strings"
 	"text/tabwriter"
 	"time"
 )
@@ -17,11 +18,15 @@ import (
 type QueueListOptions struct {
 	cfg       *config.Config
 	transport string
+	filter    string
 }
 
 var queueListExamples = `
 	# get list of queues / clients
 	kubetools queue list
+	
+	# get list of queues / clients filtered by 'some-queue' channel only
+	kubetools queue list -f some-queue
 `
 var queueListLong = `get list of queues / clients`
 var queueListShort = `get list of queues / clients`
@@ -46,7 +51,7 @@ func NewCmdQueueList(cfg *config.Config, opts *QueueOptions) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-
+	cmd.PersistentFlags().StringVarP(&o.filter, "filter", "f", "", "set filter for channel / client name")
 	return cmd
 }
 
@@ -77,8 +82,8 @@ func (o *QueueListOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	q.printChannelsTab()
-	q.printClientsTab()
+	q.printChannelsTab(o.filter)
+	q.printClientsTab(o.filter)
 	return nil
 }
 
@@ -112,28 +117,35 @@ type Client struct {
 	Pending          int64  `json:"pending"`
 }
 
-func (q *Queues) printChannelsTab() {
+func (q *Queues) printChannelsTab(filter string) {
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.TabIndent)
 	fmt.Fprintf(w, "CHANNELS:\n")
 	fmt.Fprintln(w, "NAME\tCLIENTS\tMESSAGES\tBYTES\tFIRST_SEQUENCE\tLAST_SEQUENCE")
+	cnt := 0
 	for _, q := range q.Queues {
-		fmt.Fprintf(w, "%s\t%d\t%d\t%d\t%d\t%d\n", q.Name, len(q.Clients), q.Messages, q.Bytes, q.FirstSequence, q.LastSequence)
+		if filter == "" || strings.Contains(q.Name, filter) {
+			fmt.Fprintf(w, "%s\t%d\t%d\t%d\t%d\t%d\n", q.Name, len(q.Clients), q.Messages, q.Bytes, q.FirstSequence, q.LastSequence)
+			cnt++
+		}
+
 	}
-	fmt.Fprintf(w, "\nTOTAL CHANNELS:\t%d\n", q.Total)
+	fmt.Fprintf(w, "\nTOTAL CHANNELS:\t%d\n", cnt)
 	w.Flush()
 }
-func (q *Queues) printClientsTab() {
+func (q *Queues) printClientsTab(filter string) {
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.TabIndent)
 	fmt.Fprintf(w, "\nCLIENTS:\n")
 	fmt.Fprintln(w, "CLIENT_ID\tCHANNEL\tACTIVE\tLAST_SENT\tPENDING\tSTALLED")
 	cnt := 0
 	for _, q := range q.Queues {
 		for _, c := range q.Clients {
-			if c.ClientId == "" {
-				c.ClientId = "N/A"
+			if filter == "" || strings.Contains(c.ClientId, filter) {
+				if c.ClientId == "" {
+					c.ClientId = "N/A"
+				}
+				cnt++
+				fmt.Fprintf(w, "%s\t%s\t%t\t%d\t%d\t%t\n", c.ClientId, q.Name, c.Active, c.LastSequenceSent, c.Pending, c.IsStalled)
 			}
-			cnt++
-			fmt.Fprintf(w, "%s\t%s\t%t\t%d\t%d\t%t\n", c.ClientId, q.Name, c.Active, c.LastSequenceSent, c.Pending, c.IsStalled)
 		}
 
 	}

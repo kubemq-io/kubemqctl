@@ -7,8 +7,27 @@ import (
 	"github.com/kubemq-io/kubetools/pkg/config"
 	"github.com/kubemq-io/kubetools/pkg/k8s/client"
 	"github.com/kubemq-io/kubetools/pkg/utils"
+	"net"
 	"time"
 )
+
+func getFreePorts(count int) ([]int, error) {
+	var ports []int
+	for i := 0; i < count; i++ {
+		addr, err := net.ResolveTCPAddr("tcp", "localhost:0")
+		if err != nil {
+			return nil, err
+		}
+
+		l, err := net.ListenTCP("tcp", addr)
+		if err != nil {
+			return nil, err
+		}
+		defer l.Close()
+		ports = append(ports, l.Addr().(*net.TCPAddr).Port)
+	}
+	return ports, nil
+}
 
 func SetTransport(ctx context.Context, cfg *config.Config) error {
 	if !cfg.AutoIntegrated {
@@ -19,11 +38,20 @@ func SetTransport(ctx context.Context, cfg *config.Config) error {
 	if err != nil {
 		return err
 	}
-	ports := []string{
-		fmt.Sprintf("%d:%d", cfg.GrpcPort, cfg.GrpcPort),
-		fmt.Sprintf("%d:%d", cfg.RestPort, cfg.RestPort),
-		fmt.Sprintf("%d:%d", cfg.ApiPort, cfg.ApiPort),
+	freePorts, err := getFreePorts(3)
+	if err != nil {
+		return err
 	}
+
+	ports := []string{
+		fmt.Sprintf("%d:%d", freePorts[0], cfg.GrpcPort),
+		fmt.Sprintf("%d:%d", freePorts[1], cfg.RestPort),
+		fmt.Sprintf("%d:%d", freePorts[2], cfg.ApiPort),
+	}
+	cfg.GrpcPort = freePorts[0]
+	cfg.RestPort = freePorts[1]
+	cfg.ApiPort = freePorts[2]
+
 	stopCh := make(chan struct{})
 	outCh, errOutCh := make(chan string, 1), make(chan string, 1)
 	err = c.ForwardPorts(cfg.CurrentNamespace, cfg.CurrentStatefulSet+"-0", ports, stopCh, outCh, errOutCh)
@@ -32,11 +60,11 @@ func SetTransport(ctx context.Context, cfg *config.Config) error {
 	}
 	select {
 	case <-outCh:
-		utils.Println("ok")
+		utils.Printlnf("-> gRPC Port %s Rest Port %s Api Port %s, ok", ports[0], ports[1], ports[2])
 	case errstr := <-errOutCh:
 		return fmt.Errorf(errstr)
 
-	case <-time.After(5 * time.Second):
+	case <-time.After(30 * time.Second):
 		return fmt.Errorf("timeout during setting of transport layer to Kubeernetes cluster")
 
 	case <-ctx.Done():

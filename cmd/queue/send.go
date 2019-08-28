@@ -19,13 +19,17 @@ type QueueSendOptions struct {
 	channel    string
 	message    string
 	maxReceive int
+	metadata   string
 	deadLetter string
 }
 
 var queueSendExamples = `
-	# Send message to a queue
+	# Send message to a queue channel
 	kubetools queue send some-channel some-message
-
+	
+	# Send message to a queue channel with metadata
+	kubetools queue send some-channel some-message -m some-metadata
+	
 	# Send message to a queue with a message expiration of 5 seconds
 	kubetools queue send some-channel some-message -e 5
 
@@ -33,7 +37,7 @@ var queueSendExamples = `
 	kubetools queue send some-channel some-message -d 5
 
 	# Send message to a queue with a message policy of max receive 5 times and dead-letter queue 'dead-letter'
-	kubetools queue send some-channel some-message -m 5 -q dead-letter
+	kubetools queue send some-channel some-message -r 5 -q dead-letter
 `
 var queueSendLong = `send a message to a queue`
 var queueSendShort = `send a message to a queue`
@@ -60,8 +64,9 @@ func NewCmdQueueSend(cfg *config.Config, opts *QueueOptions) *cobra.Command {
 	}
 	cmd.PersistentFlags().IntVarP(&o.expiration, "expiration", "e", 0, "set queue message expiration seconds")
 	cmd.PersistentFlags().IntVarP(&o.delay, "delay", "d", 0, "set queue message send delay seconds")
-	cmd.PersistentFlags().IntVarP(&o.maxReceive, "max-receive", "m", 0, "set dead-letter max receive count")
+	cmd.PersistentFlags().IntVarP(&o.maxReceive, "max-receive", "r", 0, "set dead-letter max receive count")
 	cmd.PersistentFlags().StringVarP(&o.deadLetter, "dead-letter-queue", "q", "", "set dead-letter queue name")
+	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "m", "", "set metadata message")
 
 	return cmd
 }
@@ -86,15 +91,19 @@ func (o *QueueSendOptions) Run(ctx context.Context) error {
 		return fmt.Errorf("create send client, %s", err.Error())
 
 	}
-	defer utils.CheckErr(client.Close())
-	res, err := client.QM().
+
+	defer func() {
+		client.Close()
+	}()
+	msg := client.QM().
 		SetChannel(o.channel).
 		SetBody([]byte(o.message)).
+		SetMetadata(o.metadata).
 		SetPolicyExpirationSeconds(o.expiration).
 		SetPolicyDelaySeconds(o.delay).
 		SetPolicyMaxReceiveCount(o.maxReceive).
-		SetPolicyMaxReceiveQueue(o.deadLetter).
-		Send(ctx)
+		SetPolicyMaxReceiveQueue(o.deadLetter)
+	res, err := msg.Send(ctx)
 	if err != nil {
 		return fmt.Errorf("sending queue message, %s", err.Error())
 	}
@@ -104,7 +113,15 @@ func (o *QueueSendOptions) Run(ctx context.Context) error {
 			return fmt.Errorf("sending queue message response, %s", res.Error)
 
 		}
-		utils.PrintfAndExit("queue message sent at: %s", time.Unix(0, res.SentAt))
+		var delay string
+		var exp string
+		if res.DelayedTo > 0 {
+			delay = fmt.Sprintf(", delayed to: %s", time.Unix(0, res.DelayedTo))
+		}
+		if res.ExpirationAt > 0 {
+			exp = fmt.Sprintf(", expire at: %s", time.Unix(0, res.ExpirationAt))
+		}
+		utils.Printlnf("[channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s, sent at: %s%s%s}", msg.Channel, msg.ClientId, res.MessageID, msg.Metadata, msg.Body, time.Unix(0, res.SentAt), exp, delay)
 	}
 	return nil
 }

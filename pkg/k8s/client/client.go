@@ -186,13 +186,16 @@ func (c *Client) ForwardPorts(ns string, name string, ports []string, stopChan c
 			errOutCh <- errOut.String()
 			close(stopChan)
 		} else if len(out.String()) != 0 {
+
 			outCh <- out.String()
 		}
+
 	}()
 
 	go func() {
 		if err = forwarder.ForwardPorts(); err != nil { // Locks until stopChan is closed.
 			errOutCh <- err.Error()
+
 		}
 	}()
 

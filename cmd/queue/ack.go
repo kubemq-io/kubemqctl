@@ -18,8 +18,11 @@ type QueueAckOptions struct {
 }
 
 var queueAckExamples = `
-	# ack all messages in a queue
+	# ack all messages in a queue channel 'some-channel' with 2 seconds of wait to complete operation
 	kubetools queue ack some-channel
+	
+	# ack all messages in a queue channel 'some-long-queue' with 30 seconds of wait to complete operation
+	kubetools queue ack some-long-queue -w 30
 `
 var queueAckLong = `ack all messages in a queue`
 var queueAckShort = `ack all messages in a queue`
@@ -31,7 +34,7 @@ func NewCmdQueueAck(cfg *config.Config, opts *QueueOptions) *cobra.Command {
 	cmd := &cobra.Command{
 
 		Use:     "ack",
-		Aliases: []string{"p"},
+		Aliases: []string{"ac"},
 		Short:   queueAckShort,
 		Long:    queueAckLong,
 		Example: queueAckExamples,
@@ -69,7 +72,9 @@ func (o *QueueAckOptions) Run(ctx context.Context) error {
 		return fmt.Errorf("create send client, %s", err.Error())
 
 	}
-	defer utils.CheckErr(client.Close())
+	defer func() {
+		client.Close()
+	}()
 	res, err := client.AQM().
 		SetChannel(o.channel).
 		SetWaitTimeSeconds(o.wait).

@@ -65,7 +65,7 @@ func Run(ctx context.Context, client *client.Client, o *Options) error {
 	}
 	added, removed, err := Watch(ctx, client.ClientSet.CoreV1().Pods(namespace), config.PodQuery, config.ContainerQuery, config.LabelSelector)
 	if err != nil {
-		return errors.Wrap(err, "failed to set up watch")
+		return errors.Wrap(err, "failed to set up attach")
 	}
 
 	tails := make(map[string]*Tail)

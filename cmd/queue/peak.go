@@ -74,7 +74,9 @@ func (o *QueuePeakOptions) Run(ctx context.Context) error {
 		return fmt.Errorf("create send client, %s", err.Error())
 
 	}
-	defer utils.CheckErr(client.Close())
+	defer func() {
+		client.Close()
+	}()
 	res, err := client.RQM().
 		SetChannel(o.channel).
 		SetWaitTimeSeconds(o.wait).
@@ -88,8 +90,12 @@ func (o *QueuePeakOptions) Run(ctx context.Context) error {
 		return fmt.Errorf("peak queue message, %s", res.Error)
 	}
 	utils.Printlnf("peaking %d messages", res.MessagesReceived)
-	for _, item := range res.Messages {
-		utils.Printlnf("%s", item.Body)
+	utils.Printlnf("peaking %d messages", res.MessagesReceived)
+	if res.MessagesReceived > 0 {
+		printItems(res.Messages)
 	}
+	//for _, item := range res.Messages {
+	//	utils.Printlnf("[%s] [%s] -> {id: %s, metadata: %s, body: %s", item.Channel, item.ClientId, item.Id, item.Metadata, item.Body)
+	//}
 	return nil
 }

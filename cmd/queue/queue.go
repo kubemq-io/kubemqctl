@@ -33,6 +33,8 @@ func NewCmdQueue(cfg *config.Config) *cobra.Command {
 	cmd.AddCommand(NewCmdQueuePeak(cfg, o))
 	cmd.AddCommand(NewCmdQueueAck(cfg, o))
 	cmd.AddCommand(NewCmdQueueList(cfg, o))
+	cmd.AddCommand(NewCmdQueueStream(cfg, o))
+	cmd.AddCommand(NewCmdQueueAttach(cfg, o))
 
 	cmd.PersistentFlags().StringVarP(&o.transport, "transport", "t", "grpc", "set transport type, grpc or rest")
 	return cmd

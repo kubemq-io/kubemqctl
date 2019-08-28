@@ -3,11 +3,14 @@ package queue
 import (
 	"context"
 	"fmt"
+	kubemq2 "github.com/kubemq-io/kubemq-go"
 	"github.com/kubemq-io/kubetools/pkg/config"
 	"github.com/kubemq-io/kubetools/pkg/k8s"
 	"github.com/kubemq-io/kubetools/pkg/kubemq"
 	"github.com/kubemq-io/kubetools/pkg/utils"
 	"github.com/spf13/cobra"
+	"os"
+	"text/tabwriter"
 )
 
 type QueueReceiveOptions struct {
@@ -16,6 +19,7 @@ type QueueReceiveOptions struct {
 	channel   string
 	messages  int
 	wait      int
+	watch     bool
 }
 
 var queueReceiveExamples = `
@@ -23,7 +27,7 @@ var queueReceiveExamples = `
 	kubetools queue receive some-channel
 
 	# receive 3 messages from a queue and wait for 5 seconds
-	kubetools queue receive some-channel -m 3 -w 5
+	kubetools queue receive some-channel -m 3 -T 5
 `
 var queueReceiveLong = `receive a message from a queue`
 var queueReceiveShort = `receive a message from a queue`
@@ -50,7 +54,8 @@ func NewCmdQueueReceive(cfg *config.Config, opts *QueueOptions) *cobra.Command {
 	}
 
 	cmd.PersistentFlags().IntVarP(&o.messages, "messages", "m", 1, "set how many messages we want to get from queue")
-	cmd.PersistentFlags().IntVarP(&o.wait, "wait", "w", 2, "set how many seconds to wait for queue messages")
+	cmd.PersistentFlags().IntVarP(&o.wait, "wait-timeout", "T", 2, "set how many seconds to wait for queue messages")
+	cmd.PersistentFlags().BoolVarP(&o.watch, "watch", "w", false, "set watch on queue channel")
 
 	return cmd
 }
@@ -74,22 +79,46 @@ func (o *QueueReceiveOptions) Run(ctx context.Context) error {
 		return fmt.Errorf("create send client, %s", err.Error())
 
 	}
-	defer utils.CheckErr(client.Close())
-	res, err := client.RQM().
-		SetChannel(o.channel).
-		SetWaitTimeSeconds(o.wait).
-		SetMaxNumberOfMessages(o.messages).
-		Send(ctx)
-	if err != nil {
-		return fmt.Errorf("receive queue message, %s", err.Error())
-	}
-	if res.IsError {
-		return fmt.Errorf("receive queue message, %s", res.Error)
-	}
-	utils.Printlnf("received %d messages, %d messages Expired", res.MessagesReceived, res.MessagesExpired)
-	for _, item := range res.Messages {
-		utils.Printlnf("%s", item.Body)
+	defer func() {
+		client.Close()
+	}()
+	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.TabIndent)
+	fmt.Fprintln(w, "CLIENT_ID\tCHANNEL\tID\tMETADATA\tBODY")
+	w.Flush()
+
+	for {
+		res, err := client.RQM().
+			SetChannel(o.channel).
+			SetWaitTimeSeconds(o.wait).
+			SetMaxNumberOfMessages(o.messages).
+			Send(ctx)
+		if err != nil {
+			utils.Println(fmt.Errorf("receive queue messagess, %s", err.Error()).Error())
+		}
+		if res.IsError {
+			utils.Println(fmt.Errorf("receive queue message,aa %s", res.Error).Error())
+		}
+
+		if res != nil && res.MessagesReceived > 0 {
+			printItems(res.Messages)
+		}
+		if !o.watch {
+			return nil
+		}
 	}
 
-	return nil
+	//for _, item := range res.Messages {
+	//
+	//	utils.Printlnf("[channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s}", item.Channel, item.ClientId, item.Id, item.Metadata, item.Body)
+	//}
+
+}
+
+func printItems(items []*kubemq2.QueueMessage) {
+	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.TabIndent)
+
+	for _, item := range items {
+		fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\n", item.ClientId, item.Channel, item.Id, item.Metadata, item.Body)
+	}
+	w.Flush()
 }

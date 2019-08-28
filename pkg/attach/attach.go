@@ -1,0 +1,155 @@
+package attach
+
+import (
+	"context"
+	"fmt"
+	"github.com/gorilla/websocket"
+	"github.com/kubemq-io/kubetools/pkg/config"
+	"github.com/kubemq-io/kubetools/pkg/utils"
+	"regexp"
+	"strings"
+
+	"os"
+	"time"
+)
+
+var retries = 10
+var retryInterval = 100 * time.Millisecond
+
+func runWebsocketClientReaderWriter(ctx context.Context, uri string, chRead chan string, chWrite chan string, ready chan struct{}, errCh chan error) {
+	var c *websocket.Conn
+	for i := 0; i < retries; i++ {
+		conn, res, err := websocket.DefaultDialer.Dial(uri, nil)
+		if err != nil {
+			buf := make([]byte, 1024)
+			if res != nil {
+				n, _ := res.Body.Read(buf)
+				//	errCh <- errors.New(string(buf[:n]))
+				utils.Println(string(buf[:n]))
+			} else {
+				utils.Printlnf("error: attach web socket connection, %s", err.Error())
+
+			}
+			time.Sleep(1 * time.Second)
+		} else {
+			c = conn
+			break
+		}
+	}
+	if c == nil {
+		os.Exit(1)
+	} else {
+		defer c.Close()
+	}
+
+	ready <- struct{}{}
+	go func() {
+		for {
+			select {
+			case msg := <-chWrite:
+				err := c.WriteMessage(1, []byte(msg))
+				if err != nil {
+					utils.Printlnf("error: attach web socket writing, %s", err.Error())
+					errCh <- err
+					return
+				}
+			case <-ctx.Done():
+				c.Close()
+				return
+				//default:
+				//	time.Sleep(100 * time.Millisecond)
+			}
+
+		}
+
+	}()
+
+	for {
+		_, message, err := c.ReadMessage()
+		if err != nil {
+			utils.Printlnf("error: attach web socket reading, %s", err.Error())
+			errCh <- err
+			return
+		} else {
+			chRead <- string(message)
+		}
+	}
+
+}
+
+type Message struct {
+	Resource string
+	Message  string
+}
+
+func Run(ctx context.Context, cfg *config.Config, resources []string, include []string, exclude []string) error {
+	for _, rsc := range resources {
+		pair := strings.Split(rsc, "/")
+		if len(pair) != 2 {
+			return fmt.Errorf("invalid resource, %s", rsc)
+		}
+		go runner(ctx, cfg, pair[0], pair[1], include, exclude)
+	}
+	return nil
+}
+
+func runner(ctx context.Context, cfg *config.Config, resType, resChannel string, include []string, exclude []string) {
+	var exc []*regexp.Regexp
+	var inc []*regexp.Regexp
+	for _, ex := range exclude {
+		rex, err := regexp.Compile(ex)
+		if err != nil {
+			continue
+		}
+		exc = append(exc, rex)
+	}
+	for _, in := range include {
+		rin, err := regexp.Compile(in)
+		if err != nil {
+			continue
+		}
+		inc = append(inc, rin)
+	}
+
+	uri := fmt.Sprintf("%s/v1/stats/attach?channel=%s&kind=%s", cfg.GetApiWsURI(), resChannel, resType)
+
+	rxChan := make(chan string, 10)
+	txChan := make(chan string, 10)
+	ready := make(chan struct{})
+	errCh := make(chan error, 10)
+	go runWebsocketClientReaderWriter(ctx, uri, rxChan, txChan, ready, errCh)
+	<-ready
+	txChan <- "start"
+OUTER:
+	for {
+		select {
+		case msg := <-rxChan:
+			for _, rex := range exc {
+				if rex.MatchString(msg) {
+					continue OUTER
+				}
+			}
+
+			if len(inc) != 0 {
+				matches := false
+				for _, rin := range inc {
+					if rin.MatchString(msg) {
+						matches = true
+						break
+					}
+				}
+				if !matches {
+					continue OUTER
+				}
+			}
+			utils.Printlnf("[%s] -> [%s] -> %s", resType, resChannel, msg)
+		case <-ctx.Done():
+			return
+		case <-errCh:
+			return
+		default:
+			time.Sleep(1 * time.Millisecond)
+		}
+
+	}
+}

@@ -14,7 +14,7 @@ import (
 	"k8s.io/client-go/kubernetes/typed/core/v1"
 )
 
-// Target is a target to watch
+// Target is a target to attach
 type Target struct {
 	Namespace string
 	Pod       string
@@ -32,7 +32,7 @@ func (t *Target) GetID() string {
 func Watch(ctx context.Context, i v1.PodInterface, podFilter *regexp.Regexp, containerFilter *regexp.Regexp, labelSelector labels.Selector) (chan *Target, chan *Target, error) {
 	watcher, err := i.Watch(metav1.ListOptions{Watch: true, LabelSelector: labelSelector.String()})
 	if err != nil {
-		return nil, nil, errors.Wrap(err, "failed to set up watch")
+		return nil, nil, errors.Wrap(err, "failed to set up attach")
 	}
 
 	added := make(chan *Target)
