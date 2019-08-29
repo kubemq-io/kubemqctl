@@ -12,7 +12,6 @@ import (
 
 type EventsAttachOptions struct {
 	cfg       *config.Config
-	transport string
 	include   []string
 	exclude   []string
 	resources []string
@@ -37,7 +36,7 @@ var eventsAttachExamples = `
 var eventsAttachLong = `attach to events channels`
 var eventsAttachShort = `attach to events channels`
 
-func NewCmdEventsAttach(cfg *config.Config, opts *EventsOptions) *cobra.Command {
+func NewCmdEventsAttach(cfg *config.Config) *cobra.Command {
 	o := &EventsAttachOptions{
 		cfg: cfg,
 	}
@@ -52,7 +51,7 @@ func NewCmdEventsAttach(cfg *config.Config, opts *EventsOptions) *cobra.Command 
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
-			utils.CheckErr(o.Complete(args, opts.transport))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(o.Run(ctx))
 		},
@@ -63,7 +62,6 @@ func NewCmdEventsAttach(cfg *config.Config, opts *EventsOptions) *cobra.Command 
 }
 
 func (o *EventsAttachOptions) Complete(args []string, transport string) error {
-	o.transport = transport
 	if len(args) == 0 {
 		return fmt.Errorf("missing channel argument")
 

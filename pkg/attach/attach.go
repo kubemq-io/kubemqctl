@@ -57,8 +57,6 @@ func runWebsocketClientReaderWriter(ctx context.Context, uri string, chRead chan
 			case <-ctx.Done():
 				c.Close()
 				return
-				//default:
-				//	time.Sleep(100 * time.Millisecond)
 			}
 
 		}
@@ -69,6 +67,7 @@ func runWebsocketClientReaderWriter(ctx context.Context, uri string, chRead chan
 		_, message, err := c.ReadMessage()
 		if err != nil {
 			utils.Printlnf("error: attach web socket reading, %s", err.Error())
+			os.Exit(0)
 			errCh <- err
 			return
 		} else {

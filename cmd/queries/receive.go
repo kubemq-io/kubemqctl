@@ -1,4 +1,4 @@
-package commands
+package queries
 
 import (
 	"context"
@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-type CommandsReceiveOptions struct {
+type QueriesReceiveOptions struct {
 	cfg          *config.Config
 	transport    string
 	channel      string
@@ -22,27 +22,27 @@ type CommandsReceiveOptions struct {
 	autoResponse bool
 }
 
-var commandsReceiveExamples = `
-	# Receive commands from a commands channel (blocks until next message)
-	kubetools commands receive some-channel
+var queriesReceiveExamples = `
+	# Receive queries from a queries channel (blocks until next message)
+	kubetools queries receive some-channel
 
-	# Receive commands from a commands channel with group(blocks until next message)
-	kubetools commands receive some-channel -g G1
+	# Receive queries from a queries channel with group(blocks until next message)
+	kubetools queries receive some-channel -g G1
 `
-var commandsReceiveLong = `receive a message from a commands`
-var commandsReceiveShort = `receive a message from a commands`
+var queriesReceiveLong = `receive a message from a queries`
+var queriesReceiveShort = `receive a message from a queries`
 
-func NewCmdCommandsReceive(cfg *config.Config) *cobra.Command {
-	o := &CommandsReceiveOptions{
+func NewCmdQueriesReceive(cfg *config.Config) *cobra.Command {
+	o := &QueriesReceiveOptions{
 		cfg: cfg,
 	}
 	cmd := &cobra.Command{
 
 		Use:     "receive",
 		Aliases: []string{"r", "rec"},
-		Short:   commandsReceiveShort,
-		Long:    commandsReceiveLong,
-		Example: commandsReceiveExamples,
+		Short:   queriesReceiveShort,
+		Long:    queriesReceiveLong,
+		Example: queriesReceiveExamples,
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
@@ -54,11 +54,11 @@ func NewCmdCommandsReceive(cfg *config.Config) *cobra.Command {
 	}
 
 	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "set group")
-	cmd.PersistentFlags().BoolVarP(&o.autoResponse, "auto-response", "a", false, "set auto response executed command")
+	cmd.PersistentFlags().BoolVarP(&o.autoResponse, "auto-response", "a", false, "set auto response executed query")
 	return cmd
 }
 
-func (o *CommandsReceiveOptions) Complete(args []string, transport string) error {
+func (o *QueriesReceiveOptions) Complete(args []string, transport string) error {
 	o.transport = transport
 	if len(args) >= 1 {
 		o.channel = args[0]
@@ -67,11 +67,11 @@ func (o *CommandsReceiveOptions) Complete(args []string, transport string) error
 	return fmt.Errorf("missing channel argument")
 }
 
-func (o *CommandsReceiveOptions) Validate() error {
+func (o *QueriesReceiveOptions) Validate() error {
 	return nil
 }
 
-func (o *CommandsReceiveOptions) Run(ctx context.Context) error {
+func (o *QueriesReceiveOptions) Run(ctx context.Context) error {
 	client, err := kubemq.GetKubeMQClient(ctx, o.transport, o.cfg)
 	if err != nil {
 		return fmt.Errorf("create kubemq client, %s", err.Error())
@@ -83,23 +83,23 @@ func (o *CommandsReceiveOptions) Run(ctx context.Context) error {
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', tabwriter.TabIndent)
 
 	errChan := make(chan error, 1)
-	commandsChan, err := client.SubscribeToCommands(ctx, o.channel, o.group, errChan)
+	queriesChan, err := client.SubscribeToQueries(ctx, o.channel, o.group, errChan)
 
 	if err != nil {
-		utils.Println(fmt.Errorf("receive commands messages, %s", err.Error()).Error())
+		utils.Println(fmt.Errorf("receive queries messages, %s", err.Error()).Error())
 	}
 	for {
-		utils.Println("waiting for the next command message...")
+		utils.Println("waiting for the next query message...")
 		select {
-		case command, opened := <-commandsChan:
+		case query, opened := <-queriesChan:
 			if !opened {
 				utils.Println("server disconnected")
 				return nil
 			}
-			fmt.Fprintf(w, "[channel: %s]\t[id: %s]\t[metadata: %s]\t[body: %s]\n", command.Channel, command.Id, command.Metadata, command.Body)
+			fmt.Fprintf(w, "[channel: %s]\t[id: %s]\t[metadata: %s]\t[body: %s]\n", query.Channel, query.Id, query.Metadata, query.Body)
 			w.Flush()
 			if o.autoResponse {
-				err = client.R().SetRequestId(command.Id).SetExecutedAt(time.Now()).SetResponseTo(command.ResponseTo).Send(ctx)
+				err = client.R().SetRequestId(query.Id).SetExecutedAt(time.Now()).SetResponseTo(query.ResponseTo).SetBody([]byte("executed your query")).Send(ctx)
 				if err != nil {
 					return err
 				}
@@ -118,13 +118,13 @@ func (o *CommandsReceiveOptions) Run(ctx context.Context) error {
 				return err
 			}
 			if isExecuted {
-				err = client.R().SetRequestId(command.Id).SetExecutedAt(time.Now()).SetResponseTo(command.ResponseTo).Send(ctx)
+				err = client.R().SetRequestId(query.Id).SetExecutedAt(time.Now()).SetResponseTo(query.ResponseTo).SetBody([]byte("executed your query")).Send(ctx)
 				if err != nil {
 					return err
 				}
 				continue
 			}
-			err = client.R().SetRequestId(command.Id).SetError(fmt.Errorf("commnad not executed")).SetResponseTo(command.ResponseTo).Send(ctx)
+			err = client.R().SetRequestId(query.Id).SetError(fmt.Errorf("query not executed")).SetResponseTo(query.ResponseTo).Send(ctx)
 			if err != nil {
 				return err
 			}

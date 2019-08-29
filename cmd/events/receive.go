@@ -30,7 +30,7 @@ var eventsReceiveExamples = `
 var eventsReceiveLong = `receive a message from a events`
 var eventsReceiveShort = `receive a message from a events`
 
-func NewCmdEventsReceive(cfg *config.Config, opts *EventsOptions) *cobra.Command {
+func NewCmdEventsReceive(cfg *config.Config) *cobra.Command {
 	o := &EventsReceiveOptions{
 		cfg: cfg,
 	}
@@ -44,7 +44,7 @@ func NewCmdEventsReceive(cfg *config.Config, opts *EventsOptions) *cobra.Command
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, opts.transport))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
@@ -88,7 +88,11 @@ func (o *EventsReceiveOptions) Run(ctx context.Context) error {
 	utils.Println("waiting for events messages...")
 	for {
 		select {
-		case ev := <-eventsChan:
+		case ev, opened := <-eventsChan:
+			if !opened {
+				utils.Println("server disconnected")
+				return nil
+			}
 			fmt.Fprintf(w, "[channel: %s]\t[id: %s]\t[metadata: %s]\t[body: %s]\n", ev.Channel, ev.Id, ev.Metadata, ev.Body)
 			w.Flush()
 		case <-ctx.Done():

@@ -7,6 +7,7 @@ require (
 	github.com/alecthomas/units v0.0.0-20190717042225-c3de453c63f4 // indirect
 	github.com/fatih/color v1.7.0
 	github.com/go-resty/resty v1.8.0
+	github.com/go-resty/resty/v2 v2.0.0
 	github.com/google/uuid v1.1.1
 	github.com/gorilla/websocket v1.4.0
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect

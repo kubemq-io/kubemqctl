@@ -34,7 +34,7 @@ var eventsReceiveExamples = `
 var eventsReceiveLong = `receive a messages from a events store`
 var eventsReceiveShort = `receive a messages from a events store`
 
-func NewCmdEventsStoreReceive(cfg *config.Config, opts *EventsStoreOptions) *cobra.Command {
+func NewCmdEventsStoreReceive(cfg *config.Config) *cobra.Command {
 	o := &EventsStoreReceiveOptions{
 		cfg: cfg,
 	}
@@ -48,7 +48,7 @@ func NewCmdEventsStoreReceive(cfg *config.Config, opts *EventsStoreOptions) *cob
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, opts.transport))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
@@ -96,7 +96,11 @@ func (o *EventsStoreReceiveOptions) Run(ctx context.Context) error {
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', tabwriter.TabIndent)
 	for {
 		select {
-		case ev := <-eventsChan:
+		case ev, opened := <-eventsChan:
+			if !opened {
+				utils.Println("server disconnected")
+				return nil
+			}
 			fmt.Fprintf(w, "[channel: %s]\t[seq: %d]\t[time: %s(UTC)]\t[id: %s]\t[metadata: %s]\t[body: %s]\n", ev.Channel, ev.Sequence, ev.Timestamp.UTC().Format("2006-01-02 15:04:05"), ev.Id, ev.Metadata, ev.Body)
 			w.Flush()
 		case <-ctx.Done():

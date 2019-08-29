@@ -10,7 +10,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type QueuePeakOptions struct {
+type QueuePeekOptions struct {
 	cfg       *config.Config
 	transport string
 	channel   string
@@ -18,31 +18,31 @@ type QueuePeakOptions struct {
 	wait      int
 }
 
-var queuePeakExamples = `
-	# Peak 1 messages from a queue and wait for 2 seconds (default)
-	kubetools queue peak some-channel
+var queuePeekExamples = `
+	# Peek 1 messages from a queue and wait for 2 seconds (default)
+	kubetools queue peek some-channel
 
-	# Peak 3 messages from a queue and wait for 5 seconds
-	kubetools queue peak some-channel -m 3 -w 5
+	# Peek 3 messages from a queue and wait for 5 seconds
+	kubetools queue peek some-channel -m 3 -w 5
 `
-var queuePeakLong = `peak a messages from a queue channel`
-var queuePeakShort = `peak a messages from a queue channel`
+var queuePeekLong = `peek a messages from a queue channel`
+var queuePeekShort = `peek a messages from a queue channel`
 
-func NewCmdQueuePeak(cfg *config.Config, opts *QueueOptions) *cobra.Command {
-	o := &QueuePeakOptions{
+func NewCmdQueuePeek(cfg *config.Config) *cobra.Command {
+	o := &QueuePeekOptions{
 		cfg: cfg,
 	}
 	cmd := &cobra.Command{
 
-		Use:     "peak",
+		Use:     "peek",
 		Aliases: []string{"p"},
-		Short:   queuePeakShort,
-		Long:    queuePeakLong,
-		Example: queuePeakExamples,
+		Short:   queuePeekShort,
+		Long:    queuePeekLong,
+		Example: queuePeekExamples,
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, opts.transport))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
@@ -55,7 +55,7 @@ func NewCmdQueuePeak(cfg *config.Config, opts *QueueOptions) *cobra.Command {
 	return cmd
 }
 
-func (o *QueuePeakOptions) Complete(args []string, transport string) error {
+func (o *QueuePeekOptions) Complete(args []string, transport string) error {
 	o.transport = transport
 	if len(args) >= 1 {
 		o.channel = args[0]
@@ -64,11 +64,11 @@ func (o *QueuePeakOptions) Complete(args []string, transport string) error {
 	return fmt.Errorf("missing channel argument")
 }
 
-func (o *QueuePeakOptions) Validate() error {
+func (o *QueuePeekOptions) Validate() error {
 	return nil
 }
 
-func (o *QueuePeakOptions) Run(ctx context.Context) error {
+func (o *QueuePeekOptions) Run(ctx context.Context) error {
 	client, err := kubemq.GetKubeMQClient(ctx, o.transport, o.cfg)
 	if err != nil {
 		return fmt.Errorf("create kubemq client, %s", err.Error())
@@ -84,12 +84,12 @@ func (o *QueuePeakOptions) Run(ctx context.Context) error {
 		SetIsPeak(true).
 		Send(ctx)
 	if err != nil {
-		return fmt.Errorf("peak queue message, %s", err.Error())
+		return fmt.Errorf("peek queue message, %s", err.Error())
 	}
 	if res.IsError {
-		return fmt.Errorf("peak queue message, %s", res.Error)
+		return fmt.Errorf("peek queue message, %s", res.Error)
 	}
-	utils.Printlnf("peaking %d messages", res.MessagesReceived)
+	utils.Printlnf("peeking %d messages", res.MessagesReceived)
 	if res.MessagesReceived > 0 {
 		printItems(res.Messages)
 	}

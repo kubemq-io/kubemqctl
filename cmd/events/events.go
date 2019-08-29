@@ -5,19 +5,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type EventsOptions struct {
-	transport string
-}
-
 var eventsExamples = ``
 var eventsLong = ``
 var eventsShort = `Execute KubeMQ events commands`
 
 // NewCmdCreate returns new initialized instance of create sub command
 func NewCmdEvents(cfg *config.Config) *cobra.Command {
-	o := &EventsOptions{
-		transport: "grpc",
-	}
 	cmd := &cobra.Command{
 		Use:     "events",
 		Aliases: []string{"e"},
@@ -28,10 +21,10 @@ func NewCmdEvents(cfg *config.Config) *cobra.Command {
 
 		},
 	}
-	cmd.AddCommand(NewCmdEventsSend(cfg, o))
-	cmd.AddCommand(NewCmdEventsReceive(cfg, o))
-	cmd.AddCommand(NewCmdEventsAttach(cfg, o))
+	cmd.AddCommand(NewCmdEventsSend(cfg))
+	cmd.AddCommand(NewCmdEventsReceive(cfg))
+	cmd.AddCommand(NewCmdEventsAttach(cfg))
+	cmd.AddCommand(NewCmdEventsMetrics(cfg))
 
-	cmd.PersistentFlags().StringVarP(&o.transport, "transport", "t", "grpc", "set transport type, grpc or rest")
 	return cmd
 }

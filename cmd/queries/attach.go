@@ -1,4 +1,4 @@
-package events_store
+package queries
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type EventsStoreAttachOptions struct {
+type QueriesAttachOptions struct {
 	cfg       *config.Config
 	transport string
 	include   []string
@@ -18,36 +18,36 @@ type EventsStoreAttachOptions struct {
 	resources []string
 }
 
-var eventsAttachExamples = `
-	# Attach to all events store channels and output running messages
-	kubetools events attach *
+var queriesAttachExamples = `
+	# attach to all queries channels and output running messages
+	kubetools queries attach *
 	
-	# Attach to some-events-store events store channel and output running messages
-	kubetools events_store attach some-events-store
+	# attach to some-query queries channel and output running messages
+	kubetools queries attach some-query
 
-	# Attach to some-events-store1 and some-events-store2 events channels and output running messages
-	kubetools events attach some-events-store1 some-events-store2 
+	# attach to some-queries1 and some-queries2 queries channels and output running messages
+	kubetools queries attach some-queries1 some-queries2 
 
-	# Attach to some-events-store events store channel and output running messages filter by include regex (some*)
-	kubetools events attach some-events -i some*
+	# attach to some-queries queries channel and output running messages filter by include regex (some*)
+	kubetools queries attach some-queries -i some*
 
-	# Attach to some-events-store events store channel and output running messages filter by exclude regex (not-some*)
-	kubetools events attach some-events -e not-some*
+	# attach to some-queries queries channel and output running messages filter by exclude regex (not-some*)
+	kubetools queries attach some-queries -e not-some*
 `
-var eventsAttachLong = `attach to events store channels`
-var eventsAttachShort = `attach to events store channels`
+var queriesAttachLong = `attach to queries channels`
+var queriesAttachShort = `attach to queries channels`
 
-func NewCmdEventsStoreAttach(cfg *config.Config) *cobra.Command {
-	o := &EventsStoreAttachOptions{
+func NewCmdQueriesAttach(cfg *config.Config) *cobra.Command {
+	o := &QueriesAttachOptions{
 		cfg: cfg,
 	}
 	cmd := &cobra.Command{
 
 		Use:     "attach",
 		Aliases: []string{"a", "att", "at"},
-		Short:   eventsAttachShort,
-		Long:    eventsAttachLong,
-		Example: eventsAttachExamples,
+		Short:   queriesAttachShort,
+		Long:    queriesAttachLong,
+		Example: queriesAttachExamples,
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
@@ -62,7 +62,7 @@ func NewCmdEventsStoreAttach(cfg *config.Config) *cobra.Command {
 	return cmd
 }
 
-func (o *EventsStoreAttachOptions) Complete(args []string, transport string) error {
+func (o *QueriesAttachOptions) Complete(args []string, transport string) error {
 	o.transport = transport
 	if len(args) == 0 {
 		return fmt.Errorf("missing channel argument")
@@ -70,18 +70,18 @@ func (o *EventsStoreAttachOptions) Complete(args []string, transport string) err
 	}
 
 	for _, a := range args {
-		rsc := fmt.Sprintf("events_store/%s", a)
+		rsc := fmt.Sprintf("queries/%s", a)
 		o.resources = append(o.resources, rsc)
 		utils.Printlnf("adding '%s' to attach list", a)
 	}
 	return nil
 }
 
-func (o *EventsStoreAttachOptions) Validate() error {
+func (o *QueriesAttachOptions) Validate() error {
 	return nil
 }
 
-func (o *EventsStoreAttachOptions) Run(ctx context.Context) error {
+func (o *QueriesAttachOptions) Run(ctx context.Context) error {
 	err := attach.Run(ctx, o.cfg, o.resources, o.include, o.exclude)
 	if err != nil {
 		return err

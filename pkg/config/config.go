@@ -18,6 +18,7 @@ var defaultConfig = &Config{
 	IsSecured:          false,
 	CertFile:           "",
 	KubeConfigPath:     "",
+	ConnectionType:     "grpc",
 }
 
 func exists(name string) bool {
@@ -53,6 +54,7 @@ type Config struct {
 	IsSecured          bool
 	CertFile           string
 	KubeConfigPath     string
+	ConnectionType     string
 }
 
 func (c *Config) Save() error {

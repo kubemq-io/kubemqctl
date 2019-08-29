@@ -31,7 +31,7 @@ var eventsStoreListExamples = `
 var eventsStoreListLong = `get a list of events store channels / clients`
 var eventsStoreListShort = `get a list of events store channels / clients`
 
-func NewCmdEventsStoreList(cfg *config.Config, opts *EventsStoreOptions) *cobra.Command {
+func NewCmdEventsStoreList(cfg *config.Config) *cobra.Command {
 	o := &EventsStoreListOptions{
 		cfg: cfg,
 	}
@@ -45,7 +45,7 @@ func NewCmdEventsStoreList(cfg *config.Config, opts *EventsStoreOptions) *cobra.
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, opts.transport))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))

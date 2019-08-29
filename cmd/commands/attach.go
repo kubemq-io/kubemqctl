@@ -12,7 +12,6 @@ import (
 
 type CommandsAttachOptions struct {
 	cfg       *config.Config
-	transport string
 	include   []string
 	exclude   []string
 	resources []string
@@ -37,7 +36,7 @@ var commandsAttachExamples = `
 var commandsAttachLong = `attach to commands channels`
 var commandsAttachShort = `attach to commands channels`
 
-func NewCmdCommandsAttach(cfg *config.Config, opts *CommandsOptions) *cobra.Command {
+func NewCmdCommandsAttach(cfg *config.Config) *cobra.Command {
 	o := &CommandsAttachOptions{
 		cfg: cfg,
 	}
@@ -52,7 +51,7 @@ func NewCmdCommandsAttach(cfg *config.Config, opts *CommandsOptions) *cobra.Comm
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
-			utils.CheckErr(o.Complete(args, opts.transport))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(o.Run(ctx))
 		},
@@ -63,7 +62,7 @@ func NewCmdCommandsAttach(cfg *config.Config, opts *CommandsOptions) *cobra.Comm
 }
 
 func (o *CommandsAttachOptions) Complete(args []string, transport string) error {
-	o.transport = transport
+
 	if len(args) == 0 {
 		return fmt.Errorf("missing channel argument")
 

@@ -33,7 +33,7 @@ var eventsSendExamples = `
 var eventsSendLong = `send messages to a events channel`
 var eventsSendShort = `send messages to a events channel`
 
-func NewCmdEventsSend(cfg *config.Config, opts *EventsOptions) *cobra.Command {
+func NewCmdEventsSend(cfg *config.Config) *cobra.Command {
 	o := &EventsSendOptions{
 		cfg: cfg,
 	}
@@ -47,7 +47,7 @@ func NewCmdEventsSend(cfg *config.Config, opts *EventsOptions) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, opts.transport))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))

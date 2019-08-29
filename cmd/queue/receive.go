@@ -32,7 +32,7 @@ var queueReceiveExamples = `
 var queueReceiveLong = `receive a messages from a queue channel`
 var queueReceiveShort = `receive a messages from a queue channel`
 
-func NewCmdQueueReceive(cfg *config.Config, opts *QueueOptions) *cobra.Command {
+func NewCmdQueueReceive(cfg *config.Config) *cobra.Command {
 	o := &QueueReceiveOptions{
 		cfg: cfg,
 	}
@@ -46,7 +46,7 @@ func NewCmdQueueReceive(cfg *config.Config, opts *QueueOptions) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, opts.transport))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
@@ -92,7 +92,7 @@ func (o *QueueReceiveOptions) Run(ctx context.Context) error {
 			utils.Println(fmt.Errorf("receive queue messagess, %s", err.Error()).Error())
 		}
 		if res.IsError {
-			utils.Println(fmt.Errorf("receive queue message,aa %s", res.Error).Error())
+			utils.Println(fmt.Errorf("receive queue message %s", res.Error).Error())
 		}
 
 		if res != nil && res.MessagesReceived > 0 {
@@ -102,11 +102,6 @@ func (o *QueueReceiveOptions) Run(ctx context.Context) error {
 			return nil
 		}
 	}
-
-	//for _, item := range res.Messages {
-	//
-	//	utils.Printlnf("[channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s}", item.Channel, item.ClientId, item.Id, item.Metadata, item.Body)
-	//}
 
 }
 

@@ -34,7 +34,7 @@ var commandsSendExamples = `
 var commandsSendLong = `send messages to a commands channel`
 var commandsSendShort = `send messages to a commands channel`
 
-func NewCmdCommandsSend(cfg *config.Config, opts *CommandsOptions) *cobra.Command {
+func NewCmdCommandsSend(cfg *config.Config) *cobra.Command {
 	o := &CommandsSendOptions{
 		cfg: cfg,
 	}
@@ -48,7 +48,7 @@ func NewCmdCommandsSend(cfg *config.Config, opts *CommandsOptions) *cobra.Comman
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, opts.transport))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
@@ -94,7 +94,7 @@ func (o *CommandsSendOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return fmt.Errorf("sending commands message, %s", err.Error())
 	}
-	utils.Printlnf("[channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s, executed: %t, executed at: %s, error: %s}", msg.Channel, msg.ClientId, msg.Id, msg.Metadata, msg.Body, res.Executed, res.ExecutedAt.Format("2006-01-02 15:04:05"), res.Error)
+	utils.Printlnf("[channel: %s] [client id: %s] -> {id: %s, executed: %t, executed at: %s, error: %s}", msg.Channel, msg.ClientId, msg.Id, res.Executed, res.ExecutedAt.Format("2006-01-02 15:04:05"), res.Error)
 
 	return nil
 }
