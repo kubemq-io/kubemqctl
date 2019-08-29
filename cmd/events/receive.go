@@ -20,8 +20,11 @@ type EventsReceiveOptions struct {
 }
 
 var eventsReceiveExamples = `
-	# receive messages from a events (blocks until next message)
+	# Receive messages from a events channel(blocks until next message)
 	kubetools events receive some-channel
+
+	# Receive messages from a events channel with group(blocks until next message)
+	kubetools events receive some-channel -g G1
 
 `
 var eventsReceiveLong = `receive a message from a events`
@@ -80,7 +83,7 @@ func (o *EventsReceiveOptions) Run(ctx context.Context) error {
 	eventsChan, err := client.SubscribeToEvents(ctx, o.channel, o.group, errChan)
 
 	if err != nil {
-		utils.Println(fmt.Errorf("receive events messagess, %s", err.Error()).Error())
+		utils.Println(fmt.Errorf("receive events messages, %s", err.Error()).Error())
 	}
 	utils.Println("waiting for events messages...")
 	for {

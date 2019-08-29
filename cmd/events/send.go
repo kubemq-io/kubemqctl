@@ -30,8 +30,8 @@ var eventsSendExamples = `
 	# Send 10 messages to a events channel
 	kubetools events send some-channel some-message -i 10
 `
-var eventsSendLong = `send messages to a events`
-var eventsSendShort = `send messages to a events`
+var eventsSendLong = `send messages to a events channel`
+var eventsSendShort = `send messages to a events channel`
 
 func NewCmdEventsSend(cfg *config.Config, opts *EventsOptions) *cobra.Command {
 	o := &EventsSendOptions{

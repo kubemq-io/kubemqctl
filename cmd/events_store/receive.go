@@ -25,9 +25,11 @@ type EventsStoreReceiveOptions struct {
 }
 
 var eventsReceiveExamples = `
-	# Receive messages from a events store (blocks until next message)
+	# Receive messages from a events store channel (blocks until next message)
 	kubetools events_store receive some-channel
 
+	# Receive messages from a events channel with group(blocks until next message)
+	kubetools events_store receive some-channel -g G1
 `
 var eventsReceiveLong = `receive a messages from a events store`
 var eventsReceiveShort = `receive a messages from a events store`
@@ -88,7 +90,7 @@ func (o *EventsStoreReceiveOptions) Run(ctx context.Context) error {
 	eventsChan, err := client.SubscribeToEventsStore(ctx, o.channel, o.group, errChan, o.subOptions)
 
 	if err != nil {
-		utils.Println(fmt.Errorf("receive events store messagess, %s", err.Error()).Error())
+		utils.Println(fmt.Errorf("receive events store messages, %s", err.Error()).Error())
 	}
 	utils.Println("waiting for events store messages...")
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', tabwriter.TabIndent)

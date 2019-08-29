@@ -39,8 +39,8 @@ var queueSendExamples = `
 	# Send message to a queue with a message policy of max receive 5 times and dead-letter queue 'dead-letter'
 	kubetools queue send some-channel some-message -r 5 -q dead-letter
 `
-var queueSendLong = `send a message to a queue`
-var queueSendShort = `send a message to a queue`
+var queueSendLong = `send a message to a queue channel`
+var queueSendShort = `send a message to a queue channel`
 
 func NewCmdQueueSend(cfg *config.Config, opts *QueueOptions) *cobra.Command {
 	o := &QueueSendOptions{
@@ -121,7 +121,7 @@ func (o *QueueSendOptions) Run(ctx context.Context) error {
 		if res.ExpirationAt > 0 {
 			exp = fmt.Sprintf(", expire at: %s", time.Unix(0, res.ExpirationAt))
 		}
-		utils.Printlnf("[channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s, sent at: %s%s%s}", msg.Channel, msg.ClientId, res.MessageID, msg.Metadata, msg.Body, time.Unix(0, res.SentAt), exp, delay)
+		utils.Printlnf("[channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s, sent at: %s%s%s}", msg.Channel, msg.ClientId, res.MessageID, msg.Metadata, msg.Body, time.Unix(0, res.SentAt).Format("2006-01-02 15:04:05"), exp, delay)
 	}
 	return nil
 }
