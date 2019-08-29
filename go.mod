@@ -10,7 +10,7 @@ require (
 	github.com/google/uuid v1.1.1
 	github.com/gorilla/websocket v1.4.0
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
-	github.com/kubemq-io/kubemq-go v1.2.5
+	github.com/kubemq-io/kubemq-go v1.2.6
 	github.com/manifoldco/promptui v0.3.2
 	github.com/mattn/go-isatty v0.0.9 // indirect
 	github.com/pkg/errors v0.8.0

@@ -22,10 +22,10 @@ type QueueStreamOptions struct {
 }
 
 var queueStreamExamples = `
-	# stream queue message in transaction mode
+	# Stream queue message in transaction mode
 	kubetools queue stream some-channel
 
-	# stream queue message in transaction mode with visibility set to 120 seconds and wait time of 180 seconds
+	# Stream queue message in transaction mode with visibility set to 120 seconds and wait time of 180 seconds
 	kubetools queue stream some-channel -v 120 -w 180
 `
 var queueStreamLong = `receive a message from a queue`

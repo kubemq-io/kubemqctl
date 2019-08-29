@@ -23,14 +23,14 @@ type QueueReceiveOptions struct {
 }
 
 var queueReceiveExamples = `
-	# receive 1 messages from a queue and wait for 2 seconds (default)
+	# Receive 1 messages from a queue and wait for 2 seconds (default)
 	kubetools queue receive some-channel
 
-	# receive 3 messages from a queue and wait for 5 seconds
+	# Receive 3 messages from a queue and wait for 5 seconds
 	kubetools queue receive some-channel -m 3 -T 5
 `
-var queueReceiveLong = `receive a message from a queue`
-var queueReceiveShort = `receive a message from a queue`
+var queueReceiveLong = `receive a messages from a queue channel`
+var queueReceiveShort = `receive a messages from a queue channel`
 
 func NewCmdQueueReceive(cfg *config.Config, opts *QueueOptions) *cobra.Command {
 	o := &QueueReceiveOptions{
@@ -82,10 +82,6 @@ func (o *QueueReceiveOptions) Run(ctx context.Context) error {
 	defer func() {
 		client.Close()
 	}()
-	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.TabIndent)
-	fmt.Fprintln(w, "CLIENT_ID\tCHANNEL\tID\tMETADATA\tBODY")
-	w.Flush()
-
 	for {
 		res, err := client.RQM().
 			SetChannel(o.channel).
@@ -117,7 +113,7 @@ func (o *QueueReceiveOptions) Run(ctx context.Context) error {
 func printItems(items []*kubemq2.QueueMessage) {
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.TabIndent)
 	for _, item := range items {
-		fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\n", item.ClientId, item.Channel, item.Id, item.Metadata, item.Body)
+		fmt.Fprintf(w, "[channel: %s]\t[id: %s]\t[metadata: %s]\t[body: %s]\n", item.Channel, item.Id, item.Metadata, item.Body)
 	}
 	w.Flush()
 }

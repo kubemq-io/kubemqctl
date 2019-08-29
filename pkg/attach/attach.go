@@ -84,9 +84,6 @@ type Message struct {
 }
 
 func Run(ctx context.Context, cfg *config.Config, resources []string, include []string, exclude []string) error {
-	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.TabIndent)
-	fmt.Fprintln(w, "RESOURCE\tCHANNEL\tMESSAGE")
-	w.Flush()
 	for _, rsc := range resources {
 		pair := strings.Split(rsc, "/")
 		if len(pair) != 2 {
@@ -150,7 +147,7 @@ OUTER:
 			}
 			msg = strings.Replace(msg, "\n", "", -1)
 			msg = strings.Replace(msg, "\t", " ", -1)
-			fmt.Fprintf(w, "%s\t%s\t%s\n", resType, resChannel, msg)
+			fmt.Fprintf(w, "[%s]\t[%s]\t%s\n", resType, resChannel, msg)
 			w.Flush()
 		case <-ctx.Done():
 			return

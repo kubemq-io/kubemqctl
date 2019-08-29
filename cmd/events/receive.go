@@ -74,7 +74,7 @@ func (o *EventsReceiveOptions) Run(ctx context.Context) error {
 	defer func() {
 		client.Close()
 	}()
-	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.TabIndent)
+	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', tabwriter.TabIndent)
 
 	errChan := make(chan error, 1)
 	eventsChan, err := client.SubscribeToEvents(ctx, o.channel, o.group, errChan)
@@ -82,15 +82,11 @@ func (o *EventsReceiveOptions) Run(ctx context.Context) error {
 	if err != nil {
 		utils.Println(fmt.Errorf("receive events messagess, %s", err.Error()).Error())
 	}
-	firstEvent := true
+	utils.Println("waiting for events messages...")
 	for {
 		select {
 		case ev := <-eventsChan:
-			if firstEvent {
-				fmt.Fprintln(w, "CHANNEL\tID\tMETADATA\tBODY")
-				firstEvent = false
-			}
-			fmt.Fprintf(w, "%s\t%s\t%s\t%s\n", ev.Channel, ev.Id, ev.Metadata, ev.Body)
+			fmt.Fprintf(w, "[channel: %s]\t[id: %s]\t[metadata: %s]\t[body: %s]\n", ev.Channel, ev.Id, ev.Metadata, ev.Body)
 			w.Flush()
 		case <-ctx.Done():
 			return nil

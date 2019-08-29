@@ -18,10 +18,10 @@ type QueueAckOptions struct {
 }
 
 var queueAckExamples = `
-	# ack all messages in a queue channel 'some-channel' with 2 seconds of wait to complete operation
+	# Ack all messages in a queue channel 'some-channel' with 2 seconds of wait to complete operation
 	kubetools queue ack some-channel
 	
-	# ack all messages in a queue channel 'some-long-queue' with 30 seconds of wait to complete operation
+	# Ack all messages in a queue channel 'some-long-queue' with 30 seconds of wait to complete operation
 	kubetools queue ack some-long-queue -w 30
 `
 var queueAckLong = `ack all messages in a queue`

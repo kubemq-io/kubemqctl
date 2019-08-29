@@ -1,4 +1,4 @@
-package queue
+package events_store
 
 import (
 	"context"
@@ -15,33 +15,33 @@ import (
 	"time"
 )
 
-type QueueListOptions struct {
+type EventsStoreListOptions struct {
 	cfg       *config.Config
 	transport string
 	filter    string
 }
 
-var queueListExamples = `
-	# Get a list of queues / clients
-	kubetools queue list
+var eventsStoreListExamples = `
+	# Get a list of events store channels
+	kubetools events_store list
 	
-	# Get a list of queues / clients filtered by 'some-queue' channel only
-	kubetools queue list -f some-queue
+	# Get a list of events stores channels/ clients filtered by 'some-events-store' channel only
+	kubetools events_store list -f some-events-store
 `
-var queueListLong = `get a list of queues / clients`
-var queueListShort = `get a list of queues / clients`
+var eventsStoreListLong = `get a list of events store channels / clients`
+var eventsStoreListShort = `get a list of events store channels / clients`
 
-func NewCmdQueueList(cfg *config.Config, opts *QueueOptions) *cobra.Command {
-	o := &QueueListOptions{
+func NewCmdEventsStoreList(cfg *config.Config, opts *EventsStoreOptions) *cobra.Command {
+	o := &EventsStoreListOptions{
 		cfg: cfg,
 	}
 	cmd := &cobra.Command{
 
 		Use:     "list",
 		Aliases: []string{"l"},
-		Short:   queueListShort,
-		Long:    queueListLong,
-		Example: queueListExamples,
+		Short:   eventsStoreListShort,
+		Long:    eventsStoreListLong,
+		Example: eventsStoreListExamples,
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
@@ -55,20 +55,20 @@ func NewCmdQueueList(cfg *config.Config, opts *QueueOptions) *cobra.Command {
 	return cmd
 }
 
-func (o *QueueListOptions) Complete(args []string, transport string) error {
+func (o *EventsStoreListOptions) Complete(args []string, transport string) error {
 	o.transport = transport
 	return nil
 }
 
-func (o *QueueListOptions) Validate() error {
+func (o *EventsStoreListOptions) Validate() error {
 	return nil
 }
 
-func (o *QueueListOptions) Run(ctx context.Context) error {
+func (o *EventsStoreListOptions) Run(ctx context.Context) error {
 	resp := &Response{}
 	q := &Queues{}
 
-	r, err := resty.R().SetResult(resp).SetError(resp).Get(fmt.Sprintf("%s/v1/stats/queues", o.cfg.GetApiHttpURI()))
+	r, err := resty.R().SetResult(resp).SetError(resp).Get(fmt.Sprintf("%s/v1/stats/events_stores", o.cfg.GetApiHttpURI()))
 	if err != nil {
 		return err
 	}

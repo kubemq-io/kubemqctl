@@ -19,14 +19,14 @@ type QueuePeakOptions struct {
 }
 
 var queuePeakExamples = `
-	# peak 1 messages from a queue and wait for 2 seconds (default)
+	# Peak 1 messages from a queue and wait for 2 seconds (default)
 	kubetools queue peak some-channel
 
-	# receive 3 messages from a queue and wait for 5 seconds
-	kubetools queue receive some-channel -m 3 -w 5
+	# Peak 3 messages from a queue and wait for 5 seconds
+	kubetools queue peak some-channel -m 3 -w 5
 `
-var queuePeakLong = `peak a message from a queue`
-var queuePeakShort = `peak a message from a queue`
+var queuePeakLong = `peak a messages from a queue channel`
+var queuePeakShort = `peak a messages from a queue channel`
 
 func NewCmdQueuePeak(cfg *config.Config, opts *QueueOptions) *cobra.Command {
 	o := &QueuePeakOptions{
@@ -90,12 +90,9 @@ func (o *QueuePeakOptions) Run(ctx context.Context) error {
 		return fmt.Errorf("peak queue message, %s", res.Error)
 	}
 	utils.Printlnf("peaking %d messages", res.MessagesReceived)
-	utils.Printlnf("peaking %d messages", res.MessagesReceived)
 	if res.MessagesReceived > 0 {
 		printItems(res.Messages)
 	}
-	//for _, item := range res.Messages {
-	//	utils.Printlnf("[%s] [%s] -> {id: %s, metadata: %s, body: %s", item.Channel, item.ClientId, item.Id, item.Metadata, item.Body)
-	//}
+
 	return nil
 }

@@ -1,4 +1,4 @@
-package events
+package events_store
 
 import (
 	"context"
@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type EventsSendOptions struct {
+type EventsStoreSendOptions struct {
 	cfg       *config.Config
 	transport string
 	channel   string
@@ -21,20 +21,20 @@ type EventsSendOptions struct {
 }
 
 var eventsSendExamples = `
-	# Send message to a events channel
-	kubetools events send some-channel some-message
+	# Send message to a events store channel
+	kubetools events_store send some-channel some-message
 	
-	# Send message to a events channel with metadata
-	kubetools events send some-channel some-message -m some-metadata
-	
-	# Send 10 messages to a events channel
-	kubetools events send some-channel some-message -i 10
-`
-var eventsSendLong = `send messages to a events`
-var eventsSendShort = `send messages to a events`
+	# Send message to a events store channel with metadata
+	kubetools events_store send some-channel some-message -m some-metadata
 
-func NewCmdEventsSend(cfg *config.Config, opts *EventsOptions) *cobra.Command {
-	o := &EventsSendOptions{
+	# Send 10 messages to a events store channel
+	kubetools events_store send some-channel some-message -i 10
+`
+var eventsSendLong = `send messages to a events store`
+var eventsSendShort = `send messages to a events store`
+
+func NewCmdEventsStoreSend(cfg *config.Config, opts *EventsStoreOptions) *cobra.Command {
+	o := &EventsStoreSendOptions{
 		cfg: cfg,
 	}
 	cmd := &cobra.Command{
@@ -59,7 +59,7 @@ func NewCmdEventsSend(cfg *config.Config, opts *EventsOptions) *cobra.Command {
 	return cmd
 }
 
-func (o *EventsSendOptions) Complete(args []string, transport string) error {
+func (o *EventsStoreSendOptions) Complete(args []string, transport string) error {
 	o.transport = transport
 	if len(args) >= 2 {
 		o.channel = args[0]
@@ -69,11 +69,11 @@ func (o *EventsSendOptions) Complete(args []string, transport string) error {
 	return fmt.Errorf("missing arguments, must be 2 arguments, channel and message")
 }
 
-func (o *EventsSendOptions) Validate() error {
+func (o *EventsStoreSendOptions) Validate() error {
 	return nil
 }
 
-func (o *EventsSendOptions) Run(ctx context.Context) error {
+func (o *EventsStoreSendOptions) Run(ctx context.Context) error {
 	client, err := kubemq.GetKubeMQClient(ctx, o.transport, o.cfg)
 	if err != nil {
 		return fmt.Errorf("create kubemq client, %s", err.Error())
@@ -83,16 +83,17 @@ func (o *EventsSendOptions) Run(ctx context.Context) error {
 		client.Close()
 	}()
 	for i := 1; i <= o.iter; i++ {
-		msg := client.E().
+		msg := client.ES().
 			SetChannel(o.channel).
 			SetId(uuid.New().String()).
 			SetBody([]byte(o.message)).
 			SetMetadata(o.metadata)
-		err = msg.Send(ctx)
+		res, err := msg.Send(ctx)
 		if err != nil {
-			return fmt.Errorf("sending events message, %s", err.Error())
+			return fmt.Errorf("sending events store message, %s", err.Error())
 		}
-		utils.Printlnf("[iteration: %d] [channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s}", i, msg.Channel, msg.ClientId, msg.Id, msg.Metadata, msg.Body)
+		utils.Printlnf("[iteration: %d] [channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s, sent:%t}", i, msg.Channel, msg.ClientId, msg.Id, msg.Metadata, msg.Body, res.Sent)
+
 	}
 	return nil
 }

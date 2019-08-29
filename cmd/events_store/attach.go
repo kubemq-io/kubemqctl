@@ -1,4 +1,4 @@
-package events
+package events_store
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type EventsAttachOptions struct {
+type EventsStoreAttachOptions struct {
 	cfg       *config.Config
 	transport string
 	include   []string
@@ -19,26 +19,26 @@ type EventsAttachOptions struct {
 }
 
 var eventsAttachExamples = `
-	# attach to all events channels and output running messages
+	# Attach to all events store channels and output running messages
 	kubetools events attach *
 	
-	# attach to some-events events channel and output running messages
-	kubetools events attach some-events
+	# Attach to some-events-store events store channel and output running messages
+	kubetools events_store attach some-events-store
 
-	# attach to some-events1 and some-events2 events channels and output running messages
-	kubetools events attach some-events1 some-events2 
+	# Attach to some-events-store1 and some-events-store2 events channels and output running messages
+	kubetools events attach some-events-store1 some-events-store2 
 
-	# attach to some-events events channel and output running messages filter by include regex (some*)
+	# Attach to some-events-store events store channel and output running messages filter by include regex (some*)
 	kubetools events attach some-events -i some*
 
-	# attach to some-events events channel and output running messages filter by exclude regex (not-some*)
+	# Attach to some-events-store events store channel and output running messages filter by exclude regex (not-some*)
 	kubetools events attach some-events -e not-some*
 `
-var eventsAttachLong = `attach to events channels`
-var eventsAttachShort = `attach to events channels`
+var eventsAttachLong = `attach to events store channels`
+var eventsAttachShort = `attach to events store channels`
 
-func NewCmdEventsAttach(cfg *config.Config, opts *EventsOptions) *cobra.Command {
-	o := &EventsAttachOptions{
+func NewCmdEventsStoreAttach(cfg *config.Config, opts *EventsStoreOptions) *cobra.Command {
+	o := &EventsStoreAttachOptions{
 		cfg: cfg,
 	}
 	cmd := &cobra.Command{
@@ -62,7 +62,7 @@ func NewCmdEventsAttach(cfg *config.Config, opts *EventsOptions) *cobra.Command 
 	return cmd
 }
 
-func (o *EventsAttachOptions) Complete(args []string, transport string) error {
+func (o *EventsStoreAttachOptions) Complete(args []string, transport string) error {
 	o.transport = transport
 	if len(args) == 0 {
 		return fmt.Errorf("missing channel argument")
@@ -70,18 +70,18 @@ func (o *EventsAttachOptions) Complete(args []string, transport string) error {
 	}
 
 	for _, a := range args {
-		rsc := fmt.Sprintf("events/%s", a)
+		rsc := fmt.Sprintf("events_store/%s", a)
 		o.resources = append(o.resources, rsc)
 		utils.Printlnf("adding '%s' to attach list", a)
 	}
 	return nil
 }
 
-func (o *EventsAttachOptions) Validate() error {
+func (o *EventsStoreAttachOptions) Validate() error {
 	return nil
 }
 
-func (o *EventsAttachOptions) Run(ctx context.Context) error {
+func (o *EventsStoreAttachOptions) Run(ctx context.Context) error {
 	err := attach.Run(ctx, o.cfg, o.resources, o.include, o.exclude)
 	if err != nil {
 		return err

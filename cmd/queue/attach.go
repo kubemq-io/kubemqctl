@@ -21,19 +21,19 @@ type QueueAttachOptions struct {
 }
 
 var queueAttachExamples = `
-	# attach to all queues and output running messages
+	# Attach to all queues and output running messages
 	kubetools queue attach all
 	
-	# attach to some-queue queue and output running messages
+	# Attach to some-queue queue and output running messages
 	kubetools queue attach some-queue
 
-	# attach to some-queue1 and some-queue2 queues and output running messages
+	# Attach to some-queue1 and some-queue2 queues and output running messages
 	kubetools queue attach some-queue1 some-queue2 
 
-	# attach to some-queue queue and output running messages filter by include regex (some*)
+	# Attach to some-queue queue and output running messages filter by include regex (some*)
 	kubetools queue attach some-queue -i some*
 
-	# attach to some-queue queue and output running messages filter by exclude regex (not-some*)
+	# Attach to some-queue queue and output running messages filter by exclude regex (not-some*)
 	kubetools queue attach some-queue -e not-some*
 `
 var queueAttachLong = `attach to queue channels`
