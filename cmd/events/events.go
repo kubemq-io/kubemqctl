@@ -6,7 +6,7 @@ import (
 )
 
 var eventsExamples = ``
-var eventsLong = ``
+var eventsLong = `Execute KubeMQ events commands`
 var eventsShort = `Execute KubeMQ events commands`
 
 // NewCmdCreate returns new initialized instance of create sub command
@@ -15,7 +15,7 @@ func NewCmdEvents(cfg *config.Config) *cobra.Command {
 		Use:     "events",
 		Aliases: []string{"e"},
 		Short:   eventsShort,
-		Long:    eventsShort,
+		Long:    eventsLong,
 		Example: eventsExamples,
 		Run: func(cmd *cobra.Command, args []string) {
 

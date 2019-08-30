@@ -1,4 +1,4 @@
-autointegrated: true
+autointegrated: false
 currentnamespace: default
 currentstatefulset: kubemq-cluster
 host: localhost

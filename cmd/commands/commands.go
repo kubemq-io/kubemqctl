@@ -15,7 +15,7 @@ func NewCmdCommands(cfg *config.Config) *cobra.Command {
 		Use:     "commands",
 		Aliases: []string{"c", "cmd"},
 		Short:   commandsShort,
-		Long:    commandsShort,
+		Long:    commandsLong,
 		Example: commandsExamples,
 		Run: func(cmd *cobra.Command, args []string) {
 

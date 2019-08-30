@@ -158,3 +158,14 @@ func TestClient_Scale(t *testing.T) {
 	require.NoError(t, err)
 
 }
+
+func TestClient_DescribeStatefulSet(t *testing.T) {
+	c, err := NewClient("")
+	require.NoError(t, err)
+	require.NotNil(t, c)
+	y, err := c.DescribeStatefulSet("default", "kubemq-cluster")
+	require.NoError(t, err)
+	require.NotEmpty(t, y)
+	fmt.Println(y)
+
+}

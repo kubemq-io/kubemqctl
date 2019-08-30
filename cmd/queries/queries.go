@@ -16,7 +16,7 @@ func NewCmdQueries(cfg *config.Config) *cobra.Command {
 		Use:     "queries",
 		Aliases: []string{"query", "qry"},
 		Short:   queriesShort,
-		Long:    queriesShort,
+		Long:    queriesLong,
 		Example: queriesExamples,
 		Run: func(cmd *cobra.Command, args []string) {
 

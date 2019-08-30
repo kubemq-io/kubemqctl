@@ -2,45 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cmd/config/config.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/events/metrics.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/queries/attach.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/queries/queries.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/queries/receive.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/queries/send.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/metrics/metrics.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/cluster/cluster.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/cluster/config/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/cluster/deploy/deploy.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/dashboard/dashboard.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/dist/assets/kube-image.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/dist/assets/loading.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/dist/assets/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/dist/assets/workers/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/dist/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/dist/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/dist/main.3be10e49527fadd97700.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/dist/polyfills.3f11bf9959f924754af3.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/dist/runtime.ec2944dd8b20ec099bf3.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/dist/styles.00ac0c6de27b63c11576.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/progress_bar.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/server.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/commands/attach.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/commands/attach.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.kubetools.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.kubetools.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/commands/commands.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/commands/commands.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/commands/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/commands/receive.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/commands/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/commands/send.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events/attach.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events/attach.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/events/events.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events/events.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events/receive.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events/send.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events_store/attach.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/attach.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/events/metrics.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events/metrics.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/events_store/events_store.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/events_store.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events_store/list.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/list.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events_store/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/receive.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events_store/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/send.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/get.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/health.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/metrics.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/mon.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/pubsub.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/ack.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/ack.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/attach.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/attach.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/list.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/list.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/peak.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/peek.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/queue.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/queue.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/receive.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/send.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/stream.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/stream.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/logs/logs.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/logs/logs.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/proxy/proxy.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/proxy/proxy.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/queries/queries.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queries/queries.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/root/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root/root.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/rpc.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/attach/attach.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/attach/attach.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/client_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/client_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/metrics/metrics.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/metrics/metrics.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -77,11 +69,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\cluster" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\commands" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\events" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\pkg\prompt" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\root" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\pkg\config" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\pkg" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\events" />
@@ -103,7 +95,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Build.go build github.com/kubemq-io/kubetools/pkg/prompt">
+  <component name="RunManager" selected="Go Test.TestClient_DescribeStatefulSet in github.com/kubemq-io/kubetools/pkg/k8s/client">
     <configuration name="go build github.com/kubemq-io/kubetools/pkg/prompt" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="kubetools" />
       <working_directory value="$PROJECT_DIR$" />
@@ -111,6 +103,17 @@
       <filePath value="$PROJECT_DIR$/pkg/prompt/prompt.go" />
       <package value="github.com/kubemq-io/kubetools/pkg/prompt" />
       <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestClient_DescribeStatefulSet in github.com/kubemq-io/kubetools/pkg/k8s/client" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="kubetools" />
+      <working_directory value="$PROJECT_DIR$/pkg/k8s/client" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/kubemq-io/kubetools/pkg/k8s/client" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestClient_DescribeStatefulSet$" />
       <method v="2" />
     </configuration>
     <configuration name="TestClient_GetLogs in github.com/kubemq-io/kubetools/k8s" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -122,17 +125,6 @@
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
       <pattern value="^TestClient_GetLogs$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestClient_GetStatefulSets in github.com/kubemq-io/kubetools/k8s" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="kubetools" />
-      <working_directory value="$PROJECT_DIR$/k8s" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/kubemq-io/kubetools/k8s" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestClient_GetStatefulSets$" />
       <method v="2" />
     </configuration>
     <configuration name="TestClient_Scale in github.com/kubemq-io/kubetools/k8s" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -159,11 +151,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestClient_DescribeStatefulSet in github.com/kubemq-io/kubetools/pkg/k8s/client" />
         <item itemvalue="Go Build.go build github.com/kubemq-io/kubetools/pkg/prompt" />
         <item itemvalue="Go Test.TestRun in github.com/kubemq-io/kubetools/k8s/stern" />
         <item itemvalue="Go Test.TestClient_GetLogs in github.com/kubemq-io/kubetools/k8s" />
         <item itemvalue="Go Test.TestClient_Scale in github.com/kubemq-io/kubetools/k8s" />
-        <item itemvalue="Go Test.TestClient_GetStatefulSets in github.com/kubemq-io/kubetools/k8s" />
       </list>
     </recent_temporary>
   </component>
@@ -343,7 +335,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567085344484</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="- adding config">
+      <created>1567095652344</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1567095652344</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -432,7 +431,8 @@
     <MESSAGE value="- adding events" />
     <MESSAGE value="- adding events store" />
     <MESSAGE value="- adding commands" />
-    <option name="LAST_COMMIT_MESSAGE" value="- adding commands" />
+    <MESSAGE value="- adding config" />
+    <option name="LAST_COMMIT_MESSAGE" value="- adding config" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

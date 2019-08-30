@@ -2,6 +2,7 @@ package client
 
 import (
 	"bytes"
+	"encoding/json"
 	"errors"
 	"fmt"
 	appsv1 "k8s.io/api/apps/v1"
@@ -16,6 +17,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"sigs.k8s.io/yaml"
 
 	"path/filepath"
 	"strings"
@@ -111,6 +113,20 @@ func (c *Client) GetStatefulSets(ns string, contains ...string) (map[string]apps
 
 	}
 	return list, err
+}
+
+func (c *Client) DescribeStatefulSet(ns, name string) (string, error) {
+
+	sts, err := c.ClientSet.AppsV1().StatefulSets(ns).Get(name, metav1.GetOptions{})
+	data, err := json.Marshal(sts)
+	if err != nil {
+		return "", err
+	}
+	y, err := yaml.JSONToYAML(data)
+	if err != nil {
+		return "", err
+	}
+	return string(y), nil
 }
 
 func (c *Client) GetServices(ns string, contains ...string) (map[string]apiv1.Service, error) {
