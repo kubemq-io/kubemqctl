@@ -2,27 +2,36 @@ package utils
 
 import (
 	"fmt"
+	"strings"
 )
 
+func Title(input string) string {
+	words := strings.Fields(input)
+	if len(words) > 0 {
+		words[0] = strings.Title(words[0])
+	}
+	return strings.Join(words, " ")
+}
 func Println(msg string) {
-	fmt.Println(msg)
+
+	fmt.Println(Title(msg))
 }
 
 func Print(msg string) {
-	fmt.Print(msg)
+	fmt.Print(strings.Title(msg))
 }
 func Printf(format string, args ...interface{}) {
-	fmt.Print(fmt.Sprintf(format, args...))
+	fmt.Print(strings.Title(fmt.Sprintf(format, args...)))
 }
 
 func Printlnf(format string, args ...interface{}) {
-	fmt.Println(fmt.Sprintf(format, args...))
+	fmt.Println(Title(fmt.Sprintf(format, args...)))
 }
 
 func PrintAndExit(msg string) {
-	fmt.Println(msg)
+	fmt.Println(strings.Title(msg))
 }
 
 func PrintfAndExit(format string, args ...interface{}) {
-	fmt.Println(fmt.Sprintf(format, args...))
+	fmt.Println(strings.Title(fmt.Sprintf(format, args...)))
 }

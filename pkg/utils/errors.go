@@ -14,6 +14,6 @@ func CheckErr(err error) {
 	if !strings.HasPrefix(msg, "error: ") {
 		msg = fmt.Sprintf("error: %s", msg)
 	}
-	fmt.Fprint(os.Stderr, msg)
+	fmt.Fprint(os.Stderr, strings.Title(msg))
 	os.Exit(1)
 }

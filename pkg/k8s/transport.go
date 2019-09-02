@@ -7,6 +7,7 @@ import (
 	"github.com/kubemq-io/kubetools/pkg/config"
 	"github.com/kubemq-io/kubetools/pkg/k8s/client"
 	"github.com/kubemq-io/kubetools/pkg/utils"
+	v1 "k8s.io/api/core/v1"
 	"net"
 	"time"
 )
@@ -38,6 +39,10 @@ func SetTransport(ctx context.Context, cfg *config.Config) error {
 	if err != nil {
 		return err
 	}
+	podNameSpace, podName, err := GetRunningPod(c, cfg.CurrentNamespace, cfg.CurrentStatefulSet)
+	if err != nil {
+		return err
+	}
 	freePorts, err := getFreePorts(3)
 	if err != nil {
 		return err
@@ -54,18 +59,18 @@ func SetTransport(ctx context.Context, cfg *config.Config) error {
 
 	stopCh := make(chan struct{})
 	outCh, errOutCh := make(chan string, 1), make(chan string, 1)
-	err = c.ForwardPorts(cfg.CurrentNamespace, cfg.CurrentStatefulSet+"-0", ports, stopCh, outCh, errOutCh)
+	err = c.ForwardPorts(podNameSpace, podName, ports, stopCh, outCh, errOutCh)
 	if err != nil {
 		return err
 	}
 	select {
 	case <-outCh:
-		utils.Printlnf("-> gRPC Port %s Rest Port %s Api Port %s, ok", ports[0], ports[1], ports[2])
+		utils.Printlnf("->  connected to %s/%s at gRPC Port %s Rest Port %s Api Port %s, ok", podNameSpace, podName, ports[0], ports[1], ports[2])
 	case errstr := <-errOutCh:
 		return fmt.Errorf(errstr)
 
 	case <-time.After(30 * time.Second):
-		return fmt.Errorf("timeout during setting of transport layer to Kubeernetes cluster")
+		return fmt.Errorf("timeout during setting of transport layer to kubernetes cluster")
 
 	case <-ctx.Done():
 		close(stopCh)
@@ -87,4 +92,23 @@ func SetTransport(ctx context.Context, cfg *config.Config) error {
 		}
 	}()
 	return nil
+}
+
+func GetRunningPod(client *client.Client, ns, sts string) (string, string, error) {
+	pods, err := client.GetPods(ns, sts)
+	if err != nil {
+		return "", "", err
+	}
+	list := map[string]string{}
+	for _, pod := range pods {
+		if pod.Status.Phase == v1.PodRunning {
+			list[pod.Namespace] = pod.Name
+		}
+	}
+
+	for key, value := range list {
+		return key, value, nil
+	}
+
+	return "", "", fmt.Errorf("no running pods available in %s/%s. you can change the currnet context with 'kubetools config' command", ns, sts)
 }

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/kubemq-io/kubetools/pkg/config"
-	prx "github.com/kubemq-io/kubetools/pkg/k8s/proxy"
+	"github.com/kubemq-io/kubetools/pkg/k8s"
 
 	"github.com/kubemq-io/kubetools/pkg/utils"
 	"github.com/spf13/cobra"
@@ -12,15 +12,15 @@ import (
 
 type ProxyOptions struct {
 	cfg *config.Config
-	*prx.ProxyOptions
+	*k8s.ProxyOptions
 }
 
 var proxyExamples = `
-	# proxy default/kubemq-cluster-0 with default KubeMQ ports
+	# proxy default/kubemq-cluster with default KubeMQ ports
 	kubetools proxy
 
 	# proxy specific namespace/pod with default KubeMQ ports
-	kubetools proxy kubemq kubemq-cluster1-0 
+	kubetools proxy kubemq kubemq-cluster1 
 
 	# proxy specific namespace/pod with specific ports
 	kubetools proxy default nginx -p 80:80 
@@ -31,7 +31,7 @@ var proxyShort = `proxy namespace/pod with ports`
 func NewCmdProxy(cfg *config.Config) *cobra.Command {
 	o := &ProxyOptions{
 		cfg: cfg,
-		ProxyOptions: &prx.ProxyOptions{
+		ProxyOptions: &k8s.ProxyOptions{
 			KubeConfig: cfg.KubeConfigPath,
 			Namespace:  "",
 			Pod:        "",
@@ -63,20 +63,13 @@ func NewCmdProxy(cfg *config.Config) *cobra.Command {
 }
 
 func (o *ProxyOptions) Complete(args []string) error {
-	if len(args) == 0 {
-		o.Namespace = o.cfg.CurrentNamespace
-		o.Pod = o.cfg.CurrentStatefulSet + "-0"
-		return nil
-	}
-	if len(args) == 1 {
-		o.Namespace = args[0]
-		o.Pod = o.cfg.CurrentStatefulSet + "-0"
-		return nil
-	}
 	if len(args) >= 2 {
 		o.Namespace = args[0]
 		o.Pod = args[1]
 		return nil
+	} else {
+		o.Namespace = o.cfg.CurrentNamespace
+		o.StatefulSet = o.cfg.CurrentStatefulSet
 	}
 	return nil
 }
@@ -86,8 +79,7 @@ func (o *ProxyOptions) Validate() error {
 }
 
 func (o *ProxyOptions) Run(ctx context.Context) error {
-	utils.Printf("Set Proxy on %s/%s with Ports: %s\n", o.Namespace, o.Pod, o.Ports)
-	err := prx.SetProxy(ctx, o.ProxyOptions)
+	err := k8s.SetProxy(ctx, o.ProxyOptions)
 	if err != nil {
 		return err
 	}

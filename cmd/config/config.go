@@ -7,13 +7,18 @@ import (
 	"github.com/kubemq-io/kubetools/pkg/k8s/client"
 	"github.com/kubemq-io/kubetools/pkg/utils"
 	"github.com/spf13/cobra"
+	"sort"
 	"strings"
 )
 
 type ConfigOptions struct {
-	cfg *config.Config
+	Cfg *config.Config
 }
 
+var configExamples = `
+	# Run configuration wizard
+	# kubetools config
+`
 var configLong = `config kubetools`
 var configShort = `config kubetools`
 
@@ -38,7 +43,7 @@ func NewCmdConfig(cfg *config.Config) *cobra.Command {
 }
 
 func (o *ConfigOptions) Complete(args []string, cfg *config.Config) error {
-	o.cfg = cfg
+	o.Cfg = cfg
 	return nil
 }
 
@@ -47,11 +52,11 @@ func (o *ConfigOptions) Validate() error {
 }
 
 func (o *ConfigOptions) Run(ctx context.Context) error {
-	cfg := o.cfg
+	cfg := o.Cfg
 	integrationType := ""
 	integrationSelect := &survey.Select{
 		Renderer: survey.Renderer{},
-		Message:  "Set KubeMQ location:",
+		Message:  "Select KubeMQ location:",
 		Options:  []string{"kubernetes cluster", "single docker container"},
 		Default:  "kubernetes cluster",
 		Help:     "select the location of KubeMQ server",
@@ -65,7 +70,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 		kubeConfigPath := ""
 		prompt := &survey.Input{
 			Renderer: survey.Renderer{},
-			Message:  "select kube config path (if not default):",
+			Message:  "Select kube config path (press Enter for default):",
 			Default:  "",
 			Help:     "set kube.config file path if not kubectl default",
 		}
@@ -76,22 +81,55 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 		if kubeConfigPath != "" {
 			cfg.KubeConfigPath = kubeConfigPath
 		}
-		utils.Println("wait, pulling KubeMQ clusters list...")
-		list, err := o.getClusters(kubeConfigPath)
+
+		c, err := client.NewClient(kubeConfigPath)
+		if err != nil {
+			return err
+		}
+		contextMap, current, err := c.GetConfigContext()
+		if err != nil {
+			return err
+		}
+		list := []string{}
+		for key, _ := range contextMap {
+			list = append(list, key)
+		}
+		sort.Strings(list)
+		contextSelected := ""
+		contextSelect := &survey.Select{
+			Renderer:      survey.Renderer{},
+			Message:       "Select kubernetes cluster context",
+			Options:       list,
+			Default:       current,
+			Help:          "set kubernetes connection context",
+			PageSize:      0,
+			VimMode:       false,
+			FilterMessage: "",
+			Filter:        nil,
+		}
+		err = survey.AskOne(contextSelect, &contextSelected)
+		if err != nil {
+			return err
+		}
+		err = c.SwitchContext(contextSelected)
+		if err != nil {
+			return err
+		}
+
+		list, err = o.getClusters(kubeConfigPath)
 		if err != nil {
 			return err
 		}
 		if list == nil {
-			utils.Println("no KubeMQ clusters was found, switching to single docker container")
-			cfg.AutoIntegrated = false
+			utils.Println("No KubeMQ clusters were found for selection")
 		} else {
 			clusterSelected := ""
 			clusterSelect := &survey.Select{
 				Renderer: survey.Renderer{},
-				Message:  "Select default cluster:",
+				Message:  "Select current KubeMQ cluster:",
 				Options:  list,
 				Default:  list[0],
-				Help:     "select the default KubeMQ server from available KubeMQ clusters ",
+				Help:     "select the default KubeMQ cluster from available KubeMQ clusters ",
 			}
 			err := survey.AskOne(clusterSelect, &clusterSelected)
 			if err != nil {
@@ -190,19 +228,6 @@ func (o *ConfigOptions) getClusters(kubeConfig string) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	sets, err := c.GetStatefulSets("")
-	if err != nil {
-		return nil, err
-	}
-	var list []string
-	for key, set := range sets {
-		for _, container := range set.Spec.Template.Spec.Containers {
-			if strings.Contains(container.Image, "kubemq") {
-				list = append(list, key)
-				continue
-			}
-		}
+	return c.GetKubeMQClusters()
 
-	}
-	return list, nil
 }

@@ -52,7 +52,7 @@ func TestClient_GetConfigContext(t *testing.T) {
 	c, err := NewClient("")
 	require.NoError(t, err)
 	require.NotNil(t, c)
-	contexts, err := c.GetConfigContext()
+	contexts, _, err := c.GetConfigContext()
 	require.NoError(t, err)
 	require.NotNil(t, contexts)
 	for name, ctx := range contexts {
@@ -75,7 +75,7 @@ func TestClient_SwitchContext(t *testing.T) {
 	c, err := NewClient("")
 	require.NoError(t, err)
 	require.NotNil(t, c)
-	contexts, err := c.GetConfigContext()
+	contexts, _, err := c.GetConfigContext()
 	require.NoError(t, err)
 	require.NotNil(t, contexts)
 	current, err := c.GetCurrentContext()
@@ -164,6 +164,17 @@ func TestClient_DescribeStatefulSet(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, c)
 	y, err := c.DescribeStatefulSet("default", "kubemq-cluster")
+	require.NoError(t, err)
+	require.NotEmpty(t, y)
+	fmt.Println(y)
+
+}
+
+func TestClient_GetStatefulSetPods(t *testing.T) {
+	c, err := NewClient("")
+	require.NoError(t, err)
+	require.NotNil(t, c)
+	y, err := c.GetStatefulSetPods("default", "kubemq-cluster")
 	require.NoError(t, err)
 	require.NotEmpty(t, y)
 	fmt.Println(y)

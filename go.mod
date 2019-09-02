@@ -4,6 +4,7 @@ go 1.12
 
 require (
 	github.com/AlecAivazis/survey/v2 v2.0.4
+	github.com/aws/aws-sdk-go v1.15.78
 	github.com/cheggaaa/pb v1.0.27
 	github.com/fatih/color v1.7.0
 	github.com/go-resty/resty v1.8.0

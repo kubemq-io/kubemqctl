@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-var defaultConfig = &Config{
+var DefaultConfig = &Config{
 	AutoIntegrated:     true,
 	CurrentNamespace:   "default",
 	CurrentStatefulSet: "kubemq-cluster",
@@ -31,13 +31,13 @@ func exists(name string) bool {
 }
 func CheckConfigFile() (*Config, error) {
 	if !exists(".kubetools.yaml") {
-		data, err := yaml.Marshal(defaultConfig)
+		data, err := yaml.Marshal(DefaultConfig)
 		if err != nil {
-			return defaultConfig, err
+			return DefaultConfig, err
 		}
 		err = ioutil.WriteFile(".kubetools.yaml", data, 0644)
 		if err != nil {
-			return defaultConfig, err
+			return DefaultConfig, err
 		}
 	}
 	return nil, nil

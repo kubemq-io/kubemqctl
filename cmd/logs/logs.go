@@ -2,6 +2,8 @@ package logs
 
 import (
 	"context"
+	"github.com/AlecAivazis/survey/v2"
+	"strings"
 
 	"github.com/kubemq-io/kubetools/pkg/config"
 
@@ -69,6 +71,34 @@ func NewCmdLogs(cfg *config.Config) *cobra.Command {
 }
 
 func (o *LogsOptions) Complete(args []string) error {
+	c, err := client.NewClient(o.cfg.KubeConfigPath)
+	if err != nil {
+		return err
+	}
+	if len(args) == 0 {
+		list, err := c.GetKubeMQClusters()
+		if err != nil {
+			return err
+		}
+		if len(list) == 0 {
+			goto NEXT
+		}
+		selection := ""
+		prompt := &survey.Select{
+			Renderer: survey.Renderer{},
+			Message:  "Show logs for KubeMQ cluster:",
+			Options:  list,
+			Default:  list[0],
+		}
+		err = survey.AskOne(prompt, &selection)
+		if err != nil {
+			return err
+		}
+		pair := strings.Split(selection, "/")
+		o.Options.Namespace = pair[0]
+		o.Options.PodQuery = pair[1]
+	}
+NEXT:
 	if len(args) > 0 {
 		o.PodQuery = args[0]
 	}

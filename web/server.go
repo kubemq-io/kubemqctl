@@ -10,8 +10,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"os/signal"
-	"sync"
 )
 
 type ServerOptions struct {
@@ -26,6 +24,7 @@ func (s *ServerOptions) Run(ctx context.Context) error {
 	http.Handle("/", fs)
 
 	go func() {
+
 		path := fmt.Sprintf("http://localhost:%d/", s.Port)
 		utils.Printlnf("start dashboard on '%s' ...", path)
 		open.Run(path)
@@ -40,7 +39,6 @@ func (s *ServerOptions) Run(ctx context.Context) error {
 }
 
 func (s *ServerOptions) Download(ctx context.Context) error {
-	ctx, cancel := context.WithCancel(ctx)
 	pwd, err := os.Getwd()
 	if err != nil {
 		log.Fatalf("Error getting wd: %s", err)
@@ -48,39 +46,26 @@ func (s *ServerOptions) Download(ctx context.Context) error {
 	opts := []getter.ClientOption{}
 	opts = append(opts, getter.WithProgress(defaultProgressBar))
 	client := &getter.Client{
-		Ctx:     ctx,
-		Src:     "https://github.com/kubemq-io/kubetools/releases/download/latest/kubetools_darwin_amd64",
-		Dst:     "./dist",
-		Pwd:     pwd,
-		Mode:    getter.ClientModeAny,
-		Options: opts,
+		Ctx:              ctx,
+		Src:              "https://github.com/kubemq-io/kubetools/releases/download/latest/dashboard.zip",
+		Dst:              "./",
+		Pwd:              pwd,
+		Mode:             getter.ClientModeDir,
+		Detectors:        nil,
+		Decompressors:    nil,
+		Getters:          nil,
+		Dir:              false,
+		ProgressListener: nil,
+		Options:          opts,
 	}
-	wg := sync.WaitGroup{}
-	wg.Add(1)
-	errChan := make(chan error, 2)
-	go func() {
-		defer wg.Done()
-		defer cancel()
-		if err := client.Get(); err != nil {
-			errChan <- err
-		}
-	}()
 
-	c := make(chan os.Signal)
-	signal.Notify(c, os.Interrupt)
-
-	select {
-	case sig := <-c:
-		signal.Reset(os.Interrupt)
-		cancel()
-		wg.Wait()
-		log.Printf("signal %v", sig)
-	case <-ctx.Done():
-		wg.Wait()
-		log.Printf("success!")
-	case err := <-errChan:
-		wg.Wait()
-		log.Fatalf("Error downloading: %s", err)
+	utils.Println("download dashboard latest version...")
+	err = client.Get()
+	if err != nil {
+		return err
 	}
+
+	utils.Println("downloaded...")
+
 	return nil
 }

@@ -2,14 +2,19 @@ package client
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/kubemq-io/kubetools/pkg/utils"
+
 	appsv1 "k8s.io/api/apps/v1"
 	apiv1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	kubeinformers "k8s.io/client-go/informers"
 	"k8s.io/client-go/kubernetes"
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
+	"k8s.io/client-go/tools/cache"
 	"k8s.io/client-go/tools/clientcmd"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 	"k8s.io/client-go/tools/portforward"
@@ -17,10 +22,12 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"sigs.k8s.io/yaml"
-
 	"path/filepath"
+	"sigs.k8s.io/yaml"
+	"sort"
 	"strings"
+
+	"time"
 )
 
 type Client struct {
@@ -67,12 +74,12 @@ func (c *Client) GetConfigClusters() (map[string]*clientcmdapi.Cluster, error) {
 	return config.Clusters, nil
 }
 
-func (c *Client) GetConfigContext() (map[string]*clientcmdapi.Context, error) {
+func (c *Client) GetConfigContext() (map[string]*clientcmdapi.Context, string, error) {
 	config, err := c.ClientConfig.ConfigAccess().GetStartingConfig()
 	if err != nil {
-		return nil, err
+		return nil, "", err
 	}
-	return config.Contexts, nil
+	return config.Contexts, config.CurrentContext, nil
 }
 
 func (c *Client) GetCurrentContext() (string, error) {
@@ -93,6 +100,100 @@ func (c *Client) SwitchContext(contextName string) error {
 	return err
 }
 
+func (c *Client) CheckAndCreateNamespace(name string) (*apiv1.Namespace, bool, error) {
+	ns, err := c.ClientSet.CoreV1().Namespaces().Get(name, metav1.GetOptions{})
+	if err == nil && ns != nil {
+		return ns, false, nil
+	}
+	newNs := &apiv1.Namespace{
+		TypeMeta: metav1.TypeMeta{
+			Kind:       "Namespace",
+			APIVersion: "v1",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name: name,
+		},
+		Spec:   apiv1.NamespaceSpec{},
+		Status: apiv1.NamespaceStatus{},
+	}
+	ns, err = c.ClientSet.CoreV1().Namespaces().Create(newNs)
+
+	if err != nil {
+		return nil, false, err
+	}
+
+	return ns, true, nil
+}
+
+func (c *Client) CreateStatefulSet(spec []byte) (*appsv1.StatefulSet, error) {
+	sts := &appsv1.StatefulSet{}
+	err := yaml.Unmarshal(spec, sts)
+	if err != nil {
+		return nil, err
+	}
+
+	createdSts, err := c.ClientSet.AppsV1().StatefulSets(sts.Namespace).Create(sts)
+	if err != nil {
+		return nil, err
+	}
+	return createdSts, nil
+}
+func (c *Client) DeleteStatefulSet(name string) error {
+	pair := strings.Split(name, "/")
+	return c.ClientSet.AppsV1().StatefulSets(pair[0]).Delete(pair[1], metav1.NewDeleteOptions(0))
+}
+func (c *Client) DeleteServicesForStatefulSet(name string) error {
+	pair := strings.Split(name, "/")
+	svcs, err := c.ClientSet.CoreV1().Services(pair[0]).List(metav1.ListOptions{})
+	if err != nil {
+		return err
+	}
+
+	for _, svc := range svcs.Items {
+		if strings.Contains(svc.Name, pair[1]) {
+			err := c.ClientSet.CoreV1().Services(pair[0]).Delete(svc.Name, metav1.NewDeleteOptions(0))
+			if err != nil {
+				utils.Printlnf("Service %s/%s not deleted. Error: %s", svc.Namespace, svc.Namespace, utils.Title(err.Error()))
+				continue
+			}
+			utils.Printlnf("Service %s/%s deleted.", svc.Namespace, svc.Name)
+		}
+	}
+	return nil
+}
+func (c *Client) DeleteVolumeClaimsForStatefulSet(name string) error {
+	pair := strings.Split(name, "/")
+	vpcs, err := c.ClientSet.CoreV1().PersistentVolumeClaims(pair[0]).List(metav1.ListOptions{})
+	if err != nil {
+		return err
+	}
+
+	for _, vpc := range vpcs.Items {
+		if strings.Contains(vpc.Name, pair[1]) {
+			err := c.ClientSet.CoreV1().PersistentVolumeClaims(pair[0]).Delete(vpc.Name, metav1.NewDeleteOptions(0))
+			if err != nil {
+				utils.Printlnf("Persistence Volume Claim %s/%s not deleted. Error: %s", vpc.Namespace, vpc.Namespace, utils.Title(err.Error()))
+				continue
+			}
+			utils.Printlnf("Persistence Volume Claim %s/%s deleted.", vpc.Namespace, vpc.Name)
+		}
+	}
+	return nil
+}
+
+func (c *Client) CreateService(spec []byte) (*apiv1.Service, error) {
+	svc := &apiv1.Service{}
+	err := yaml.Unmarshal(spec, svc)
+	if err != nil {
+		return nil, err
+	}
+
+	createdSvc, err := c.ClientSet.CoreV1().Services(svc.Namespace).Create(svc)
+	if err != nil {
+		return nil, err
+	}
+	return createdSvc, nil
+}
 func (c *Client) GetStatefulSets(ns string, contains ...string) (map[string]appsv1.StatefulSet, error) {
 
 	sts, err := c.ClientSet.AppsV1().StatefulSets(ns).List(metav1.ListOptions{})
@@ -218,18 +319,182 @@ func (c *Client) ForwardPorts(ns string, name string, ports []string, stopChan c
 	return nil
 }
 
-func (c *Client) Scale(ns, name string, replicas int32) error {
+func (c *Client) Scale(ctx context.Context, ns, name string, replicas int32) error {
 	currentScale, err := c.ClientSet.AppsV1().StatefulSets(ns).GetScale(name, metav1.GetOptions{})
 	if err != nil {
 		return err
 	}
 	currentScale.Spec.Replicas = replicas
-	newScale, err := c.ClientSet.AppsV1().StatefulSets(ns).UpdateScale(name, currentScale)
+	_, err = c.ClientSet.AppsV1().StatefulSets(ns).UpdateScale(name, currentScale)
 	if err != nil {
 		return err
 	}
-	fmt.Println(newScale.Status)
-	return nil
+	done := make(chan struct{})
+	evt := make(chan *appsv1.StatefulSet)
+	go c.GetStatefulSetEvents(ctx, evt, done)
+
+	for {
+		select {
+		case sts := <-evt:
+			if replicas == sts.Status.Replicas && sts.Status.Replicas == sts.Status.ReadyReplicas {
+				utils.Printlnf("Desired:%d Current:%d Ready:%d", replicas, sts.Status.Replicas, sts.Status.ReadyReplicas)
+				done <- struct{}{}
+				return nil
+			} else {
+				utils.Printlnf("Desired:%d Current:%d Ready:%d", replicas, sts.Status.Replicas, sts.Status.ReadyReplicas)
+			}
+		case <-ctx.Done():
+			return nil
+		}
+
+	}
+
+}
+
+func (c *Client) GetKubeMQClusters() ([]string, error) {
+
+	sets, err := c.GetStatefulSets("")
+	if err != nil {
+		return nil, err
+	}
+	var list []string
+	for key, set := range sets {
+		for _, container := range set.Spec.Template.Spec.Containers {
+			if strings.Contains(container.Image, "kubemq") {
+				list = append(list, key)
+				continue
+			}
+		}
+
+	}
+	sort.Strings(list)
+	return list, nil
+}
+
+func (c *Client) GetKubeMQClustersStatus() ([]*StatefulSetStatus, error) {
+
+	sets, err := c.GetStatefulSets("")
+	if err != nil {
+		return nil, err
+	}
+	var list []*StatefulSetStatus
+	for _, set := range sets {
+		for _, container := range set.Spec.Template.Spec.Containers {
+			if strings.Contains(container.Image, "kubemq") {
+				sts := &StatefulSetStatus{
+					Name:      set.Name,
+					Namespace: set.Namespace,
+					Desired:   *set.Spec.Replicas,
+					Running:   set.Status.Replicas,
+					Ready:     set.Status.ReadyReplicas,
+					Image:     container.Image,
+					Age:       time.Now().Sub(set.CreationTimestamp.Time),
+				}
+				list = append(list, sts)
+				continue
+			}
+		}
+	}
+
+	return list, nil
+}
+
+func (c *Client) GetStatefulSetDeployment(ns, name string) (*StatefulSetDeployment, error) {
+
+	sts, err := c.ClientSet.AppsV1().StatefulSets(ns).Get(name, metav1.GetOptions{})
+	if err != nil {
+		return nil, err
+	}
+	labels := sts.Spec.Template.ObjectMeta.Labels
+	svcList := []apiv1.Service{}
+	vpcList := []apiv1.PersistentVolumeClaim{}
+
+	svcs, _ := c.ClientSet.CoreV1().Services(ns).List(metav1.ListOptions{})
+	if svcs != nil {
+		for _, svc := range svcs.Items {
+			for key, value := range svc.Spec.Selector {
+				if labels[key] == value {
+					svcList = append(svcList, svc)
+					continue
+				}
+			}
+		}
+	}
+	for _, svc := range svcList {
+		fmt.Println(svc.Name)
+	}
+	vpcs, _ := c.ClientSet.CoreV1().PersistentVolumeClaims(ns).List(metav1.ListOptions{})
+	if vpcs != nil {
+		for _, vpc := range vpcs.Items {
+			for key, value := range vpc.Spec.Selector.MatchLabels {
+				if labels[key] == value {
+					vpcList = append(vpcList, vpc)
+					continue
+				}
+			}
+		}
+	}
+
+	dep := &StatefulSetDeployment{
+		Namespace:         ns,
+		Name:              name,
+		Labels:            labels,
+		StatefulSet:       sts,
+		Services:          svcList,
+		VolumesClaims:     vpcList,
+		StatefulSetStatus: stsToStatus(sts),
+		ServicesStatus:    svcsToStatus(svcList),
+	}
+	return dep, nil
+}
+
+func stsToStatus(sts *appsv1.StatefulSet) *StatefulSetStatus {
+	stss := &StatefulSetStatus{
+		Name:      sts.Name,
+		Namespace: sts.Namespace,
+		Desired:   *sts.Spec.Replicas,
+		Running:   sts.Status.Replicas,
+		Ready:     sts.Status.ReadyReplicas,
+		Image:     "",
+		Age:       time.Now().Sub(sts.CreationTimestamp.Time),
+		PVC:       false,
+	}
+	for _, container := range sts.Spec.Template.Spec.Containers {
+		stss.Image = container.Image
+	}
+	if len(sts.Spec.VolumeClaimTemplates) > 0 {
+		stss.PVC = true
+	}
+	return stss
+}
+
+func svcsToStatus(svcs []apiv1.Service) []*ServiceStatus {
+	list := []*ServiceStatus{}
+	for _, svc := range svcs {
+		ss := &ServiceStatus{
+			Name:      svc.Name,
+			Namespace: svc.Namespace,
+			Type:      string(svc.Spec.Type),
+			ClusterIP: svc.Spec.ClusterIP,
+			ExternalP: "",
+			Ports:     "",
+			Age:       time.Now().Sub(svc.CreationTimestamp.Time),
+		}
+		ss.ExternalP = strings.Join(svc.Spec.ExternalIPs, ",")
+
+		portList := []string{}
+		for _, port := range svc.Spec.Ports {
+			if port.NodePort > 0 {
+				portList = append(portList, fmt.Sprintf("%d:%d/%s", port.Port, port.NodePort, string(port.Protocol)))
+			} else {
+				portList = append(portList, fmt.Sprintf("%d/%s", port.Port, string(port.Protocol)))
+			}
+		}
+		ss.Ports = strings.Join(portList, ",")
+
+		list = append(list, ss)
+	}
+	return list
 }
 
 func homeDir() string {
@@ -237,4 +502,42 @@ func homeDir() string {
 		return h
 	}
 	return os.Getenv("USERPROFILE") // windows
+}
+
+func (c *Client) GetStatefulSetEvents(ctx context.Context, evt chan *appsv1.StatefulSet, done chan struct{}) error {
+	kubeInformerFactory := kubeinformers.NewSharedInformerFactory(c.ClientSet, time.Second*15)
+	stsInformer := kubeInformerFactory.Apps().V1().StatefulSets().Informer()
+	stop := make(chan struct{})
+	defer close(stop)
+	stsInformer.AddEventHandler(cache.ResourceEventHandlerFuncs{
+		AddFunc: func(obj interface{}) {
+			sts, ok := obj.(*appsv1.StatefulSet)
+			if ok {
+				evt <- sts
+			}
+
+		},
+		DeleteFunc: func(obj interface{}) {
+			sts, ok := obj.(*appsv1.StatefulSet)
+			if ok {
+				evt <- sts
+			}
+		},
+		UpdateFunc: func(oldObj, newObj interface{}) {
+			sts, ok := newObj.(*appsv1.StatefulSet)
+			if ok {
+				evt <- sts
+			}
+		},
+	})
+	kubeInformerFactory.Start(stop)
+	for {
+		select {
+		case <-done:
+			return nil
+		case <-ctx.Done():
+			return nil
+
+		}
+	}
 }
