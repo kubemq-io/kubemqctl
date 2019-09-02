@@ -20,15 +20,15 @@ type EventsReceiveOptions struct {
 }
 
 var eventsReceiveExamples = `
-	# Receive messages from a events channel(blocks until next message)
+	# Receive messages from an events channel (blocks until next message)
 	kubetools events receive some-channel
 
-	# Receive messages from a events channel with group(blocks until next message)
+	# Receive messages from an events channel with group (blocks until next message)
 	kubetools events receive some-channel -g G1
 
 `
-var eventsReceiveLong = `receive a message from a events`
-var eventsReceiveShort = `receive a message from a events`
+var eventsReceiveLong = `Receive a message from events channel`
+var eventsReceiveShort = `Receive a message from events channel`
 
 func NewCmdEventsReceive(cfg *config.Config) *cobra.Command {
 	o := &EventsReceiveOptions{
@@ -44,14 +44,14 @@ func NewCmdEventsReceive(cfg *config.Config) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
 
-	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "set group")
+	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "Set group")
 	return cmd
 }
 

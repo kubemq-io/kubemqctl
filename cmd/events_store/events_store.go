@@ -5,9 +5,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var eventsExamples = ``
-var eventsLong = `Execute KubeMQ events store commands`
-var eventsShort = `Execute KubeMQ events store commands`
+var eventsExamples = `
+	# Execute send events_store command 
+	# kubetools events_store send
+
+	# Execute receive events_store command
+	# kubetools events_store receive
+
+	# Execute attach to events_store command
+	# kubetools events_store attach
+`
+var eventsLong = `Execute KubeMQ 'events_store' Pub/Sub commands`
+var eventsShort = `Execute KubeMQ 'events_store' Pub/Sub commands`
 
 // NewCmdCreate returns new initialized instance of create sub command
 func NewCmdEventsStore(cfg *config.Config) *cobra.Command {
@@ -18,7 +27,7 @@ func NewCmdEventsStore(cfg *config.Config) *cobra.Command {
 		Long:    eventsShort,
 		Example: eventsExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-
+			cmd.Help()
 		},
 	}
 	cmd.AddCommand(NewCmdEventsStoreSend(cfg))

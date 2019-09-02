@@ -25,8 +25,8 @@ var scaleExamples = `
 	# Scale StatufulSet to 0
 	kubetools cluster scale 0
 `
-var scaleLong = `Scale KubeMQ stateful set`
-var scaleShort = `Scale KubeMQ stateful set`
+var scaleLong = `Scale KubeMQ cluster`
+var scaleShort = `Scale KubeMQ cluster`
 
 func NewCmdScale(cfg *config.Config) *cobra.Command {
 	o := &ScaleOptions{
@@ -42,7 +42,7 @@ func NewCmdScale(cfg *config.Config) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args))
+			utils.CheckErr(o.Complete(args), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(o.Run(ctx))
 		},

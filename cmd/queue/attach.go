@@ -36,8 +36,8 @@ var queueAttachExamples = `
 	# Attach to some-queue queue and output running messages filter by exclude regex (not-some*)
 	kubetools queue attach some-queue -e not-some*
 `
-var queueAttachLong = `attach to queue channels`
-var queueAttachShort = `attach to queue channels`
+var queueAttachLong = `Attach to queue channels and display content`
+var queueAttachShort = `Attach to queue channels`
 
 func NewCmdQueueAttach(cfg *config.Config) *cobra.Command {
 	o := &QueueAttachOptions{
@@ -54,13 +54,13 @@ func NewCmdQueueAttach(cfg *config.Config) *cobra.Command {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
-			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().StringArrayVarP(&o.include, "include", "i", []string{}, "set (regex) strings to include")
-	cmd.PersistentFlags().StringArrayVarP(&o.exclude, "exclude", "e", []string{}, "set (regex) strings to exclude")
+	cmd.PersistentFlags().StringArrayVarP(&o.include, "include", "i", []string{}, "Set (regex) strings to include")
+	cmd.PersistentFlags().StringArrayVarP(&o.exclude, "exclude", "e", []string{}, "Set (regex) strings to exclude")
 	return cmd
 }
 

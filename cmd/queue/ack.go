@@ -24,8 +24,8 @@ var queueAckExamples = `
 	# Ack all messages in a queue channel 'some-long-queue' with 30 seconds of wait to complete operation
 	kubetools queue ack some-long-queue -w 30
 `
-var queueAckLong = `ack all messages in a queue`
-var queueAckShort = `ack all messages in a queue`
+var queueAckLong = `Ack all messages in a queue channel`
+var queueAckShort = `Ack all messages in a queue channel`
 
 func NewCmdQueueAck(cfg *config.Config) *cobra.Command {
 	o := &QueueAckOptions{
@@ -41,14 +41,14 @@ func NewCmdQueueAck(cfg *config.Config) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
 
-	cmd.PersistentFlags().IntVarP(&o.wait, "wait", "w", 2, "set how many seconds to wait for ack all messages")
+	cmd.PersistentFlags().IntVarP(&o.wait, "wait", "w", 2, "Set how many seconds to wait for ack all messages")
 
 	return cmd
 }

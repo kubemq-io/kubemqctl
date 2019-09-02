@@ -31,8 +31,8 @@ var commandsSendExamples = `
 	# Send command to a commands channel with 120 seconds timeout
 	kubetools commands send some-channel some-message -o 120
 `
-var commandsSendLong = `send messages to a commands channel`
-var commandsSendShort = `send messages to a commands channel`
+var commandsSendLong = `Send messages to commands channel`
+var commandsSendShort = `Send messages to commands channel`
 
 func NewCmdCommandsSend(cfg *config.Config) *cobra.Command {
 	o := &CommandsSendOptions{
@@ -48,14 +48,14 @@ func NewCmdCommandsSend(cfg *config.Config) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "m", "", "set metadata message")
-	cmd.PersistentFlags().IntVarP(&o.timeout, "timeout", "o", 30, "set command timeout")
+	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "m", "", "Set metadata message")
+	cmd.PersistentFlags().IntVarP(&o.timeout, "timeout", "o", 30, "Set command timeout")
 
 	return cmd
 }
@@ -67,7 +67,7 @@ func (o *CommandsSendOptions) Complete(args []string, transport string) error {
 		o.message = args[1]
 		return nil
 	}
-	return fmt.Errorf("missing arguments, must be 2 arguments, channel and message")
+	return fmt.Errorf("missing arguments, must be 2 arguments, channel and a message")
 }
 
 func (o *CommandsSendOptions) Validate() error {

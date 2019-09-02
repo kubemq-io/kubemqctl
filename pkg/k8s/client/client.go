@@ -420,9 +420,7 @@ func (c *Client) GetStatefulSetDeployment(ns, name string) (*StatefulSetDeployme
 			}
 		}
 	}
-	for _, svc := range svcList {
-		fmt.Println(svc.Name)
-	}
+
 	vpcs, _ := c.ClientSet.CoreV1().PersistentVolumeClaims(ns).List(metav1.ListOptions{})
 	if vpcs != nil {
 		for _, vpc := range vpcs.Items {
@@ -480,14 +478,18 @@ func svcsToStatus(svcs []apiv1.Service) []*ServiceStatus {
 			Ports:     "",
 			Age:       time.Now().Sub(svc.CreationTimestamp.Time),
 		}
-		ss.ExternalP = strings.Join(svc.Spec.ExternalIPs, ",")
 
+		if string(svc.Spec.Type) == "LoadBalancer" {
+			if len(svc.Status.LoadBalancer.Ingress) > 0 {
+				ss.ExternalP = svc.Status.LoadBalancer.Ingress[0].IP
+			}
+		}
 		portList := []string{}
 		for _, port := range svc.Spec.Ports {
 			if port.NodePort > 0 {
-				portList = append(portList, fmt.Sprintf("%d:%d/%s", port.Port, port.NodePort, string(port.Protocol)))
+				portList = append(portList, fmt.Sprintf("%d:%d", port.Port, port.NodePort))
 			} else {
-				portList = append(portList, fmt.Sprintf("%d/%s", port.Port, string(port.Protocol)))
+				portList = append(portList, fmt.Sprintf("%d", port.Port))
 			}
 		}
 		ss.Ports = strings.Join(portList, ",")

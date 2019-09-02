@@ -33,8 +33,8 @@ var eventsAttachExamples = `
 	# attach to some-events events channel and output running messages filter by exclude regex (not-some*)
 	kubetools events attach some-events -e not-some*
 `
-var eventsAttachLong = `attach to events channels`
-var eventsAttachShort = `attach to events channels`
+var eventsAttachLong = `Attach to events channels and display channel content`
+var eventsAttachShort = `Attach to events channels`
 
 func NewCmdEventsAttach(cfg *config.Config) *cobra.Command {
 	o := &EventsAttachOptions{
@@ -51,13 +51,13 @@ func NewCmdEventsAttach(cfg *config.Config) *cobra.Command {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
-			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().StringArrayVarP(&o.include, "include", "i", []string{}, "set (regex) strings to include")
-	cmd.PersistentFlags().StringArrayVarP(&o.exclude, "exclude", "e", []string{}, "set (regex) strings to exclude")
+	cmd.PersistentFlags().StringArrayVarP(&o.include, "include", "i", []string{}, "Set (regex) strings to include")
+	cmd.PersistentFlags().StringArrayVarP(&o.exclude, "exclude", "e", []string{}, "Set (regex) strings to exclude")
 	return cmd
 }
 

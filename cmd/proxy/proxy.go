@@ -25,8 +25,8 @@ var proxyExamples = `
 	# proxy specific namespace/pod with specific ports
 	kubetools proxy default nginx -p 80:80 
 `
-var proxyLong = `proxy namespace/pod with ports`
-var proxyShort = `proxy namespace/pod with ports`
+var proxyLong = `Proxy KubeMQ cluster connection to localhost`
+var proxyShort = `Proxy KubeMQ cluster connection to localhost`
 
 func NewCmdProxy(cfg *config.Config) *cobra.Command {
 	o := &ProxyOptions{
@@ -48,7 +48,7 @@ func NewCmdProxy(cfg *config.Config) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args))
+			utils.CheckErr(o.Complete(args), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(o.Run(ctx))
 		},
@@ -57,7 +57,7 @@ func NewCmdProxy(cfg *config.Config) *cobra.Command {
 		fmt.Sprintf("%d:%d", cfg.GrpcPort, cfg.GrpcPort),
 		fmt.Sprintf("%d:%d", cfg.RestPort, cfg.RestPort),
 		fmt.Sprintf("%d:%d", cfg.ApiPort, cfg.ApiPort),
-	}, "set proxy ports")
+	}, "Set proxy ports")
 
 	return cmd
 }

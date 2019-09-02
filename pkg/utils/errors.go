@@ -2,11 +2,12 @@ package utils
 
 import (
 	"fmt"
+	"github.com/spf13/cobra"
 	"os"
 	"strings"
 )
 
-func CheckErr(err error) {
+func CheckErr(err error, cmd ...*cobra.Command) {
 	if err == nil {
 		return
 	}
@@ -14,6 +15,11 @@ func CheckErr(err error) {
 	if !strings.HasPrefix(msg, "error: ") {
 		msg = fmt.Sprintf("error: %s", msg)
 	}
-	fmt.Fprint(os.Stderr, strings.Title(msg))
+	fmt.Fprintln(os.Stderr, strings.Title(msg))
+	if cmd != nil {
+		if cmd[0].HasExample() {
+			fmt.Fprintln(os.Stderr, "Try:", cmd[0].Example)
+		}
+	}
 	os.Exit(1)
 }

@@ -35,7 +35,7 @@ func NewCmdDelete(cfg *config.Config) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args))
+			utils.CheckErr(o.Complete(args), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(o.Run(ctx))
 		},
@@ -72,7 +72,7 @@ func (o *DeleteOptions) Run(ctx context.Context) error {
 		Message:       "Select KubeMQ clusters to delete",
 		Options:       list,
 		Default:       nil,
-		Help:          "select KubeMQ clusters to delete",
+		Help:          "Select KubeMQ clusters to delete",
 		PageSize:      0,
 		VimMode:       false,
 		FilterMessage: "",
@@ -81,6 +81,21 @@ func (o *DeleteOptions) Run(ctx context.Context) error {
 	err = survey.AskOne(multiSelected, &selection)
 	if err != nil {
 		return err
+	}
+
+	areYouSure := false
+	promptConfirm := &survey.Confirm{
+		Renderer: survey.Renderer{},
+		Message:  "Are you sure ?",
+		Default:  false,
+		Help:     "Confirm KubeMQ cluster deletion",
+	}
+	err = survey.AskOne(promptConfirm, &areYouSure)
+	if err != nil {
+		return err
+	}
+	if !areYouSure {
+		return nil
 	}
 	for _, sts := range selection {
 

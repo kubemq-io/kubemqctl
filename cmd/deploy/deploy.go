@@ -47,8 +47,8 @@ var deployExamples = `
 	# Deploy default KubeMQ cluster with specific KubeMQ image version   
 	# kubetools deploy b3330scc-93ef-4395-bba3-13131sb2785e -i v1.6.2
 `
-var deployLong = `Deploy KubeMQ cluster`
-var deployShort = `Deploy KubeMQ cluster`
+var deployLong = `Deploy a KubeMQ cluster`
+var deployShort = `Deploy a KubeMQ cluster`
 
 func NewCmdDeploy(cfg *config.Config) *cobra.Command {
 	o := &DeployOptions{
@@ -64,22 +64,22 @@ func NewCmdDeploy(cfg *config.Config) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args))
+			utils.CheckErr(o.Complete(args), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
 
-	cmd.PersistentFlags().StringVarP(&o.namespace, "namespace", "s", "default", "set namespace name")
-	cmd.PersistentFlags().StringVarP(&o.name, "name", "n", "kubemq-cluster", "set KubeMQ cluster name")
-	cmd.PersistentFlags().StringVarP(&o.version, "image", "i", "latest", "set KubeMQ image version")
-	cmd.PersistentFlags().StringVarP(&o.token, "token", "t", "", "set KubeMQ token")
-	cmd.PersistentFlags().IntVarP(&o.replicas, "replicas", "r", 3, "set how many replicas in KubeMQ cluster")
-	cmd.PersistentFlags().IntVarP(&o.volume, "volume", "v", 0, "set size of persistence volume")
-	cmd.PersistentFlags().StringVarP(&o.appsVersion, "apps-api", "", "apps/v1", "set api version for kubernetes apps end-point")
-	cmd.PersistentFlags().StringVarP(&o.coreVersion, "core-api", "", "v1", "set api version for kubernetes core end-point")
-	cmd.PersistentFlags().BoolVarP(&o.isNodePort, "set-node-port", "", false, "set expose services with NodePort")
-	cmd.PersistentFlags().BoolVarP(&o.isLoadBalance, "set-load-balancer", "", false, "set expose services with LoadBalancer")
+	cmd.PersistentFlags().StringVarP(&o.namespace, "namespace", "s", "default", "Set namespace name")
+	cmd.PersistentFlags().StringVarP(&o.name, "name", "n", "kubemq-cluster", "Set KubeMQ cluster name")
+	cmd.PersistentFlags().StringVarP(&o.version, "image", "i", "latest", "Set KubeMQ image version")
+	cmd.PersistentFlags().StringVarP(&o.token, "token", "t", "", "Set KubeMQ token")
+	cmd.PersistentFlags().IntVarP(&o.replicas, "replicas", "r", 3, "Set how many replicas in KubeMQ cluster")
+	cmd.PersistentFlags().IntVarP(&o.volume, "volume", "v", 0, "Set size of persistence volume")
+	cmd.PersistentFlags().StringVarP(&o.appsVersion, "apps-api", "", "apps/v1", "Set api version for kubernetes apps end-point")
+	cmd.PersistentFlags().StringVarP(&o.coreVersion, "core-api", "", "v1", "Set api version for kubernetes core end-point")
+	cmd.PersistentFlags().BoolVarP(&o.isNodePort, "set-node-port", "", false, "Set expose services with NodePort")
+	cmd.PersistentFlags().BoolVarP(&o.isLoadBalance, "set-load-balancer", "", false, "Set expose services with LoadBalancer")
 
 	return cmd
 }
@@ -126,17 +126,6 @@ func (o *DeployOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-
-	//stsCfg := StatefulSetConfig{
-	//	ApiVersion: "apps/v1",
-	//	Name:       "kubemq-cluster",
-	//	Namespace:  "default",
-	//	Replicas:   3,
-	//	Token:      "b33600cc-93ef-4395-bba3-13131eb2785e",
-	//	Version:    "latest",
-	//}
-	//t := NewTemplate(defaultStsTemplate, stsCfg)
-	//spec, err := t.Get()
 	var created bool
 	deployment.Namespace, created, err = c.CheckAndCreateNamespace(o.namespace)
 	if err != nil {

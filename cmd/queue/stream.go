@@ -28,8 +28,8 @@ var queueStreamExamples = `
 	# Stream queue message in transaction mode with visibility set to 120 seconds and wait time of 180 seconds
 	kubetools queue stream some-channel -v 120 -w 180
 `
-var queueStreamLong = `receive a message from a queue`
-var queueStreamShort = `receive a message from a queue`
+var queueStreamLong = `Stream a message from a queue`
+var queueStreamShort = `Stream a message from a queue`
 
 func NewCmdQueueStream(cfg *config.Config) *cobra.Command {
 	o := &QueueStreamOptions{
@@ -45,14 +45,14 @@ func NewCmdQueueStream(cfg *config.Config) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().IntVarP(&o.visibility, "visibility", "v", 30, "set initial visibility seconds")
-	cmd.PersistentFlags().IntVarP(&o.wait, "wait", "w", 60, "set how many seconds to wait for queue messages")
+	cmd.PersistentFlags().IntVarP(&o.visibility, "visibility", "v", 30, "Set initial visibility seconds")
+	cmd.PersistentFlags().IntVarP(&o.wait, "wait", "w", 60, "Set how many seconds to wait for queue messages")
 
 	return cmd
 }
@@ -79,6 +79,7 @@ func (o *QueueStreamOptions) Run(ctx context.Context) error {
 	defer func() {
 		client.Close()
 	}()
+
 	for {
 		stream := client.NewStreamQueueMessage().SetChannel(o.channel)
 		utils.Printlnf("waiting for the message in the queue: (waiting for %d seconds, visibility set to %d seconds)", o.wait, o.visibility)
@@ -87,22 +88,25 @@ func (o *QueueStreamOptions) Run(ctx context.Context) error {
 			return err
 		}
 		utils.Printlnf("[channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s}", msg.Channel, msg.ClientId, msg.Id, msg.Metadata, msg.Body)
+	PROMPT:
 		action, result, err := o.prompt()
 		if err != nil {
 			return err
 		}
 		switch action {
-		case "ack":
+		case "Ack":
 			err := msg.Ack()
 			if err != nil {
 				return err
 			}
-		case "reject":
+			utils.Println("Message Acked")
+		case "Reject":
 			err := msg.Reject()
 			if err != nil {
 				return err
 			}
-		case "extend visibility":
+			utils.Println("Message Rejected")
+		case "Extend visibility":
 			val, err := strconv.Atoi(result)
 			if err != nil {
 				return err
@@ -111,12 +115,15 @@ func (o *QueueStreamOptions) Run(ctx context.Context) error {
 			if err != nil {
 				return err
 			}
-		case "resend to another queue":
+			utils.Printlnf("Visibility Extended By %s Seconds.", result)
+			goto PROMPT
+		case "Resend to another queue":
 			err = msg.Resend(result)
 			if err != nil {
 				return err
 			}
-		case "ack and send new message":
+			utils.Printlnf("Message Resent to %s.", result)
+		case "Ack and send new message":
 			pair := strings.Split(result, ",")
 			if len(pair) != 2 {
 				return fmt.Errorf("invalid queue-name,message-body format")
@@ -126,15 +133,12 @@ func (o *QueueStreamOptions) Run(ctx context.Context) error {
 			if err != nil {
 				return err
 			}
-		case "done":
-			err := msg.Ack()
-			if err != nil {
-				return err
-			}
-
+			utils.Println("New Message Sent.")
+		case "Abort":
+			utils.Println("Aborting.")
 			return nil
 		}
-		utils.Println("sent.")
+
 	}
 
 }
@@ -142,29 +146,29 @@ func (o *QueueStreamOptions) prompt() (string, string, error) {
 	action := ""
 	prompt := &survey.Select{
 		Message: "What next:",
-		Options: []string{"ack", "reject", "extend visibility", "resend to another queue", "ack and send new message", "done"},
+		Options: []string{"Ack", "Reject", "Extend visibility", "Resend to another queue", "Ack and send new message", "Abort"},
 	}
 	err := survey.AskOne(prompt, &action)
 	if err != nil {
 		return "", "", err
 	}
 	switch action {
-	case "ack", "reject", "done":
+	case "Ack", "Reject", "Abort":
 		return action, "", nil
-	case "extend visibility":
+	case "Extend visibility":
 		visibility := ""
 		prompt := &survey.Input{
 			Renderer: survey.Renderer{},
 			Message:  "How long to extend visibility",
 			Default:  "60",
-			Help:     "in seconds",
+			Help:     "In seconds",
 		}
 		err := survey.AskOne(prompt, &visibility)
 		if err != nil {
 			return "", "", err
 		}
 		return action, visibility, nil
-	case "resend to another queue":
+	case "Resend to another queue":
 		queueName := ""
 		prompt := &survey.Input{
 			Renderer: survey.Renderer{},
@@ -177,13 +181,13 @@ func (o *QueueStreamOptions) prompt() (string, string, error) {
 			return "", "", err
 		}
 		return action, queueName, nil
-	case "ack and send new message":
+	case "Ack and send new message":
 		newMessage := ""
 		prompt := &survey.Input{
 			Renderer: survey.Renderer{},
 			Message:  "New Message:",
 			Default:  "new-queue,new-message",
-			Help:     "format queue-name,message-body ",
+			Help:     "Format queue-name,message-body ",
 		}
 		err := survey.AskOne(prompt, &newMessage, survey.WithValidator(survey.MinLength(1)))
 		if err != nil {

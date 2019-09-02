@@ -46,11 +46,11 @@ func (d *StatefulSetDeployment) ServicesStatusString() string {
 	list := []string{}
 	for _, ss := range d.ServicesStatus {
 		if ss.ExternalP == "" {
-			list = append(list, fmt.Sprintf(" %s:%s", ss.ClusterIP, ss.Ports))
+			list = append(list, fmt.Sprintf("%s %s:%s", ss.Type, ss.ClusterIP, ss.Ports))
 		} else {
-			list = append(list, fmt.Sprintf(" %s/%s:%s", ss.ExternalP, ss.ClusterIP, ss.Ports))
+			list = append(list, fmt.Sprintf("%s %s/%s:%s", ss.Type, ss.ExternalP, ss.ClusterIP, ss.Ports))
 		}
 
 	}
-	return strings.Join(list, ",")
+	return strings.Join(list, ", ")
 }

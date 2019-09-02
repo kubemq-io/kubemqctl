@@ -29,8 +29,8 @@ var queueReceiveExamples = `
 	# Receive 3 messages from a queue and wait for 5 seconds
 	kubetools queue receive some-channel -m 3 -T 5
 `
-var queueReceiveLong = `receive a messages from a queue channel`
-var queueReceiveShort = `receive a messages from a queue channel`
+var queueReceiveLong = `Receive a messages from a queue channel`
+var queueReceiveShort = `Receive a messages from a queue channel`
 
 func NewCmdQueueReceive(cfg *config.Config) *cobra.Command {
 	o := &QueueReceiveOptions{
@@ -46,16 +46,16 @@ func NewCmdQueueReceive(cfg *config.Config) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
 
-	cmd.PersistentFlags().IntVarP(&o.messages, "messages", "m", 1, "set how many messages we want to get from queue")
-	cmd.PersistentFlags().IntVarP(&o.wait, "wait-timeout", "T", 2, "set how many seconds to wait for queue messages")
-	cmd.PersistentFlags().BoolVarP(&o.watch, "watch", "w", false, "set watch on queue channel")
+	cmd.PersistentFlags().IntVarP(&o.messages, "messages", "m", 1, "Set how many messages we want to get from queue")
+	cmd.PersistentFlags().IntVarP(&o.wait, "wait-timeout", "T", 2, "Set how many seconds to wait for queue messages")
+	cmd.PersistentFlags().BoolVarP(&o.watch, "watch", "w", false, "Set watch on queue channel")
 
 	return cmd
 }
@@ -97,6 +97,8 @@ func (o *QueueReceiveOptions) Run(ctx context.Context) error {
 
 		if res != nil && res.MessagesReceived > 0 {
 			printItems(res.Messages)
+		} else {
+			utils.Println("No new messages in queue")
 		}
 		if !o.watch {
 			return nil

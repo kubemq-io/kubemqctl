@@ -30,8 +30,8 @@ var eventsSendExamples = `
 	# Send 10 messages to a events channel
 	kubetools events send some-channel some-message -i 10
 `
-var eventsSendLong = `send messages to a events channel`
-var eventsSendShort = `send messages to a events channel`
+var eventsSendLong = `Send messages to an events channel`
+var eventsSendShort = `Send messages to an events channel`
 
 func NewCmdEventsSend(cfg *config.Config) *cobra.Command {
 	o := &EventsSendOptions{
@@ -47,14 +47,14 @@ func NewCmdEventsSend(cfg *config.Config) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "m", "", "set metadata message")
-	cmd.PersistentFlags().IntVarP(&o.iter, "iterations", "i", 1, "set how many messages to send")
+	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "m", "", "Set metadata message")
+	cmd.PersistentFlags().IntVarP(&o.iter, "iterations", "i", 1, "Set how many messages to send")
 
 	return cmd
 }
@@ -66,7 +66,7 @@ func (o *EventsSendOptions) Complete(args []string, transport string) error {
 		o.message = args[1]
 		return nil
 	}
-	return fmt.Errorf("missing arguments, must be 2 arguments, channel and message")
+	return fmt.Errorf("missing arguments, must be 2 arguments, channel and a message")
 }
 
 func (o *EventsSendOptions) Validate() error {

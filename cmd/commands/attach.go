@@ -33,8 +33,8 @@ var commandsAttachExamples = `
 	# attach to some-commands commands channel and output running messages filter by exclude regex (not-some*)
 	kubetools commands attach some-commands -e not-some*
 `
-var commandsAttachLong = `attach to commands channels`
-var commandsAttachShort = `attach to commands channels`
+var commandsAttachLong = `Attach to commands channels and display channel content`
+var commandsAttachShort = `Attach to commands channels`
 
 func NewCmdCommandsAttach(cfg *config.Config) *cobra.Command {
 	o := &CommandsAttachOptions{
@@ -51,13 +51,14 @@ func NewCmdCommandsAttach(cfg *config.Config) *cobra.Command {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
-			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().StringArrayVarP(&o.include, "include", "i", []string{}, "set (regex) strings to include")
-	cmd.PersistentFlags().StringArrayVarP(&o.exclude, "exclude", "e", []string{}, "set (regex) strings to exclude")
+
+	cmd.PersistentFlags().StringArrayVarP(&o.include, "include", "i", []string{}, "Set (regex) strings to include")
+	cmd.PersistentFlags().StringArrayVarP(&o.exclude, "exclude", "e", []string{}, "Set (regex) strings to exclude")
 	return cmd
 }
 
@@ -65,7 +66,6 @@ func (o *CommandsAttachOptions) Complete(args []string, transport string) error 
 
 	if len(args) == 0 {
 		return fmt.Errorf("missing channel argument")
-
 	}
 
 	for _, a := range args {

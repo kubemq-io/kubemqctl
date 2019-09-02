@@ -17,9 +17,11 @@ type StatusOptions struct {
 }
 
 var statusExamples = `
+	# Get status of KubeMQ of clusters
+	kubetools status
 `
-var statusLong = `Status KubeMQ of clusters`
-var statusShort = `Status KubeMQ of clusters`
+var statusLong = `Get status of KubeMQ of clusters`
+var statusShort = `Get status of KubeMQ of clusters`
 
 func NewCmdStatus(cfg *config.Config) *cobra.Command {
 	o := &StatusOptions{
@@ -35,7 +37,7 @@ func NewCmdStatus(cfg *config.Config) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args))
+			utils.CheckErr(o.Complete(args), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(o.Run(ctx))
 		},

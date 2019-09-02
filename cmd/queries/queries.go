@@ -5,9 +5,19 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var queriesExamples = ``
-var queriesLong = ``
-var queriesShort = `Execute KubeMQ queries based commands`
+var queriesExamples = `
+	# Execute send queries command
+	# kubetools queries send
+
+	# Execute receive queries command
+	# kubetools queries receive
+
+	# Execute attach to queries command
+	# kubetools queries attach
+
+`
+var queriesLong = `Execute KubeMQ 'queries' RPC based commands`
+var queriesShort = `Execute KubeMQ 'queries' RPC based commands`
 
 // NewCmdCreate returns new initialized instance of create sub query
 func NewCmdQueries(cfg *config.Config) *cobra.Command {
@@ -19,7 +29,7 @@ func NewCmdQueries(cfg *config.Config) *cobra.Command {
 		Long:    queriesLong,
 		Example: queriesExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-
+			cmd.Help()
 		},
 	}
 	cmd.AddCommand(NewCmdQueriesSend(cfg))

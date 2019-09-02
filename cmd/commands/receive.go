@@ -26,11 +26,11 @@ var commandsReceiveExamples = `
 	# Receive commands from a commands channel (blocks until next message)
 	kubetools commands receive some-channel
 
-	# Receive commands from a commands channel with group(blocks until next message)
+	# Receive commands from a commands channel with group (blocks until next message)
 	kubetools commands receive some-channel -g G1
 `
-var commandsReceiveLong = `receive a message from a commands`
-var commandsReceiveShort = `receive a message from a commands`
+var commandsReceiveLong = `Receive a message from commands channel`
+var commandsReceiveShort = `Receive a message from commands channel`
 
 func NewCmdCommandsReceive(cfg *config.Config) *cobra.Command {
 	o := &CommandsReceiveOptions{
@@ -46,15 +46,15 @@ func NewCmdCommandsReceive(cfg *config.Config) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
 
-	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "set group")
-	cmd.PersistentFlags().BoolVarP(&o.autoResponse, "auto-response", "a", false, "set auto response executed command")
+	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "Set group")
+	cmd.PersistentFlags().BoolVarP(&o.autoResponse, "auto-response", "a", false, "Set auto response executed command")
 	return cmd
 }
 

@@ -36,8 +36,8 @@ var queriesSendExamples = `
 	# Send query to a queries channel with cache-key and cache duration of 1m
 	kubetools queries send some-channel some-message -c cache-key -d 1m
 `
-var queriesSendLong = `send messages to a queries channel`
-var queriesSendShort = `send messages to a queries channel`
+var queriesSendLong = `Send messages to a queries channel`
+var queriesSendShort = `Send messages to a queries channel`
 
 func NewCmdQueriesSend(cfg *config.Config) *cobra.Command {
 	o := &QueriesSendOptions{
@@ -53,16 +53,16 @@ func NewCmdQueriesSend(cfg *config.Config) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "m", "", "set metadata message")
-	cmd.PersistentFlags().StringVarP(&o.cacheKey, "cache-key", "c", "", "set cache key")
-	cmd.PersistentFlags().IntVarP(&o.timeout, "timeout", "o", 30, "set query timeout")
-	cmd.PersistentFlags().DurationVarP(&o.cacheTTL, "cache-duration", "d", 10*time.Minute, "set cache duration timeout")
+	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "m", "", "Set metadata message")
+	cmd.PersistentFlags().StringVarP(&o.cacheKey, "cache-key", "c", "", "Set cache key")
+	cmd.PersistentFlags().IntVarP(&o.timeout, "timeout", "o", 30, "Set query timeout")
+	cmd.PersistentFlags().DurationVarP(&o.cacheTTL, "cache-duration", "d", 10*time.Minute, "Set cache duration timeout")
 
 	return cmd
 }
@@ -74,7 +74,7 @@ func (o *QueriesSendOptions) Complete(args []string, transport string) error {
 		o.message = args[1]
 		return nil
 	}
-	return fmt.Errorf("missing arguments, must be 2 arguments, channel and message")
+	return fmt.Errorf("missing arguments, must be 2 arguments, channel and a message")
 }
 
 func (o *QueriesSendOptions) Validate() error {

@@ -39,8 +39,8 @@ var queueSendExamples = `
 	# Send message to a queue with a message policy of max receive 5 times and dead-letter queue 'dead-letter'
 	kubetools queue send some-channel some-message -r 5 -q dead-letter
 `
-var queueSendLong = `send a message to a queue channel`
-var queueSendShort = `send a message to a queue channel`
+var queueSendLong = `Send a message to a queue channel`
+var queueSendShort = `Send a message to a queue channel`
 
 func NewCmdQueueSend(cfg *config.Config) *cobra.Command {
 	o := &QueueSendOptions{
@@ -56,17 +56,17 @@ func NewCmdQueueSend(cfg *config.Config) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().IntVarP(&o.expiration, "expiration", "e", 0, "set queue message expiration seconds")
-	cmd.PersistentFlags().IntVarP(&o.delay, "delay", "d", 0, "set queue message send delay seconds")
-	cmd.PersistentFlags().IntVarP(&o.maxReceive, "max-receive", "r", 0, "set dead-letter max receive count")
-	cmd.PersistentFlags().StringVarP(&o.deadLetter, "dead-letter-queue", "q", "", "set dead-letter queue name")
-	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "m", "", "set metadata message")
+	cmd.PersistentFlags().IntVarP(&o.expiration, "expiration", "e", 0, "Set queue message expiration seconds")
+	cmd.PersistentFlags().IntVarP(&o.delay, "delay", "d", 0, "Set queue message send delay seconds")
+	cmd.PersistentFlags().IntVarP(&o.maxReceive, "max-receive", "r", 0, "Set dead-letter max receive count")
+	cmd.PersistentFlags().StringVarP(&o.deadLetter, "dead-letter-queue", "q", "", "Set dead-letter queue name")
+	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "m", "", "Set metadata message")
 
 	return cmd
 }
@@ -78,7 +78,7 @@ func (o *QueueSendOptions) Complete(args []string, transport string) error {
 		o.message = args[1]
 		return nil
 	}
-	return fmt.Errorf("missing arguments, must be 2 arguments, channel and message")
+	return fmt.Errorf("missing arguments, must be 2 arguments, channel and a message")
 }
 
 func (o *QueueSendOptions) Validate() error {

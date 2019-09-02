@@ -16,18 +16,18 @@ type ConfigOptions struct {
 }
 
 var configExamples = `
-	# Run configuration wizard
+	# Run Kubetools configuration wizard
 	# kubetools config
 `
-var configLong = `config kubetools`
-var configShort = `config kubetools`
+var configLong = `Kubetools configuration wizard`
+var configShort = `Kubetools configuration wizard`
 
 // NewCmdCreate returns new initialized instance of create sub command
 func NewCmdConfig(cfg *config.Config) *cobra.Command {
 	o := &ConfigOptions{}
 	cmd := &cobra.Command{
 		Use:     "config",
-		Aliases: []string{"conf"},
+		Aliases: []string{"conf", "con"},
 		Short:   configShort,
 		Long:    configLong,
 
@@ -56,23 +56,23 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 	integrationType := ""
 	integrationSelect := &survey.Select{
 		Renderer: survey.Renderer{},
-		Message:  "Select KubeMQ location:",
-		Options:  []string{"kubernetes cluster", "single docker container"},
-		Default:  "kubernetes cluster",
-		Help:     "select the location of KubeMQ server",
+		Message:  "Select KubeMQ install location:",
+		Options:  []string{"Kubernetes cluster", "Local docker container"},
+		Default:  "Kubernetes cluster",
+		Help:     "Select the location of KubeMQ server",
 	}
 	err := survey.AskOne(integrationSelect, &integrationType)
 	if err != nil {
 		return err
 	}
-	if integrationType == "kubernetes cluster" {
+	if integrationType == "Kubernetes cluster" {
 		cfg.AutoIntegrated = true
 		kubeConfigPath := ""
 		prompt := &survey.Input{
 			Renderer: survey.Renderer{},
 			Message:  "Select kube config path (press Enter for default):",
 			Default:  "",
-			Help:     "set kube.config file path if not kubectl default",
+			Help:     "Set kube.config file path if not kubectl default",
 		}
 		err := survey.AskOne(prompt, &kubeConfigPath)
 		if err != nil {
@@ -98,10 +98,10 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 		contextSelected := ""
 		contextSelect := &survey.Select{
 			Renderer:      survey.Renderer{},
-			Message:       "Select kubernetes cluster context",
+			Message:       "Select kubernetes cluster context:",
 			Options:       list,
 			Default:       current,
-			Help:          "set kubernetes connection context",
+			Help:          "Set kubernetes connection context",
 			PageSize:      0,
 			VimMode:       false,
 			FilterMessage: "",
@@ -129,7 +129,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 				Message:  "Select current KubeMQ cluster:",
 				Options:  list,
 				Default:  list[0],
-				Help:     "select the default KubeMQ cluster from available KubeMQ clusters ",
+				Help:     "Select the default KubeMQ cluster from available KubeMQ clusters",
 			}
 			err := survey.AskOne(clusterSelect, &clusterSelected)
 			if err != nil {
@@ -146,7 +146,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 		Renderer: survey.Renderer{},
 		Message:  "Set KubeMQ Host:",
 		Default:  "localhost",
-		Help:     "set KubeMQ host",
+		Help:     "Set KubeMQ host",
 	}
 	err = survey.AskOne(promptHost, &cfg.Host, survey.WithValidator(survey.MinLength(1)))
 	if err != nil {
@@ -156,7 +156,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 		Renderer: survey.Renderer{},
 		Message:  "Set KubeMQ gRPC port interface:",
 		Default:  "50000",
-		Help:     "set KubeMQ gRPC port",
+		Help:     "Set KubeMQ gRPC port",
 	}
 	err = survey.AskOne(promptGrpcPort, &cfg.GrpcPort)
 	if err != nil {
@@ -166,7 +166,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 		Renderer: survey.Renderer{},
 		Message:  "Set KubeMQ Rest port interface:",
 		Default:  "9090",
-		Help:     "set KubeMQ Rest port",
+		Help:     "Set KubeMQ Rest port",
 	}
 	err = survey.AskOne(promptRestPort, &cfg.RestPort)
 	if err != nil {
@@ -176,20 +176,20 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 		Renderer: survey.Renderer{},
 		Message:  "Set KubeMQ Api port interface:",
 		Default:  "8080",
-		Help:     "set KubeMQ Api port",
+		Help:     "Set KubeMQ Api port",
 	}
 	err = survey.AskOne(promptAPIPort, &cfg.ApiPort)
 	if err != nil {
 		return err
 	}
-	connextionTypeSelect := &survey.Select{
+	connectionTypeSelect := &survey.Select{
 		Renderer: survey.Renderer{},
 		Message:  "Set default interface:",
 		Options:  []string{"grpc", "rest"},
 		Default:  "grpc",
-		Help:     "select the default interface connection type",
+		Help:     "Select the default interface connection type",
 	}
-	err = survey.AskOne(connextionTypeSelect, &cfg.ConnectionType)
+	err = survey.AskOne(connectionTypeSelect, &cfg.ConnectionType)
 	if err != nil {
 		return err
 	}
@@ -197,7 +197,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 		Renderer: survey.Renderer{},
 		Message:  "Set secured connection ?:",
 		Default:  false,
-		Help:     "set KubeMQ secure connection",
+		Help:     "Set KubeMQ secured connection",
 	}
 	err = survey.AskOne(promptIsSecured, &cfg.IsSecured)
 	if err != nil {
@@ -208,7 +208,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 			Renderer: survey.Renderer{},
 			Message:  "Set cert file path:",
 			Default:  "./",
-			Help:     "set KubeMQ cert file path",
+			Help:     "Set KubeMQ cert file path",
 		}
 		err = survey.AskOne(promptCertFile, &cfg.CertFile)
 		if err != nil {

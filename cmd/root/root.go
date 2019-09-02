@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/kubemq-io/kubetools/cmd/commands"
 	config2 "github.com/kubemq-io/kubetools/cmd/config"
+	context2 "github.com/kubemq-io/kubetools/cmd/context"
 	"github.com/kubemq-io/kubetools/cmd/dashboard"
 	"github.com/kubemq-io/kubetools/cmd/delete"
 	"github.com/kubemq-io/kubetools/cmd/deploy"
@@ -15,6 +16,7 @@ import (
 	"github.com/kubemq-io/kubetools/cmd/queue"
 	"github.com/kubemq-io/kubetools/cmd/scale"
 	"github.com/kubemq-io/kubetools/cmd/status"
+	version2 "github.com/kubemq-io/kubetools/cmd/version"
 	"github.com/kubemq-io/kubetools/pkg/config"
 	"github.com/kubemq-io/kubetools/pkg/utils"
 	"github.com/spf13/cobra"
@@ -76,5 +78,7 @@ func init() {
 	rootCmd.AddCommand(delete.NewCmdDelete(cfg))
 	rootCmd.AddCommand(scale.NewCmdScale(cfg))
 	rootCmd.AddCommand(status.NewCmdStatus(cfg))
+	rootCmd.AddCommand(context2.NewCmdContext(cfg))
+	rootCmd.AddCommand(version2.NewCmdVersion(version))
 
 }

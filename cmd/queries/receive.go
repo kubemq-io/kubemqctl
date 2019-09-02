@@ -29,8 +29,8 @@ var queriesReceiveExamples = `
 	# Receive queries from a queries channel with group(blocks until next message)
 	kubetools queries receive some-channel -g G1
 `
-var queriesReceiveLong = `receive a message from a queries`
-var queriesReceiveShort = `receive a message from a queries`
+var queriesReceiveLong = `Receive a message from a queries channel`
+var queriesReceiveShort = `Receive a message from a queries channel`
 
 func NewCmdQueriesReceive(cfg *config.Config) *cobra.Command {
 	o := &QueriesReceiveOptions{
@@ -46,15 +46,15 @@ func NewCmdQueriesReceive(cfg *config.Config) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
 
-	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "set group")
-	cmd.PersistentFlags().BoolVarP(&o.autoResponse, "auto-response", "a", false, "set auto response executed query")
+	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "Set group")
+	cmd.PersistentFlags().BoolVarP(&o.autoResponse, "auto-response", "a", false, "Set auto response executed query")
 	return cmd
 }
 

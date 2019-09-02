@@ -25,8 +25,8 @@ var queuePeekExamples = `
 	# Peek 3 messages from a queue and wait for 5 seconds
 	kubetools queue peek some-channel -m 3 -w 5
 `
-var queuePeekLong = `peek a messages from a queue channel`
-var queuePeekShort = `peek a messages from a queue channel`
+var queuePeekLong = `Peek a messages from a queue channel`
+var queuePeekShort = `Peek a messages from a queue channel`
 
 func NewCmdQueuePeek(cfg *config.Config) *cobra.Command {
 	o := &QueuePeekOptions{
@@ -42,15 +42,15 @@ func NewCmdQueuePeek(cfg *config.Config) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
 
-	cmd.PersistentFlags().IntVarP(&o.messages, "messages", "m", 1, "set how many messages we want to get from queue")
-	cmd.PersistentFlags().IntVarP(&o.wait, "wait", "w", 2, "set how many seconds to wait for queue messages")
+	cmd.PersistentFlags().IntVarP(&o.messages, "messages", "m", 1, "Set how many messages we want to get from queue")
+	cmd.PersistentFlags().IntVarP(&o.wait, "wait", "w", 2, "Set how many seconds to wait for queue messages")
 
 	return cmd
 }

@@ -28,8 +28,8 @@ var queueListExamples = `
 	# Get a list of queues / clients filtered by 'some-queue' channel only
 	kubetools queue list -f some-queue
 `
-var queueListLong = `get a list of queues / clients`
-var queueListShort = `get a list of queues / clients`
+var queueListLong = `Get a list of queues / clients`
+var queueListShort = `Get a list of queues / clients`
 
 func NewCmdQueueList(cfg *config.Config) *cobra.Command {
 	o := &QueueListOptions{
@@ -45,13 +45,13 @@ func NewCmdQueueList(cfg *config.Config) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			utils.CheckErr(o.Complete(args, cfg.ConnectionType))
+			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().StringVarP(&o.filter, "filter", "f", "", "set filter for channel / client name")
+	cmd.PersistentFlags().StringVarP(&o.filter, "filter", "f", "", "Set filter for channel / client name")
 	return cmd
 }
 
