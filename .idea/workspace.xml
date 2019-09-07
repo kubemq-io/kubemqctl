@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="" />
+    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="add dashboard">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/templates.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/templates.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/env.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/env.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/logging.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/logging.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/service.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/statefulset.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/templates.go" beforeDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,7 +23,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="C:\Go" />
+  <component name="GOROOT" path="C:\Go\go1.13" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -32,25 +40,25 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$GOPATH$/projects/kubemq/demo" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/pkg/k8s/config" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\version" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\pkg\k8s" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\pkg\k8s\transport" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\cluster" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\pkg\k8s\config" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\events" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\events_store" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\queue" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\k8s" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\cluster" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\version" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\pkg\k8s" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\pkg\k8s\transport" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -333,7 +341,28 @@
       <option name="project" value="LOCAL" />
       <updated>1567438827825</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="add dashboard">
+      <created>1567439310957</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1567439310957</updated>
+    </task>
+    <task id="LOCAL-00030" summary="add cluster sub command">
+      <created>1567846179474</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1567846179474</updated>
+    </task>
+    <task id="LOCAL-00031" summary="refactoring create">
+      <created>1567871457277</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1567871457277</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -402,9 +431,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/dist" />
     </ignored-roots>
-    <MESSAGE value="add version and task files" />
-    <MESSAGE value="update readme" />
-    <MESSAGE value="add bin folder&#10;add mon command" />
     <MESSAGE value="add send and subscribe command" />
     <MESSAGE value="update git chmod" />
     <MESSAGE value="-v1.0.0&#10;add queue support" />
@@ -427,7 +453,10 @@
     <MESSAGE value="- adding dashboard command" />
     <MESSAGE value="- additional command" />
     <MESSAGE value="- Cleaning" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Cleaning" />
+    <MESSAGE value="add dashboard" />
+    <MESSAGE value="add cluster sub command" />
+    <MESSAGE value="refactoring create" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring create" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

@@ -1,10 +1,8 @@
 package config
 
 var EnvConfig = &EntryGroup{
-	Name: "Environment variables",
-	Entries: []*Entry{
-		DefaultToken,
-	},
+	Name:    "Environment variables",
+	Entries: nil,
 	SubGroups: []*EntryGroup{
 		LicenseConfig,
 		LoggingConfig,
