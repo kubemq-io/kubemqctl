@@ -1,4 +1,4 @@
-package create
+package config
 
 import (
 	"text/template"
@@ -9,7 +9,7 @@ apiVersion: {{.ApiVersion}}
 kind: StatefulSet
 metadata:
   name: {{.Name}}
-  namespace: {{.Namespace}}
+  nameSpace: {{.Namespace}}
 spec:
   selector:
     matchLabels:
@@ -74,10 +74,10 @@ spec:
 
 var defaultServiceTemplate = `
 apiVersion: {{.ApiVersion}}
-kind: Service
+kind: Services
 metadata:
   name: {{.Name}}
-  namespace: {{.Namespace}}
+  nameSpace: {{.Namespace}}
 spec:
   ports:
     - name: {{.PortName}}

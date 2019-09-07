@@ -8,6 +8,7 @@ require (
 	github.com/cespare/reflex v0.2.0 // indirect
 	github.com/cheggaaa/pb v1.0.27
 	github.com/fatih/color v1.7.0
+	github.com/ghodss/yaml v1.0.0
 	github.com/go-resty/resty v1.8.0
 	github.com/go-resty/resty/v2 v2.0.0
 	github.com/google/uuid v1.1.1

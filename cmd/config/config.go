@@ -78,9 +78,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 		if err != nil {
 			return err
 		}
-		if kubeConfigPath != "" {
-			cfg.KubeConfigPath = kubeConfigPath
-		}
+		cfg.KubeConfigPath = kubeConfigPath
 
 		c, err := client.NewClient(kubeConfigPath)
 		if err != nil {

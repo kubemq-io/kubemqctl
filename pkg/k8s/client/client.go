@@ -99,7 +99,25 @@ func (c *Client) SwitchContext(contextName string) error {
 	err = clientcmd.ModifyConfig(c.ClientConfig.ConfigAccess(), *config, true)
 	return err
 }
+func (c *Client) GetNamespace(name string) (*apiv1.Namespace, bool, error) {
+	ns, err := c.ClientSet.CoreV1().Namespaces().Get(name, metav1.GetOptions{})
+	if err == nil && ns != nil {
+		return ns, true, nil
+	}
+	newNs := &apiv1.Namespace{
+		TypeMeta: metav1.TypeMeta{
+			Kind:       "Namespace",
+			APIVersion: "v1",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name: name,
+		},
+		Spec:   apiv1.NamespaceSpec{},
+		Status: apiv1.NamespaceStatus{},
+	}
+	return newNs, false, nil
 
+}
 func (c *Client) CheckAndCreateNamespace(name string) (*apiv1.Namespace, bool, error) {
 	ns, err := c.ClientSet.CoreV1().Namespaces().Get(name, metav1.GetOptions{})
 	if err == nil && ns != nil {

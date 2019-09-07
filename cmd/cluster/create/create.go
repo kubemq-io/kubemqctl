@@ -1,13 +1,17 @@
 package create
 
 import (
+	"bufio"
 	"context"
 	"fmt"
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/ghodss/yaml"
 	"github.com/kubemq-io/kubetools/pkg/config"
 	"github.com/kubemq-io/kubetools/pkg/k8s/client"
+	conf "github.com/kubemq-io/kubetools/pkg/k8s/config"
 	"github.com/skratchdot/open-golang/open"
 	"k8s.io/api/core/v1"
+	"os"
 
 	"github.com/kubemq-io/kubetools/pkg/utils"
 	"github.com/spf13/cobra"
@@ -16,6 +20,8 @@ import (
 
 type CreateOptions struct {
 	cfg           *config.Config
+	defaultMode   bool
+	exportFile    bool
 	token         string
 	replicas      int
 	version       string
@@ -30,22 +36,13 @@ type CreateOptions struct {
 
 var createExamples = `
 	# Create default KubeMQ cluster
-	# kubetools cluster create b33600cc-93ef-4395-bba3-13131eb27d5e
+	# kubetools cluster create b33600cc-93ef-4395-bba3-13131eb27d5e -d
 
-	# Create KubeMQ cluster default namespace with specific cluster name  
-	# kubetools cluster create b3330scc-93ef-4395-bba3-13131sb2785e -n kubemq-cluster-1
+	# Create KubeMQ cluster with options  
+	# kubetools cluster create b3330scc-93ef-4395-bba3-13131sb2785e
 
-	# Create KubeMQ cluster with specific cluster name and namespace   
-	# kubetools cluster create b3330scc-93ef-4395-bba3-13131sb2785e -n kubemq-cluster-1 -s kubemq-namespace
-
-	# Create default KubeMQ cluster with 5 pods   
-	# kubetools cluster create b3330scc-93ef-4395-bba3-13131sb2785e -r 5
-
-	# Create default KubeMQ cluster with persistence volume claims of 10Gi   
-	# kubetools cluster create b3330scc-93ef-4395-bba3-13131sb2785e -v 10
-
-	# Create default KubeMQ cluster with specific KubeMQ image version   
-	# kubetools cluster create b3330scc-93ef-4395-bba3-13131sb2785e -i v1.6.2
+	# Export KubeMQ cluster yaml file (Dry-Run)    
+	# kubetools cluster create b3330scc-93ef-4395-bba3-13131sb2785e -f 
 `
 var createLong = `Create a KubeMQ cluster`
 var createShort = `Create a KubeMQ cluster`
@@ -70,16 +67,8 @@ func NewCmdCreate(cfg *config.Config) *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().StringVarP(&o.namespace, "namespace", "s", "default", "Set namespace name")
-	cmd.PersistentFlags().StringVarP(&o.name, "name", "n", "kubemq-cluster", "Set KubeMQ cluster name")
-	cmd.PersistentFlags().StringVarP(&o.version, "image", "i", "latest", "Set KubeMQ image version")
-	cmd.PersistentFlags().StringVarP(&o.token, "token", "t", "", "Set KubeMQ token")
-	cmd.PersistentFlags().IntVarP(&o.replicas, "replicas", "r", 3, "Set how many replicas in KubeMQ cluster")
-	cmd.PersistentFlags().IntVarP(&o.volume, "volume", "v", 0, "Set size of persistence volume")
-	cmd.PersistentFlags().StringVarP(&o.appsVersion, "apps-api", "", "apps/v1", "Set api version for kubernetes apps end-point")
-	cmd.PersistentFlags().StringVarP(&o.coreVersion, "core-api", "", "v1", "Set api version for kubernetes core end-point")
-	cmd.PersistentFlags().BoolVarP(&o.isNodePort, "set-node-port", "", false, "Set expose services with NodePort")
-	cmd.PersistentFlags().BoolVarP(&o.isLoadBalance, "set-load-balancer", "", false, "Set expose services with LoadBalancer")
+	cmd.PersistentFlags().BoolVarP(&o.defaultMode, "default", "d", false, "Create KubeMQ cluster with default parameters")
+	cmd.PersistentFlags().BoolVarP(&o.exportFile, "file", "f", false, "Generate yaml configuration file")
 
 	return cmd
 }
@@ -105,7 +94,11 @@ func (o *CreateOptions) Complete(args []string) error {
 		}
 		utils.Println("")
 	}
-	return nil
+	if o.defaultMode {
+		return o.setDefaultOptions()
+	}
+
+	return o.askOptions()
 }
 
 func (o *CreateOptions) Validate() error {
@@ -117,6 +110,9 @@ func (o *CreateOptions) Validate() error {
 }
 
 func (o *CreateOptions) Run(ctx context.Context) error {
+	if o.exportFile {
+		return o.export()
+	}
 	deployment := &StatefulSetDeployment{
 		Namespace:   nil,
 		StatefulSet: nil,
@@ -138,12 +134,12 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	isCreateed := false
+	isCreated := false
 	deployment.StatefulSet, err = c.CreateStatefulSet(spec)
 	if err != nil {
 		utils.Printlnf("StatefulSet %s/%s not created. Error: %s", o.namespace, o.name, utils.Title(err.Error()))
 	} else {
-		isCreateed = true
+		isCreated = true
 		utils.Printlnf("StatefulSet %s/%s created", o.namespace, o.name)
 	}
 
@@ -160,7 +156,7 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 		}
 
 	}
-	if !isCreateed {
+	if !isCreated {
 		return nil
 	}
 	utils.Printlnf("StatefulSet %s/%s list:", o.namespace, o.name)
@@ -182,5 +178,174 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 			return nil
 		}
 	}
+	return nil
+}
+func (o *CreateOptions) export() error {
+	deployment := struct {
+		Namespace   []byte
+		StatefulSet []byte
+		Services    [][]byte
+	}{}
+	c, err := client.NewClient(o.cfg.KubeConfigPath)
+	if err != nil {
+		return err
+	}
+	ns, existed, err := c.GetNamespace(o.namespace)
+	if err != nil {
+		return err
+	}
+	if !existed {
+		deployment.Namespace, err = yaml.Marshal(ns)
+		if err != nil {
+			return err
+		}
+	}
+
+	deployment.StatefulSet, err = NewStatefulSetConfig(o).Spec()
+	if err != nil {
+		return err
+	}
+	for _, cfg := range NewServiceConfigs(o) {
+		spec, err := cfg.Spec()
+		if err != nil {
+			return err
+		}
+		deployment.Services = append(deployment.Services, spec)
+	}
+	f, err := os.Create(fmt.Sprintf("%s.yaml", o.name))
+	if err != nil {
+		return err
+	}
+	w := bufio.NewWriter(f)
+	if deployment.Namespace != nil {
+		w.Write(deployment.Namespace)
+		w.WriteString(fmt.Sprintf("---"))
+	}
+	if deployment.StatefulSet != nil {
+		w.Write(deployment.StatefulSet)
+		w.WriteString(fmt.Sprintf("---"))
+	}
+
+	for _, svc := range deployment.Services {
+		w.Write(svc)
+		w.WriteString(fmt.Sprintf("---"))
+	}
+	err = w.Flush()
+	if err != nil {
+		return err
+	}
+	utils.Printlnf("create yaml file was exported to %s.yaml", o.name)
+	return nil
+}
+
+func (o *CreateOptions) askOptions() error {
+	answers := struct {
+		Namespace string
+		Name      string
+		Version   string
+		Replicas  int
+		Volume    int
+		Service   string
+	}{}
+
+	qs := []*survey.Question{
+		{
+			Name: "namespace",
+			Prompt: &survey.Input{
+				Renderer: survey.Renderer{},
+				Message:  "Enter namespace of KubeMQ cluster creation:",
+				Default:  "default",
+				Help:     "",
+			},
+			Validate:  survey.Validator(conf.IsRequired()),
+			Transform: nil,
+		},
+		{
+			Name: "name",
+			Prompt: &survey.Input{
+				Renderer: survey.Renderer{},
+				Message:  "Enter KubeMQ cluster name:",
+				Default:  "kubemq-cluster",
+				Help:     "",
+			},
+			Validate:  survey.Validator(conf.IsRequired()),
+			Transform: nil,
+		},
+		{
+			Name: "version",
+			Prompt: &survey.Input{
+				Renderer: survey.Renderer{},
+				Message:  "Set KubeMQ image version:",
+				Default:  "latest",
+				Help:     "",
+			},
+			Validate:  survey.Validator(conf.IsRequired()),
+			Transform: nil,
+		},
+		{
+			Name: "replicas",
+			Prompt: &survey.Input{
+				Renderer: survey.Renderer{},
+				Message:  "Set KubeMQ cluster nodes:",
+				Default:  "3",
+				Help:     "",
+			},
+			Validate:  survey.Validator(conf.IsUint()),
+			Transform: nil,
+		},
+		{
+			Name: "volume",
+			Prompt: &survey.Input{
+				Renderer: survey.Renderer{},
+				Message:  "Set KubeMQ cluster persistence volume claim size (0 - no persistence claims):",
+				Default:  "0",
+				Help:     "",
+			},
+			Validate:  survey.Validator(conf.IsUint()),
+			Transform: nil,
+		},
+		{
+			Name: "service",
+			Prompt: &survey.Select{
+				Renderer: survey.Renderer{},
+				Message:  "Expose services as :",
+				Options:  []string{"ClusterIP", "NodePort", "LoadBalancer"},
+				Default:  "ClusterIP",
+				Help:     "",
+			},
+			Validate:  nil,
+			Transform: nil,
+		},
+	}
+	err := survey.Ask(qs, &answers)
+	if err != nil {
+		return err
+	}
+	o.appsVersion = "apps/v1"
+	o.coreVersion = "v1"
+	o.name = answers.Name
+	o.namespace = answers.Namespace
+	o.version = answers.Version
+	o.replicas = answers.Replicas
+	o.volume = answers.Volume
+	switch answers.Service {
+	case "NodePort":
+		o.isNodePort = true
+	case "LoadBalancer":
+		o.isLoadBalance = true
+	}
+
+	return nil
+}
+
+func (o *CreateOptions) setDefaultOptions() error {
+
+	o.appsVersion = "apps/v1"
+	o.coreVersion = "v1"
+	o.name = "kubemq-cluster"
+	o.namespace = "default"
+	o.version = "latest"
+	o.replicas = 3
+	o.volume = 0
 	return nil
 }
