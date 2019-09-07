@@ -1,4 +1,4 @@
-package deploy
+package create
 
 import (
 	"context"
@@ -14,7 +14,7 @@ import (
 	appsv1 "k8s.io/api/apps/v1"
 )
 
-type DeployOptions struct {
+type CreateOptions struct {
 	cfg           *config.Config
 	token         string
 	replicas      int
@@ -28,39 +28,39 @@ type DeployOptions struct {
 	isLoadBalance bool
 }
 
-var deployExamples = `
-	# Deploy default KubeMQ cluster
-	# kubetools deploy b33600cc-93ef-4395-bba3-13131eb27d5e
+var createExamples = `
+	# Create default KubeMQ cluster
+	# kubetools cluster create b33600cc-93ef-4395-bba3-13131eb27d5e
 
-	# Deploy KubeMQ cluster default namespace with specific cluster name  
-	# kubetools deploy b3330scc-93ef-4395-bba3-13131sb2785e -n kubemq-cluster-1
+	# Create KubeMQ cluster default namespace with specific cluster name  
+	# kubetools cluster create b3330scc-93ef-4395-bba3-13131sb2785e -n kubemq-cluster-1
 
-	# Deploy KubeMQ cluster with specific cluster name and namespace   
-	# kubetools deploy b3330scc-93ef-4395-bba3-13131sb2785e -n kubemq-cluster-1 -s kubemq-namespace
+	# Create KubeMQ cluster with specific cluster name and namespace   
+	# kubetools cluster create b3330scc-93ef-4395-bba3-13131sb2785e -n kubemq-cluster-1 -s kubemq-namespace
 
-	# Deploy default KubeMQ cluster with 5 pods   
-	# kubetools deploy b3330scc-93ef-4395-bba3-13131sb2785e -r 5
+	# Create default KubeMQ cluster with 5 pods   
+	# kubetools cluster create b3330scc-93ef-4395-bba3-13131sb2785e -r 5
 
-	# Deploy default KubeMQ cluster with persistence volume claims of 10Gi   
-	# kubetools deploy b3330scc-93ef-4395-bba3-13131sb2785e -v 10
+	# Create default KubeMQ cluster with persistence volume claims of 10Gi   
+	# kubetools cluster create b3330scc-93ef-4395-bba3-13131sb2785e -v 10
 
-	# Deploy default KubeMQ cluster with specific KubeMQ image version   
-	# kubetools deploy b3330scc-93ef-4395-bba3-13131sb2785e -i v1.6.2
+	# Create default KubeMQ cluster with specific KubeMQ image version   
+	# kubetools cluster create b3330scc-93ef-4395-bba3-13131sb2785e -i v1.6.2
 `
-var deployLong = `Deploy a KubeMQ cluster`
-var deployShort = `Deploy a KubeMQ cluster`
+var createLong = `Create a KubeMQ cluster`
+var createShort = `Create a KubeMQ cluster`
 
-func NewCmdDeploy(cfg *config.Config) *cobra.Command {
-	o := &DeployOptions{
+func NewCmdCreate(cfg *config.Config) *cobra.Command {
+	o := &CreateOptions{
 		cfg: cfg,
 	}
 	cmd := &cobra.Command{
 
-		Use:     "deploy",
-		Aliases: []string{"dep", "dp", "d"},
-		Short:   deployShort,
-		Long:    deployLong,
-		Example: deployExamples,
+		Use:     "create",
+		Aliases: []string{"c"},
+		Short:   createShort,
+		Long:    createLong,
+		Example: createExamples,
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
@@ -84,7 +84,7 @@ func NewCmdDeploy(cfg *config.Config) *cobra.Command {
 	return cmd
 }
 
-func (o *DeployOptions) Complete(args []string) error {
+func (o *CreateOptions) Complete(args []string) error {
 	if len(args) > 0 {
 		o.token = args[0]
 	} else {
@@ -108,7 +108,7 @@ func (o *DeployOptions) Complete(args []string) error {
 	return nil
 }
 
-func (o *DeployOptions) Validate() error {
+func (o *CreateOptions) Validate() error {
 	if o.token == "" {
 		return fmt.Errorf("no KubeMQ token provided")
 	}
@@ -116,7 +116,7 @@ func (o *DeployOptions) Validate() error {
 	return nil
 }
 
-func (o *DeployOptions) Run(ctx context.Context) error {
+func (o *CreateOptions) Run(ctx context.Context) error {
 	deployment := &StatefulSetDeployment{
 		Namespace:   nil,
 		StatefulSet: nil,
@@ -138,32 +138,32 @@ func (o *DeployOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	isDeployed := false
+	isCreateed := false
 	deployment.StatefulSet, err = c.CreateStatefulSet(spec)
 	if err != nil {
-		utils.Printlnf("StatefulSet %s/%s not deployed. Error: %s", o.namespace, o.name, utils.Title(err.Error()))
+		utils.Printlnf("StatefulSet %s/%s not created. Error: %s", o.namespace, o.name, utils.Title(err.Error()))
 	} else {
-		isDeployed = true
-		utils.Printlnf("StatefulSet %s/%s deployed", o.namespace, o.name)
+		isCreateed = true
+		utils.Printlnf("StatefulSet %s/%s created", o.namespace, o.name)
 	}
 
 	for _, cfg := range NewServiceConfigs(o) {
 		spec, err := cfg.Spec()
 		svc, err := c.CreateService(spec)
 		if err != nil {
-			utils.Printlnf("Service %s/%s not deployed. Error: %s", cfg.Namespace, cfg.Name, utils.Title(err.Error()))
+			utils.Printlnf("Service %s/%s not created. Error: %s", cfg.Namespace, cfg.Name, utils.Title(err.Error()))
 		} else {
 			if svc != nil {
-				utils.Printlnf("Service %s/%s deployed", cfg.Namespace, cfg.Name)
+				utils.Printlnf("Service %s/%s created", cfg.Namespace, cfg.Name)
 				deployment.Services[svc.Name] = svc
 			}
 		}
 
 	}
-	if !isDeployed {
+	if !isCreateed {
 		return nil
 	}
-	utils.Printlnf("StatefulSet %s/%s status:", o.namespace, o.name)
+	utils.Printlnf("StatefulSet %s/%s list:", o.namespace, o.name)
 	done := make(chan struct{})
 	evt := make(chan *appsv1.StatefulSet)
 	go c.GetStatefulSetEvents(ctx, evt, done)

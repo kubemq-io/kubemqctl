@@ -1,4 +1,4 @@
-package status
+package list
 
 import (
 	"context"
@@ -12,25 +12,25 @@ import (
 	"time"
 )
 
-type StatusOptions struct {
+type ListOptions struct {
 	cfg *config.Config
 }
 
 var statusExamples = `
-	# Get status of KubeMQ of clusters
-	kubetools status
+	# Get list of KubeMQ of clusters
+	kubetools cluster list
 `
-var statusLong = `Get status of KubeMQ of clusters`
-var statusShort = `Get status of KubeMQ of clusters`
+var statusLong = `Get list of KubeMQ of clusters`
+var statusShort = `Get list of KubeMQ of clusters`
 
-func NewCmdStatus(cfg *config.Config) *cobra.Command {
-	o := &StatusOptions{
+func NewCmdList(cfg *config.Config) *cobra.Command {
+	o := &ListOptions{
 		cfg: cfg,
 	}
 	cmd := &cobra.Command{
 
-		Use:     "status",
-		Aliases: []string{"st"},
+		Use:     "list",
+		Aliases: []string{"ls"},
 		Short:   statusShort,
 		Long:    statusLong,
 		Example: statusExamples,
@@ -46,16 +46,16 @@ func NewCmdStatus(cfg *config.Config) *cobra.Command {
 	return cmd
 }
 
-func (o *StatusOptions) Complete(args []string) error {
+func (o *ListOptions) Complete(args []string) error {
 	return nil
 }
 
-func (o *StatusOptions) Validate() error {
+func (o *ListOptions) Validate() error {
 
 	return nil
 }
 
-func (o *StatusOptions) Run(ctx context.Context) error {
+func (o *ListOptions) Run(ctx context.Context) error {
 	c, err := client.NewClient(o.cfg.KubeConfigPath)
 	if err != nil {
 		return err

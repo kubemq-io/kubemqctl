@@ -22,22 +22,22 @@ type LogsOptions struct {
 
 var logsExamples = `
 	# Stream logs with selection of KubeMQ cluster
-	kubetools logs
+	kubetools cluster logs
 
 	# Stream logs of all pods in default namespace
-	kubetools logs .* -n default
+	kubetools cluster logs .* -n default
 
 	# Stream logs of regex base pods with logs since 10m ago
-	kubetools logs kubemq-cluster.* -s 10m
+	kubetools cluster logs kubemq-cluster.* -s 10m
 
 	# Stream logs of regex base pods with logs since 10m ago include the string of 'connection'
-	kubetools logs kubemq-cluster.* -s 10m -i connection
+	kubetools cluster logs kubemq-cluster.* -s 10m -i connection
 
 	# Stream logs of regex base pods with logs exclude the string of 'error'
-	kubetools logs kubemq-cluster.* -s 10m -e error
+	kubetools cluster logs kubemq-cluster.* -s 10m -e error
 
 	# Stream logs of specific container
-	kubetools logs -c kubemq-cluster-0
+	kubetools cluster logs -c kubemq-cluster-0
 `
 var logsLong = `Stream logs from KubeMQ pods`
 var logsShort = `Stream logs from KubeMQ pods`

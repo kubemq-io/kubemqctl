@@ -17,7 +17,7 @@ type ContextOptions struct {
 
 var contextExamples = `
 	# Select kubernetes cluster context
-	kubetools context
+	kubetools cluster context
 
 `
 var contextLong = `Select kubernetes cluster context`

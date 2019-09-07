@@ -1,4 +1,4 @@
-package deploy
+package create
 
 import (
 	appsv1 "k8s.io/api/apps/v1"
@@ -34,7 +34,7 @@ type StatefulSetDeployment struct {
 	Services    map[string]*apiv1.Service
 }
 
-func NewStatefulSetConfig(o *DeployOptions) StatefulSetConfig {
+func NewStatefulSetConfig(o *CreateOptions) StatefulSetConfig {
 	return StatefulSetConfig{
 		ApiVersion: o.appsVersion,
 		Name:       o.name,
@@ -51,7 +51,7 @@ func (s StatefulSetConfig) Spec() ([]byte, error) {
 	return t.Get()
 }
 
-func NewServiceConfigs(o *DeployOptions) []ServiceConfig {
+func NewServiceConfigs(o *CreateOptions) []ServiceConfig {
 	list := []ServiceConfig{}
 	svc := ServiceConfig{
 		ApiVersion:    o.coreVersion,

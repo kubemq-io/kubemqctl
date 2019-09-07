@@ -20,10 +20,10 @@ type ScaleOptions struct {
 
 var scaleExamples = `
 	# Scale StatufulSet to 5
-	kubetools cluster scale 5
+	kubetools cluster cluster scale 5
 
 	# Scale StatufulSet to 0
-	kubetools cluster scale 0
+	kubetools cluster cluster scale 0
 `
 var scaleLong = `Scale KubeMQ cluster`
 var scaleShort = `Scale KubeMQ cluster`

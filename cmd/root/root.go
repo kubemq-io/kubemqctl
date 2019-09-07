@@ -2,20 +2,19 @@ package root
 
 import (
 	"context"
+	"github.com/kubemq-io/kubetools/cmd/cluster"
+	"github.com/kubemq-io/kubetools/cmd/cluster/proxy"
 	"github.com/kubemq-io/kubetools/cmd/commands"
 	config2 "github.com/kubemq-io/kubetools/cmd/config"
-	context2 "github.com/kubemq-io/kubetools/cmd/context"
+
 	"github.com/kubemq-io/kubetools/cmd/dashboard"
-	"github.com/kubemq-io/kubetools/cmd/delete"
-	"github.com/kubemq-io/kubetools/cmd/deploy"
+
 	"github.com/kubemq-io/kubetools/cmd/events"
 	"github.com/kubemq-io/kubetools/cmd/events_store"
-	"github.com/kubemq-io/kubetools/cmd/logs"
-	"github.com/kubemq-io/kubetools/cmd/proxy"
+
 	"github.com/kubemq-io/kubetools/cmd/queries"
 	"github.com/kubemq-io/kubetools/cmd/queue"
-	"github.com/kubemq-io/kubetools/cmd/scale"
-	"github.com/kubemq-io/kubetools/cmd/status"
+
 	version2 "github.com/kubemq-io/kubetools/cmd/version"
 	"github.com/kubemq-io/kubetools/pkg/config"
 	"github.com/kubemq-io/kubetools/pkg/utils"
@@ -73,12 +72,7 @@ func init() {
 	rootCmd.AddCommand(config2.NewCmdConfig(cfg))
 	rootCmd.AddCommand(dashboard.NewCmdDashboard(cfg))
 	rootCmd.AddCommand(proxy.NewCmdProxy(cfg))
-	rootCmd.AddCommand(logs.NewCmdLogs(cfg))
-	rootCmd.AddCommand(deploy.NewCmdDeploy(cfg))
-	rootCmd.AddCommand(delete.NewCmdDelete(cfg))
-	rootCmd.AddCommand(scale.NewCmdScale(cfg))
-	rootCmd.AddCommand(status.NewCmdStatus(cfg))
-	rootCmd.AddCommand(context2.NewCmdContext(cfg))
 	rootCmd.AddCommand(version2.NewCmdVersion(version))
+	rootCmd.AddCommand(cluster.NewCmdCluster(cfg))
 
 }

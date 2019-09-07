@@ -17,13 +17,13 @@ type ProxyOptions struct {
 
 var proxyExamples = `
 	# proxy default/kubemq-cluster with default KubeMQ ports
-	kubetools proxy
+	kubetools cluster proxy
 
 	# proxy specific namespace/pod with default KubeMQ ports
-	kubetools proxy kubemq kubemq-cluster1 
+	kubetools cluster proxy kubemq kubemq-cluster1 
 
 	# proxy specific namespace/pod with specific ports
-	kubetools proxy default nginx -p 80:80 
+	kubetools cluster proxy default nginx -p 80:80 
 `
 var proxyLong = `Proxy KubeMQ cluster connection to localhost`
 var proxyShort = `Proxy KubeMQ cluster connection to localhost`

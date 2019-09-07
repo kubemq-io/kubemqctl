@@ -15,11 +15,11 @@ type DeleteOptions struct {
 }
 
 var deleteExamples = `
- 	# Delete selection of KubeMQ clusters
-	kubetools delete
+ 	# Delete KubeMQ cluster
+	kubetools cluster delete
 `
-var deleteLong = `Delete KubeMQ clusters`
-var deleteShort = `Delete KubeMQ clusters`
+var deleteLong = `Delete KubeMQ cluster`
+var deleteShort = `Delete KubeMQ cluster`
 
 func NewCmdDelete(cfg *config.Config) *cobra.Command {
 	o := &DeleteOptions{
