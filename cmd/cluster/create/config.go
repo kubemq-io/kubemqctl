@@ -1,10 +1,5 @@
 package create
 
-import (
-	appsv1 "k8s.io/api/apps/v1"
-	apiv1 "k8s.io/api/core/v1"
-)
-
 type StatefulSetConfig struct {
 	ApiVersion string
 	Name       string
@@ -26,12 +21,6 @@ type ServiceConfig struct {
 	TargetPort    int
 	TargetApp     string
 	PortName      string
-}
-
-type StatefulSetDeployment struct {
-	Namespace   *apiv1.Namespace
-	StatefulSet *appsv1.StatefulSet
-	Services    map[string]*apiv1.Service
 }
 
 func NewStatefulSetConfig(o *CreateOptions) StatefulSetConfig {

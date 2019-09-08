@@ -1,16 +1,12 @@
 package create
 
 import (
-	"bufio"
 	"context"
 	"fmt"
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/ghodss/yaml"
 	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s/client"
 	conf "github.com/kubemq-io/kubetools/pkg/k8s/config"
 	"github.com/skratchdot/open-golang/open"
-	"k8s.io/api/core/v1"
 	"os"
 
 	"github.com/kubemq-io/kubetools/pkg/utils"
@@ -20,7 +16,7 @@ import (
 
 type CreateOptions struct {
 	cfg           *config.Config
-	defaultMode   bool
+	setOptions    bool
 	exportFile    bool
 	token         string
 	replicas      int
@@ -32,6 +28,8 @@ type CreateOptions struct {
 	volume        int
 	isNodePort    bool
 	isLoadBalance bool
+	envVars       *conf.EntryGroup
+	deployment    *StatefulSetDeployment
 }
 
 var createExamples = `
@@ -49,7 +47,8 @@ var createShort = `Create a KubeMQ cluster`
 
 func NewCmdCreate(cfg *config.Config) *cobra.Command {
 	o := &CreateOptions{
-		cfg: cfg,
+		cfg:     cfg,
+		envVars: conf.EnvConfig,
 	}
 	cmd := &cobra.Command{
 
@@ -67,7 +66,7 @@ func NewCmdCreate(cfg *config.Config) *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().BoolVarP(&o.defaultMode, "default", "d", false, "Create KubeMQ cluster with default parameters")
+	cmd.PersistentFlags().BoolVarP(&o.setOptions, "options", "o", false, "Create KubeMQ cluster with options")
 	cmd.PersistentFlags().BoolVarP(&o.exportFile, "file", "f", false, "Generate yaml configuration file")
 
 	return cmd
@@ -94,11 +93,11 @@ func (o *CreateOptions) Complete(args []string) error {
 		}
 		utils.Println("")
 	}
-	if o.defaultMode {
-		return o.setDefaultOptions()
-	}
+	if o.setOptions {
+		return o.askOptions()
 
-	return o.askOptions()
+	}
+	return o.setDefaultOptions()
 }
 
 func (o *CreateOptions) Validate() error {
@@ -110,59 +109,30 @@ func (o *CreateOptions) Validate() error {
 }
 
 func (o *CreateOptions) Run(ctx context.Context) error {
+	sd, err := CreateStatefulSetDeployment(o)
+	if err != nil {
+		return err
+	}
 	if o.exportFile {
-		return o.export()
-	}
-	deployment := &StatefulSetDeployment{
-		Namespace:   nil,
-		StatefulSet: nil,
-		Services:    map[string]*v1.Service{},
-	}
-	c, err := client.NewClient(o.cfg.KubeConfigPath)
-	if err != nil {
-		return err
-	}
-	var created bool
-	deployment.Namespace, created, err = c.CheckAndCreateNamespace(o.namespace)
-	if err != nil {
-		return err
-	}
-	if created {
-		utils.Printlnf("Namespace %s created", o.namespace)
-	}
-	spec, err := NewStatefulSetConfig(o).Spec()
-	if err != nil {
-		return err
-	}
-	isCreated := false
-	deployment.StatefulSet, err = c.CreateStatefulSet(spec)
-	if err != nil {
-		utils.Printlnf("StatefulSet %s/%s not created. Error: %s", o.namespace, o.name, utils.Title(err.Error()))
-	} else {
-		isCreated = true
-		utils.Printlnf("StatefulSet %s/%s created", o.namespace, o.name)
-	}
 
-	for _, cfg := range NewServiceConfigs(o) {
-		spec, err := cfg.Spec()
-		svc, err := c.CreateService(spec)
+		f, err := os.Create(fmt.Sprintf("%s.yaml", o.name))
 		if err != nil {
-			utils.Printlnf("Service %s/%s not created. Error: %s", cfg.Namespace, cfg.Name, utils.Title(err.Error()))
-		} else {
-			if svc != nil {
-				utils.Printlnf("Service %s/%s created", cfg.Namespace, cfg.Name)
-				deployment.Services[svc.Name] = svc
-			}
+			return err
 		}
-
+		return sd.Export(f, o)
 	}
-	if !isCreated {
+
+	executed, err := sd.Execute(o)
+	if err != nil {
+		return err
+	}
+	if !executed {
 		return nil
 	}
 	utils.Printlnf("StatefulSet %s/%s list:", o.namespace, o.name)
 	done := make(chan struct{})
 	evt := make(chan *appsv1.StatefulSet)
-	go c.GetStatefulSetEvents(ctx, evt, done)
+	go sd.client.GetStatefulSetEvents(ctx, evt, done)
 
 	for {
 		select {
@@ -178,66 +148,8 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 			return nil
 		}
 	}
-	return nil
+
 }
-func (o *CreateOptions) export() error {
-	deployment := struct {
-		Namespace   []byte
-		StatefulSet []byte
-		Services    [][]byte
-	}{}
-	c, err := client.NewClient(o.cfg.KubeConfigPath)
-	if err != nil {
-		return err
-	}
-	ns, existed, err := c.GetNamespace(o.namespace)
-	if err != nil {
-		return err
-	}
-	if !existed {
-		deployment.Namespace, err = yaml.Marshal(ns)
-		if err != nil {
-			return err
-		}
-	}
-
-	deployment.StatefulSet, err = NewStatefulSetConfig(o).Spec()
-	if err != nil {
-		return err
-	}
-	for _, cfg := range NewServiceConfigs(o) {
-		spec, err := cfg.Spec()
-		if err != nil {
-			return err
-		}
-		deployment.Services = append(deployment.Services, spec)
-	}
-	f, err := os.Create(fmt.Sprintf("%s.yaml", o.name))
-	if err != nil {
-		return err
-	}
-	w := bufio.NewWriter(f)
-	if deployment.Namespace != nil {
-		w.Write(deployment.Namespace)
-		w.WriteString(fmt.Sprintf("---"))
-	}
-	if deployment.StatefulSet != nil {
-		w.Write(deployment.StatefulSet)
-		w.WriteString(fmt.Sprintf("---"))
-	}
-
-	for _, svc := range deployment.Services {
-		w.Write(svc)
-		w.WriteString(fmt.Sprintf("---"))
-	}
-	err = w.Flush()
-	if err != nil {
-		return err
-	}
-	utils.Printlnf("create yaml file was exported to %s.yaml", o.name)
-	return nil
-}
-
 func (o *CreateOptions) askOptions() error {
 	answers := struct {
 		Namespace string
@@ -333,6 +245,11 @@ func (o *CreateOptions) askOptions() error {
 		o.isNodePort = true
 	case "LoadBalancer":
 		o.isLoadBalance = true
+	}
+
+	err = o.envVars.Execute()
+	if err != nil {
+		return err
 	}
 
 	return nil

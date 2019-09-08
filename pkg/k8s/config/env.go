@@ -5,8 +5,12 @@ var EnvConfig = &EntryGroup{
 	Entries: nil,
 	SubGroups: []*EntryGroup{
 		LicenseConfig,
-		LoggingConfig,
 		PersistenceConfig,
+		QueuesConfig,
+		GrpcConfig,
+		RESTConfig,
+		LoggingConfig,
+		ObservabilityConfig,
 	},
 	Result: nil,
 }

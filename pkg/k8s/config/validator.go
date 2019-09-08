@@ -46,6 +46,29 @@ func IsUint() Validator {
 	}
 }
 
+func IsUFloat() Validator {
+
+	return func(val interface{}) error {
+		if str, ok := val.(string); ok {
+			// if the string is longer than the given value
+			v, err := strconv.ParseFloat(str, 64)
+			if err != nil {
+				return fmt.Errorf("value is not a float number")
+			}
+			if v < 0 {
+				return fmt.Errorf("value must be greater then 0")
+			}
+
+		} else {
+			// otherwise we cannot convert the value into a string and cannot enforce length
+			return fmt.Errorf("cannot enforce length on response of type %v", reflect.TypeOf(val).Name())
+		}
+
+		// the input is fine
+		return nil
+	}
+}
+
 func IsInt() Validator {
 
 	return func(val interface{}) error {

@@ -19,8 +19,8 @@ var configExamples = `
 	# Run Kubetools configuration wizard
 	# kubetools config
 `
-var configLong = `Kubetools configuration wizard`
-var configShort = `Kubetools configuration wizard`
+var configLong = `Run Kubetools configuration wizard`
+var configShort = `Run Kubetools configuration wizard`
 
 // NewCmdCreate returns new initialized instance of create sub command
 func NewCmdConfig(cfg *config.Config) *cobra.Command {

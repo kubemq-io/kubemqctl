@@ -3,7 +3,6 @@ package root
 import (
 	"context"
 	"github.com/kubemq-io/kubetools/cmd/cluster"
-	"github.com/kubemq-io/kubetools/cmd/cluster/proxy"
 	"github.com/kubemq-io/kubetools/cmd/commands"
 	config2 "github.com/kubemq-io/kubetools/cmd/config"
 
@@ -71,7 +70,6 @@ func init() {
 	rootCmd.AddCommand(queries.NewCmdQueries(cfg))
 	rootCmd.AddCommand(config2.NewCmdConfig(cfg))
 	rootCmd.AddCommand(dashboard.NewCmdDashboard(cfg))
-	rootCmd.AddCommand(proxy.NewCmdProxy(cfg))
 	rootCmd.AddCommand(version2.NewCmdVersion(version))
 	rootCmd.AddCommand(cluster.NewCmdCluster(cfg))
 

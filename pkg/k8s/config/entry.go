@@ -44,6 +44,7 @@ type EntryGroup struct {
 }
 
 func (eg *EntryGroup) Execute() error {
+	eg.Result = map[string]*Entry{}
 	confirm := &survey.Confirm{
 		Renderer: survey.Renderer{},
 		Message:  fmt.Sprintf("Would you like to configure %s ?", eg.Name),
@@ -58,7 +59,6 @@ func (eg *EntryGroup) Execute() error {
 	if !resp {
 		return nil
 	}
-	eg.Result = map[string]*Entry{}
 
 	for _, entry := range eg.Entries {
 		err := entry.Execute()
@@ -70,7 +70,42 @@ func (eg *EntryGroup) Execute() error {
 		}
 	}
 
+	var multiSelectOptions []string
+
 	for _, group := range eg.SubGroups {
+		multiSelectOptions = append(multiSelectOptions, group.Name)
+	}
+	if multiSelectOptions == nil {
+		return nil
+	}
+	multiSelect := &survey.MultiSelect{
+		Renderer:      survey.Renderer{},
+		Message:       "Select what would you like to configure ?:",
+		Options:       multiSelectOptions,
+		Default:       false,
+		Help:          "",
+		PageSize:      0,
+		VimMode:       false,
+		FilterMessage: "",
+		Filter:        nil,
+	}
+	multiSelectEntries := []string{}
+	err = survey.AskOne(multiSelect, &multiSelectEntries)
+	if err != nil {
+		return err
+	}
+	if multiSelectEntries == nil {
+		return nil
+	}
+	multiSelectMap := make(map[string]struct{})
+	for _, entry := range multiSelectEntries {
+		multiSelectMap[entry] = struct{}{}
+	}
+	for _, group := range eg.SubGroups {
+		_, ok := multiSelectMap[group.Name]
+		if !ok {
+			continue
+		}
 		err := group.Execute()
 		if err != nil {
 			return err
