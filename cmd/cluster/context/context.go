@@ -2,7 +2,6 @@ package context
 
 import (
 	"context"
-	"fmt"
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/kubemq-io/kubetools/pkg/config"
 	"github.com/kubemq-io/kubetools/pkg/k8s/client"
@@ -57,7 +56,7 @@ func (o *ContextOptions) Validate() error {
 }
 
 func (o *ContextOptions) Run(ctx context.Context) error {
-	fmt.Println(o.cfg)
+
 	c, err := client.NewClient(o.cfg.KubeConfigPath)
 	if err != nil {
 		return err
@@ -91,6 +90,6 @@ func (o *ContextOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-
+	utils.Printlnf("kubernetes cluster switched to %s", contextSelected)
 	return nil
 }
