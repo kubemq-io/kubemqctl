@@ -3,10 +3,8 @@ package create
 import (
 	"context"
 	"fmt"
-	"github.com/AlecAivazis/survey/v2"
 	"github.com/kubemq-io/kubetools/pkg/config"
 	conf "github.com/kubemq-io/kubetools/pkg/k8s/config"
-	"github.com/skratchdot/open-golang/open"
 	"os"
 
 	"github.com/kubemq-io/kubetools/pkg/utils"
@@ -28,27 +26,27 @@ type CreateOptions struct {
 	volume        int
 	isNodePort    bool
 	isLoadBalance bool
-	envVars       *conf.EntryGroup
+	optionsMenu   *conf.Menu
 	deployment    *StatefulSetDeployment
 }
 
 var createExamples = `
 	# Create default KubeMQ cluster
-	# kubetools cluster create b33600cc-93ef-4395-bba3-13131eb27d5e -d
+	# kubetools cluster create -t b33600cc-93ef-4395-bba3-13131eb27d5e 
 
 	# Create KubeMQ cluster with options  
-	# kubetools cluster create b3330scc-93ef-4395-bba3-13131sb2785e
+	# kubetools cluster create -t b3330scc-93ef-4395-bba3-13131sb2785e -o
 
 	# Export KubeMQ cluster yaml file (Dry-Run)    
-	# kubetools cluster create b3330scc-93ef-4395-bba3-13131sb2785e -f 
+	# kubetools cluster create -t b3330scc-93ef-4395-bba3-13131sb2785e -f 
 `
 var createLong = `Create a KubeMQ cluster`
 var createShort = `Create a KubeMQ cluster`
 
 func NewCmdCreate(cfg *config.Config) *cobra.Command {
 	o := &CreateOptions{
-		cfg:     cfg,
-		envVars: conf.EnvConfig,
+		cfg:         cfg,
+		optionsMenu: conf.CreateMenu,
 	}
 	cmd := &cobra.Command{
 
@@ -66,6 +64,7 @@ func NewCmdCreate(cfg *config.Config) *cobra.Command {
 		},
 	}
 
+	cmd.PersistentFlags().StringVarP(&o.token, "token", "t", "", "Set KubeMQ Token")
 	cmd.PersistentFlags().BoolVarP(&o.setOptions, "options", "o", false, "Create KubeMQ cluster with options")
 	cmd.PersistentFlags().BoolVarP(&o.exportFile, "file", "f", false, "Generate yaml configuration file")
 
@@ -73,29 +72,28 @@ func NewCmdCreate(cfg *config.Config) *cobra.Command {
 }
 
 func (o *CreateOptions) Complete(args []string) error {
-	if len(args) > 0 {
-		o.token = args[0]
-	} else {
-		toRegister := true
-		promptConfirm := &survey.Confirm{
-			Renderer: survey.Renderer{},
-			Message:  "No KubeMQ token provided, want to open the registration form ?",
-			Default:  true,
-			Help:     "",
-		}
-		err := survey.AskOne(promptConfirm, &toRegister)
-		if err != nil {
-			return err
-		}
-		err = open.Run("https://account.kubemq.io/login/register")
-		if err != nil {
-			return err
-		}
-		utils.Println("")
+	if o.token == "" {
+		return fmt.Errorf("No KubeMQ token provided")
 	}
 	if o.setOptions {
-		return o.askOptions()
-
+		err := conf.CreateMenu.Run()
+		if err != nil {
+			return err
+		}
+		o.appsVersion = "apps/v1"
+		o.coreVersion = "v1"
+		o.name = conf.CreateBasicOptions.Name
+		o.namespace = conf.CreateBasicOptions.Namespace
+		o.version = conf.CreateBasicOptions.Image
+		o.replicas = conf.CreateBasicOptions.Replicas
+		o.volume = conf.CreateBasicOptions.Vol
+		switch conf.CreateBasicOptions.ServiceMode {
+		case "NodePort":
+			o.isNodePort = true
+		case "LoadBalancer":
+			o.isLoadBalance = true
+		}
+		return nil
 	}
 	return o.setDefaultOptions()
 }
@@ -109,6 +107,7 @@ func (o *CreateOptions) Validate() error {
 }
 
 func (o *CreateOptions) Run(ctx context.Context) error {
+	utils.Printlnf("\n")
 	sd, err := CreateStatefulSetDeployment(o)
 	if err != nil {
 		return err
@@ -150,111 +149,6 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 	}
 
 }
-func (o *CreateOptions) askOptions() error {
-	answers := struct {
-		Namespace string
-		Name      string
-		Version   string
-		Replicas  int
-		Volume    int
-		Service   string
-	}{}
-
-	qs := []*survey.Question{
-		{
-			Name: "namespace",
-			Prompt: &survey.Input{
-				Renderer: survey.Renderer{},
-				Message:  "Enter namespace of KubeMQ cluster creation:",
-				Default:  "default",
-				Help:     "",
-			},
-			Validate:  survey.Validator(conf.IsRequired()),
-			Transform: nil,
-		},
-		{
-			Name: "name",
-			Prompt: &survey.Input{
-				Renderer: survey.Renderer{},
-				Message:  "Enter KubeMQ cluster name:",
-				Default:  "kubemq-cluster",
-				Help:     "",
-			},
-			Validate:  survey.Validator(conf.IsRequired()),
-			Transform: nil,
-		},
-		{
-			Name: "version",
-			Prompt: &survey.Input{
-				Renderer: survey.Renderer{},
-				Message:  "Set KubeMQ image version:",
-				Default:  "latest",
-				Help:     "",
-			},
-			Validate:  survey.Validator(conf.IsRequired()),
-			Transform: nil,
-		},
-		{
-			Name: "replicas",
-			Prompt: &survey.Input{
-				Renderer: survey.Renderer{},
-				Message:  "Set KubeMQ cluster nodes:",
-				Default:  "3",
-				Help:     "",
-			},
-			Validate:  survey.Validator(conf.IsUint()),
-			Transform: nil,
-		},
-		{
-			Name: "volume",
-			Prompt: &survey.Input{
-				Renderer: survey.Renderer{},
-				Message:  "Set KubeMQ cluster persistence volume claim size (0 - no persistence claims):",
-				Default:  "0",
-				Help:     "",
-			},
-			Validate:  survey.Validator(conf.IsUint()),
-			Transform: nil,
-		},
-		{
-			Name: "service",
-			Prompt: &survey.Select{
-				Renderer: survey.Renderer{},
-				Message:  "Expose services as :",
-				Options:  []string{"ClusterIP", "NodePort", "LoadBalancer"},
-				Default:  "ClusterIP",
-				Help:     "",
-			},
-			Validate:  nil,
-			Transform: nil,
-		},
-	}
-	err := survey.Ask(qs, &answers)
-	if err != nil {
-		return err
-	}
-	o.appsVersion = "apps/v1"
-	o.coreVersion = "v1"
-	o.name = answers.Name
-	o.namespace = answers.Namespace
-	o.version = answers.Version
-	o.replicas = answers.Replicas
-	o.volume = answers.Volume
-	switch answers.Service {
-	case "NodePort":
-		o.isNodePort = true
-	case "LoadBalancer":
-		o.isLoadBalance = true
-	}
-
-	err = o.envVars.Execute()
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
 func (o *CreateOptions) setDefaultOptions() error {
 
 	o.appsVersion = "apps/v1"
@@ -264,5 +158,13 @@ func (o *CreateOptions) setDefaultOptions() error {
 	o.version = "latest"
 	o.replicas = 3
 	o.volume = 0
+	utils.Printlnf("Create KubeMQ cluster with default options:")
+	utils.Printlnf("\tKubeMQ Token: %s", o.token)
+	utils.Printlnf("'\tCluster Name: %s", o.name)
+	utils.Printlnf("\tCluster Namespace: %s", o.namespace)
+	utils.Printlnf("\tCluster Docker Image: kubemq/kubemq:%s", o.version)
+	utils.Printlnf("\tCluster Replicas: %d", o.replicas)
+	utils.Printlnf("\tCluster PVC Size: %d", o.volume)
+
 	return nil
 }

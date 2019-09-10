@@ -2,7 +2,7 @@ package config
 
 var PersistenceConfig = &EntryGroup{
 	Name: "Persistence parameters",
-	Entries: []*Entry{
+	Entries: []Entry{
 		PersistenceCleanStore,
 		PersistenceMaxQueue,
 		PersistenceMaxSubscribers,
@@ -15,7 +15,7 @@ var PersistenceConfig = &EntryGroup{
 	Result:    nil,
 }
 
-var PersistenceCleanStore = &Entry{
+var PersistenceCleanStore = &EnvEntry{
 	VarName:  "STORE_CLEAN",
 	VarValue: "",
 	Prompt: &Selection{
@@ -27,7 +27,7 @@ var PersistenceCleanStore = &Entry{
 	},
 }
 
-var PersistenceMaxQueue = &Entry{
+var PersistenceMaxQueue = &EnvEntry{
 	VarName:  "STORE_MAX_QUEUES",
 	VarValue: "0",
 	Prompt: &Input{
@@ -38,7 +38,7 @@ var PersistenceMaxQueue = &Entry{
 	},
 }
 
-var PersistenceMaxSubscribers = &Entry{
+var PersistenceMaxSubscribers = &EnvEntry{
 	VarName:  "STORE_MAX_SUBSCRIBERS",
 	VarValue: "0",
 	Prompt: &Input{
@@ -49,7 +49,7 @@ var PersistenceMaxSubscribers = &Entry{
 	},
 }
 
-var PersistenceMaxMessages = &Entry{
+var PersistenceMaxMessages = &EnvEntry{
 	VarName:  "STORE_MAX_MESSAGES",
 	VarValue: "0",
 	Prompt: &Input{
@@ -59,7 +59,7 @@ var PersistenceMaxMessages = &Entry{
 		Help:       "Set max number of stored messages per channel/queue, 0 = unlimited",
 	},
 }
-var PersistenceMaxSize = &Entry{
+var PersistenceMaxSize = &EnvEntry{
 	VarName:  "STORE_MAX_SIZE",
 	VarValue: "0",
 	Prompt: &Input{
@@ -69,7 +69,7 @@ var PersistenceMaxSize = &Entry{
 		Help:       "Set max size in bytes per channel/queue, 0 = unlimited ",
 	},
 }
-var PersistenceMaxRetention = &Entry{
+var PersistenceMaxRetention = &EnvEntry{
 	VarName:  "STORE_MAX_RETENTION",
 	VarValue: "0",
 	Prompt: &Input{
@@ -79,7 +79,7 @@ var PersistenceMaxRetention = &Entry{
 		Help:       "Set store time in minutes for each message per channel/queue, 0 = infinite",
 	},
 }
-var PersistenceMaxPurge = &Entry{
+var PersistenceMaxPurge = &EnvEntry{
 	VarName:  "STORE_MAX_INACTIVITY_PURGE",
 	VarValue: "0",
 	Prompt: &Input{

@@ -2,7 +2,7 @@ package config
 
 var ObservabilityConfig = &EntryGroup{
 	Name: "Observability parameters",
-	Entries: []*Entry{
+	Entries: []Entry{
 		ObservabilityMetricsDisable,
 		ObservabilityTracingSample,
 	},
@@ -18,7 +18,7 @@ var ObservabilityConfig = &EntryGroup{
 	Result: nil,
 }
 
-var ObservabilityMetricsDisable = &Entry{
+var ObservabilityMetricsDisable = &EnvEntry{
 	VarName:  "METRICS_DISABLE",
 	VarValue: "",
 	Prompt: &Selection{
@@ -30,7 +30,7 @@ var ObservabilityMetricsDisable = &Entry{
 	},
 }
 
-var ObservabilityTracingSample = &Entry{
+var ObservabilityTracingSample = &EnvEntry{
 	VarName:  "METRICS_TRACING_SAMPLE",
 	VarValue: "",
 	Prompt: &Input{
@@ -43,7 +43,7 @@ var ObservabilityTracingSample = &Entry{
 
 var ObservabilityPrometheusConfig = &EntryGroup{
 	Name: "Prometheus parameters",
-	Entries: []*Entry{
+	Entries: []Entry{
 		ObservabilityPrometheusEnable,
 		ObservabilityPrometheusPath,
 	},
@@ -51,7 +51,7 @@ var ObservabilityPrometheusConfig = &EntryGroup{
 	Result:    nil,
 }
 
-var ObservabilityPrometheusEnable = &Entry{
+var ObservabilityPrometheusEnable = &EnvEntry{
 	VarName:  "METRICS_PROMETHEUS_ENABLE",
 	VarValue: "0",
 	Prompt: &Selection{
@@ -63,7 +63,7 @@ var ObservabilityPrometheusEnable = &Entry{
 	},
 }
 
-var ObservabilityPrometheusPath = &Entry{
+var ObservabilityPrometheusPath = &EnvEntry{
 	VarName:  "METRICS_PROMETHEUS_PATH",
 	VarValue: "0",
 	Prompt: &Input{
@@ -76,7 +76,7 @@ var ObservabilityPrometheusPath = &Entry{
 
 var ObservabilityJeagerConfig = &EntryGroup{
 	Name: "Jeager parameters",
-	Entries: []*Entry{
+	Entries: []Entry{
 		ObservabilityJeagersEnable,
 		ObservabilityJeagerCollectorAddress,
 		ObservabilityJeagerAGENTAddress,
@@ -85,7 +85,7 @@ var ObservabilityJeagerConfig = &EntryGroup{
 	Result:    nil,
 }
 
-var ObservabilityJeagersEnable = &Entry{
+var ObservabilityJeagersEnable = &EnvEntry{
 	VarName:  "METRICS_JEAGER_ENABLE",
 	VarValue: "0",
 	Prompt: &Selection{
@@ -97,7 +97,7 @@ var ObservabilityJeagersEnable = &Entry{
 	},
 }
 
-var ObservabilityJeagerCollectorAddress = &Entry{
+var ObservabilityJeagerCollectorAddress = &EnvEntry{
 	VarName:  "METRICS_JEAGER_COLLECTOR_ADDRESS",
 	VarValue: "0",
 	Prompt: &Input{
@@ -108,7 +108,7 @@ var ObservabilityJeagerCollectorAddress = &Entry{
 	},
 }
 
-var ObservabilityJeagerAGENTAddress = &Entry{
+var ObservabilityJeagerAGENTAddress = &EnvEntry{
 	VarName:  "METRICS_JEAGER_AGENT_ADDRESS",
 	VarValue: "0",
 	Prompt: &Input{
@@ -121,7 +121,7 @@ var ObservabilityJeagerAGENTAddress = &Entry{
 
 var ObservabilityZipkinConfig = &EntryGroup{
 	Name: "Zipkin parameters",
-	Entries: []*Entry{
+	Entries: []Entry{
 		ObservabilityZipkinEnable,
 		ObservabilityZipkinAReporterAddress,
 	},
@@ -129,7 +129,7 @@ var ObservabilityZipkinConfig = &EntryGroup{
 	Result:    nil,
 }
 
-var ObservabilityZipkinEnable = &Entry{
+var ObservabilityZipkinEnable = &EnvEntry{
 	VarName:  "METRICS_ZIPKIN_ENABLE",
 	VarValue: "0",
 	Prompt: &Selection{
@@ -141,7 +141,7 @@ var ObservabilityZipkinEnable = &Entry{
 	},
 }
 
-var ObservabilityZipkinAReporterAddress = &Entry{
+var ObservabilityZipkinAReporterAddress = &EnvEntry{
 	VarName:  "METRICS_ZIPKEIN_REPORTER_ADDRESS",
 	VarValue: "0",
 	Prompt: &Input{
@@ -154,7 +154,7 @@ var ObservabilityZipkinAReporterAddress = &Entry{
 
 var ObservabilityHoneycombConfig = &EntryGroup{
 	Name: "Honeycomb parameters",
-	Entries: []*Entry{
+	Entries: []Entry{
 		ObservabilityHoneycombsEnable,
 		ObservabilityHoneycombKey,
 		ObservabilityHoneycombDataset,
@@ -163,7 +163,7 @@ var ObservabilityHoneycombConfig = &EntryGroup{
 	Result:    nil,
 }
 
-var ObservabilityHoneycombsEnable = &Entry{
+var ObservabilityHoneycombsEnable = &EnvEntry{
 	VarName:  "METRICS_HONEYCOMB_ENABLE",
 	VarValue: "0",
 	Prompt: &Selection{
@@ -175,7 +175,7 @@ var ObservabilityHoneycombsEnable = &Entry{
 	},
 }
 
-var ObservabilityHoneycombKey = &Entry{
+var ObservabilityHoneycombKey = &EnvEntry{
 	VarName:  "METRICS_HONEYCOMB_KEY",
 	VarValue: "0",
 	Prompt: &Input{
@@ -186,7 +186,7 @@ var ObservabilityHoneycombKey = &Entry{
 	},
 }
 
-var ObservabilityHoneycombDataset = &Entry{
+var ObservabilityHoneycombDataset = &EnvEntry{
 	VarName:  "METRICS_HONEYCOMB_DATASET",
 	VarValue: "0",
 	Prompt: &Input{
@@ -199,7 +199,7 @@ var ObservabilityHoneycombDataset = &Entry{
 
 var ObservabilityStackDriversConfig = &EntryGroup{
 	Name: "Google's StackDriver parameters",
-	Entries: []*Entry{
+	Entries: []Entry{
 		ObservabilityStackDriversEnable,
 		ObservabilityStackDriverProjectID,
 		ObservabilityStackDriverMonitorCreds,
@@ -209,7 +209,7 @@ var ObservabilityStackDriversConfig = &EntryGroup{
 	Result:    nil,
 }
 
-var ObservabilityStackDriversEnable = &Entry{
+var ObservabilityStackDriversEnable = &EnvEntry{
 	VarName:  "METRICS_STACKDRIVER_ENABLE",
 	VarValue: "0",
 	Prompt: &Selection{
@@ -221,7 +221,7 @@ var ObservabilityStackDriversEnable = &Entry{
 	},
 }
 
-var ObservabilityStackDriverProjectID = &Entry{
+var ObservabilityStackDriverProjectID = &EnvEntry{
 	VarName:  "METRICS_STACKDRIVER_PROJECT_ID",
 	VarValue: "",
 	Prompt: &Input{
@@ -232,7 +232,7 @@ var ObservabilityStackDriverProjectID = &Entry{
 	},
 }
 
-var ObservabilityStackDriverMonitorCreds = &Entry{
+var ObservabilityStackDriverMonitorCreds = &EnvEntry{
 	VarName:  "METRICS_STACKDRIVER_MONITOR_CRDES",
 	VarValue: "",
 	Prompt: &Input{
@@ -243,7 +243,7 @@ var ObservabilityStackDriverMonitorCreds = &Entry{
 	},
 }
 
-var ObservabilityStackDriverTraceCreds = &Entry{
+var ObservabilityStackDriverTraceCreds = &EnvEntry{
 	VarName:  "METRICS_STACKDRIVER_TRACE_CREDS",
 	VarValue: "",
 	Prompt: &Input{
@@ -256,7 +256,7 @@ var ObservabilityStackDriverTraceCreds = &Entry{
 
 var ObservabilityAWSsConfig = &EntryGroup{
 	Name: "AWS X-Ray parameters",
-	Entries: []*Entry{
+	Entries: []Entry{
 		ObservabilityAWSsEnable,
 		ObservabilityAWSAccessKeyID,
 		ObservabilityAWSSecretAccessKey,
@@ -266,7 +266,7 @@ var ObservabilityAWSsConfig = &EntryGroup{
 	Result:    nil,
 }
 
-var ObservabilityAWSsEnable = &Entry{
+var ObservabilityAWSsEnable = &EnvEntry{
 	VarName:  "METRICS_AWS_ENABLE",
 	VarValue: "",
 	Prompt: &Selection{
@@ -278,7 +278,7 @@ var ObservabilityAWSsEnable = &Entry{
 	},
 }
 
-var ObservabilityAWSAccessKeyID = &Entry{
+var ObservabilityAWSAccessKeyID = &EnvEntry{
 	VarName:  "METRICS_AWS_ACCESS_KEY_ID",
 	VarValue: "",
 	Prompt: &Input{
@@ -289,7 +289,7 @@ var ObservabilityAWSAccessKeyID = &Entry{
 	},
 }
 
-var ObservabilityAWSSecretAccessKey = &Entry{
+var ObservabilityAWSSecretAccessKey = &EnvEntry{
 	VarName:  "METRICS_AWS_SECRET_ACCESS_KEY",
 	VarValue: "",
 	Prompt: &Input{
@@ -300,7 +300,7 @@ var ObservabilityAWSSecretAccessKey = &Entry{
 	},
 }
 
-var ObservabilityAWSDefaultRegion = &Entry{
+var ObservabilityAWSDefaultRegion = &EnvEntry{
 	VarName:  "METRICS_AWS_DEFAULT_REGION",
 	VarValue: "",
 	Prompt: &Input{
@@ -313,7 +313,7 @@ var ObservabilityAWSDefaultRegion = &Entry{
 
 var ObservabilityDatadogConfig = &EntryGroup{
 	Name: "Datadog parameters",
-	Entries: []*Entry{
+	Entries: []Entry{
 		ObservabilityDatadogsEnable,
 		ObservabilityDatadogTraceAddress,
 		ObservabilityDatadogStatsAddress,
@@ -322,7 +322,7 @@ var ObservabilityDatadogConfig = &EntryGroup{
 	Result:    nil,
 }
 
-var ObservabilityDatadogsEnable = &Entry{
+var ObservabilityDatadogsEnable = &EnvEntry{
 	VarName:  "METRICS_DATADOG_ENABLE",
 	VarValue: "",
 	Prompt: &Selection{
@@ -334,7 +334,7 @@ var ObservabilityDatadogsEnable = &Entry{
 	},
 }
 
-var ObservabilityDatadogTraceAddress = &Entry{
+var ObservabilityDatadogTraceAddress = &EnvEntry{
 	VarName:  "METRICS_DATADOG_TRACE_ADDRESS",
 	VarValue: "",
 	Prompt: &Input{
@@ -345,7 +345,7 @@ var ObservabilityDatadogTraceAddress = &Entry{
 	},
 }
 
-var ObservabilityDatadogStatsAddress = &Entry{
+var ObservabilityDatadogStatsAddress = &EnvEntry{
 	VarName:  "METRICS_DATADOG_STATS_ADDRESS",
 	VarValue: "",
 	Prompt: &Input{

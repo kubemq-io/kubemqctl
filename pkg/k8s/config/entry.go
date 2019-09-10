@@ -1,72 +1,59 @@
 package config
 
 import (
-	"fmt"
 	"github.com/AlecAivazis/survey/v2"
 	apiv1 "k8s.io/api/core/v1"
 )
 
-var entryTemplate = `
-            - name: %s
-              value: %s
-`
-
-type Entry struct {
-	VarName  string
-	VarValue string
-	Prompt   Prompt
+type EnvVar struct {
+	Name  string
+	Value string
 }
 
-func (e *Entry) String() string {
-	if e.VarValue == "" {
-		return ""
-	}
-	return fmt.Sprintf(entryTemplate, e.VarName, e.VarValue)
+type ConfigMap struct {
+	Name     string
+	Value    string
+	FileName string
 }
 
-func (e *Entry) Execute() error {
-	if e.Prompt == nil {
-		return nil
-	}
-	for {
-		err := e.Prompt.Ask(&e.VarValue)
-		if err == nil {
-			return nil
-		}
-	}
+type Secret struct {
+	Name       string
+	Value      string
+	FileName   string
+	SecretType string
+}
+
+type Volume struct {
+	Volume *apiv1.Volume
+	Mount  *apiv1.VolumeMount
+}
+
+type Entry interface {
+	Execute() error
+	EnvVar() *EnvVar
+	Volume() *Volume
+	ConfigMap() *ConfigMap
+	Secret() *Secret
 }
 
 type EntryGroup struct {
 	Name      string
-	Entries   []*Entry
+	Entries   []Entry
 	SubGroups []*EntryGroup
-	Result    map[string]*Entry
+	Result    map[string]Entry
 }
 
 func (eg *EntryGroup) Execute() error {
-	eg.Result = map[string]*Entry{}
-	confirm := &survey.Confirm{
-		Renderer: survey.Renderer{},
-		Message:  fmt.Sprintf("Would you like to configure %s ?", eg.Name),
-		Default:  false,
-		Help:     "",
-	}
-	resp := false
-	err := survey.AskOne(confirm, &resp)
-	if err != nil {
-		return err
-	}
-	if !resp {
-		return nil
-	}
+	eg.Result = map[string]Entry{}
+	var err error
 
 	for _, entry := range eg.Entries {
 		err := entry.Execute()
 		if err != nil {
 			return err
 		}
-		if entry.VarValue != "" {
-			eg.Result[entry.VarName] = entry
+		if entry.EnvVar() != nil && entry.EnvVar().Value != "" {
+			eg.Result[entry.EnvVar().Value] = entry
 		}
 	}
 
@@ -121,35 +108,52 @@ func (eg *EntryGroup) ExportEnvVar() []apiv1.EnvVar {
 	var envVars []apiv1.EnvVar
 	for _, entry := range eg.Result {
 		envVars = append(envVars, apiv1.EnvVar{
-			Name:      entry.VarName,
-			Value:     entry.VarValue,
+			Name:      entry.EnvVar().Name,
+			Value:     entry.EnvVar().Value,
 			ValueFrom: nil,
 		})
 	}
 	return envVars
 }
-func (eg *EntryGroup) getEntry(name string) *Entry {
-	for _, entry := range eg.Entries {
-		if entry.VarName == name {
-			return entry
-		}
-	}
-	for _, group := range eg.SubGroups {
-		entry := group.getEntry(name)
-		if entry != nil {
-			return entry
-		}
 
+func (eg *EntryGroup) ExportVolumeMounts() []apiv1.VolumeMount {
+	var volMounts []apiv1.VolumeMount
+	for _, entry := range eg.Result {
+
+		if entry.Volume() != nil {
+			volMounts = append(volMounts, *entry.Volume().Mount)
+		}
 	}
-	return nil
+	return volMounts
 }
 
-func (eg *EntryGroup) LoadEnvVar(envVars []apiv1.EnvVar) {
-	for _, env := range envVars {
-		if entry := eg.getEntry(env.Name); entry != nil {
-			entry.VarValue = env.Value
-			entry.Prompt.SetDefault(env.Value)
+func (eg *EntryGroup) ExportVolumes() []apiv1.Volume {
+	var vol []apiv1.Volume
+	for _, entry := range eg.Result {
+		if entry.Volume() != nil {
+			vol = append(vol, *entry.Volume().Volume)
 		}
 	}
+	return vol
+}
 
+func (eg *EntryGroup) ExportConfigMaps() []ConfigMap {
+	var cm []ConfigMap
+	for _, entry := range eg.Result {
+		if entry.ConfigMap() != nil {
+			cm = append(cm, *entry.ConfigMap())
+		}
+
+	}
+	return cm
+}
+
+func (eg *EntryGroup) ExportSecrets() []Secret {
+	var cm []Secret
+	for _, entry := range eg.Result {
+		if entry.Secret() != nil {
+			cm = append(cm, *entry.Secret())
+		}
+	}
+	return cm
 }

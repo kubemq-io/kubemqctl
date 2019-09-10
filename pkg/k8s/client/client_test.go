@@ -1,6 +1,7 @@
 package client
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"github.com/stretchr/testify/require"
@@ -152,9 +153,9 @@ func TestClient_Scale(t *testing.T) {
 	c, err := NewClient("")
 	require.NoError(t, err)
 	require.NotNil(t, c)
-	err = c.Scale("default", "kubemq-cluster", 5)
+	err = c.Scale(context.Background(), "default", "kubemq-cluster", 5)
 	require.NoError(t, err)
-	err = c.Scale("default", "kubemq-cluster", 3)
+	err = c.Scale(context.Background(), "default", "kubemq-cluster", 3)
 	require.NoError(t, err)
 
 }
@@ -170,13 +171,12 @@ func TestClient_DescribeStatefulSet(t *testing.T) {
 
 }
 
-func TestClient_GetStatefulSetPods(t *testing.T) {
+func TestClient_CreateConfigMap(t *testing.T) {
 	c, err := NewClient("")
 	require.NoError(t, err)
 	require.NotNil(t, c)
-	y, err := c.GetStatefulSetPods("default", "kubemq-cluster")
+	cm, err := c.CreateOrUpdateConfigMap("default", "kubeconfigmap", "cert.pem", "some content")
 	require.NoError(t, err)
-	require.NotEmpty(t, y)
-	fmt.Println(y)
-
+	require.NotEmpty(t, cm)
+	fmt.Println(cm)
 }

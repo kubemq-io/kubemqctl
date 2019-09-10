@@ -2,7 +2,7 @@ package config
 
 var QueuesConfig = &EntryGroup{
 	Name: "Queues parameters",
-	Entries: []*Entry{
+	Entries: []Entry{
 		QueuesMaxNumberOfMessages,
 		QueuesMaxWaitTimeout,
 		QueuesMaxExpirationSeconds,
@@ -16,7 +16,7 @@ var QueuesConfig = &EntryGroup{
 	Result:    nil,
 }
 
-var QueuesMaxNumberOfMessages = &Entry{
+var QueuesMaxNumberOfMessages = &EnvEntry{
 	VarName:  "QUEUE_MAX_NUMBER_OF_MESSAGE",
 	VarValue: "0",
 	Prompt: &Input{
@@ -27,7 +27,7 @@ var QueuesMaxNumberOfMessages = &Entry{
 	},
 }
 
-var QueuesMaxWaitTimeout = &Entry{
+var QueuesMaxWaitTimeout = &EnvEntry{
 	VarName:  "QUEUE_MAX_WAIT_TIMEOUT_SECONDS",
 	VarValue: "0",
 	Prompt: &Input{
@@ -38,7 +38,7 @@ var QueuesMaxWaitTimeout = &Entry{
 	},
 }
 
-var QueuesMaxExpirationSeconds = &Entry{
+var QueuesMaxExpirationSeconds = &EnvEntry{
 	VarName:  "QUEUE_MAX_EXPIRATION_SECONDS",
 	VarValue: "0",
 	Prompt: &Input{
@@ -49,7 +49,7 @@ var QueuesMaxExpirationSeconds = &Entry{
 	},
 }
 
-var QueuesMaxDealySeconds = &Entry{
+var QueuesMaxDealySeconds = &EnvEntry{
 	VarName:  "QUEUE_MAX_DELAY_SECONDS",
 	VarValue: "0",
 	Prompt: &Input{
@@ -59,7 +59,7 @@ var QueuesMaxDealySeconds = &Entry{
 		Help:       "Set max delay seconds allowed for message",
 	},
 }
-var QueuesMaxReceiveCount = &Entry{
+var QueuesMaxReceiveCount = &EnvEntry{
 	VarName:  "QUEUE_MAX_RECEIVE_COUNT",
 	VarValue: "0",
 	Prompt: &Input{
@@ -69,7 +69,7 @@ var QueuesMaxReceiveCount = &Entry{
 		Help:       "Set max retires to receive message before discard",
 	},
 }
-var QueuesMaxVisibilitySeconds = &Entry{
+var QueuesMaxVisibilitySeconds = &EnvEntry{
 	VarName:  "QUEUE_MAX_VISIBILITY_SECONDS",
 	VarValue: "0",
 	Prompt: &Input{
@@ -79,7 +79,7 @@ var QueuesMaxVisibilitySeconds = &Entry{
 		Help:       "Set max time of hold received message before returning to queue in seconds",
 	},
 }
-var QueuesDefaultVisibilitySeconds = &Entry{
+var QueuesDefaultVisibilitySeconds = &EnvEntry{
 	VarName:  "QUEUE_DEFAULT_VISIBILITY_SECONDS",
 	VarValue: "0",
 	Prompt: &Input{
@@ -89,7 +89,7 @@ var QueuesDefaultVisibilitySeconds = &Entry{
 		Help:       "Set default time of hold received message before returning to queue in seconds",
 	},
 }
-var QueuesDefaultWaitTimeoutSeconds = &Entry{
+var QueuesDefaultWaitTimeoutSeconds = &EnvEntry{
 	VarName:  "QUEUE_DEFAULT_WAIT_TIMEOUT_SECONDS",
 	VarValue: "0",
 	Prompt: &Input{

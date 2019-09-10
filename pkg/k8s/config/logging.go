@@ -2,7 +2,7 @@ package config
 
 var LoggingConfig = &EntryGroup{
 	Name: "Logging parameters",
-	Entries: []*Entry{
+	Entries: []Entry{
 		LoggingLogLevel,
 		LoggingEnabelLogFile,
 		LoggingLogFilePath,
@@ -11,7 +11,7 @@ var LoggingConfig = &EntryGroup{
 	Result:    nil,
 }
 
-var LoggingLogLevel = &Entry{
+var LoggingLogLevel = &EnvEntry{
 	VarName:  "KUBEMQ_LOG_LEVEL",
 	VarValue: "2",
 	Prompt: &Selection{
@@ -23,7 +23,7 @@ var LoggingLogLevel = &Entry{
 	},
 }
 
-var LoggingEnabelLogFile = &Entry{
+var LoggingEnabelLogFile = &EnvEntry{
 	VarName:  "LOG_FILE_ENABLE",
 	VarValue: "",
 	Prompt: &Selection{
@@ -35,7 +35,7 @@ var LoggingEnabelLogFile = &Entry{
 	},
 }
 
-var LoggingLogFilePath = &Entry{
+var LoggingLogFilePath = &EnvEntry{
 	VarName:  "LOG_FILE_PATH",
 	VarValue: "",
 	Prompt: &Input{
@@ -46,7 +46,7 @@ var LoggingLogFilePath = &Entry{
 	},
 }
 
-var LoggingEnabelLoggly = &Entry{
+var LoggingEnabelLoggly = &EnvEntry{
 	VarName:  "LOG_LOGGLY_ENABLE",
 	VarValue: "",
 	Prompt: &Selection{
@@ -58,7 +58,7 @@ var LoggingEnabelLoggly = &Entry{
 	},
 }
 
-var LoggingLogglyKey = &Entry{
+var LoggingLogglyKey = &EnvEntry{
 	VarName:  "LOG_LOGGLY_KEY",
 	VarValue: "",
 	Prompt: &Input{
@@ -69,7 +69,7 @@ var LoggingLogglyKey = &Entry{
 	},
 }
 
-var LoggingLogglyFlushInterval = &Entry{
+var LoggingLogglyFlushInterval = &EnvEntry{
 	VarName:  "LOG_LOGGLY_FLUSH_INTERVAL",
 	VarValue: "",
 	Prompt: &Input{

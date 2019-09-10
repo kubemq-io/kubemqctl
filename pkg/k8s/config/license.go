@@ -2,7 +2,7 @@ package config
 
 var LicenseConfig = &EntryGroup{
 	Name: "License parameters",
-	Entries: []*Entry{
+	Entries: []Entry{
 		LicenseData,
 		LicenseProxy,
 	},
@@ -10,22 +10,22 @@ var LicenseConfig = &EntryGroup{
 	Result:    nil,
 }
 
-var LicenseData = &Entry{
+var LicenseData = &EnvEntry{
 	VarName:  "KUBEMQ_LICENSE_DATA ",
 	VarValue: "",
-	Prompt: &Input{
-		Message:    "(License) Set KubeMQ license data:",
+	Prompt: &Editor{
+		Message:    "(License) Enter license file data (copy/past data):",
 		Validators: nil,
 		Default:    "",
 		Help:       "Set KubeMQ license data",
 	},
 }
 
-var LicenseProxy = &Entry{
+var LicenseProxy = &EnvEntry{
 	VarName:  "KUBEMQ_PROXY",
 	VarValue: "",
 	Prompt: &Input{
-		Message:    "(License) Set Proxy server address url access:",
+		Message:    "(License) Set Proxy server address url access (host:port):",
 		Validators: []Validator{IsValidHostPort()},
 		Default:    "",
 		Help:       "Set Proxy server address url access (in case license validation failure)",

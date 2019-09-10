@@ -2,7 +2,7 @@ package config
 
 var GrpcConfig = &EntryGroup{
 	Name: "gRPC interface parameters",
-	Entries: []*Entry{
+	Entries: []Entry{
 		GrpcEnable,
 		GrpcSubBufSize,
 		GrpcBodyLimit,
@@ -14,7 +14,7 @@ var GrpcConfig = &EntryGroup{
 	Result:    nil,
 }
 
-var GrpcEnable = &Entry{
+var GrpcEnable = &EnvEntry{
 	VarName:  "GRPC_ENABLE",
 	VarValue: "0",
 	Prompt: &Selection{
@@ -26,7 +26,7 @@ var GrpcEnable = &Entry{
 	},
 }
 
-var GrpcSubBufSize = &Entry{
+var GrpcSubBufSize = &EnvEntry{
 	VarName:  "GRPC_SUB_BUFF_SIZE",
 	VarValue: "0",
 	Prompt: &Input{
@@ -37,7 +37,7 @@ var GrpcSubBufSize = &Entry{
 	},
 }
 
-var GrpcBodyLimit = &Entry{
+var GrpcBodyLimit = &EnvEntry{
 	VarName:  "GRPC_BODY_LIMIT",
 	VarValue: "",
 	Prompt: &Input{
@@ -48,7 +48,7 @@ var GrpcBodyLimit = &Entry{
 	},
 }
 
-var GrpcTLSMode = &Entry{
+var GrpcTLSMode = &EnvEntry{
 	VarName:  "GRPC_SECURITY_TLS_MODE",
 	VarValue: "",
 	Prompt: &Selection{
@@ -60,7 +60,7 @@ var GrpcTLSMode = &Entry{
 	},
 }
 
-var GrpcCertFile = &Entry{
+var GrpcCertFile = &EnvEntry{
 	VarName:  "GRPC_SECURITY_CERT_FILE",
 	VarValue: "",
 	Prompt: &Input{
@@ -71,7 +71,7 @@ var GrpcCertFile = &Entry{
 	},
 }
 
-var GrpcKeyFile = &Entry{
+var GrpcKeyFile = &EnvEntry{
 	VarName:  "GRPC_SECURITY_KEY_FILE",
 	VarValue: "",
 	Prompt: &Input{

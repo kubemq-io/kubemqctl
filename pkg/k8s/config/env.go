@@ -1,6 +1,6 @@
 package config
 
-var EnvConfig = &EntryGroup{
+var CreateEnvGroup = &EntryGroup{
 	Name:    "Environment variables",
 	Entries: nil,
 	SubGroups: []*EntryGroup{

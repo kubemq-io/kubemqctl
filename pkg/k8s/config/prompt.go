@@ -33,44 +33,6 @@ func (i *Input) SetDefault(def string) {
 	i.Default = def
 }
 
-//
-//type SelectionIndex struct {
-//	Message    string
-//	Options    []string
-//	Validators []Validator
-//	Default    string
-//	Help       string
-//}
-//
-//func (si *SelectionIndex) Ask(answer interface{}) error {
-//	prompt := &survey.Select{
-//		Renderer: survey.Renderer{},
-//		Message:  si.Message,
-//		Options:  si.Options,
-//		Default:  si.Default,
-//		Help:     si.Help,
-//	}
-//	opts := []survey.AskOpt{}
-//	for _, validator := range si.Validators {
-//		opts = append(opts, survey.WithValidator(survey.Validator(validator)))
-//	}
-//	selectAnswer := ""
-//	err := survey.AskOne(prompt, &selectAnswer, opts...)
-//	if err != nil {
-//		return err
-//	}
-//	for key, value := range si.Options {
-//		if value == selectAnswer {
-//			answer = fmt.Sprintf("%d", key+1)
-//			return nil
-//		}
-//	}
-//	return nil
-//}
-//func (si *SelectionIndex) SetDefault(def string) {
-//	si.Default = def
-//}
-
 type Selection struct {
 	Message    string
 	Options    []string
@@ -96,4 +58,33 @@ func (s *Selection) Ask(answer interface{}) error {
 
 func (s *Selection) SetDefault(def string) {
 	s.Default = def
+}
+
+type Editor struct {
+	Message    string
+	Validators []Validator
+	Default    string
+	Help       string
+}
+
+func (e *Editor) Ask(answer interface{}) error {
+	prompt := &survey.Editor{
+		Renderer:      survey.Renderer{},
+		Message:       e.Message,
+		Default:       e.Default,
+		Help:          e.Help,
+		Editor:        "",
+		HideDefault:   false,
+		AppendDefault: false,
+		FileName:      "*.sh",
+	}
+	opts := []survey.AskOpt{}
+	for _, validator := range e.Validators {
+		opts = append(opts, survey.WithValidator(survey.Validator(validator)))
+	}
+	return survey.AskOne(prompt, answer, opts...)
+}
+
+func (e *Editor) SetDefault(def string) {
+	e.Default = def
 }

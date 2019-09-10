@@ -143,18 +143,21 @@ func (c *Client) CheckAndCreateNamespace(name string) (*apiv1.Namespace, bool, e
 	return ns, true, nil
 }
 
-func (c *Client) CreateStatefulSet(spec []byte) (*appsv1.StatefulSet, error) {
-	sts := &appsv1.StatefulSet{}
-	err := yaml.Unmarshal(spec, sts)
-	if err != nil {
-		return nil, err
-	}
+func (c *Client) CreateOrUpdateStatefulSet(sts *appsv1.StatefulSet) (*appsv1.StatefulSet, bool, error) {
 
+	oldSts, err := c.ClientSet.AppsV1().StatefulSets(sts.Namespace).Get(sts.Name, metav1.GetOptions{})
+	if err == nil && oldSts != nil {
+		newSts, err := c.ClientSet.AppsV1().StatefulSets(sts.Namespace).Update(sts)
+		if err != nil {
+			return nil, true, err
+		}
+		return newSts, true, nil
+	}
 	createdSts, err := c.ClientSet.AppsV1().StatefulSets(sts.Namespace).Create(sts)
 	if err != nil {
-		return nil, err
+		return nil, false, err
 	}
-	return createdSts, nil
+	return createdSts, false, nil
 }
 func (c *Client) DeleteStatefulSet(name string) error {
 	pair := strings.Split(name, "/")
@@ -199,19 +202,66 @@ func (c *Client) DeleteVolumeClaimsForStatefulSet(name string) error {
 	return nil
 }
 
-func (c *Client) CreateService(spec []byte) (*apiv1.Service, error) {
-	svc := &apiv1.Service{}
-	err := yaml.Unmarshal(spec, svc)
-	if err != nil {
-		return nil, err
+func (c *Client) CreateOrUpdateService(svc *apiv1.Service) (*apiv1.Service, bool, error) {
+
+	oldSvc, err := c.ClientSet.CoreV1().Services(svc.Namespace).Get(svc.Name, metav1.GetOptions{})
+	if err == nil && oldSvc != nil {
+		svc.ResourceVersion = oldSvc.ResourceVersion
+		svc.Spec.ClusterIP = oldSvc.Spec.ClusterIP
+		newSvc, err := c.ClientSet.CoreV1().Services(svc.Namespace).Update(svc)
+		if err != nil {
+			return nil, true, err
+		}
+		return newSvc, true, nil
 	}
 
 	createdSvc, err := c.ClientSet.CoreV1().Services(svc.Namespace).Create(svc)
 	if err != nil {
+		return nil, false, err
+	}
+	return createdSvc, false, nil
+}
+
+func (c *Client) CreateOrUpdateConfigMap(cm *apiv1.ConfigMap) (*apiv1.ConfigMap, bool, error) {
+	oldCm, err := c.ClientSet.CoreV1().ConfigMaps(cm.Namespace).Get(cm.Name, metav1.GetOptions{})
+	if err == nil && oldCm != nil {
+		newSvc, err := c.ClientSet.CoreV1().ConfigMaps(cm.Namespace).Update(cm)
+		if err != nil {
+			return nil, true, err
+		}
+		return newSvc, true, nil
+	}
+	createCm, err := c.ClientSet.CoreV1().ConfigMaps(cm.Namespace).Create(cm)
+	if err != nil {
+		return nil, false, err
+	}
+	return createCm, false, nil
+}
+func (c *Client) CreateOrUpdateSecret(sec *apiv1.Secret) (*apiv1.Secret, bool, error) {
+	oldSec, err := c.ClientSet.CoreV1().Secrets(sec.Namespace).Get(sec.Name, metav1.GetOptions{})
+	if err == nil && oldSec != nil {
+		newSec, err := c.ClientSet.CoreV1().Secrets(sec.Namespace).Update(sec)
+		if err != nil {
+			return nil, true, err
+		}
+		return newSec, true, nil
+	}
+	createSec, err := c.ClientSet.CoreV1().Secrets(sec.Namespace).Create(sec)
+	if err != nil {
+		return nil, false, err
+	}
+	return createSec, false, nil
+}
+
+func (c *Client) GetConfigMap(namespace, name string) (*apiv1.ConfigMap, error) {
+
+	cm, err := c.ClientSet.CoreV1().ConfigMaps(namespace).Get(name, metav1.GetOptions{})
+	if err != nil {
 		return nil, err
 	}
-	return createdSvc, nil
+	return cm, nil
 }
+
 func (c *Client) GetStatefulSets(ns string, contains ...string) (map[string]appsv1.StatefulSet, error) {
 
 	sts, err := c.ClientSet.AppsV1().StatefulSets(ns).List(metav1.ListOptions{})
