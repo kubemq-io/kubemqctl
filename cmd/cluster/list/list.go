@@ -56,6 +56,7 @@ func (o *ListOptions) Validate() error {
 }
 
 func (o *ListOptions) Run(ctx context.Context) error {
+	utils.Println("Getting KubeMQ Cluster List...")
 	c, err := client.NewClient(o.cfg.KubeConfigPath)
 	if err != nil {
 		return err

@@ -89,9 +89,12 @@ func (o *QueuePeekOptions) Run(ctx context.Context) error {
 	if res.IsError {
 		return fmt.Errorf("peek queue message, %s", res.Error)
 	}
-	utils.Printlnf("peeking %d messages", res.MessagesReceived)
+
 	if res.MessagesReceived > 0 {
+		utils.Printlnf("peeking %d messages", res.MessagesReceived)
 		printItems(res.Messages)
+	} else {
+		utils.Printlnf("no messages in queue to peek")
 	}
 
 	return nil

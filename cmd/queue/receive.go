@@ -23,11 +23,14 @@ type QueueReceiveOptions struct {
 }
 
 var queueReceiveExamples = `
-	# Receive 1 messages from a queue and wait for 2 seconds (default)
+	# Receive 1 messages from a queue and wait for 10 seconds (default)
 	kubetools queue receive some-channel
 
 	# Receive 3 messages from a queue and wait for 5 seconds
 	kubetools queue receive some-channel -m 3 -T 5
+
+	# Watching queue channel messages
+	kubetools queue receive some-channel -w
 `
 var queueReceiveLong = `Receive a messages from a queue channel`
 var queueReceiveShort = `Receive a messages from a queue channel`
@@ -54,7 +57,7 @@ func NewCmdQueueReceive(cfg *config.Config) *cobra.Command {
 	}
 
 	cmd.PersistentFlags().IntVarP(&o.messages, "messages", "m", 1, "Set how many messages we want to get from queue")
-	cmd.PersistentFlags().IntVarP(&o.wait, "wait-timeout", "T", 2, "Set how many seconds to wait for queue messages")
+	cmd.PersistentFlags().IntVarP(&o.wait, "wait-timeout", "T", 10, "Set how many seconds to wait for queue messages")
 	cmd.PersistentFlags().BoolVarP(&o.watch, "watch", "w", false, "Set watch on queue channel")
 
 	return cmd
@@ -74,6 +77,11 @@ func (o *QueueReceiveOptions) Validate() error {
 }
 
 func (o *QueueReceiveOptions) Run(ctx context.Context) error {
+	if o.watch {
+		utils.Printlnf("Watching %s queue channel, waiting for messages...", o.channel)
+	} else {
+		utils.Printlnf("Pulling messages from %s queue channel, waiting for %d seconds...", o.channel, o.wait)
+	}
 	client, err := kubemq.GetKubeMQClient(ctx, o.transport, o.cfg)
 	if err != nil {
 		return fmt.Errorf("create kubemq client, %s", err.Error())
@@ -98,7 +106,10 @@ func (o *QueueReceiveOptions) Run(ctx context.Context) error {
 		if res != nil && res.MessagesReceived > 0 {
 			printItems(res.Messages)
 		} else {
-			utils.Println("No new messages in queue")
+			if !o.watch {
+				utils.Println("No new messages in queue")
+			}
+
 		}
 		if !o.watch {
 			return nil

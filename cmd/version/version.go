@@ -7,7 +7,7 @@ import (
 )
 
 type VersionOptions struct {
-	version string
+	version *string
 }
 
 var versionExamples = `
@@ -17,9 +17,10 @@ var versionExamples = `
 var versionLong = `Show Kubetools version`
 var versionShort = `Show Kubetools version`
 
-func NewCmdVersion(version string) *cobra.Command {
+func NewCmdVersion(version *string) *cobra.Command {
 	o := VersionOptions{
-		version: version}
+		version: version,
+	}
 	cmd := &cobra.Command{
 		Use:     "version",
 		Aliases: []string{"ver", "v"},
@@ -47,6 +48,7 @@ func (o *VersionOptions) Validate() error {
 }
 
 func (o *VersionOptions) Run(ctx context.Context) error {
-	utils.Printlnf("Kubetools version %s", o.version)
+
+	utils.Printlnf("Kubetools version %s", *o.version)
 	return nil
 }

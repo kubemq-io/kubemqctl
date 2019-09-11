@@ -75,7 +75,7 @@ func (o *ScaleOptions) Run(ctx context.Context) error {
 	selection := ""
 	prompt := &survey.Select{
 		Renderer: survey.Renderer{},
-		Message:  "Scale for KubeMQ cluster:",
+		Message:  "Select KubeMQ cluster to scale:",
 		Options:  list,
 		Default:  list[0],
 	}
@@ -95,7 +95,7 @@ func (o *ScaleOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	utils.Println("Start scaling:")
+	utils.Println("Start scaling...")
 	err = c.Scale(ctx, pair[0], pair[1], int32(o.scale))
 	if err != nil {
 		return err

@@ -23,13 +23,13 @@ import (
 )
 
 var cfg *config.Config
-var version string
+var Version string
 var rootCmd = &cobra.Command{
 	Use: "kubetools",
 }
 
-func Execute(ver string) {
-	version = ver
+func Execute(version string) {
+	Version = version
 	defer utils.CheckErr(cfg.Save())
 	utils.CheckErr(rootCmd.Execute())
 
@@ -70,7 +70,7 @@ func init() {
 	rootCmd.AddCommand(queries.NewCmdQueries(cfg))
 	rootCmd.AddCommand(config2.NewCmdConfig(cfg))
 	rootCmd.AddCommand(dashboard.NewCmdDashboard(cfg))
-	rootCmd.AddCommand(version2.NewCmdVersion(version))
+	rootCmd.AddCommand(version2.NewCmdVersion(&Version))
 	rootCmd.AddCommand(cluster.NewCmdCluster(cfg))
 
 }
