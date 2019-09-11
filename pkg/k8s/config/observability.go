@@ -1,10 +1,10 @@
 package config
 
 var ObservabilityConfig = &EntryGroup{
-	Name: "Observability parameters",
+	Name:    "Observability parameters",
 	Entries: []Entry{
-		ObservabilityMetricsDisable,
-		ObservabilityTracingSample,
+		//ObservabilityMetricsDisable,
+		//ObservabilityTracingSample,
 	},
 	SubGroups: []*EntryGroup{
 		ObservabilityPrometheusConfig,

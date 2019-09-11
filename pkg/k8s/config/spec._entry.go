@@ -11,6 +11,10 @@ func (se *SpecEntry) Execute() error {
 	}
 	for {
 		err := se.Prompt.Ask(se.Value)
+		if err.Error() == "interrupt" {
+			return err
+		}
+
 		if err == nil {
 			return nil
 		}

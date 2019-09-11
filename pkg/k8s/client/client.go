@@ -575,7 +575,7 @@ func homeDir() string {
 }
 
 func (c *Client) GetStatefulSetEvents(ctx context.Context, evt chan *appsv1.StatefulSet, done chan struct{}) error {
-	kubeInformerFactory := kubeinformers.NewSharedInformerFactory(c.ClientSet, time.Second*15)
+	kubeInformerFactory := kubeinformers.NewSharedInformerFactory(c.ClientSet, time.Second*5)
 	stsInformer := kubeInformerFactory.Apps().V1().StatefulSets().Informer()
 	stop := make(chan struct{})
 	defer close(stop)

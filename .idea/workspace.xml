@@ -2,34 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/config/authentication.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/config/authorization.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/config/basic.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/config/configmap_entry.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/config/create_menu.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/config/env_entry.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/config/menu.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/config/no_prompt_entry.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/config/secret_entry.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/config/spec._entry.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/cluster/create/create.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/create.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/deployment.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/deployment.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/k8s/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/client_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/client_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/entry.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/entry.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/env.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/env.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/authentication.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/authentication.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/configmap_entry.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/configmap_entry.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/create_menu.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/create_menu.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/env.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/env_entry.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/env_entry.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/k8s/config/grpc.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/grpc.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/license.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/license.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/logging.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/logging.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/k8s/config/observability.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/observability.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/k8s/config/persistence.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/persistence.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/prompt.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/prompt.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/k8s/config/queue.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/queue.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/k8s/config/rest.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/rest.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/logs/logs_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/logs/logs_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/secret_entry.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/secret_entry.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/spec._entry.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/spec._entry.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -397,7 +384,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567963885317</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="wip - create menu">
+      <created>1568132577261</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1568132577261</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -466,7 +460,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/dist" />
     </ignored-roots>
-    <MESSAGE value="-v1.0.0&#10;add queue support" />
     <MESSAGE value="-v1.0.1&#10;fix rest issue with new kubemq-go release 1.2.1" />
     <MESSAGE value="-v1.0.1&#10;update redeame" />
     <MESSAGE value="update redeame" />
@@ -491,7 +484,8 @@
     <MESSAGE value="refactoring create" />
     <MESSAGE value="refactor create" />
     <MESSAGE value="complete create" />
-    <option name="LAST_COMMIT_MESSAGE" value="complete create" />
+    <MESSAGE value="wip - create menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="wip - create menu" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

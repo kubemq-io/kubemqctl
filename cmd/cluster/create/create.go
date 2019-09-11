@@ -128,7 +128,7 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 	if !executed {
 		return nil
 	}
-	utils.Printlnf("StatefulSet %s/%s list:", o.namespace, o.name)
+	utils.Printlnf("Create StatefulSet %s/%s progress:", o.namespace, o.name)
 	done := make(chan struct{})
 	evt := make(chan *appsv1.StatefulSet)
 	go sd.client.GetStatefulSetEvents(ctx, evt, done)
@@ -136,12 +136,14 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 	for {
 		select {
 		case sts := <-evt:
-			if int32(o.replicas) == sts.Status.Replicas && sts.Status.Replicas == sts.Status.ReadyReplicas {
-				utils.Printlnf("Desired:%d Current:%d Ready:%d", o.replicas, sts.Status.Replicas, sts.Status.ReadyReplicas)
-				done <- struct{}{}
-				return nil
-			} else {
-				utils.Printlnf("Desired:%d Current:%d Ready:%d", o.replicas, sts.Status.Replicas, sts.Status.ReadyReplicas)
+			if sts.Name == sd.StatefulSet.Name && sts.Namespace == sd.StatefulSet.Namespace {
+				if int32(o.replicas) == sts.Status.Replicas && sts.Status.Replicas == sts.Status.ReadyReplicas {
+					utils.Printlnf("Desired:%d Current:%d Ready:%d", o.replicas, sts.Status.Replicas, sts.Status.ReadyReplicas)
+					done <- struct{}{}
+					return nil
+				} else {
+					utils.Printlnf("Desired:%d Current:%d Ready:%d", o.replicas, sts.Status.Replicas, sts.Status.ReadyReplicas)
+				}
 			}
 		case <-ctx.Done():
 			return nil
@@ -160,7 +162,7 @@ func (o *CreateOptions) setDefaultOptions() error {
 	o.volume = 0
 	utils.Printlnf("Create KubeMQ cluster with default options:")
 	utils.Printlnf("\tKubeMQ Token: %s", o.token)
-	utils.Printlnf("'\tCluster Name: %s", o.name)
+	utils.Printlnf("\tCluster Name: %s", o.name)
 	utils.Printlnf("\tCluster Namespace: %s", o.namespace)
 	utils.Printlnf("\tCluster Docker Image: kubemq/kubemq:%s", o.version)
 	utils.Printlnf("\tCluster Replicas: %d", o.replicas)

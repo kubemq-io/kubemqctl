@@ -17,6 +17,7 @@ type SecretEntry struct {
 	SecretValue string
 	VolumeName  string
 	SecretType  string
+	useExisted  bool
 }
 
 func (sec *SecretEntry) Execute() error {
@@ -42,6 +43,7 @@ func (sec *SecretEntry) Execute() error {
 		return err
 	}
 	if selected == existed {
+		sec.useExisted = true
 		return nil
 	}
 	editor := &Editor{
@@ -70,9 +72,8 @@ func (sec *SecretEntry) Volume() *Volume {
 		Volume: &apiv1.Volume{
 			Name: sec.VolumeName,
 			VolumeSource: apiv1.VolumeSource{
-				ConfigMap: &apiv1.ConfigMapVolumeSource{
-					LocalObjectReference: apiv1.LocalObjectReference{
-						Name: sec.SecretName},
+				Secret: &apiv1.SecretVolumeSource{
+					SecretName:  sec.SecretName,
 					Items:       nil,
 					DefaultMode: nil,
 					Optional:    nil,
@@ -94,6 +95,10 @@ func (sec *SecretEntry) ConfigMap() *ConfigMap {
 }
 
 func (sec *SecretEntry) Secret() *Secret {
+	if sec.useExisted {
+		return nil
+	}
+
 	return &Secret{
 		Name:       sec.SecretName,
 		Value:      sec.SecretValue,

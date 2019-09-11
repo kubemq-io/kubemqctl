@@ -59,12 +59,12 @@ var CreateMenu = &Menu{
 						Action: AuthenticationGRPCConfig,
 					},
 					&MenuItem{
-						Label:  "Set REST tls cert file",
-						Action: nil,
+						Label:  "Set REST TLS Authentication",
+						Action: AuthenticationRESTConfig,
 					},
 					&MenuItem{
-						Label:  "Set REST tls key file",
-						Action: nil,
+						Label:  "Set REST CORS parameters",
+						Action: RESTInterfaceCORS,
 					},
 				},
 			},
@@ -84,6 +84,18 @@ var CreateMenu = &Menu{
 		&MenuItem{
 			Label:  "Set Interfaces parameters (gRPC, REST...) ",
 			Action: nil,
+			SubMenu: &Menu{
+				Items: []*MenuItem{
+					&MenuItem{
+						Label:  "Set gRPC interface parameters",
+						Action: GrpcInterfaceConfig,
+					},
+					&MenuItem{
+						Label:  "Set REST interface parameters",
+						Action: RESTInterfaceConfig,
+					},
+				},
+			},
 		},
 		&MenuItem{
 			Label:  "Set Logging parameters (Level,Exports to files...) ",

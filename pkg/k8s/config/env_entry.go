@@ -12,6 +12,9 @@ func (e *EnvEntry) Execute() error {
 	}
 	for {
 		err := e.Prompt.Ask(&e.VarValue)
+		if err.Error() == "interrupt" {
+			return err
+		}
 		if err == nil {
 			return nil
 		}
