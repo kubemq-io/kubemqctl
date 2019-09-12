@@ -30,7 +30,7 @@ func NewCmdList(cfg *config.Config) *cobra.Command {
 	cmd := &cobra.Command{
 
 		Use:     "list",
-		Aliases: []string{"ls"},
+		Aliases: []string{"ls", "l"},
 		Short:   statusShort,
 		Long:    statusLong,
 		Example: statusExamples,
