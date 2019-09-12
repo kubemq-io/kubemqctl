@@ -1,19 +1,23 @@
-package create
+package deployment
 
 import (
 	"bufio"
+	b64 "encoding/base64"
 	"fmt"
 	"github.com/ghodss/yaml"
+	"github.com/kubemq-io/kubetools/pkg/config"
 	"github.com/kubemq-io/kubetools/pkg/k8s/client"
+	conf "github.com/kubemq-io/kubetools/pkg/k8s/config"
 	"github.com/kubemq-io/kubetools/pkg/utils"
 	"io"
 	appsv1 "k8s.io/api/apps/v1"
 	apiv1 "k8s.io/api/core/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"strings"
 )
 
 type StatefulSetDeployment struct {
-	client      *client.Client
+	Client      *client.Client
 	Namespace   *apiv1.Namespace
 	StatefulSet *appsv1.StatefulSet
 	Services    []*apiv1.Service
@@ -21,45 +25,52 @@ type StatefulSetDeployment struct {
 	Secrets     []*apiv1.Secret
 }
 
-func CreateStatefulSetDeployment(o *CreateOptions) (*StatefulSetDeployment, error) {
+func NewStatefulSetDeployment(cfg *config.Config) (*StatefulSetDeployment, error) {
 	sd := &StatefulSetDeployment{
-		client:      nil,
+		Client:      nil,
 		Namespace:   nil,
 		StatefulSet: nil,
 		Services:    nil,
+		ConfigMaps:  nil,
+		Secrets:     nil,
 	}
-	c, err := client.NewClient(o.cfg.KubeConfigPath)
+	c, err := client.NewClient(cfg.KubeConfigPath)
 	if err != nil {
 		return nil, err
 	}
-	sd.client = c
-	ns, existed, err := c.GetNamespace(o.namespace)
+	sd.Client = c
+
+	return sd, nil
+}
+func (sd *StatefulSetDeployment) CreateStatefulSetDeployment(o *Options, optionsMenu *conf.Menu) error {
+
+	ns, existed, err := sd.Client.GetNamespace(o.Namespace)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	if !existed {
 		sd.Namespace = ns
 	}
 	stSpec, err := NewStatefulSetConfig(o).Spec()
 	if err != nil {
-		return nil, err
+		return err
 	}
 	sts := &appsv1.StatefulSet{}
 	err = yaml.Unmarshal(stSpec, sts)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	sd.StatefulSet = sts
-	envVars := o.optionsMenu.ExportEnvVar()
+	envVars := optionsMenu.ExportEnvVar()
 	sd.StatefulSet.Spec.Template.Spec.Containers[0].Env = append(sd.StatefulSet.Spec.Template.Spec.Containers[0].Env, envVars...)
 
-	volMounts := o.optionsMenu.ExportVolumeMounts()
+	volMounts := optionsMenu.ExportVolumeMounts()
 	sd.StatefulSet.Spec.Template.Spec.Containers[0].VolumeMounts = append(sd.StatefulSet.Spec.Template.Spec.Containers[0].VolumeMounts, volMounts...)
 
-	vols := o.optionsMenu.ExportVolumes()
+	vols := optionsMenu.ExportVolumes()
 	sd.StatefulSet.Spec.Template.Spec.Volumes = append(sd.StatefulSet.Spec.Template.Spec.Volumes, vols...)
 
-	configMaps := o.optionsMenu.ExportConfigMaps()
+	configMaps := optionsMenu.ExportConfigMaps()
 	for _, cm := range configMaps {
 		sd.ConfigMaps = append(sd.ConfigMaps, &apiv1.ConfigMap{
 			TypeMeta: v1.TypeMeta{
@@ -68,16 +79,17 @@ func CreateStatefulSetDeployment(o *CreateOptions) (*StatefulSetDeployment, erro
 			},
 			ObjectMeta: v1.ObjectMeta{
 				Name:      cm.Name,
-				Namespace: o.namespace,
+				Namespace: o.Namespace,
 			},
 			Data:       map[string]string{cm.FileName: cm.Value},
 			BinaryData: nil,
 		})
 	}
 
-	secrets := o.optionsMenu.ExportSecrets()
+	secrets := optionsMenu.ExportSecrets()
 
 	for _, sec := range secrets {
+		b64Value := []byte(b64.StdEncoding.EncodeToString([]byte(sec.Value)))
 		sd.Secrets = append(sd.Secrets, &apiv1.Secret{
 			TypeMeta: v1.TypeMeta{
 				Kind:       "Secret",
@@ -85,49 +97,49 @@ func CreateStatefulSetDeployment(o *CreateOptions) (*StatefulSetDeployment, erro
 			},
 			ObjectMeta: v1.ObjectMeta{
 				Name:      sec.Name,
-				Namespace: o.namespace,
+				Namespace: o.Namespace,
 			},
-			Data:       nil,
-			StringData: map[string]string{sec.FileName: sec.Value},
-			Type:       apiv1.SecretType(sec.SecretType),
+			Data: map[string][]byte{sec.FileName: b64Value},
+			Type: apiv1.SecretType(sec.SecretType),
 		})
 	}
+
 	for _, svcfg := range NewServiceConfigs(o) {
 		spec, err := svcfg.Spec()
 		if err != nil {
-			return nil, err
+			return err
 		}
 		svc := &apiv1.Service{}
 		err = yaml.Unmarshal(spec, svc)
 		sd.Services = append(sd.Services, svc)
 	}
-	return sd, nil
+	return nil
 }
 
-func (sd *StatefulSetDeployment) Execute(o *CreateOptions) (bool, error) {
+func (sd *StatefulSetDeployment) Execute(name, namespace string) (bool, error) {
 	if sd.Namespace != nil {
-		_, err := sd.client.ClientSet.CoreV1().Namespaces().Create(sd.Namespace)
+		_, err := sd.Client.ClientSet.CoreV1().Namespaces().Create(sd.Namespace)
 		if err != nil {
 			return false, err
 		}
-		utils.Printlnf("Namespace %s created", o.namespace)
+		utils.Printlnf("Namespace %s created", name)
 	}
 	var err error
 
-	newSts, isUpdated, err := sd.client.CreateOrUpdateStatefulSet(sd.StatefulSet)
+	newSts, isUpdated, err := sd.Client.CreateOrUpdateStatefulSet(sd.StatefulSet)
 
 	if err != nil {
-		utils.Printlnf("StatefulSet %s/%s not created. Error: %s", o.namespace, o.name, utils.Title(err.Error()))
+		utils.Printlnf("StatefulSet %s/%s not created. Error: %s", namespace, name, utils.Title(err.Error()))
 	} else {
 		if newSts != nil && isUpdated {
-			utils.Printlnf("StatefulSet %s/%s configured", o.namespace, o.name)
+			utils.Printlnf("StatefulSet %s/%s configured", namespace, name)
 		} else if newSts != nil {
-			utils.Printlnf("StatefulSet %s/%s created", o.namespace, o.name)
+			utils.Printlnf("StatefulSet %s/%s created", namespace, name)
 		}
 	}
 
 	for _, svc := range sd.Services {
-		newSvc, isUpdated, err := sd.client.CreateOrUpdateService(svc)
+		newSvc, isUpdated, err := sd.Client.CreateOrUpdateService(svc)
 		if err != nil {
 			utils.Printlnf("Service %s/%s not created. Error: %s", svc.Namespace, svc.Name, utils.Title(err.Error()))
 		} else {
@@ -141,7 +153,7 @@ func (sd *StatefulSetDeployment) Execute(o *CreateOptions) (bool, error) {
 	}
 
 	for _, cm := range sd.ConfigMaps {
-		newCm, isUpdated, err := sd.client.CreateOrUpdateConfigMap(cm)
+		newCm, isUpdated, err := sd.Client.CreateOrUpdateConfigMap(cm)
 		if err != nil {
 			utils.Printlnf("ConfigMap %s/%s not created. Error: %s", cm.Namespace, cm.Name, utils.Title(err.Error()))
 		} else {
@@ -153,7 +165,7 @@ func (sd *StatefulSetDeployment) Execute(o *CreateOptions) (bool, error) {
 		}
 	}
 	for _, sec := range sd.Secrets {
-		newCm, isUpdated, err := sd.client.CreateOrUpdateSecret(sec)
+		newCm, isUpdated, err := sd.Client.CreateOrUpdateSecret(sec)
 		if err != nil {
 			utils.Printlnf("Secret %s/%s not created. Error: %s", sec.Namespace, sec.Name, utils.Title(err.Error()))
 		} else {
@@ -167,7 +179,7 @@ func (sd *StatefulSetDeployment) Execute(o *CreateOptions) (bool, error) {
 	return true, nil
 }
 
-func (sd *StatefulSetDeployment) Export(out io.Writer, o *CreateOptions) error {
+func (sd *StatefulSetDeployment) Export(out io.Writer) error {
 	w := bufio.NewWriter(out)
 	if sd.Namespace != nil {
 		data, err := yaml.Marshal(sd.Namespace)
@@ -215,6 +227,51 @@ func (sd *StatefulSetDeployment) Export(out io.Writer, o *CreateOptions) error {
 	if err != nil {
 		return err
 	}
-	utils.Printlnf("create yaml file was exported to %s.yaml", o.name)
+	return nil
+}
+
+func (sd *StatefulSetDeployment) Import(input string) error {
+	segments := strings.Split(input, "---")
+	if len(segments) == 0 {
+		segments = append(segments, input)
+	}
+	for index, seg := range segments {
+		if strings.Contains(seg, "kind: StatefulSet") {
+			sts := &appsv1.StatefulSet{}
+			err := yaml.Unmarshal([]byte(seg), sts)
+			if err != nil {
+				return fmt.Errorf("error parsing StatefulSet yaml (segment %d), %s", index, err)
+			}
+			sd.StatefulSet = sts
+			continue
+		}
+		if strings.Contains(seg, "kind: Service") {
+			svc := &apiv1.Service{}
+			err := yaml.Unmarshal([]byte(seg), svc)
+			if err != nil {
+				return fmt.Errorf("error parsing Service yaml (segment %d), %s", index, err)
+			}
+			sd.Services = append(sd.Services, svc)
+			continue
+		}
+		if strings.Contains(seg, "kind: ConfigMap") {
+			cm := &apiv1.ConfigMap{}
+			err := yaml.Unmarshal([]byte(seg), cm)
+			if err != nil {
+				return fmt.Errorf("error parsing ConfigMap yaml (segment %d), %s", index, err)
+			}
+			sd.ConfigMaps = append(sd.ConfigMaps, cm)
+			continue
+		}
+		if strings.Contains(seg, "kind: Secret") {
+			sec := &apiv1.Secret{}
+			err := yaml.Unmarshal([]byte(seg), sec)
+			if err != nil {
+				return fmt.Errorf("error parsing Secret yaml (segment %d), %s", index, err)
+			}
+			sd.Secrets = append(sd.Secrets, sec)
+			continue
+		}
+	}
 	return nil
 }

@@ -30,7 +30,7 @@ func NewCmdContext(cfg *config.Config) *cobra.Command {
 	cmd := &cobra.Command{
 
 		Use:     "context",
-		Aliases: []string{"ctx"},
+		Aliases: []string{"cx", "ct", "ctx"},
 		Short:   contextShort,
 		Long:    contextLong,
 		Example: contextExamples,

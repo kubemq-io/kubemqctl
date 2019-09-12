@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
+    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="fix spec_entry">
+      <change afterPath="$PROJECT_DIR$/cmd/cluster/apply/apply.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/env_entry.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/env_entry.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/spec._entry.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/spec._entry.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/cluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/cluster.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/context/context.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/context/context.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/create.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/create.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/deployment.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/deployment.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/templates.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/templates.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/commands/commands.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/commands/commands.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/authentication.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/authentication.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/authorization.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/authorization.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/configmap_entry.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/configmap_entry.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/create_menu.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/create_menu.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/license.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/license.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/menu.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/menu.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/observability.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/observability.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/prompt.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/prompt.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/secret_entry.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/secret_entry.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,25 +52,25 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/pkg/k8s/config" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/cluster/apply" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\cluster\apply" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\pkg\k8s\config" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\events" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\events_store" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\queue" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\pkg\k8s\deployment" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\cluster\create" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\cluster" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\version" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\pkg\k8s" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\pkg\k8s\transport" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -393,7 +409,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568208805088</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="fix spec_entry">
+      <created>1568214067393</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1568214067393</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -462,7 +485,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/dist" />
     </ignored-roots>
-    <MESSAGE value="-v1.0.1&#10;update redeame" />
     <MESSAGE value="update redeame" />
     <MESSAGE value="update redeame png" />
     <MESSAGE value="remove bin folders" />
@@ -487,7 +509,8 @@
     <MESSAGE value="complete create" />
     <MESSAGE value="wip - create menu" />
     <MESSAGE value="finish v2.0.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="finish v2.0.0" />
+    <MESSAGE value="fix spec_entry" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix spec_entry" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

@@ -1,4 +1,17 @@
-package create
+package deployment
+
+type Options struct {
+	Token         string
+	Replicas      int
+	Version       string
+	Namespace     string
+	Name          string
+	AppsVersion   string
+	CoreVersion   string
+	Volume        int
+	IsNodePort    bool
+	IsLoadBalance bool
+}
 
 type StatefulSetConfig struct {
 	ApiVersion string
@@ -23,15 +36,15 @@ type ServiceConfig struct {
 	PortName      string
 }
 
-func NewStatefulSetConfig(o *CreateOptions) StatefulSetConfig {
+func NewStatefulSetConfig(o *Options) StatefulSetConfig {
 	return StatefulSetConfig{
-		ApiVersion: o.appsVersion,
-		Name:       o.name,
-		Namespace:  o.namespace,
-		Replicas:   o.replicas,
-		Token:      o.token,
-		Version:    o.version,
-		Volume:     o.volume,
+		ApiVersion: o.AppsVersion,
+		Name:       o.Name,
+		Namespace:  o.Namespace,
+		Replicas:   o.Replicas,
+		Token:      o.Token,
+		Version:    o.Version,
+		Volume:     o.Volume,
 	}
 }
 
@@ -40,75 +53,75 @@ func (s StatefulSetConfig) Spec() ([]byte, error) {
 	return t.Get()
 }
 
-func NewServiceConfigs(o *CreateOptions) []ServiceConfig {
+func NewServiceConfigs(o *Options) []ServiceConfig {
 	list := []ServiceConfig{}
 	svc := ServiceConfig{
-		ApiVersion:    o.coreVersion,
-		Name:          o.name,
-		Namespace:     o.namespace,
-		AppName:       o.name,
+		ApiVersion:    o.CoreVersion,
+		Name:          o.Name,
+		Namespace:     o.Namespace,
+		AppName:       o.Name,
 		Type:          "ClusterIP",
 		ContainerPort: 5228,
 		Protocol:      "TCP",
 		TargetPort:    5228,
-		TargetApp:     o.name,
+		TargetApp:     o.Name,
 		PortName:      "cluster-port",
 	}
 
 	svcGrpc := ServiceConfig{
-		ApiVersion:    o.coreVersion,
-		Name:          o.name + "-grpc",
-		Namespace:     o.namespace,
-		AppName:       o.name,
+		ApiVersion:    o.CoreVersion,
+		Name:          o.Name + "-grpc",
+		Namespace:     o.Namespace,
+		AppName:       o.Name,
 		Type:          "ClusterIP",
 		ContainerPort: 50000,
 		Protocol:      "TCP",
 		TargetPort:    50000,
-		TargetApp:     o.name,
+		TargetApp:     o.Name,
 		PortName:      "grpc-port",
 	}
-	if o.isNodePort {
+	if o.IsNodePort {
 		svcGrpc.Type = "NodePort"
 	}
-	if o.isLoadBalance {
+	if o.IsLoadBalance {
 		svcGrpc.Type = "LoadBalancer"
 	}
 
 	svcRest := ServiceConfig{
-		ApiVersion:    o.coreVersion,
-		Name:          o.name + "-rest",
-		Namespace:     o.namespace,
-		AppName:       o.name,
+		ApiVersion:    o.CoreVersion,
+		Name:          o.Name + "-rest",
+		Namespace:     o.Namespace,
+		AppName:       o.Name,
 		Type:          "ClusterIP",
 		ContainerPort: 9090,
 		Protocol:      "TCP",
 		TargetPort:    9090,
-		TargetApp:     o.name,
+		TargetApp:     o.Name,
 		PortName:      "rest-port",
 	}
-	if o.isNodePort {
+	if o.IsNodePort {
 		svcRest.Type = "NodePort"
 	}
-	if o.isLoadBalance {
+	if o.IsLoadBalance {
 		svcRest.Type = "LoadBalancer"
 	}
 
 	svcApi := ServiceConfig{
-		ApiVersion:    o.coreVersion,
-		Name:          o.name + "-api",
-		Namespace:     o.namespace,
-		AppName:       o.name,
+		ApiVersion:    o.CoreVersion,
+		Name:          o.Name + "-api",
+		Namespace:     o.Namespace,
+		AppName:       o.Name,
 		Type:          "ClusterIP",
 		ContainerPort: 8080,
 		Protocol:      "TCP",
 		TargetPort:    8080,
-		TargetApp:     o.name,
+		TargetApp:     o.Name,
 		PortName:      "api-port",
 	}
-	if o.isNodePort {
+	if o.IsNodePort {
 		svcApi.Type = "NodePort"
 	}
-	if o.isLoadBalance {
+	if o.IsLoadBalance {
 		svcApi.Type = "LoadBalancer"
 	}
 

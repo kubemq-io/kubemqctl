@@ -147,7 +147,11 @@ func (c *Client) CreateOrUpdateStatefulSet(sts *appsv1.StatefulSet) (*appsv1.Sta
 
 	oldSts, err := c.ClientSet.AppsV1().StatefulSets(sts.Namespace).Get(sts.Name, metav1.GetOptions{})
 	if err == nil && oldSts != nil {
-		newSts, err := c.ClientSet.AppsV1().StatefulSets(sts.Namespace).Update(sts)
+		oldSts.Spec.Replicas = sts.Spec.Replicas
+		oldSts.Spec.Template = sts.Spec.Template
+		oldSts.Spec.UpdateStrategy = sts.Spec.UpdateStrategy
+
+		newSts, err := c.ClientSet.AppsV1().StatefulSets(sts.Namespace).Update(oldSts)
 		if err != nil {
 			return nil, true, err
 		}

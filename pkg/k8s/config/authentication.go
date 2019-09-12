@@ -16,6 +16,7 @@ var AuthenticationGRPCConfig = &EntryGroup{
 			VarValue: "./tls-grpc.key",
 		},
 		&SecretEntry{
+			Prefix:      "Authentication",
 			Name:        "tls-grpc-cert",
 			Description: "gRPC TLS Cert file",
 			ClusterName: CreateBasicOptions.Name,
@@ -23,8 +24,10 @@ var AuthenticationGRPCConfig = &EntryGroup{
 			FilePath:    "./tls-grpc.cert",
 			FileName:    "tls-grpc.cert",
 			SecretType:  "tls.cert",
+			SecretValue: "asdasdas",
 		},
 		&SecretEntry{
+			Prefix:      "Authentication",
 			Name:        "tls-grpc-key",
 			Description: "gRPC TLS Key file",
 			ClusterName: CreateBasicOptions.Name,
@@ -54,6 +57,7 @@ var AuthenticationRESTConfig = &EntryGroup{
 			VarValue: "./tls-rest.key",
 		},
 		&SecretEntry{
+			Prefix:      "Authentication",
 			Name:        "tls-rest-cert",
 			Description: "REST TLS Cert file",
 			ClusterName: CreateBasicOptions.Name,
@@ -63,6 +67,7 @@ var AuthenticationRESTConfig = &EntryGroup{
 			SecretType:  "tls.cert",
 		},
 		&SecretEntry{
+			Prefix:      "Authentication",
 			Name:        "tls-rest-key",
 			Description: "REST TLS Key file",
 			ClusterName: CreateBasicOptions.Name,

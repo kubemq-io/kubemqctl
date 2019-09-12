@@ -1,6 +1,7 @@
 package cluster
 
 import (
+	"github.com/kubemq-io/kubetools/cmd/cluster/apply"
 	context "github.com/kubemq-io/kubetools/cmd/cluster/context"
 	"github.com/kubemq-io/kubetools/cmd/cluster/create"
 	"github.com/kubemq-io/kubetools/cmd/cluster/delete"
@@ -14,7 +15,29 @@ import (
 )
 
 var clusterExamples = `
+	# Execute create KubeMQ cluster command
+	kubetools cluster create
 
+	# Execute delete KubeMQ cluster command
+	kubetools cluster delete
+
+	# Execute apply KubeMQ cluster command
+	kubetools cluster apply
+
+	# Execute show KubeMQ cluster logs command
+	kubetools cluster logs
+
+	# Execute scale KubeMQ cluster command
+	kubetools cluster scale
+
+	# Execute list of KubeMQ clusters command
+	kubetools cluster list
+
+	# Execute proxy ports of KubeMQ cluster command
+	kubetools cluster proxy
+
+	# Execute switch Kubernetes context command
+	kubetools cluster context
 `
 var clusterLong = `Executes KubeMQ cluster management commands`
 var clusterShort = `Executes KubeMQ cluster management commands`
@@ -24,7 +47,7 @@ func NewCmdCluster(cfg *config.Config) *cobra.Command {
 	cmd := &cobra.Command{
 
 		Use:     "cluster",
-		Aliases: []string{"cls"},
+		Aliases: []string{"c", "cls"},
 		Short:   clusterShort,
 		Long:    clusterLong,
 		Example: clusterExamples,
@@ -39,5 +62,6 @@ func NewCmdCluster(cfg *config.Config) *cobra.Command {
 	cmd.AddCommand(list.NewCmdList(cfg))
 	cmd.AddCommand(context.NewCmdContext(cfg))
 	cmd.AddCommand(proxy.NewCmdProxy(cfg))
+	cmd.AddCommand(apply.NewCmdApply(cfg))
 	return cmd
 }

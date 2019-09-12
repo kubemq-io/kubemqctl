@@ -7,6 +7,7 @@ import (
 )
 
 type ConfigMapEntry struct {
+	Prefix         string
 	Name           string
 	Description    string
 	ClusterName    string
@@ -28,7 +29,7 @@ func (cm *ConfigMapEntry) Execute() error {
 	selected := ""
 	selectOptions := &survey.Select{
 		Renderer:      survey.Renderer{},
-		Message:       fmt.Sprintf("Please Select %s source:", cm.Description),
+		Message:       fmt.Sprintf("(%s) Please Select %s source:", cm.Prefix, cm.Description),
 		Options:       []string{existed, new},
 		Default:       existed,
 		Help:          "",
@@ -48,7 +49,7 @@ func (cm *ConfigMapEntry) Execute() error {
 	}
 
 	editor := &Editor{
-		Message:    fmt.Sprintf("Enter or Copy/Paste %s data:", cm.Description),
+		Message:    fmt.Sprintf("(%s) Enter or Copy/Paste %s data:", cm.Prefix, cm.Description),
 		Validators: nil,
 		Default:    "",
 		Help:       "",

@@ -11,6 +11,7 @@ var AuthorizationConfig = &EntryGroup{
 }
 
 var AuthorizationACLData = &ConfigMapEntry{
+	Prefix:         "Authorization",
 	Name:           "acl",
 	Description:    "ACL (Access Control List - CSV Format)",
 	ClusterName:    CreateBasicOptions.Name,

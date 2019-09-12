@@ -22,7 +22,7 @@ var commandsShort = `Execute KubeMQ 'commands' RPC commands`
 func NewCmdCommands(cfg *config.Config) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "commands",
-		Aliases: []string{"c", "cmd"},
+		Aliases: []string{"cmd"},
 		Short:   commandsShort,
 		Long:    commandsLong,
 		Example: commandsExamples,

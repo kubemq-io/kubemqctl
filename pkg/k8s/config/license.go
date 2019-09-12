@@ -11,9 +11,9 @@ var LicenseConfig = &EntryGroup{
 }
 
 var LicenseData = &EnvEntry{
-	VarName:  "KUBEMQ_LICENSE_DATA ",
+	VarName:  "KUBEMQ_LICENSE_DATA",
 	VarValue: "",
-	Prompt: &Editor{
+	Prompt: &Input{
 		Message:    "(License) Enter license file data (copy/past data):",
 		Validators: nil,
 		Default:    "",

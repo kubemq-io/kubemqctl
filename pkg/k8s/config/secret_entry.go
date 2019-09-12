@@ -7,6 +7,7 @@ import (
 )
 
 type SecretEntry struct {
+	Prefix      string
 	Name        string
 	Description string
 	ClusterName string
@@ -28,7 +29,7 @@ func (sec *SecretEntry) Execute() error {
 	selected := ""
 	selectOptions := &survey.Select{
 		Renderer:      survey.Renderer{},
-		Message:       fmt.Sprintf("Please Select %s source:", sec.Description),
+		Message:       fmt.Sprintf("(%s) Please Select %s source:", sec.Prefix, sec.Description),
 		Options:       []string{existed, new},
 		Default:       existed,
 		Help:          "",
@@ -47,7 +48,7 @@ func (sec *SecretEntry) Execute() error {
 		return nil
 	}
 	editor := &Editor{
-		Message:    fmt.Sprintf("Enter or Copy/Paste %s data:", sec.Description),
+		Message:    fmt.Sprintf("(%s) Enter or Copy/Paste %s data:", sec.Prefix, sec.Description),
 		Validators: nil,
 		Default:    "",
 		Help:       "",

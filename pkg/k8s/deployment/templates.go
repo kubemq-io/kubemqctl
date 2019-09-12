@@ -1,4 +1,4 @@
-package create
+package deployment
 
 import (
 	"text/template"

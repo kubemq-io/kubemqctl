@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"github.com/AlecAivazis/survey/v2"
 	apiv1 "k8s.io/api/core/v1"
 )
@@ -22,7 +23,8 @@ func (mi *MenuItem) Run() error {
 }
 
 type Menu struct {
-	Items []*MenuItem
+	Prefix string
+	Items  []*MenuItem
 }
 
 func (m *Menu) Run() error {
@@ -35,9 +37,8 @@ func (m *Menu) Run() error {
 	selected := []string{}
 	prompt := &survey.MultiSelect{
 		Renderer:      survey.Renderer{},
-		Message:       "Please select items",
+		Message:       fmt.Sprintf("(%s) Please select items", m.Prefix),
 		Options:       items,
-		Default:       "All",
 		Help:          "",
 		PageSize:      len(m.Items),
 		VimMode:       false,

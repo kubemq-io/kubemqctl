@@ -16,11 +16,13 @@ var CreateBasicOptions = struct {
 	Vol:         0,
 }
 var CreateMenu = &Menu{
+	Prefix: "Main",
 	Items: []*MenuItem{
 		&MenuItem{
 			Label:  "Set Basic configuration (Name, Namespace...)",
 			Action: nil,
 			SubMenu: &Menu{
+				Prefix: "Basic",
 				Items: []*MenuItem{
 					&MenuItem{
 						Label:  "Set cluster name (kubemq-cluster) ",
@@ -53,6 +55,7 @@ var CreateMenu = &Menu{
 			Label:  "Set Authentication parameters (Certs, Keys...) ",
 			Action: nil,
 			SubMenu: &Menu{
+				Prefix: "Authentication",
 				Items: []*MenuItem{
 					&MenuItem{
 						Label:  "Set gRPC TLS Authentication",
@@ -85,6 +88,7 @@ var CreateMenu = &Menu{
 			Label:  "Set Interfaces parameters (gRPC, REST...) ",
 			Action: nil,
 			SubMenu: &Menu{
+				Prefix: "Interfaces",
 				Items: []*MenuItem{
 					&MenuItem{
 						Label:  "Set gRPC interface parameters",

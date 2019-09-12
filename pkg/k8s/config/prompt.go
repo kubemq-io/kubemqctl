@@ -71,7 +71,7 @@ func (e *Editor) Ask(answer interface{}) error {
 	prompt := &survey.Editor{
 		Renderer:      survey.Renderer{},
 		Message:       e.Message,
-		Default:       e.Default,
+		Default:       "",
 		Help:          e.Help,
 		Editor:        "",
 		HideDefault:   false,

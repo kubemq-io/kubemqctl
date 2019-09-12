@@ -53,7 +53,7 @@ var ObservabilityPrometheusConfig = &EntryGroup{
 
 var ObservabilityPrometheusEnable = &EnvEntry{
 	VarName:  "METRICS_PROMETHEUS_ENABLE",
-	VarValue: "0",
+	VarValue: "",
 	Prompt: &Selection{
 		Message:    "(Observability-Prometheus) Enable Prometheus exporting:",
 		Options:    []string{"false", "true"},
@@ -65,7 +65,7 @@ var ObservabilityPrometheusEnable = &EnvEntry{
 
 var ObservabilityPrometheusPath = &EnvEntry{
 	VarName:  "METRICS_PROMETHEUS_PATH",
-	VarValue: "0",
+	VarValue: "",
 	Prompt: &Input{
 		Message:    "(Observability-Prometheus) Set Prometheus scraping end point (on the KubeMQ service API address):",
 		Validators: []Validator{IsRequired()},
