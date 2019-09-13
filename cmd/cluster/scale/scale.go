@@ -6,10 +6,10 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 	"strings"
 
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s/client"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -20,10 +20,10 @@ type ScaleOptions struct {
 
 var scaleExamples = `
 	# Scale StatufulSet to 5
-	kubetools cluster cluster scale 5
+	kubemqctl cluster cluster scale 5
 
 	# Scale StatufulSet to 0
-	kubetools cluster cluster scale 0
+	kubemqctl cluster cluster scale 0
 `
 var scaleLong = `Scale KubeMQ cluster`
 var scaleShort = `Scale KubeMQ cluster`

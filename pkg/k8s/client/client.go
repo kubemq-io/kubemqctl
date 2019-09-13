@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 
 	appsv1 "k8s.io/api/apps/v1"
 	apiv1 "k8s.io/api/core/v1"

@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/go-resty/resty"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"os"
 	"strings"
@@ -23,10 +23,10 @@ type QueueListOptions struct {
 
 var queueListExamples = `
 	# Get a list of queues / clients
-	kubetools queue list
+	kubemqctl queue list
 	
 	# Get a list of queues / clients filtered by 'some-queue' channel only
-	kubetools queue list -f some-queue
+	kubemqctl queue list -f some-queue
 `
 var queueListLong = `Get a list of queues / clients`
 var queueListShort = `Get a list of queues / clients`

@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/kubemq"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"time"
 )
@@ -25,16 +25,16 @@ type QueriesSendOptions struct {
 
 var queriesSendExamples = `
 	# Send query to a queries channel
-	kubetools queries send some-channel some-query
+	kubemqctl queries send some-channel some-query
 	
 	# Send query to a queries channel with metadata
-	kubetools queries send some-channel some-message -m some-metadata
+	kubemqctl queries send some-channel some-message -m some-metadata
 	
 	# Send query to a queries channel with 120 seconds timeout
-	kubetools queries send some-channel some-message -o 120
+	kubemqctl queries send some-channel some-message -o 120
 	
 	# Send query to a queries channel with cache-key and cache duration of 1m
-	kubetools queries send some-channel some-message -c cache-key -d 1m
+	kubemqctl queries send some-channel some-message -c cache-key -d 1m
 `
 var queriesSendLong = `Send messages to a queries channel`
 var queriesSendShort = `Send messages to a queries channel`

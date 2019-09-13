@@ -2,21 +2,21 @@ package root
 
 import (
 	"context"
-	"github.com/kubemq-io/kubetools/cmd/cluster"
-	"github.com/kubemq-io/kubetools/cmd/commands"
-	config2 "github.com/kubemq-io/kubetools/cmd/config"
+	"github.com/kubemq-io/kubemqctl/cmd/cluster"
+	"github.com/kubemq-io/kubemqctl/cmd/commands"
+	config2 "github.com/kubemq-io/kubemqctl/cmd/config"
 
-	"github.com/kubemq-io/kubetools/cmd/dashboard"
+	"github.com/kubemq-io/kubemqctl/cmd/dashboard"
 
-	"github.com/kubemq-io/kubetools/cmd/events"
-	"github.com/kubemq-io/kubetools/cmd/events_store"
+	"github.com/kubemq-io/kubemqctl/cmd/events"
+	"github.com/kubemq-io/kubemqctl/cmd/events_store"
 
-	"github.com/kubemq-io/kubetools/cmd/queries"
-	"github.com/kubemq-io/kubetools/cmd/queue"
+	"github.com/kubemq-io/kubemqctl/cmd/queries"
+	"github.com/kubemq-io/kubemqctl/cmd/queue"
 
-	version2 "github.com/kubemq-io/kubetools/cmd/version"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	version2 "github.com/kubemq-io/kubemqctl/cmd/version"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"os"
@@ -25,7 +25,7 @@ import (
 var cfg *config.Config
 var Version string
 var rootCmd = &cobra.Command{
-	Use: "kubetools",
+	Use: "kubemqctl",
 }
 
 func Execute(version string) {
@@ -45,7 +45,7 @@ func exists(name string) bool {
 }
 func init() {
 	cfg = &config.Config{}
-	if !exists(".kubetools.yaml") {
+	if !exists(".kubemqctl.yaml") {
 		utils.Println("No configuration found, initialize first time configuration:")
 		cfgOpts := &config2.ConfigOptions{Cfg: config.DefaultConfig}
 		err := cfgOpts.Run(context.Background())
@@ -57,7 +57,7 @@ func init() {
 		cfg = defaultCfg
 	} else {
 		viper.AddConfigPath("./")
-		viper.SetConfigName(".kubetools")
+		viper.SetConfigName(".kubemqctl")
 		err := viper.ReadInConfig()
 		utils.CheckErr(err)
 		err = viper.Unmarshal(cfg)

@@ -3,10 +3,10 @@ package queue
 import (
 	"context"
 	"fmt"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/kubemq"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -19,10 +19,10 @@ type QueueAckOptions struct {
 
 var queueAckExamples = `
 	# Ack all messages in a queue channel 'some-channel' with 2 seconds of wait to complete operation
-	kubetools queue ack some-channel
+	kubemqctl queue ack some-channel
 	
 	# Ack all messages in a queue channel 'some-long-queue' with 30 seconds of wait to complete operation
-	kubetools queue ack some-long-queue -w 30
+	kubemqctl queue ack some-long-queue -w 30
 `
 var queueAckLong = `Ack all messages in a queue channel`
 var queueAckShort = `Ack all messages in a queue channel`

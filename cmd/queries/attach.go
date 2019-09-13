@@ -3,10 +3,10 @@ package queries
 import (
 	"context"
 	"fmt"
-	"github.com/kubemq-io/kubetools/pkg/attach"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/attach"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -20,19 +20,19 @@ type QueriesAttachOptions struct {
 
 var queriesAttachExamples = `
 	# attach to all queries channels and output running messages
-	kubetools queries attach *
+	kubemqctl queries attach *
 	
 	# attach to some-query queries channel and output running messages
-	kubetools queries attach some-query
+	kubemqctl queries attach some-query
 
 	# attach to some-queries1 and some-queries2 queries channels and output running messages
-	kubetools queries attach some-queries1 some-queries2 
+	kubemqctl queries attach some-queries1 some-queries2 
 
 	# attach to some-queries queries channel and output running messages filter by include regex (some*)
-	kubetools queries attach some-queries -i some*
+	kubemqctl queries attach some-queries -i some*
 
 	# attach to some-queries queries channel and output running messages filter by exclude regex (not-some*)
-	kubetools queries attach some-queries -e not-some*
+	kubemqctl queries attach some-queries -e not-some*
 `
 var queriesAttachLong = `Attach to queries channels and display channel content`
 var queriesAttachShort = `Attach to queries channels`

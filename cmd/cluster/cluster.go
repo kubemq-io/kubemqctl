@@ -1,43 +1,43 @@
 package cluster
 
 import (
-	"github.com/kubemq-io/kubetools/cmd/cluster/apply"
-	context "github.com/kubemq-io/kubetools/cmd/cluster/context"
-	"github.com/kubemq-io/kubetools/cmd/cluster/create"
-	"github.com/kubemq-io/kubetools/cmd/cluster/delete"
-	"github.com/kubemq-io/kubetools/cmd/cluster/list"
-	"github.com/kubemq-io/kubetools/cmd/cluster/logs"
-	"github.com/kubemq-io/kubetools/cmd/cluster/proxy"
-	"github.com/kubemq-io/kubetools/cmd/cluster/scale"
-	"github.com/kubemq-io/kubetools/pkg/config"
+	"github.com/kubemq-io/kubemqctl/cmd/cluster/apply"
+	context "github.com/kubemq-io/kubemqctl/cmd/cluster/context"
+	"github.com/kubemq-io/kubemqctl/cmd/cluster/create"
+	"github.com/kubemq-io/kubemqctl/cmd/cluster/delete"
+	"github.com/kubemq-io/kubemqctl/cmd/cluster/list"
+	"github.com/kubemq-io/kubemqctl/cmd/cluster/logs"
+	"github.com/kubemq-io/kubemqctl/cmd/cluster/proxy"
+	"github.com/kubemq-io/kubemqctl/cmd/cluster/scale"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
 
 	"github.com/spf13/cobra"
 )
 
 var clusterExamples = `
 	# Execute create KubeMQ cluster command
-	kubetools cluster create
+	kubemqctl cluster create
 
 	# Execute delete KubeMQ cluster command
-	kubetools cluster delete
+	kubemqctl cluster delete
 
 	# Execute apply KubeMQ cluster command
-	kubetools cluster apply
+	kubemqctl cluster apply
 
 	# Execute show KubeMQ cluster logs command
-	kubetools cluster logs
+	kubemqctl cluster logs
 
 	# Execute scale KubeMQ cluster command
-	kubetools cluster scale
+	kubemqctl cluster scale
 
 	# Execute list of KubeMQ clusters command
-	kubetools cluster list
+	kubemqctl cluster list
 
 	# Execute proxy ports of KubeMQ cluster command
-	kubetools cluster proxy
+	kubemqctl cluster proxy
 
 	# Execute switch Kubernetes context command
-	kubetools cluster context
+	kubemqctl cluster context
 `
 var clusterLong = `Executes KubeMQ cluster management commands`
 var clusterShort = `Executes KubeMQ cluster management commands`

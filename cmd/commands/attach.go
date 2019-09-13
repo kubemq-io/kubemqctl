@@ -3,10 +3,10 @@ package commands
 import (
 	"context"
 	"fmt"
-	"github.com/kubemq-io/kubetools/pkg/attach"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/attach"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -19,19 +19,19 @@ type CommandsAttachOptions struct {
 
 var commandsAttachExamples = `
 	# attach to all commands channels and output running messages
-	kubetools commands attach *
+	kubemqctl commands attach *
 	
 	# attach to some-commands commands channel and output running messages
-	kubetools commands attach some-commands
+	kubemqctl commands attach some-commands
 
 	# attach to some-commands1 and some-commands2 commands channels and output running messages
-	kubetools commands attach some-commands1 some-commands2 
+	kubemqctl commands attach some-commands1 some-commands2 
 
 	# attach to some-commands commands channel and output running messages filter by include regex (some*)
-	kubetools commands attach some-commands -i some*
+	kubemqctl commands attach some-commands -i some*
 
 	# attach to some-commands commands channel and output running messages filter by exclude regex (not-some*)
-	kubetools commands attach some-commands -e not-some*
+	kubemqctl commands attach some-commands -e not-some*
 `
 var commandsAttachLong = `Attach to commands channels and display channel content`
 var commandsAttachShort = `Attach to commands channels`

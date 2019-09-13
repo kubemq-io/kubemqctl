@@ -5,7 +5,7 @@ import (
 	"errors"
 	"github.com/google/uuid"
 	"github.com/kubemq-io/kubemq-go"
-	"github.com/kubemq-io/kubetools/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
 )
 
 func GetKubeMQClient(ctx context.Context, transport string, cfg *config.Config) (*kubemq.Client, error) {

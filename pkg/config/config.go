@@ -30,12 +30,12 @@ func exists(name string) bool {
 	return true
 }
 func CheckConfigFile() (*Config, error) {
-	if !exists(".kubetools.yaml") {
+	if !exists(".kubemqctl.yaml") {
 		data, err := yaml.Marshal(DefaultConfig)
 		if err != nil {
 			return DefaultConfig, err
 		}
-		err = ioutil.WriteFile(".kubetools.yaml", data, 0644)
+		err = ioutil.WriteFile(".kubemqctl.yaml", data, 0644)
 		if err != nil {
 			return DefaultConfig, err
 		}
@@ -62,7 +62,7 @@ func (c *Config) Save() error {
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile(".kubetools.yaml", data, 0644)
+	err = ioutil.WriteFile(".kubemqctl.yaml", data, 0644)
 	if err != nil {
 		return err
 	}

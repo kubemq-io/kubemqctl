@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/fatih/color"
-	"github.com/kubemq-io/kubetools/pkg/k8s/client"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 	"github.com/pkg/errors"
 	"k8s.io/apimachinery/pkg/labels"
 	"regexp"

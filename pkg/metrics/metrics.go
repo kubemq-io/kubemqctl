@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/go-resty/resty/v2"
-	"github.com/kubemq-io/kubetools/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"io"
 	"text/tabwriter"
 	"time"

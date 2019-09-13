@@ -1,19 +1,19 @@
 package commands
 
 import (
-	"github.com/kubemq-io/kubetools/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/spf13/cobra"
 )
 
 var commandsExamples = `
 	# Execute send commands 
-	# kubetools commands send
+	# kubemqctl commands send
 
 	# Execute receive commands
-	# kubetools commands receive
+	# kubemqctl commands receive
 
 	# Execute attach to commands channel
-	# kubetools commands attach
+	# kubemqctl commands attach
 `
 var commandsLong = `Execute KubeMQ 'commands' RPC commands`
 var commandsShort = `Execute KubeMQ 'commands' RPC commands`

@@ -1,19 +1,19 @@
 package events
 
 import (
-	"github.com/kubemq-io/kubetools/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/spf13/cobra"
 )
 
 var eventsExamples = `
 	# Execute send events command
-	# kubetools events send
+	# kubemqctl events send
 
 	# Execute receive an events command
-	# kubetools events receive
+	# kubemqctl events receive
 
 	# Execute attach to an events command
-	# kubetools events attach
+	# kubemqctl events attach
 
 `
 var eventsLong = `Execute KubeMQ 'events' Pub/Sub commands`

@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/hashicorp/go-getter"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/skratchdot/open-golang/open"
 	"io/ioutil"
 	"log"
@@ -73,7 +73,7 @@ func (s *ServerOptions) Download(ctx context.Context) error {
 	opts = append(opts, getter.WithProgress(defaultProgressBar))
 	client := &getter.Client{
 		Ctx:              ctx,
-		Src:              "https://github.com/kubemq-io/kubetools/releases/download/latest/dashboard.zip",
+		Src:              "https://github.com/kubemq-io/kubemqctl/releases/download/latest/dashboard.zip",
 		Dst:              "./",
 		Pwd:              pwd,
 		Mode:             getter.ClientModeDir,

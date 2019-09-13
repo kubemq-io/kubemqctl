@@ -3,9 +3,9 @@ package config
 import (
 	"context"
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s/client"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"sort"
 	"strings"
@@ -16,11 +16,11 @@ type ConfigOptions struct {
 }
 
 var configExamples = `
-	# Run Kubetools configuration wizard
-	# kubetools config
+	# Run Kubemqctl configuration wizard
+	# kubemqctl config
 `
-var configLong = `Run Kubetools configuration wizard`
-var configShort = `Run Kubetools configuration wizard`
+var configLong = `Run Kubemqctl configuration wizard`
+var configShort = `Run Kubemqctl configuration wizard`
 
 // NewCmdCreate returns new initialized instance of create sub command
 func NewCmdConfig(cfg *config.Config) *cobra.Command {

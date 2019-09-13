@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s/client"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	v1 "k8s.io/api/core/v1"
 	"net"
 	"time"
@@ -34,7 +34,7 @@ func SetTransport(ctx context.Context, cfg *config.Config) error {
 	if !cfg.AutoIntegrated {
 		return nil
 	}
-	utils.Print("connecting to kuberenets cluster... ")
+	utils.Print("connecting to kubernetes cluster... ")
 	c, err := client.NewClient(cfg.KubeConfigPath)
 	if err != nil {
 		return err
@@ -99,16 +99,16 @@ func GetRunningPod(client *client.Client, ns, sts string) (string, string, error
 	if err != nil {
 		return "", "", err
 	}
-	list := map[string]string{}
+	list := NewRandomList()
 	for _, pod := range pods {
 		if pod.Status.Phase == v1.PodRunning {
-			list[pod.Namespace] = pod.Name
+			list.Add(pod.Name)
 		}
 	}
-
-	for key, value := range list {
-		return key, value, nil
+	randPort := list.Random()
+	if randPort != "" {
+		return ns, randPort, nil
 	}
 
-	return "", "", fmt.Errorf("no running pods available in %s/%s. you can change the currnet context with 'kubetools config' command", ns, sts)
+	return "", "", fmt.Errorf("no running pods available in %s/%s. you can change the currnet context with 'kubemqctl config' command", ns, sts)
 }

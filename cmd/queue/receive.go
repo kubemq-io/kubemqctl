@@ -4,13 +4,14 @@ import (
 	"context"
 	"fmt"
 	kubemq2 "github.com/kubemq-io/kubemq-go"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/kubemq"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"os"
 	"text/tabwriter"
+	"time"
 )
 
 type QueueReceiveOptions struct {
@@ -24,13 +25,13 @@ type QueueReceiveOptions struct {
 
 var queueReceiveExamples = `
 	# Receive 1 messages from a queue and wait for 2 seconds (default)
-	kubetools queue receive some-channel
+	kubemqctl queue receive some-channel
 
 	# Receive 3 messages from a queue and wait for 5 seconds
-	kubetools queue receive some-channel -m 3 -T 5
+	kubemqctl queue receive some-channel -m 3 -T 5
 
 	# Watching queue channel messages
-	kubetools queue receive some-channel -w
+	kubemqctl queue receive some-channel -w
 `
 var queueReceiveLong = `Receive a messages from a queue channel`
 var queueReceiveShort = `Receive a messages from a queue channel`
@@ -121,7 +122,12 @@ func (o *QueueReceiveOptions) Run(ctx context.Context) error {
 func printItems(items []*kubemq2.QueueMessage) {
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.TabIndent)
 	for _, item := range items {
-		fmt.Fprintf(w, "[channel: %s]\t[id: %s]\t[metadata: %s]\t[body: %s]\n", item.Channel, item.Id, item.Metadata, item.Body)
+		fmt.Fprintf(w, "[channel: %s]\t[id: %s]\t[seq: %d]\t[timestamp: %s]\t[metadata: %s]\t[body: %s]\n",
+			item.Channel,
+			item.Id,
+			item.Attributes.Sequence,
+			time.Unix(0, item.Attributes.Timestamp).Format("2006-01-02 15:04:05.999"), item.Metadata,
+			item.Body)
 	}
 	w.Flush()
 }

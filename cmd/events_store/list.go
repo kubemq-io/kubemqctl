@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/go-resty/resty"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"os"
 	"strings"
@@ -23,10 +23,10 @@ type EventsStoreListOptions struct {
 
 var eventsStoreListExamples = `
 	# Get a list of events store channels
-	kubetools events_store list
+	kubemqctl events_store list
 	
 	# Get a list of events stores channels/ clients filtered by 'some-events-store' channel only
-	kubetools events_store list -f some-events-store
+	kubemqctl events_store list -f some-events-store
 `
 var eventsStoreListLong = `Get a list of events store channels / clients`
 var eventsStoreListShort = `Get a list of events store channels / clients`

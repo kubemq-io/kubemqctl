@@ -3,10 +3,10 @@ package dashboard
 import (
 	"context"
 	"fmt"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/utils"
-	"github.com/kubemq-io/kubetools/web"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/web"
 	"github.com/spf13/cobra"
 	"io/ioutil"
 	"os"
@@ -21,10 +21,10 @@ type DashboardOptions struct {
 
 var dashboardExamples = `
 	# Run KubeMQ dashboard web view
-	kubetools dashboard
+	kubemqctl dashboard
 
 	# Run KubeMQ dashboard and update version
-	kubetools dashboard -u
+	kubemqctl dashboard -u
 `
 var dashboardLong = `Run KubeMQ dashboard web view`
 var dashboardShort = `Run KubeMQ dashboard web view`

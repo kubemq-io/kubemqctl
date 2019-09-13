@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/kubemq"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"os"
 	"text/tabwriter"
@@ -24,10 +24,10 @@ type CommandsReceiveOptions struct {
 
 var commandsReceiveExamples = `
 	# Receive commands from a commands channel (blocks until next message)
-	kubetools commands receive some-channel
+	kubemqctl commands receive some-channel
 
 	# Receive commands from a commands channel with group (blocks until next message)
-	kubetools commands receive some-channel -g G1
+	kubemqctl commands receive some-channel -g G1
 `
 var commandsReceiveLong = `Receive a message from commands channel`
 var commandsReceiveShort = `Receive a message from commands channel`

@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/go-resty/resty"
-	"github.com/kubemq-io/kubetools/pkg/attach"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/attach"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -22,19 +22,19 @@ type QueueAttachOptions struct {
 
 var queueAttachExamples = `
 	# Attach to all queues and output running messages
-	kubetools queue attach all
+	kubemqctl queue attach all
 	
 	# Attach to some-queue queue and output running messages
-	kubetools queue attach some-queue
+	kubemqctl queue attach some-queue
 
 	# Attach to some-queue1 and some-queue2 queues and output running messages
-	kubetools queue attach some-queue1 some-queue2 
+	kubemqctl queue attach some-queue1 some-queue2 
 
 	# Attach to some-queue queue and output running messages filter by include regex (some*)
-	kubetools queue attach some-queue -i some*
+	kubemqctl queue attach some-queue -i some*
 
 	# Attach to some-queue queue and output running messages filter by exclude regex (not-some*)
-	kubetools queue attach some-queue -e not-some*
+	kubemqctl queue attach some-queue -e not-some*
 `
 var queueAttachLong = `Attach to queue channels and display content`
 var queueAttachShort = `Attach to queue channels`

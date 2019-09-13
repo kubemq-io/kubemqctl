@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/kubemq"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -22,13 +22,13 @@ type EventsStoreSendOptions struct {
 
 var eventsSendExamples = `
 	# Send message to an events store channel
-	kubetools events_store send some-channel some-message
+	kubemqctl events_store send some-channel some-message
 	
 	# Send message to an events store channel with metadata
-	kubetools events_store send some-channel some-message -m some-metadata
+	kubemqctl events_store send some-channel some-message -m some-metadata
 
 	# Send 10 messages to an events store channel
-	kubetools events_store send some-channel some-message -i 10
+	kubemqctl events_store send some-channel some-message -i 10
 `
 var eventsSendLong = `Send messages to an events store channel`
 var eventsSendShort = `Send messages to an events store channel`
@@ -86,7 +86,7 @@ func (o *EventsStoreSendOptions) Run(ctx context.Context) error {
 		msg := client.ES().
 			SetChannel(o.channel).
 			SetId(uuid.New().String()).
-			SetBody([]byte(o.message)).
+			SetBody([]byte(fmt.Sprintf("%s - (%d)", o.message, i))).
 			SetMetadata(o.metadata)
 		res, err := msg.Send(ctx)
 		if err != nil {

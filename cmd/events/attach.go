@@ -3,10 +3,10 @@ package events
 import (
 	"context"
 	"fmt"
-	"github.com/kubemq-io/kubetools/pkg/attach"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/attach"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -19,19 +19,19 @@ type EventsAttachOptions struct {
 
 var eventsAttachExamples = `
 	# attach to all events channels and output running messages
-	kubetools events attach *
+	kubemqctl events attach *
 	
 	# attach to some-events events channel and output running messages
-	kubetools events attach some-events
+	kubemqctl events attach some-events
 
 	# attach to some-events1 and some-events2 events channels and output running messages
-	kubetools events attach some-events1 some-events2 
+	kubemqctl events attach some-events1 some-events2 
 
 	# attach to some-events events channel and output running messages filter by include regex (some*)
-	kubetools events attach some-events -i some*
+	kubemqctl events attach some-events -i some*
 
 	# attach to some-events events channel and output running messages filter by exclude regex (not-some*)
-	kubetools events attach some-events -e not-some*
+	kubemqctl events attach some-events -e not-some*
 `
 var eventsAttachLong = `Attach to events channels and display channel content`
 var eventsAttachShort = `Attach to events channels`

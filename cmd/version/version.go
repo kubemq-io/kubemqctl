@@ -2,7 +2,7 @@ package version
 
 import (
 	"context"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -11,11 +11,11 @@ type VersionOptions struct {
 }
 
 var versionExamples = `
- 	# Show Kubetools version
-	kubetools version
+ 	# Show Kubemqctl version
+	kubemqctl version
 `
-var versionLong = `Show Kubetools version`
-var versionShort = `Show Kubetools version`
+var versionLong = `Show Kubemqctl version`
+var versionShort = `Show Kubemqctl version`
 
 func NewCmdVersion(version *string) *cobra.Command {
 	o := VersionOptions{
@@ -49,6 +49,6 @@ func (o *VersionOptions) Validate() error {
 
 func (o *VersionOptions) Run(ctx context.Context) error {
 
-	utils.Printlnf("Kubetools version %s", *o.version)
+	utils.Printlnf("Kubemqctl version %s", *o.version)
 	return nil
 }

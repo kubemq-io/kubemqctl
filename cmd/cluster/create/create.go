@@ -3,13 +3,13 @@ package create
 import (
 	"context"
 	"fmt"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	conf "github.com/kubemq-io/kubetools/pkg/k8s/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s/deployment"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	conf "github.com/kubemq-io/kubemqctl/pkg/k8s/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/deployment"
 	"io/ioutil"
 	"os"
 
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	appsv1 "k8s.io/api/apps/v1"
 )
@@ -26,16 +26,16 @@ type CreateOptions struct {
 
 var createExamples = `
 	# Create default KubeMQ cluster
-	# kubetools cluster create -t b33600cc-93ef-4395-bba3-13131eb27d5e 
+	# kubemqctl cluster create -t b33600cc-93ef-4395-bba3-13131eb27d5e 
 
 	# Import KubeMQ cluster yaml file  
-	# kubetools cluster create -f kubemq-cluster.yaml
+	# kubemqctl cluster create -f kubemq-cluster.yaml
 
 	# Create KubeMQ cluster with options
-	# kubetools cluster create -t b3330scc-93ef-4395-bba3-13131sb2785e -o
+	# kubemqctl cluster create -t b3330scc-93ef-4395-bba3-13131sb2785e -o
 
 	# Export KubeMQ cluster yaml file    
-	# kubetools cluster create -t b3330scc-93ef-4395-bba3-13131sb2785e -e 
+	# kubemqctl cluster create -t b3330scc-93ef-4395-bba3-13131sb2785e -e 
 `
 var createLong = `Create a KubeMQ cluster`
 var createShort = `Create a KubeMQ cluster`

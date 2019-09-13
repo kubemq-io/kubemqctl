@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/kubemq-io/kubetools/cmd/root"
+	"github.com/kubemq-io/kubemqctl/cmd/root"
 )
 
 var version string

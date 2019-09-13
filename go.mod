@@ -1,4 +1,4 @@
-module github.com/kubemq-io/kubetools
+module github.com/kubemq-io/kubemqctl
 
 go 1.12
 

@@ -3,10 +3,10 @@ package events
 import (
 	"context"
 	"fmt"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/kubemq"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"os"
 	"text/tabwriter"
@@ -21,10 +21,10 @@ type EventsReceiveOptions struct {
 
 var eventsReceiveExamples = `
 	# Receive messages from an events channel (blocks until next message)
-	kubetools events receive some-channel
+	kubemqctl events receive some-channel
 
 	# Receive messages from an events channel with group (blocks until next message)
-	kubetools events receive some-channel -g G1
+	kubemqctl events receive some-channel -g G1
 
 `
 var eventsReceiveLong = `Receive a message from events channel`

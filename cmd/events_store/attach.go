@@ -3,10 +3,10 @@ package events_store
 import (
 	"context"
 	"fmt"
-	"github.com/kubemq-io/kubetools/pkg/attach"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/attach"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -20,19 +20,19 @@ type EventsStoreAttachOptions struct {
 
 var eventsAttachExamples = `
 	# Attach to all events store channels and output running messages
-	kubetools events attach *
+	kubemqctl events attach *
 	
 	# Attach to some-events-store events store channel and output running messages
-	kubetools events_store attach some-events-store
+	kubemqctl events_store attach some-events-store
 
 	# Attach to some-events-store1 and some-events-store2 events channels and output running messages
-	kubetools events attach some-events-store1 some-events-store2 
+	kubemqctl events attach some-events-store1 some-events-store2 
 
 	# Attach to some-events-store events store channel and output running messages filter by include regex (some*)
-	kubetools events attach some-events -i some*
+	kubemqctl events attach some-events -i some*
 
 	# Attach to some-events-store events store channel and output running messages filter by exclude regex (not-some*)
-	kubetools events attach some-events -e not-some*
+	kubemqctl events attach some-events -e not-some*
 `
 var eventsAttachLong = `Attach to events store channels and display channel content`
 var eventsAttachShort = `Attach to events store channels`

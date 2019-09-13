@@ -3,10 +3,10 @@ package queue
 import (
 	"context"
 	"fmt"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/kubemq"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -20,10 +20,10 @@ type QueuePeekOptions struct {
 
 var queuePeekExamples = `
 	# Peek 1 messages from a queue and wait for 2 seconds (default)
-	kubetools queue peek some-channel
+	kubemqctl queue peek some-channel
 
 	# Peek 3 messages from a queue and wait for 5 seconds
-	kubetools queue peek some-channel -m 3 -w 5
+	kubemqctl queue peek some-channel -m 3 -w 5
 `
 var queuePeekLong = `Peek a messages from a queue channel`
 var queuePeekShort = `Peek a messages from a queue channel`

@@ -5,12 +5,12 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 	"strings"
 
-	"github.com/kubemq-io/kubetools/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
 
-	"github.com/kubemq-io/kubetools/pkg/k8s/client"
-	"github.com/kubemq-io/kubetools/pkg/k8s/logs"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/logs"
 
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -22,22 +22,22 @@ type LogsOptions struct {
 
 var logsExamples = `
 	# Stream logs with selection of KubeMQ cluster
-	kubetools cluster logs
+	kubemqctl cluster logs
 
 	# Stream logs of all pods in default namespace
-	kubetools cluster logs .* -n default
+	kubemqctl cluster logs .* -n default
 
 	# Stream logs of regex base pods with logs since 10m ago
-	kubetools cluster logs kubemq-cluster.* -s 10m
+	kubemqctl cluster logs kubemq-cluster.* -s 10m
 
 	# Stream logs of regex base pods with logs since 10m ago include the string of 'connection'
-	kubetools cluster logs kubemq-cluster.* -s 10m -i connection
+	kubemqctl cluster logs kubemq-cluster.* -s 10m -i connection
 
 	# Stream logs of regex base pods with logs exclude the string of 'error'
-	kubetools cluster logs kubemq-cluster.* -s 10m -e error
+	kubemqctl cluster logs kubemq-cluster.* -s 10m -e error
 
 	# Stream logs of specific container
-	kubetools cluster logs -c kubemq-cluster-0
+	kubemqctl cluster logs -c kubemq-cluster-0
 `
 var logsLong = `Stream logs from KubeMQ pods`
 var logsShort = `Stream logs from KubeMQ pods`

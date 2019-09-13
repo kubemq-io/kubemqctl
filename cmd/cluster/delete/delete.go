@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s/client"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -16,7 +16,7 @@ type DeleteOptions struct {
 
 var deleteExamples = `
  	# Delete KubeMQ cluster
-	kubetools cluster delete
+	kubemqctl cluster delete
 `
 var deleteLong = `Delete KubeMQ cluster`
 var deleteShort = `Delete KubeMQ cluster`

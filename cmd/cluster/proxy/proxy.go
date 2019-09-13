@@ -3,10 +3,10 @@ package proxy
 import (
 	"context"
 	"fmt"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
 
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -17,13 +17,13 @@ type ProxyOptions struct {
 
 var proxyExamples = `
 	# proxy default/kubemq-cluster with default KubeMQ ports
-	kubetools cluster proxy
+	kubemqctl cluster proxy
 
 	# proxy specific namespace/pod with default KubeMQ ports
-	kubetools cluster proxy kubemq kubemq-cluster1 
+	kubemqctl cluster proxy kubemq kubemq-cluster1 
 
 	# proxy specific namespace/pod with specific ports
-	kubetools cluster proxy default nginx -p 80:80 
+	kubemqctl cluster proxy default nginx -p 80:80 
 `
 var proxyLong = `Proxy KubeMQ cluster connection to localhost`
 var proxyShort = `Proxy KubeMQ cluster connection to localhost`

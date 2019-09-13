@@ -3,9 +3,9 @@ package apply
 import (
 	"context"
 	"fmt"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s/deployment"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/deployment"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"io/ioutil"
 	appsv1 "k8s.io/api/apps/v1"
@@ -18,7 +18,7 @@ type ApplyOptions struct {
 
 var applyExamples = `
 	# Apply KubeMQ cluster deployment
-	# kubetools cluster apply kubemq-cluster.yaml 
+	# kubemqctl cluster apply kubemq-cluster.yaml 
 `
 var applyLong = `Apply a KubeMQ cluster`
 var applyShort = `Apply a KubeMQ cluster`

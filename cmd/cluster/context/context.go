@@ -3,11 +3,11 @@ package context
 import (
 	"context"
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s/client"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 	"sort"
 
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -17,7 +17,7 @@ type ContextOptions struct {
 
 var contextExamples = `
 	# Select kubernetes cluster context
-	kubetools cluster context
+	kubemqctl cluster context
 
 `
 var contextLong = `Select kubernetes cluster context`

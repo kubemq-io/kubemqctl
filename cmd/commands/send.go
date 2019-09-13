@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/kubemq"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"time"
 )
@@ -23,13 +23,13 @@ type CommandsSendOptions struct {
 
 var commandsSendExamples = `
 	# Send command to a commands channel
-	kubetools commands send some-channel some-command
+	kubemqctl commands send some-channel some-command
 	
 	# Send command to a commands channel with metadata
-	kubetools commands send some-channel some-message -m some-metadata
+	kubemqctl commands send some-channel some-message -m some-metadata
 	
 	# Send command to a commands channel with 120 seconds timeout
-	kubetools commands send some-channel some-message -o 120
+	kubemqctl commands send some-channel some-message -o 120
 `
 var commandsSendLong = `Send messages to commands channel`
 var commandsSendShort = `Send messages to commands channel`

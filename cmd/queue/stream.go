@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/kubemq"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"strconv"
 	"strings"
@@ -23,10 +23,10 @@ type QueueStreamOptions struct {
 
 var queueStreamExamples = `
 	# Stream queue message in transaction mode
-	kubetools queue stream some-channel
+	kubemqctl queue stream some-channel
 
 	# Stream queue message in transaction mode with visibility set to 120 seconds and wait time of 180 seconds
-	kubetools queue stream some-channel -v 120 -w 180
+	kubemqctl queue stream some-channel -v 120 -w 180
 `
 var queueStreamLong = `Stream a message from a queue`
 var queueStreamShort = `Stream a message from a queue`

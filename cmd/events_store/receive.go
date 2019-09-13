@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"github.com/AlecAivazis/survey/v2"
 	kubemq2 "github.com/kubemq-io/kubemq-go"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s"
-	"github.com/kubemq-io/kubetools/pkg/kubemq"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"os"
 	"strconv"
@@ -26,10 +26,10 @@ type EventsStoreReceiveOptions struct {
 
 var eventsReceiveExamples = `
 	# Receive messages from an events store channel (blocks until next message)
-	kubetools events_store receive some-channel
+	kubemqctl events_store receive some-channel
 
 	# Receive messages from an events channel with group(blocks until next message)
-	kubetools events_store receive some-channel -g G1
+	kubemqctl events_store receive some-channel -g G1
 `
 var eventsReceiveLong = `Receive a messages from an events store`
 var eventsReceiveShort = `Receive a messages from an events store`

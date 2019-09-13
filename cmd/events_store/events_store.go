@@ -1,19 +1,19 @@
 package events_store
 
 import (
-	"github.com/kubemq-io/kubetools/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/spf13/cobra"
 )
 
 var eventsExamples = `
 	# Execute send events_store command 
-	# kubetools events_store send
+	# kubemqctl events_store send
 
 	# Execute receive events_store command
-	# kubetools events_store receive
+	# kubemqctl events_store receive
 
 	# Execute attach to events_store command
-	# kubetools events_store attach
+	# kubemqctl events_store attach
 `
 var eventsLong = `Execute KubeMQ 'events_store' Pub/Sub commands`
 var eventsShort = `Execute KubeMQ 'events_store' Pub/Sub commands`

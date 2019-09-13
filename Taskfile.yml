@@ -3,7 +3,7 @@
 version: '2'
 
 vars:
-  BINARY_NAME: kubetools
+  BINARY_NAME: kubemqctl
   VERSION: v2.0.0
 
 tasks:

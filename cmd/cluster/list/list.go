@@ -3,9 +3,9 @@ package list
 import (
 	"context"
 	"fmt"
-	"github.com/kubemq-io/kubetools/pkg/config"
-	"github.com/kubemq-io/kubetools/pkg/k8s/client"
-	"github.com/kubemq-io/kubetools/pkg/utils"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"os"
 	"text/tabwriter"
@@ -18,7 +18,7 @@ type ListOptions struct {
 
 var statusExamples = `
 	# Get list of KubeMQ of clusters
-	kubetools cluster list
+	kubemqctl cluster list
 `
 var statusLong = `Get list of KubeMQ of clusters`
 var statusShort = `Get list of KubeMQ of clusters`
