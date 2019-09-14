@@ -118,7 +118,19 @@ func (o *QueriesReceiveOptions) Run(ctx context.Context) error {
 				return err
 			}
 			if isExecuted {
-				err = client.R().SetRequestId(query.Id).SetExecutedAt(time.Now()).SetResponseTo(query.ResponseTo).SetBody([]byte("executed your query")).Send(ctx)
+
+				respBody := ""
+				prompt := &survey.Input{
+					Renderer: survey.Renderer{},
+					Message:  "Set response message",
+					Default:  "response-to",
+					Help:     "",
+				}
+				err := survey.AskOne(prompt, &respBody)
+				if err != nil {
+					return err
+				}
+				err = client.R().SetRequestId(query.Id).SetExecutedAt(time.Now()).SetResponseTo(query.ResponseTo).SetBody([]byte(respBody)).Send(ctx)
 				if err != nil {
 					return err
 				}
