@@ -1,7 +1,6 @@
 package root
 
 import (
-	"context"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster"
 	"github.com/kubemq-io/kubemqctl/cmd/commands"
 	config2 "github.com/kubemq-io/kubemqctl/cmd/config"
@@ -46,10 +45,10 @@ func exists(name string) bool {
 func init() {
 	cfg = &config.Config{}
 	if !exists(".kubemqctl.yaml") {
-		utils.Println("No configuration found, initialize first time configuration:")
-		cfgOpts := &config2.ConfigOptions{Cfg: config.DefaultConfig}
-		err := cfgOpts.Run(context.Background())
-		utils.CheckErr(err)
+		utils.Println("No configuration found, initialize first time default configuration. Run 'kubemqctl config' to run expert configuration wizard.")
+		//cfgOpts := &config2.ConfigOptions{Cfg: config.DefaultConfig}
+		//err := cfgOpts.Run(context.Background())
+		//utils.CheckErr(err)
 	}
 
 	defaultCfg, err := config.CheckConfigFile()

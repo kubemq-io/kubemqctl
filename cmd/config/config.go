@@ -53,6 +53,18 @@ func (o *ConfigOptions) Validate() error {
 
 func (o *ConfigOptions) Run(ctx context.Context) error {
 	cfg := o.Cfg
+
+	promptDefaultToken := &survey.Input{
+		Renderer: survey.Renderer{},
+		Message:  "Set Default KubeMQ Token (press Enter for default):",
+		Default:  cfg.DefaultToken,
+		Help:     "Set kube.config file path if not kubectl default",
+	}
+	err := survey.AskOne(promptDefaultToken, &cfg.DefaultToken)
+	if err != nil {
+		return err
+	}
+
 	integrationType := ""
 	integrationSelect := &survey.Select{
 		Renderer: survey.Renderer{},
@@ -61,7 +73,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 		Default:  "Kubernetes cluster",
 		Help:     "Select the location of KubeMQ server",
 	}
-	err := survey.AskOne(integrationSelect, &integrationType)
+	err = survey.AskOne(integrationSelect, &integrationType)
 	if err != nil {
 		return err
 	}
