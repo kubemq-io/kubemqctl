@@ -5,6 +5,7 @@ import (
 	context "github.com/kubemq-io/kubemqctl/cmd/cluster/context"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/create"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/delete"
+	"github.com/kubemq-io/kubemqctl/cmd/cluster/describe"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/list"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/logs"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/proxy"
@@ -20,6 +21,9 @@ var clusterExamples = `
 
 	# Execute delete KubeMQ cluster command
 	kubemqctl cluster delete
+
+	# Execute describe KubeMQ cluster command
+	kubemqctl cluster describe
 
 	# Execute apply KubeMQ cluster command
 	kubemqctl cluster apply
@@ -63,5 +67,6 @@ func NewCmdCluster(cfg *config.Config) *cobra.Command {
 	cmd.AddCommand(context.NewCmdContext(cfg))
 	cmd.AddCommand(proxy.NewCmdProxy(cfg))
 	cmd.AddCommand(apply.NewCmdApply(cfg))
+	cmd.AddCommand(describe.NewCmdDescribe(cfg))
 	return cmd
 }

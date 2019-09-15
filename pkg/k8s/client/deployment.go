@@ -31,7 +31,7 @@ type ServiceStatus struct {
 	Age       time.Duration
 }
 
-type StatefulSetDeployment struct {
+type StatefulSetDeploymentStatus struct {
 	Namespace         string
 	Name              string
 	Labels            map[string]string
@@ -42,7 +42,7 @@ type StatefulSetDeployment struct {
 	ServicesStatus    []*ServiceStatus
 }
 
-func (d *StatefulSetDeployment) ServicesStatusString() string {
+func (d *StatefulSetDeploymentStatus) ServicesStatusString() string {
 	list := []string{}
 	for _, ss := range d.ServicesStatus {
 		if ss.ExternalP == "" {

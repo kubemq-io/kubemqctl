@@ -42,6 +42,45 @@ func NewStatefulSetDeployment(cfg *config.Config) (*StatefulSetDeployment, error
 
 	return sd, nil
 }
+
+func NewStatefulSetDeploymentFromCluster(cfg *config.Config, ns, name string) (*StatefulSetDeployment, error) {
+	sd := &StatefulSetDeployment{
+		Client:      nil,
+		Namespace:   nil,
+		StatefulSet: nil,
+		Services:    nil,
+		ConfigMaps:  nil,
+		Secrets:     nil,
+	}
+	c, err := client.NewClient(cfg.KubeConfigPath)
+	if err != nil {
+		return nil, err
+	}
+	sd.Client = c
+
+	sd.StatefulSet, err = c.GetStatefulSet(ns, name)
+	if err != nil {
+		return nil, err
+	}
+	if sd.StatefulSet == nil {
+		return sd, nil
+	}
+	sd.Services, err = c.GetServices(ns, sd.StatefulSet.Spec.Template.ObjectMeta.Labels)
+	if err != nil {
+		return nil, err
+	}
+
+	sd.ConfigMaps, err = c.GetConfigMaps(ns, sd.StatefulSet.Spec.Template.Spec.Volumes)
+	if err != nil {
+		return nil, err
+	}
+	sd.Secrets, err = c.GetSecrets(ns, sd.StatefulSet.Spec.Template.Spec.Volumes)
+	if err != nil {
+		return nil, err
+	}
+	return sd, nil
+}
+
 func (sd *StatefulSetDeployment) CreateStatefulSetDeployment(o *Options, optionsMenu *conf.Menu) error {
 
 	ns, existed, err := sd.Client.GetNamespace(o.Namespace)
@@ -61,12 +100,13 @@ func (sd *StatefulSetDeployment) CreateStatefulSetDeployment(o *Options, options
 		return err
 	}
 	sd.StatefulSet = sts
-	envVars := optionsMenu.ExportEnvVar()
-	sd.StatefulSet.Spec.Template.Spec.Containers[0].Env = append(sd.StatefulSet.Spec.Template.Spec.Containers[0].Env, envVars...)
+	if len(sd.StatefulSet.Spec.Template.Spec.Containers) > 0 {
+		envVars := optionsMenu.ExportEnvVar()
+		sd.StatefulSet.Spec.Template.Spec.Containers[0].Env = append(sd.StatefulSet.Spec.Template.Spec.Containers[0].Env, envVars...)
 
-	volMounts := optionsMenu.ExportVolumeMounts()
-	sd.StatefulSet.Spec.Template.Spec.Containers[0].VolumeMounts = append(sd.StatefulSet.Spec.Template.Spec.Containers[0].VolumeMounts, volMounts...)
-
+		volMounts := optionsMenu.ExportVolumeMounts()
+		sd.StatefulSet.Spec.Template.Spec.Containers[0].VolumeMounts = append(sd.StatefulSet.Spec.Template.Spec.Containers[0].VolumeMounts, volMounts...)
+	}
 	vols := optionsMenu.ExportVolumes()
 	sd.StatefulSet.Spec.Template.Spec.Volumes = append(sd.StatefulSet.Spec.Template.Spec.Volumes, vols...)
 
@@ -272,6 +312,23 @@ func (sd *StatefulSetDeployment) Import(input string) error {
 			sd.Secrets = append(sd.Secrets, sec)
 			continue
 		}
+	}
+
+	return sd.Validate()
+}
+
+func (sd *StatefulSetDeployment) Validate() error {
+	if sd.StatefulSet == nil {
+		return fmt.Errorf("invalid import file, no StatefulSet was defined")
+	}
+	if len(sd.StatefulSet.Spec.Template.Spec.Containers) > 0 {
+		if !strings.Contains(sd.StatefulSet.Spec.Template.Spec.Containers[0].Image, "kubemq") {
+			return fmt.Errorf("invalid KubeMQ StatefulSet definitions, docker image is invalid")
+		}
+	}
+	if len(sd.Services) == 0 {
+		return fmt.Errorf("invalid KubeMQ Services definitions, at least one serivce must be defined")
+
 	}
 	return nil
 }

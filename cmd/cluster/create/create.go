@@ -7,7 +7,9 @@ import (
 	conf "github.com/kubemq-io/kubemqctl/pkg/k8s/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/deployment"
 	"io/ioutil"
+
 	"os"
+	"time"
 
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
@@ -81,8 +83,18 @@ func (o *CreateOptions) Complete(args []string) error {
 	}
 
 	if o.deployOptions.Token == "" {
-		return fmt.Errorf("No KubeMQ token provided")
+		if o.cfg.DefaultToken != "" {
+			o.deployOptions.Token = o.cfg.DefaultToken
+			utils.Printlnf("Create using save KubeMQ token: %s", o.cfg.DefaultToken)
+		} else {
+			return fmt.Errorf("No KubeMQ token provided")
+		}
+
+	} else {
+		o.cfg.DefaultToken = o.deployOptions.Token
+		_ = o.cfg.Save()
 	}
+
 	if o.setOptions {
 		err := conf.CreateMenu.Run()
 		if err != nil {
@@ -128,7 +140,9 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 			return err
 		}
 	}
+
 	utils.Printlnf("Create started...")
+
 	stsName := sd.StatefulSet.Name
 	stsNamespace := sd.StatefulSet.Namespace
 	if o.exportFile {
@@ -154,10 +168,12 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 		return nil
 	}
 	utils.Printlnf("Create StatefulSet %s/%s progress:", stsNamespace, stsName)
+
 	done := make(chan struct{})
 	evt := make(chan *appsv1.StatefulSet)
 	go sd.Client.GetStatefulSetEvents(ctx, evt, done)
 
+	time.Sleep(2 * time.Second)
 	for {
 		select {
 		case sts := <-evt:
@@ -175,7 +191,30 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 			return nil
 		}
 	}
-
+	//go func() {
+	//	watch, err := sd.Client.ClientSet.CoreV1().Pods(sd.StatefulSet.Namespace).Watch(metav1.ListOptions{})
+	//	if err != nil {
+	//		panic(err)
+	//		return
+	//	}
+	//	go func() {
+	//		for event := range watch.ResultChan() {
+	//			fmt.Printf("Type: %v\n", event.Type)
+	//			p, ok := event.Object.(*v1.Pod)
+	//			if !ok {
+	//				panic(fmt.Errorf("unexpected type"))
+	//				return
+	//			}
+	//			fmt.Println(p.Name)
+	//			fmt.Println(p.Status.ContainerStatuses)
+	//			fmt.Println(p.Status.Phase)
+	//		}
+	//	}()
+	//	time.Sleep(5 * time.Second)
+	//}()
+	//
+	//<-ctx.Done()
+	//return nil
 }
 func (o *CreateOptions) setDefaultOptions() error {
 

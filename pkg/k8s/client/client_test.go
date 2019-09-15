@@ -170,13 +170,3 @@ func TestClient_DescribeStatefulSet(t *testing.T) {
 	fmt.Println(y)
 
 }
-
-func TestClient_CreateConfigMap(t *testing.T) {
-	c, err := NewClient("")
-	require.NoError(t, err)
-	require.NotNil(t, c)
-	cm, err := c.CreateOrUpdateConfigMap("default", "kubeconfigmap", "cert.pem", "some content")
-	require.NoError(t, err)
-	require.NotEmpty(t, cm)
-	fmt.Println(cm)
-}
