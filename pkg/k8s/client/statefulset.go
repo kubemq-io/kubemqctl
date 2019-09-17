@@ -192,26 +192,7 @@ func (c *Client) Scale(ctx context.Context, ns, name string, replicas int32) err
 	if err != nil {
 		return err
 	}
-	done := make(chan struct{})
-	evt := make(chan *appsv1.StatefulSet)
-	go c.GetStatefulSetEvents(ctx, evt, done)
-
-	for {
-		select {
-		case sts := <-evt:
-			if replicas == sts.Status.Replicas && sts.Status.Replicas == sts.Status.ReadyReplicas {
-				utils.Printlnf("Desired:%d Current:%d Ready:%d", replicas, sts.Status.Replicas, sts.Status.ReadyReplicas)
-				done <- struct{}{}
-				return nil
-			} else {
-				utils.Printlnf("Desired:%d Current:%d Ready:%d", replicas, sts.Status.Replicas, sts.Status.ReadyReplicas)
-			}
-		case <-ctx.Done():
-			return nil
-		}
-
-	}
-
+	return nil
 }
 
 func (c *Client) DescribeStatefulSet(ns, name string) (string, error) {
@@ -246,4 +227,29 @@ func (c *Client) DeleteVolumeClaimsForStatefulSet(name string) error {
 		}
 	}
 	return nil
+}
+
+func (c *Client) PrintStatefulSetStatus(ctx context.Context, desired int32, namespace, name string) error {
+	stsDone := make(chan struct{})
+	stsCh := make(chan *appsv1.StatefulSet)
+
+	go c.GetStatefulSetEvents(ctx, stsCh, stsDone)
+	last := ""
+	for {
+		select {
+		case sts := <-stsCh:
+			if sts.Name == name && sts.Namespace == namespace {
+				current := fmt.Sprintf("[StatefulSet] -> Desired - %d Current - %d Ready - %d", desired, sts.Status.Replicas, sts.Status.ReadyReplicas)
+				//utils.Printlnf("[StatefulSet] -> Desired - %d Current - %d Ready - %d", desired, sts.Status.Replicas, sts.Status.ReadyReplicas)
+				if last != current {
+					utils.Println(current)
+					last = current
+				}
+			}
+		case <-ctx.Done():
+			stsDone <- struct{}{}
+			return nil
+		}
+	}
+
 }

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/AlecAivazis/survey/v2"
+	"strconv"
 	"strings"
 
 	"github.com/kubemq-io/kubemqctl/pkg/config"
@@ -14,23 +15,29 @@ import (
 )
 
 type ScaleOptions struct {
-	cfg   *config.Config
-	scale int
+	cfg    *config.Config
+	scale  int
+	watch  bool
+	status bool
 }
 
 var scaleExamples = `
-	# Scale StatufulSet to 5
+	# Scale StatufulSet 
 	kubemqctl cluster cluster scale 5
 
+	# Scale StatufulSet with watch events and status
+	kubemqctl cluster scale -w -s 
+
 	# Scale StatufulSet to 0
-	kubemqctl cluster cluster scale 0
+	kubemqctl cluster scale 0
 `
 var scaleLong = `Scale KubeMQ cluster`
 var scaleShort = `Scale KubeMQ cluster`
 
 func NewCmdScale(cfg *config.Config) *cobra.Command {
 	o := &ScaleOptions{
-		cfg: cfg,
+		cfg:   cfg,
+		scale: -1,
 	}
 	cmd := &cobra.Command{
 
@@ -47,12 +54,20 @@ func NewCmdScale(cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
+	cmd.PersistentFlags().BoolVarP(&o.watch, "watch", "w", false, "watch and print scale statefulset events")
+	cmd.PersistentFlags().BoolVarP(&o.status, "status", "s", false, "watch and print scale statefulset status")
 
 	return cmd
 }
 
 func (o *ScaleOptions) Complete(args []string) error {
-
+	var err error
+	if len(args) > 0 {
+		o.scale, err = strconv.Atoi(args[0])
+		if err != nil {
+			o.scale = -1
+		}
+	}
 	return nil
 }
 
@@ -85,20 +100,36 @@ func (o *ScaleOptions) Run(ctx context.Context) error {
 	}
 	pair := strings.Split(selection, "/")
 
-	promptScale := &survey.Input{
-		Renderer: survey.Renderer{},
-		Message:  "Set Scale: ",
-		Default:  "3",
-		Help:     "",
+	if o.scale < 0 {
+		promptScale := &survey.Input{
+			Renderer: survey.Renderer{},
+			Message:  "Set Scale: ",
+			Default:  "",
+			Help:     "",
+		}
+		err = survey.AskOne(promptScale, &o.scale)
+		if err != nil {
+			return err
+		}
 	}
-	err = survey.AskOne(promptScale, &o.scale)
-	if err != nil {
-		return err
-	}
-	utils.Println("Start scaling...")
+
+	utils.Println("Scaling started")
 	err = c.Scale(ctx, pair[0], pair[1], int32(o.scale))
 	if err != nil {
 		return err
 	}
+
+	if o.watch {
+		go c.PrintEvents(ctx, pair[0], pair[1])
+	}
+
+	if o.status {
+		go c.PrintStatefulSetStatus(ctx, int32(o.scale), pair[0], pair[1])
+	}
+	if o.status || o.watch {
+		<-ctx.Done()
+
+	}
+
 	return nil
 }

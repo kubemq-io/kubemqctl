@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	apiv1 "k8s.io/api/core/v1"
 	kubeinformers "k8s.io/client-go/informers"
 	"k8s.io/client-go/tools/cache"
@@ -53,4 +54,28 @@ func FormatEventSource(es apiv1.EventSource) string {
 		EventSourceString = append(EventSourceString, es.Host)
 	}
 	return strings.Join(EventSourceString, ", ")
+}
+
+func (c *Client) PrintEvents(ctx context.Context, namespace, name string) error {
+	evtDone := make(chan struct{})
+	evtChan := make(chan *apiv1.Event)
+
+	go c.GetEvents(ctx, evtChan, evtDone)
+
+	for {
+		select {
+		case e := <-evtChan:
+			if e.InvolvedObject.Namespace != namespace || !strings.Contains(e.InvolvedObject.Name, name) {
+				continue
+			}
+			if time.Now().Sub(e.LastTimestamp.Time) < time.Second {
+				utils.Printlnf("[Event] [%s] [%s] [%s/%s] -> %s", e.Type, e.Reason, e.InvolvedObject.Kind, e.InvolvedObject.Name, strings.TrimSpace(e.Message))
+
+			}
+		case <-ctx.Done():
+			evtDone <- struct{}{}
+			return nil
+		}
+	}
+
 }

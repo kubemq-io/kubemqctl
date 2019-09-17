@@ -8,17 +8,22 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"io/ioutil"
-	appsv1 "k8s.io/api/apps/v1"
 )
 
 type ApplyOptions struct {
 	cfg        *config.Config
 	importData string
+	watch      bool
+	status     bool
 }
 
 var applyExamples = `
 	# Apply KubeMQ cluster deployment
 	# kubemqctl cluster apply kubemq-cluster.yaml 
+
+	# Apply KubeMQ cluster deployment with watching status and events
+	# kubemqctl cluster apply kubemq-cluster.yaml -w -s
+
 `
 var applyLong = `Apply a KubeMQ cluster`
 var applyShort = `Apply a KubeMQ cluster`
@@ -42,6 +47,8 @@ func NewCmdApply(cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
+	cmd.PersistentFlags().BoolVarP(&o.watch, "watch", "w", false, "watch and print apply statefulset events")
+	cmd.PersistentFlags().BoolVarP(&o.status, "status", "s", false, "watch and print apply statefulset status")
 
 	return cmd
 }
@@ -83,27 +90,19 @@ func (o *ApplyOptions) Run(ctx context.Context) error {
 	if !executed {
 		return nil
 	}
-	utils.Printlnf("Apply StatefulSet %s/%s progress:", sd.StatefulSet.Namespace, sd.StatefulSet.Name)
-	done := make(chan struct{})
-	evt := make(chan *appsv1.StatefulSet)
-	go sd.Client.GetStatefulSetEvents(ctx, evt, done)
+	stsName := sd.StatefulSet.Name
+	stsNamespace := sd.StatefulSet.Namespace
 
-	for {
-		select {
-		case sts := <-evt:
-			if sts.Name == sd.StatefulSet.Name && sts.Namespace == sd.StatefulSet.Namespace {
-				rep := *sd.StatefulSet.Spec.Replicas
-				if rep == sts.Status.Replicas && sts.Status.Replicas == sts.Status.ReadyReplicas {
-					utils.Printlnf("Desired:%d Current:%d Ready:%d", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
-					done <- struct{}{}
-					return nil
-				} else {
-					utils.Printlnf("Desired:%d Current:%d Ready:%d", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
-				}
-			}
-		case <-ctx.Done():
-			return nil
-		}
+	if o.watch {
+		go sd.Client.PrintEvents(ctx, stsNamespace, stsName)
 	}
 
+	if o.status {
+		go sd.Client.PrintStatefulSetStatus(ctx, *sd.StatefulSet.Spec.Replicas, stsNamespace, stsName)
+	}
+	if o.status || o.watch {
+		<-ctx.Done()
+
+	}
+	return nil
 }

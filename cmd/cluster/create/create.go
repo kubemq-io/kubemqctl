@@ -4,18 +4,12 @@ import (
 	"context"
 	"fmt"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
-	"time"
-
 	conf "github.com/kubemq-io/kubemqctl/pkg/k8s/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/deployment"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"io/ioutil"
-	appsv1 "k8s.io/api/apps/v1"
-
-	apiv1 "k8s.io/api/core/v1"
 	"os"
-	"strings"
 )
 
 type CreateOptions struct {
@@ -24,6 +18,8 @@ type CreateOptions struct {
 	exportFile    bool
 	file          string
 	importData    string
+	watch         bool
+	status        bool
 	optionsMenu   *conf.Menu
 	deployOptions *deployment.Options
 }
@@ -32,14 +28,17 @@ var createExamples = `
 	# Create default KubeMQ cluster
 	# kubemqctl cluster create -t b33600cc-93ef-4395-bba3-13131eb27d5e 
 
+	# Create default KubeMQ cluster and watch events and status
+	# kubemqctl cluster create -t b3d3600cc-93ef-4395-bba3-13131eb27d5e -w -s
+
 	# Import KubeMQ cluster yaml file  
 	# kubemqctl cluster create -f kubemq-cluster.yaml
 
 	# Create KubeMQ cluster with options
-	# kubemqctl cluster create -t b3330scc-93ef-4395-bba3-13131sb2785e -o
+	# kubemqctl cluster create -t b33d30scc-93ef-4395-bba3-13131sb2785e -o
 
 	# Export KubeMQ cluster yaml file    
-	# kubemqctl cluster create -t b3330scc-93ef-4395-bba3-13131sb2785e -e 
+	# kubemqctl cluster create -t b3d330scc-93ef-4395-bba3-13131sb2785e -e 
 `
 var createLong = `Create a KubeMQ cluster`
 var createShort = `Create a KubeMQ cluster`
@@ -70,6 +69,8 @@ func NewCmdCreate(cfg *config.Config) *cobra.Command {
 	cmd.PersistentFlags().BoolVarP(&o.setOptions, "options", "o", false, "create KubeMQ cluster with options")
 	cmd.PersistentFlags().BoolVarP(&o.exportFile, "export", "e", false, "generate yaml configuration file")
 	cmd.PersistentFlags().StringVarP(&o.file, "file", "f", "", "import configuration yaml file")
+	cmd.PersistentFlags().BoolVarP(&o.watch, "watch", "w", false, "watch and print create statefulset events")
+	cmd.PersistentFlags().BoolVarP(&o.status, "status", "s", false, "watch and print create statefulset status")
 
 	return cmd
 }
@@ -170,70 +171,85 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 	if !executed {
 		return nil
 	}
-	utils.Printlnf("Create StatefulSet %s/%s progress:", stsNamespace, stsName)
 
-	stsDone := make(chan struct{})
-	stsChan := make(chan *appsv1.StatefulSet)
-
-	evtDone := make(chan struct{})
-	evtChan := make(chan *apiv1.Event)
-	timeNow := time.Now()
-	go sd.Client.GetStatefulSetEvents(ctx, stsChan, stsDone)
-	go sd.Client.GetEvents(ctx, evtChan, evtDone)
-
-	//w := tabwriter.NewWriter(os.Stdout, 1, 8, 2, ' ', tabwriter.TabIndent)
-	//fmt.Fprintf(w, "Type\tReason\tMessage\n")
-	//w.Flush()
-	//w = tabwriter.NewWriter(os.Stdout, 1, 8, 2, ' ', tabwriter.TabIndent)
-	//	time.Sleep(2 * time.Second)
-
-	for {
-		select {
-		case sts := <-stsChan:
-
-			if sts.Name == sd.StatefulSet.Name && sts.Namespace == sd.StatefulSet.Namespace {
-
-				rep := *sd.StatefulSet.Spec.Replicas
-				utils.Printlnf("[StatefulSet] [Desired - %d] [Current - %d] [Ready - %d]", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
-				//if rep == sts.Status.Replicas && sts.Status.Replicas == sts.Status.ReadyReplicas {
-				//	//fmt.Fprintf(w, "%d\t%d\t%d\n", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
-				//	//w.Flush()
-				//	//utils.Printlnf("StatefulSet: Desired-%d Current-%d Ready-%d", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
-				//	stsDone <- struct{}{}
-				//	evtDone <- struct{}{}
-				//	return nil
-				//} else {
-				//	//fmt.Fprintf(w, "%d\t%d\t%d\n", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
-				//	//w.Flush()
-				//	//utils.Printlnf("StatefulSet: Desired-%d Current-%d Ready-%d", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
-				//}
-			}
-		case e := <-evtChan:
-			if !strings.Contains(e.InvolvedObject.Name, stsName) {
-				continue
-			}
-			if e.LastTimestamp.Sub(timeNow) < 0 {
-				continue
-			}
-			if e.Count == 1 && time.Now().Sub(e.FirstTimestamp.Time) < time.Second {
-				utils.Printlnf("%d [Event] [%s] [%s] [%s] [%s] -> %s", e.Count, e.Type, e.Reason, utils.TranslateTimestampSince(e.FirstTimestamp), e.InvolvedObject.Name, strings.TrimSpace(e.Message))
-
-			}
-			//var interval string
-			//if e.Count > 1 {
-			//	interval = fmt.Sprintf("%s (x%d over %s)", utils.TranslateTimestampSince(e.LastTimestamp), e.Count, utils.TranslateTimestampSince(e.FirstTimestamp))
-			//} else {
-			//	interval = utils.TranslateTimestampSince(e.FirstTimestamp)
-			//}
-			//utils.Printlnf("%d [Event] [%s] [%s] [%s] [%s] -> %s", e.Count, e.Type, e.Reason, interval, e.InvolvedObject.Name, strings.TrimSpace(e.Message))
-		case <-ctx.Done():
-			return nil
-		}
+	if o.watch {
+		go sd.Client.PrintEvents(ctx, stsNamespace, stsName)
 	}
 
+	if o.status {
+		go sd.Client.PrintStatefulSetStatus(ctx, *sd.StatefulSet.Spec.Replicas, stsNamespace, stsName)
+	}
+	if o.status || o.watch {
+		<-ctx.Done()
+
+	}
+
+	return nil
+	//	utils.Printlnf("Create StatefulSet %s/%s progress:", stsNamespace, stsName)
 	//
-	//<-ctx.Done()
-	//return nil
+	//	stsDone := make(chan struct{})
+	//	stsChan := make(chan *appsv1.StatefulSet)
+	//
+	//	evtDone := make(chan struct{})
+	//	evtChan := make(chan *apiv1.Event)
+	////	timeNow := time.Now()
+	//	go sd.Client.GetStatefulSetEvents(ctx, stsChan, stsDone)
+	//	go sd.Client.GetEvents(ctx, evtChan, evtDone)
+	//
+	//	//w := tabwriter.NewWriter(os.Stdout, 1, 8, 2, ' ', tabwriter.TabIndent)
+	//	//fmt.Fprintf(w, "Type\tReason\tMessage\n")
+	//	//w.Flush()
+	//	//w = tabwriter.NewWriter(os.Stdout, 1, 8, 2, ' ', tabwriter.TabIndent)
+	//	//	time.Sleep(2 * time.Second)
+	//
+	//	for {
+	//		select {
+	//		case sts := <-stsChan:
+	//
+	//			if sts.Name == sd.StatefulSet.Name && sts.Namespace == sd.StatefulSet.Namespace {
+	//
+	//				rep := *sd.StatefulSet.Spec.Replicas
+	//				utils.Printlnf("[StatefulSet] -> Desired - %d Current - %d Ready - %d", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
+	//				//if rep == sts.Status.Replicas && sts.Status.Replicas == sts.Status.ReadyReplicas {
+	//				//	//fmt.Fprintf(w, "%d\t%d\t%d\n", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
+	//				//	//w.Flush()
+	//				//	//utils.Printlnf("StatefulSet: Desired-%d Current-%d Ready-%d", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
+	//				//	stsDone <- struct{}{}
+	//				//	evtDone <- struct{}{}
+	//				//	return nil
+	//				//} else {
+	//				//	//fmt.Fprintf(w, "%d\t%d\t%d\n", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
+	//				//	//w.Flush()
+	//				//	//utils.Printlnf("StatefulSet: Desired-%d Current-%d Ready-%d", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
+	//				//}
+	//			}
+	//		case e := <-evtChan:
+	//
+	//			if !strings.Contains(e.InvolvedObject.Name, stsName) {
+	//				continue
+	//			}
+	//			//if e.LastTimestamp.Sub(timeNow) < 0 {
+	//			//	continue
+	//			//}
+	//			if   time.Now().Sub(e.LastTimestamp.Time) < time.Second {
+	//				utils.Printlnf("[Event] [%s] [%s] [%s/%s] -> %s",  e.Type, e.Reason, e.InvolvedObject.Kind, e.InvolvedObject.Name, strings.TrimSpace(e.Message))
+	//
+	//			}
+	//			//var interval string
+	//			//if e.Count > 1 {
+	//			//	interval = fmt.Sprintf("%s (x%d over %s)", utils.TranslateTimestampSince(e.LastTimestamp), e.Count, utils.TranslateTimestampSince(e.FirstTimestamp))
+	//			//} else {
+	//			//	interval = utils.TranslateTimestampSince(e.FirstTimestamp)
+	//			//}
+	//			//utils.Printlnf("%d [Event] [%s] [%s] [%s] [%s] -> %s", e.Count, e.Type, e.Reason, interval, e.InvolvedObject.Name, strings.TrimSpace(e.Message))
+	//		case <-ctx.Done():
+	//			return nil
+	//		}
+	//	}
+	//
+	//	//
+	//	//<-ctx.Done()
+	//	//return nil
 }
 func (o *CreateOptions) setDefaultOptions() error {
 

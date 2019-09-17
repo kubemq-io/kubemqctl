@@ -1,29 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="add events">
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/client/events.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/client/pod.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/utils/duration.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/utils/writer.go" afterDir="false" />
+    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/liornabat.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/cluster/events/events.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/apply/apply.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/apply/apply.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/cluster/cluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/cluster.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/cluster/create/create.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/create.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/list/list.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/list/list.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/commands/commands.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/commands/commands.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/commands/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/commands/receive.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/dashboard/dashboard.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/dashboard/dashboard.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events/events.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events/events.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events/receive.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events_store/events_store.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/events_store.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queries/queries.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queries/queries.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queries/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queries/receive.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/queue.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/queue.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/receive.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/root/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root/root.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/version/version.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/scale/scale.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/scale/scale.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/events.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/events.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/statefulset.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/statefulset.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,42 +25,40 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="C:\Go\go1.13" />
+  <component name="GOROOT" path="/usr/local/Cellar/go/1.12.6/libexec" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1OxlgdjAAEWaPrXyHoB9yMIxGef" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="1OdmsJ7UpfbJKnTEvPEFfIoGK0g" />
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="DefaultGoTemplateProperty" value="Go File" />
-    <property name="GO_FMT" value="false" />
+    <property name="GO_FMT" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="configurable.Global.GOPATH.is.expanded" value="true" />
+    <property name="configurable.Module.GOPATH.is.expanded" value="false" />
+    <property name="configurable.Project.GOPATH.is.expanded" value="true" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/cluster/describe" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/cluster/events" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\cluster" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\pkg\k8s\deployment" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\cluster\create" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\cluster" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\version" />
+      <recent name="$PROJECT_DIR$/.github" />
+      <recent name="$PROJECT_DIR$/cmd" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\cluster\describe" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\cluster\apply" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\pkg\k8s\config" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd\events" />
+      <recent name="$PROJECT_DIR$/cmd/cluster/events" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -88,69 +73,44 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.TestGetConfigClusters in github.com/kubemq-io/kubemqctl/pkg/k8s/client">
-    <configuration name="TestClient_CreateConfigMap in github.com/kubemq-io/kubetools/pkg/k8s/client" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Build.go build client.go">
+    <configuration name="go build client.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true">
       <module name="kubetools" />
-      <working_directory value="$PROJECT_DIR$/pkg/k8s/client" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/kubemq-io/kubetools/pkg/k8s/client" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/pkg/k8s/client/client.go" />
+      <package value="github.com/kubemq-io/kubetools" />
       <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestClient_CreateConfigMap$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestClient_DescribeStatefulSet in github.com/kubemq-io/kubetools/pkg/k8s/client" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="go build github.com/kubemq-io/kubetools" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="kubetools" />
-      <working_directory value="$PROJECT_DIR$/pkg/k8s/client" />
-      <framework value="gotest" />
+      <working_directory value="$PROJECT_DIR$" />
       <kind value="PACKAGE" />
-      <package value="github.com/kubemq-io/kubetools/pkg/k8s/client" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <package value="github.com/kubemq-io/kubetools" />
       <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestClient_DescribeStatefulSet$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestClient_GetPods in github.com/kubemq-io/kubetools/pkg/k8s/client" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="go build kubetools" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
       <module name="kubetools" />
-      <working_directory value="$PROJECT_DIR$/pkg/k8s/client" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/kubemq-io/kubetools/pkg/k8s/client" />
-      <directory value="$PROJECT_DIR$/" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <go_parameters value="-i" />
+      <kind value="FILE" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestClient_GetPods$" />
+      <package value="github.com/kubemq-io/kubetools" />
+      <directory value="$PROJECT_DIR$/" />
       <method v="2" />
     </configuration>
-    <configuration name="TestClient_GetStatefulSetPods in github.com/kubemq-io/kubetools/pkg/k8s/client" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="kubetools" />
-      <working_directory value="$PROJECT_DIR$/pkg/k8s/client" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/kubemq-io/kubetools/pkg/k8s/client" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestClient_GetStatefulSetPods$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestGetConfigClusters in github.com/kubemq-io/kubemqctl/pkg/k8s/client" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="kubetools" />
-      <working_directory value="$PROJECT_DIR$/pkg/k8s/client" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/kubemq-io/kubemqctl/pkg/k8s/client" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestGetConfigClusters$" />
-      <method v="2" />
-    </configuration>
+    <list>
+      <item itemvalue="Go Build.go build kubetools" />
+      <item itemvalue="Go Build.go build client.go" />
+      <item itemvalue="Go Build.go build github.com/kubemq-io/kubetools" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Test.TestGetConfigClusters in github.com/kubemq-io/kubemqctl/pkg/k8s/client" />
-        <item itemvalue="Go Test.TestClient_CreateConfigMap in github.com/kubemq-io/kubetools/pkg/k8s/client" />
-        <item itemvalue="Go Test.TestClient_GetPods in github.com/kubemq-io/kubetools/pkg/k8s/client" />
-        <item itemvalue="Go Test.TestClient_GetStatefulSetPods in github.com/kubemq-io/kubetools/pkg/k8s/client" />
-        <item itemvalue="Go Test.TestClient_DescribeStatefulSet in github.com/kubemq-io/kubetools/pkg/k8s/client" />
+        <item itemvalue="Go Build.go build client.go" />
+        <item itemvalue="Go Build.go build github.com/kubemq-io/kubetools" />
       </list>
     </recent_temporary>
   </component>
@@ -218,238 +178,105 @@
       <option name="project" value="LOCAL" />
       <updated>1563376552043</updated>
     </task>
-    <task id="LOCAL-00009" summary="-v1.0.1&#10;update redeame">
-      <created>1563508825819</created>
+    <task id="LOCAL-00009" summary="go fmt">
+      <created>1564239000368</created>
       <option name="number" value="00009" />
       <option name="presentableId" value="LOCAL-00009" />
       <option name="project" value="LOCAL" />
-      <updated>1563508825819</updated>
+      <updated>1564239000368</updated>
     </task>
-    <task id="LOCAL-00010" summary="update redeame">
-      <created>1564324637401</created>
+    <task id="LOCAL-00010" summary="add cancel func">
+      <created>1564239320631</created>
       <option name="number" value="00010" />
       <option name="presentableId" value="LOCAL-00010" />
       <option name="project" value="LOCAL" />
-      <updated>1564324637401</updated>
+      <updated>1564239320631</updated>
     </task>
-    <task id="LOCAL-00011" summary="update redeame png">
-      <created>1564325800201</created>
+    <task id="LOCAL-00011" summary="fixes after linting">
+      <created>1564240534696</created>
       <option name="number" value="00011" />
       <option name="presentableId" value="LOCAL-00011" />
       <option name="project" value="LOCAL" />
-      <updated>1564325800201</updated>
+      <updated>1564240534696</updated>
     </task>
-    <task id="LOCAL-00012" summary="remove bin folders">
-      <created>1564325934193</created>
+    <task id="LOCAL-00012" summary="fixes after linting">
+      <created>1564240741877</created>
       <option name="number" value="00012" />
       <option name="presentableId" value="LOCAL-00012" />
       <option name="project" value="LOCAL" />
-      <updated>1564325934193</updated>
+      <updated>1564240741877</updated>
     </task>
-    <task id="LOCAL-00013" summary="update kubemq-go sdk to version v1.2.4">
-      <created>1564927845781</created>
+    <task id="LOCAL-00013" summary="fixes after linting">
+      <created>1564240915655</created>
       <option name="number" value="00013" />
       <option name="presentableId" value="LOCAL-00013" />
       <option name="project" value="LOCAL" />
-      <updated>1564927845781</updated>
+      <updated>1564240915655</updated>
     </task>
-    <task id="LOCAL-00014" summary="adding checks for closed channel">
-      <created>1565172821806</created>
+    <task id="LOCAL-00014" summary="fixes after linting">
+      <created>1564241583742</created>
       <option name="number" value="00014" />
       <option name="presentableId" value="LOCAL-00014" />
       <option name="project" value="LOCAL" />
-      <updated>1565172821806</updated>
+      <updated>1564241583742</updated>
     </task>
-    <task id="LOCAL-00015" summary="adding checks for closed channel">
-      <created>1565245147912</created>
+    <task id="LOCAL-00015" summary="fixes after linting">
+      <created>1564241720581</created>
       <option name="number" value="00015" />
       <option name="presentableId" value="LOCAL-00015" />
       <option name="project" value="LOCAL" />
-      <updated>1565245147912</updated>
+      <updated>1564241720581</updated>
     </task>
-    <task id="LOCAL-00016" summary="-v1.3.0&#10;- add get queues and events stores commands">
-      <created>1565458985499</created>
+    <task id="LOCAL-00016" summary="create config file if not exist">
+      <created>1564290915501</created>
       <option name="number" value="00016" />
       <option name="presentableId" value="LOCAL-00016" />
       <option name="project" value="LOCAL" />
-      <updated>1565458985500</updated>
+      <updated>1564290915501</updated>
     </task>
-    <task id="LOCAL-00017" summary="- update readme">
-      <created>1565459187245</created>
+    <task id="LOCAL-00017" summary="add vendor folder">
+      <created>1564291078096</created>
       <option name="number" value="00017" />
       <option name="presentableId" value="LOCAL-00017" />
       <option name="project" value="LOCAL" />
-      <updated>1565459187245</updated>
+      <updated>1564291078096</updated>
     </task>
-    <task id="LOCAL-00018" summary="- update readme">
-      <created>1565459287413</created>
+    <task id="LOCAL-00018" summary="add bin for version v1.1.0">
+      <created>1564291256338</created>
       <option name="number" value="00018" />
       <option name="presentableId" value="LOCAL-00018" />
       <option name="project" value="LOCAL" />
-      <updated>1565459287413</updated>
+      <updated>1564291256338</updated>
     </task>
-    <task id="LOCAL-00019" summary="refactoring to v2">
-      <created>1566921799963</created>
+    <task id="LOCAL-00019" summary="update readme.md">
+      <created>1564316187775</created>
       <option name="number" value="00019" />
       <option name="presentableId" value="LOCAL-00019" />
       <option name="project" value="LOCAL" />
-      <updated>1566921799963</updated>
+      <updated>1564316187775</updated>
     </task>
-    <task id="LOCAL-00020" summary="- update queue commands">
-      <created>1566923997804</created>
+    <task id="LOCAL-00020" summary="start prompt packa&#10;ge">
+      <created>1567514451324</created>
       <option name="number" value="00020" />
       <option name="presentableId" value="LOCAL-00020" />
       <option name="project" value="LOCAL" />
-      <updated>1566923997804</updated>
+      <updated>1567514451324</updated>
     </task>
-    <task id="LOCAL-00021" summary="- complete queue">
-      <created>1566999216094</created>
+    <task id="LOCAL-00021" summary="update switch context">
+      <created>1568013224049</created>
       <option name="number" value="00021" />
       <option name="presentableId" value="LOCAL-00021" />
       <option name="project" value="LOCAL" />
-      <updated>1566999216094</updated>
+      <updated>1568013224049</updated>
     </task>
-    <task id="LOCAL-00022" summary="- adding events">
-      <created>1567008675215</created>
+    <task id="LOCAL-00022" summary="update config">
+      <created>1568557700667</created>
       <option name="number" value="00022" />
       <option name="presentableId" value="LOCAL-00022" />
       <option name="project" value="LOCAL" />
-      <updated>1567008675215</updated>
+      <updated>1568557700667</updated>
     </task>
-    <task id="LOCAL-00023" summary="- adding events store">
-      <created>1567070871217</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1567070871217</updated>
-    </task>
-    <task id="LOCAL-00024" summary="- adding commands">
-      <created>1567085344484</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1567085344484</updated>
-    </task>
-    <task id="LOCAL-00025" summary="- adding config">
-      <created>1567095652344</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1567095652344</updated>
-    </task>
-    <task id="LOCAL-00026" summary="- adding dashboard command">
-      <created>1567156749151</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1567156749151</updated>
-    </task>
-    <task id="LOCAL-00027" summary="- additional command">
-      <created>1567417854951</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1567417854951</updated>
-    </task>
-    <task id="LOCAL-00028" summary="- Cleaning">
-      <created>1567438827825</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1567438827825</updated>
-    </task>
-    <task id="LOCAL-00029" summary="add dashboard">
-      <created>1567439310957</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1567439310957</updated>
-    </task>
-    <task id="LOCAL-00030" summary="add cluster sub command">
-      <created>1567846179474</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1567846179474</updated>
-    </task>
-    <task id="LOCAL-00031" summary="refactoring create">
-      <created>1567871457277</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1567871457277</updated>
-    </task>
-    <task id="LOCAL-00032" summary="refactor create">
-      <created>1567875600136</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1567875600136</updated>
-    </task>
-    <task id="LOCAL-00033" summary="complete create">
-      <created>1567963885317</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1567963885317</updated>
-    </task>
-    <task id="LOCAL-00034" summary="wip - create menu">
-      <created>1568132577261</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1568132577261</updated>
-    </task>
-    <task id="LOCAL-00035" summary="wip - create menu">
-      <created>1568203381182</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1568203381182</updated>
-    </task>
-    <task id="LOCAL-00036" summary="finish v2.0.0">
-      <created>1568208805088</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1568208805088</updated>
-    </task>
-    <task id="LOCAL-00037" summary="fix spec_entry">
-      <created>1568214067393</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1568214067393</updated>
-    </task>
-    <task id="LOCAL-00038" summary="adding apply&#10;refactoring deployment">
-      <created>1568295800846</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1568295800846</updated>
-    </task>
-    <task id="LOCAL-00039" summary="change kubetools to kubemqctl">
-      <created>1568392667511</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1568392667511</updated>
-    </task>
-    <task id="LOCAL-00040" summary="change kubetools to kubemqctl">
-      <created>1568483016181</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1568483016181</updated>
-    </task>
-    <task id="LOCAL-00041" summary="add describe">
-      <created>1568573733961</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1568573733961</updated>
-    </task>
-    <option name="localTasksCounter" value="42" />
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -458,31 +285,6 @@
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
-        <entry key="1">
-          <value>
-            <State>
-              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="HEAD" />
-                      </list>
-                    </value>
-                  </entry>
-                  <entry key="roots">
-                    <value>
-                      <list>
-                        <option value="$PROJECT_DIR$" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
         <entry key="MAIN">
           <value>
             <State>
@@ -491,11 +293,6 @@
           </value>
         </entry>
       </map>
-    </option>
-    <option name="OPEN_TABS">
-      <set>
-        <option value="1" />
-      </set>
     </option>
     <option name="RECENT_FILTERS">
       <map>
@@ -515,35 +312,26 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <ignored-roots>
-      <path value="$PROJECT_DIR$/dist" />
-    </ignored-roots>
-    <MESSAGE value="update kubemq-go sdk to version v1.2.4" />
-    <MESSAGE value="adding checks for closed channel" />
-    <MESSAGE value="-v1.3.0&#10;- add get queues and events stores commands" />
-    <MESSAGE value="- update readme" />
-    <MESSAGE value="refactoring to v2" />
-    <MESSAGE value="- update queue commands" />
-    <MESSAGE value="- complete queue" />
-    <MESSAGE value="- adding events" />
-    <MESSAGE value="- adding events store" />
-    <MESSAGE value="- adding commands" />
-    <MESSAGE value="- adding config" />
-    <MESSAGE value="- adding dashboard command" />
-    <MESSAGE value="- additional command" />
-    <MESSAGE value="- Cleaning" />
-    <MESSAGE value="add dashboard" />
-    <MESSAGE value="add cluster sub command" />
-    <MESSAGE value="refactoring create" />
-    <MESSAGE value="refactor create" />
-    <MESSAGE value="complete create" />
-    <MESSAGE value="wip - create menu" />
-    <MESSAGE value="finish v2.0.0" />
-    <MESSAGE value="fix spec_entry" />
-    <MESSAGE value="adding apply&#10;refactoring deployment" />
-    <MESSAGE value="change kubetools to kubemqctl" />
-    <MESSAGE value="add describe" />
-    <option name="LAST_COMMIT_MESSAGE" value="add describe" />
+    <MESSAGE value="add kubetest module" />
+    <MESSAGE value="add health and metrics commands" />
+    <MESSAGE value="add version and task files" />
+    <MESSAGE value="update readme" />
+    <MESSAGE value="add bin folder&#10;add mon command" />
+    <MESSAGE value="add send and subscribe command" />
+    <MESSAGE value="update git chmod" />
+    <MESSAGE value="-v1.0.0&#10;add queue support" />
+    <MESSAGE value="-v1.0.1&#10;fix rest issue with new kubemq-go release 1.2.1" />
+    <MESSAGE value="go fmt" />
+    <MESSAGE value="add cancel func" />
+    <MESSAGE value="fixes after linting" />
+    <MESSAGE value="create config file if not exist" />
+    <MESSAGE value="add vendor folder" />
+    <MESSAGE value="add bin for version v1.1.0" />
+    <MESSAGE value="update readme.md" />
+    <MESSAGE value="start prompt packa&#10;ge" />
+    <MESSAGE value="update switch context" />
+    <MESSAGE value="update config" />
+    <option name="LAST_COMMIT_MESSAGE" value="update config" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
