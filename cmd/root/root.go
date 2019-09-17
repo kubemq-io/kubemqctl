@@ -5,15 +5,13 @@ import (
 	"github.com/kubemq-io/kubemqctl/cmd/commands"
 	config2 "github.com/kubemq-io/kubemqctl/cmd/config"
 
-	"github.com/kubemq-io/kubemqctl/cmd/dashboard"
-
 	"github.com/kubemq-io/kubemqctl/cmd/events"
 	"github.com/kubemq-io/kubemqctl/cmd/events_store"
 
 	"github.com/kubemq-io/kubemqctl/cmd/queries"
 	"github.com/kubemq-io/kubemqctl/cmd/queue"
 
-	version2 "github.com/kubemq-io/kubemqctl/cmd/version"
+	//	version2 "github.com/kubemq-io/kubemqctl/cmd/version"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
@@ -23,12 +21,14 @@ import (
 
 var cfg *config.Config
 var Version string
+
 var rootCmd = &cobra.Command{
-	Use: "kubemqctl",
+	Use:       "kubemqctl",
+	ValidArgs: []string{"cluster", "config", "commands", "queries", "queues", "events", "events_store"},
 }
 
 func Execute(version string) {
-	Version = version
+	rootCmd.Version = version
 	defer utils.CheckErr(cfg.Save())
 	utils.CheckErr(rootCmd.Execute())
 
@@ -46,9 +46,6 @@ func init() {
 	cfg = &config.Config{}
 	if !exists(".kubemqctl.yaml") {
 		utils.Println("No configuration found, initialize first time default configuration. Run 'kubemqctl config' to run expert configuration wizard.")
-		//cfgOpts := &config2.ConfigOptions{Cfg: config.DefaultConfig}
-		//err := cfgOpts.Run(context.Background())
-		//utils.CheckErr(err)
 	}
 
 	defaultCfg, err := config.CheckConfigFile()
@@ -68,8 +65,6 @@ func init() {
 	rootCmd.AddCommand(commands.NewCmdCommands(cfg))
 	rootCmd.AddCommand(queries.NewCmdQueries(cfg))
 	rootCmd.AddCommand(config2.NewCmdConfig(cfg))
-	rootCmd.AddCommand(dashboard.NewCmdDashboard(cfg))
-	rootCmd.AddCommand(version2.NewCmdVersion(&Version))
 	rootCmd.AddCommand(cluster.NewCmdCluster(cfg))
 
 }

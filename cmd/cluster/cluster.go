@@ -4,6 +4,7 @@ import (
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/apply"
 	context "github.com/kubemq-io/kubemqctl/cmd/cluster/context"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/create"
+	"github.com/kubemq-io/kubemqctl/cmd/cluster/dashboard"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/delete"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/describe"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/list"
@@ -42,6 +43,9 @@ var clusterExamples = `
 
 	# Execute switch Kubernetes context command
 	kubemqctl cluster context
+
+	# Execute cluster web-based dashboard
+	kubemqctl cluster dashboard
 `
 var clusterLong = `Executes KubeMQ cluster management commands`
 var clusterShort = `Executes KubeMQ cluster management commands`
@@ -50,11 +54,12 @@ func NewCmdCluster(cfg *config.Config) *cobra.Command {
 
 	cmd := &cobra.Command{
 
-		Use:     "cluster",
-		Aliases: []string{"c", "cls"},
-		Short:   clusterShort,
-		Long:    clusterLong,
-		Example: clusterExamples,
+		Use:       "cluster",
+		Aliases:   []string{"c", "cls"},
+		Short:     clusterShort,
+		Long:      clusterLong,
+		Example:   clusterExamples,
+		ValidArgs: []string{"create", "context", "apply", "dashboard", "delete", "describe", "list", "logs", "proxy", "scale"},
 		Run: func(cmd *cobra.Command, args []string) {
 			cmd.Help()
 		},
@@ -68,5 +73,6 @@ func NewCmdCluster(cfg *config.Config) *cobra.Command {
 	cmd.AddCommand(proxy.NewCmdProxy(cfg))
 	cmd.AddCommand(apply.NewCmdApply(cfg))
 	cmd.AddCommand(describe.NewCmdDescribe(cfg))
+	cmd.AddCommand(dashboard.NewCmdDashboard(cfg))
 	return cmd
 }

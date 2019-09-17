@@ -63,7 +63,7 @@ func (o *ListOptions) Run(ctx context.Context) error {
 	}
 
 	list, err := c.GetKubeMQClustersStatus()
-	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.TabIndent)
+	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
 	fmt.Fprintf(w, "NAME\tDESIRED\tRUNNING\tREADY\tIMAGE\tAGE\tSERVICES\n")
 	for _, item := range list {
 		dep, err := c.GetStatefulSetDeployment(item.Namespace, item.Name)

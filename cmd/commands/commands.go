@@ -21,11 +21,12 @@ var commandsShort = `Execute KubeMQ 'commands' RPC commands`
 // NewCmdCreate returns new initialized instance of create sub command
 func NewCmdCommands(cfg *config.Config) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "commands",
-		Aliases: []string{"cmd"},
-		Short:   commandsShort,
-		Long:    commandsLong,
-		Example: commandsExamples,
+		Use:       "commands",
+		Aliases:   []string{"cmd"},
+		Short:     commandsShort,
+		Long:      commandsLong,
+		Example:   commandsExamples,
+		ValidArgs: []string{"send", "receive", "attach"},
 		Run: func(cmd *cobra.Command, args []string) {
 			cmd.Help()
 		},

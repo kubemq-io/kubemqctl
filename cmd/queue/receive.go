@@ -43,7 +43,7 @@ func NewCmdQueueReceive(cfg *config.Config) *cobra.Command {
 	cmd := &cobra.Command{
 
 		Use:     "receive",
-		Aliases: []string{"r", "rec"},
+		Aliases: []string{"r", "rec", "subscribe", "sub"},
 		Short:   queueReceiveShort,
 		Long:    queueReceiveLong,
 		Example: queueReceiveExamples,

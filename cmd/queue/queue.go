@@ -7,38 +7,39 @@ import (
 
 var queueExamples = `
 	# Execute send to queue command
-	kubemqctl queue send
+	kubemqctl queues send
 
 	# Execute attached to a queue command
-	kubemqctl queue attach
+	kubemqctl queues attach
 
 	# Execute receive to queue command
-	kubemqctl queue receive
+	kubemqctl queues receive
 	
 	# Execute list queue command
-	kubemqctl queries list
+	kubemqctl queues list
 
 	# Execute peek queue command
-	kubemqctl queries peak
+	kubemqctl queues peak
 
 	# Execute ack queue command
-	 kubemqctl queries ack
+	 kubemqctl queues ack
 
 	# Execute stream queue command
-	kubemqctl queries stream
+	kubemqctl queues stream
 `
-var queueLong = `Execute KubeMQ 'queue' commands`
-var queueShort = `Execute KubeMQ 'queue' commands`
+var queueLong = `Execute KubeMQ 'queues' commands`
+var queueShort = `Execute KubeMQ 'queues' commands`
 
 // NewCmdCreate returns new initialized instance of create sub command
 func NewCmdQueue(cfg *config.Config) *cobra.Command {
 
 	cmd := &cobra.Command{
-		Use:     "queue",
-		Aliases: []string{"q", "qu"},
-		Short:   queueShort,
-		Long:    queueShort,
-		Example: queueExamples,
+		Use:       "queues",
+		Aliases:   []string{"q", "qu", "queue"},
+		Short:     queueShort,
+		Long:      queueShort,
+		Example:   queueExamples,
+		ValidArgs: []string{"send", "receive", "attach", "peek", "ack", "list", "stream"},
 		Run: func(cmd *cobra.Command, args []string) {
 			cmd.Help()
 		},

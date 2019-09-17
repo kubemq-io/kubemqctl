@@ -23,11 +23,12 @@ var queriesShort = `Execute KubeMQ 'queries' RPC based commands`
 func NewCmdQueries(cfg *config.Config) *cobra.Command {
 
 	cmd := &cobra.Command{
-		Use:     "queries",
-		Aliases: []string{"query", "qry"},
-		Short:   queriesShort,
-		Long:    queriesLong,
-		Example: queriesExamples,
+		Use:       "queries",
+		Aliases:   []string{"query", "qry"},
+		Short:     queriesShort,
+		Long:      queriesLong,
+		Example:   queriesExamples,
+		ValidArgs: []string{"send", "receive", "attach"},
 		Run: func(cmd *cobra.Command, args []string) {
 			cmd.Help()
 		},

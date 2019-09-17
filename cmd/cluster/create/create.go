@@ -4,16 +4,18 @@ import (
 	"context"
 	"fmt"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
-	conf "github.com/kubemq-io/kubemqctl/pkg/k8s/config"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/deployment"
-	"io/ioutil"
-
-	"os"
 	"time"
 
+	conf "github.com/kubemq-io/kubemqctl/pkg/k8s/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/deployment"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
+	"io/ioutil"
 	appsv1 "k8s.io/api/apps/v1"
+
+	apiv1 "k8s.io/api/core/v1"
+	"os"
+	"strings"
 )
 
 type CreateOptions struct {
@@ -73,6 +75,7 @@ func NewCmdCreate(cfg *config.Config) *cobra.Command {
 }
 
 func (o *CreateOptions) Complete(args []string) error {
+
 	if o.file != "" {
 		buff, err := ioutil.ReadFile(o.file)
 		if err != nil {
@@ -169,49 +172,65 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 	}
 	utils.Printlnf("Create StatefulSet %s/%s progress:", stsNamespace, stsName)
 
-	done := make(chan struct{})
-	evt := make(chan *appsv1.StatefulSet)
-	go sd.Client.GetStatefulSetEvents(ctx, evt, done)
+	stsDone := make(chan struct{})
+	stsChan := make(chan *appsv1.StatefulSet)
 
-	time.Sleep(2 * time.Second)
+	evtDone := make(chan struct{})
+	evtChan := make(chan *apiv1.Event)
+	timeNow := time.Now()
+	go sd.Client.GetStatefulSetEvents(ctx, stsChan, stsDone)
+	go sd.Client.GetEvents(ctx, evtChan, evtDone)
+
+	//w := tabwriter.NewWriter(os.Stdout, 1, 8, 2, ' ', tabwriter.TabIndent)
+	//fmt.Fprintf(w, "Type\tReason\tMessage\n")
+	//w.Flush()
+	//w = tabwriter.NewWriter(os.Stdout, 1, 8, 2, ' ', tabwriter.TabIndent)
+	//	time.Sleep(2 * time.Second)
+
 	for {
 		select {
-		case sts := <-evt:
+		case sts := <-stsChan:
+
 			if sts.Name == sd.StatefulSet.Name && sts.Namespace == sd.StatefulSet.Namespace {
+
 				rep := *sd.StatefulSet.Spec.Replicas
-				if rep == sts.Status.Replicas && sts.Status.Replicas == sts.Status.ReadyReplicas {
-					utils.Printlnf("Desired:%d Current:%d Ready:%d", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
-					done <- struct{}{}
-					return nil
-				} else {
-					utils.Printlnf("Desired:%d Current:%d Ready:%d", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
-				}
+				utils.Printlnf("[StatefulSet] [Desired - %d] [Current - %d] [Ready - %d]", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
+				//if rep == sts.Status.Replicas && sts.Status.Replicas == sts.Status.ReadyReplicas {
+				//	//fmt.Fprintf(w, "%d\t%d\t%d\n", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
+				//	//w.Flush()
+				//	//utils.Printlnf("StatefulSet: Desired-%d Current-%d Ready-%d", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
+				//	stsDone <- struct{}{}
+				//	evtDone <- struct{}{}
+				//	return nil
+				//} else {
+				//	//fmt.Fprintf(w, "%d\t%d\t%d\n", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
+				//	//w.Flush()
+				//	//utils.Printlnf("StatefulSet: Desired-%d Current-%d Ready-%d", rep, sts.Status.Replicas, sts.Status.ReadyReplicas)
+				//}
 			}
+		case e := <-evtChan:
+			if !strings.Contains(e.InvolvedObject.Name, stsName) {
+				continue
+			}
+			if e.LastTimestamp.Sub(timeNow) < 0 {
+				continue
+			}
+			if e.Count == 1 && time.Now().Sub(e.FirstTimestamp.Time) < time.Second {
+				utils.Printlnf("%d [Event] [%s] [%s] [%s] [%s] -> %s", e.Count, e.Type, e.Reason, utils.TranslateTimestampSince(e.FirstTimestamp), e.InvolvedObject.Name, strings.TrimSpace(e.Message))
+
+			}
+			//var interval string
+			//if e.Count > 1 {
+			//	interval = fmt.Sprintf("%s (x%d over %s)", utils.TranslateTimestampSince(e.LastTimestamp), e.Count, utils.TranslateTimestampSince(e.FirstTimestamp))
+			//} else {
+			//	interval = utils.TranslateTimestampSince(e.FirstTimestamp)
+			//}
+			//utils.Printlnf("%d [Event] [%s] [%s] [%s] [%s] -> %s", e.Count, e.Type, e.Reason, interval, e.InvolvedObject.Name, strings.TrimSpace(e.Message))
 		case <-ctx.Done():
 			return nil
 		}
 	}
-	//go func() {
-	//	watch, err := sd.Client.ClientSet.CoreV1().Pods(sd.StatefulSet.Namespace).Watch(metav1.ListOptions{})
-	//	if err != nil {
-	//		panic(err)
-	//		return
-	//	}
-	//	go func() {
-	//		for event := range watch.ResultChan() {
-	//			fmt.Printf("Type: %v\n", event.Type)
-	//			p, ok := event.Object.(*v1.Pod)
-	//			if !ok {
-	//				panic(fmt.Errorf("unexpected type"))
-	//				return
-	//			}
-	//			fmt.Println(p.Name)
-	//			fmt.Println(p.Status.ContainerStatuses)
-	//			fmt.Println(p.Status.Phase)
-	//		}
-	//	}()
-	//	time.Sleep(5 * time.Second)
-	//}()
+
 	//
 	//<-ctx.Done()
 	//return nil

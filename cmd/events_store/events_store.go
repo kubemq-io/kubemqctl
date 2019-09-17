@@ -14,6 +14,8 @@ var eventsExamples = `
 
 	# Execute attach to events_store command
 	# kubemqctl events_store attach
+
+	# Execute list of events_store channels command
 `
 var eventsLong = `Execute KubeMQ 'events_store' Pub/Sub commands`
 var eventsShort = `Execute KubeMQ 'events_store' Pub/Sub commands`
@@ -21,11 +23,12 @@ var eventsShort = `Execute KubeMQ 'events_store' Pub/Sub commands`
 // NewCmdCreate returns new initialized instance of create sub command
 func NewCmdEventsStore(cfg *config.Config) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "events_store",
-		Aliases: []string{"es"},
-		Short:   eventsLong,
-		Long:    eventsShort,
-		Example: eventsExamples,
+		Use:       "events_store",
+		Aliases:   []string{"es"},
+		Short:     eventsLong,
+		Long:      eventsShort,
+		Example:   eventsExamples,
+		ValidArgs: []string{"send", "receive", "attach", "list"},
 		Run: func(cmd *cobra.Command, args []string) {
 			cmd.Help()
 		},

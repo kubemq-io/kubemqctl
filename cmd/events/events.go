@@ -22,11 +22,12 @@ var eventsShort = `Execute KubeMQ 'events' Pub/Sub commands`
 // NewCmdCreate returns new initialized instance of create sub command
 func NewCmdEvents(cfg *config.Config) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "events",
-		Aliases: []string{"e"},
-		Short:   eventsShort,
-		Long:    eventsLong,
-		Example: eventsExamples,
+		Use:       "events",
+		Aliases:   []string{"e"},
+		Short:     eventsShort,
+		Long:      eventsLong,
+		Example:   eventsExamples,
+		ValidArgs: []string{"send", "receive", "attach"},
 		Run: func(cmd *cobra.Command, args []string) {
 			cmd.Help()
 		},
