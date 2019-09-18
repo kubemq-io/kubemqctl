@@ -24,20 +24,20 @@ type QueriesSendOptions struct {
 }
 
 var queriesSendExamples = `
-	# Send query to a queries channel
+	# Send query to a 'queries' channel
 	kubemqctl queries send some-channel some-query
 	
-	# Send query to a queries channel with metadata
+	# Send query to a 'queries' channel with metadata
 	kubemqctl queries send some-channel some-message -m some-metadata
 	
-	# Send query to a queries channel with 120 seconds timeout
+	# Send query to a 'queries' channel with 120 seconds timeout
 	kubemqctl queries send some-channel some-message -o 120
 	
-	# Send query to a queries channel with cache-key and cache duration of 1m
+	# Send query to a 'queries' channel with cache-key and cache duration of 1m
 	kubemqctl queries send some-channel some-message -c cache-key -d 1m
 `
-var queriesSendLong = `Send messages to a queries channel`
-var queriesSendShort = `Send messages to a queries channel`
+var queriesSendLong = `Send command allow to send messages to 'queries' channel with an option to set query time-out and caching parameters`
+var queriesSendShort = `Send messages to a 'queries' channel command`
 
 func NewCmdQueriesSend(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueriesSendOptions{
@@ -59,10 +59,10 @@ func NewCmdQueriesSend(ctx context.Context, cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "m", "", "Set metadata message")
-	cmd.PersistentFlags().StringVarP(&o.cacheKey, "cache-key", "c", "", "Set cache key")
-	cmd.PersistentFlags().IntVarP(&o.timeout, "timeout", "o", 30, "Set query timeout")
-	cmd.PersistentFlags().DurationVarP(&o.cacheTTL, "cache-duration", "d", 10*time.Minute, "Set cache duration timeout")
+	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "m", "", "set query message metadata field")
+	cmd.PersistentFlags().StringVarP(&o.cacheKey, "cache-key", "c", "", "set query cache key")
+	cmd.PersistentFlags().IntVarP(&o.timeout, "timeout", "o", 30, "set query timeout")
+	cmd.PersistentFlags().DurationVarP(&o.cacheTTL, "cache-duration", "d", 10*time.Minute, "set cache duration timeout")
 
 	return cmd
 }

@@ -7,16 +7,17 @@ import (
 )
 
 var eventsExamples = `
-	# Execute send events_store command 
-	# kubemqctl events_store send
+	# Execute send 'events store' command 
+	kubemqctl events_store send
 
-	# Execute receive events_store command
-	# kubemqctl events_store receive
+	# Execute receive 'events store' command
+	kubemqctl events_store receive
 
-	# Execute attach to events_store command
-	# kubemqctl events_store attach
+	# Execute attach to 'events store' command
+	 kubemqctl events_store attach
 
-	# Execute list of events_store channels command
+	# Execute list of 'events store' channels command
+ 	kubemqctl events_store list
 `
 var eventsLong = `Execute KubeMQ 'events_store' Pub/Sub commands`
 var eventsShort = `Execute KubeMQ 'events_store' Pub/Sub commands`

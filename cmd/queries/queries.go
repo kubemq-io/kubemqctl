@@ -1,19 +1,20 @@
 package queries
 
 import (
+	"context"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/spf13/cobra"
 )
 
 var queriesExamples = `
-	# Execute send queries command
-	# kubemqctl queries send
+	# Execute send 'queries'  command
+	kubemqctl queries send
 
-	# Execute receive queries command
-	# kubemqctl queries receive
+	# Execute receive 'queries'  command
+	kubemqctl queries receive
 
-	# Execute attach to queries command
-	# kubemqctl queries attach
+	# Execute attach to 'queries' command
+	kubemqctl queries attach
 
 `
 var queriesLong = `Execute KubeMQ 'queries' RPC based commands`

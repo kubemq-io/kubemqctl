@@ -8,13 +8,13 @@ import (
 
 var commandsExamples = `
 	# Execute send commands 
-	# kubemqctl commands send
+	kubemqctl commands send
 
 	# Execute receive commands
-	# kubemqctl commands receive
+	kubemqctl commands receive
 
 	# Execute attach to 'commands' channel
-	# kubemqctl commands attach
+	kubemqctl commands attach
 `
 var commandsLong = `Execute KubeMQ 'commands' RPC commands`
 var commandsShort = `Execute KubeMQ 'commands' RPC commands`

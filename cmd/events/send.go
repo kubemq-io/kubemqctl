@@ -17,7 +17,7 @@ type EventsSendOptions struct {
 	channel   string
 	message   string
 	metadata  string
-	iter      int
+	messages  int
 }
 
 var eventsSendExamples = `
@@ -54,7 +54,7 @@ func NewCmdEventsSend(ctx context.Context, cfg *config.Config) *cobra.Command {
 		},
 	}
 	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "", "", "set message metadata field")
-	cmd.PersistentFlags().IntVarP(&o.iter, "messages", "m", 1, "set how many 'events' messages to send")
+	cmd.PersistentFlags().IntVarP(&o.messages, "messages", "m", 1, "set how many 'events' messages to send")
 
 	return cmd
 }
@@ -82,7 +82,7 @@ func (o *EventsSendOptions) Run(ctx context.Context) error {
 	defer func() {
 		client.Close()
 	}()
-	for i := 1; i <= o.iter; i++ {
+	for i := 1; i <= o.messages; i++ {
 		msg := client.E().
 			SetChannel(o.channel).
 			SetId(uuid.New().String()).
@@ -92,7 +92,7 @@ func (o *EventsSendOptions) Run(ctx context.Context) error {
 		if err != nil {
 			return fmt.Errorf("sending 'events' message, %s", err.Error())
 		}
-		utils.Printlnf("[iteration: %d] [channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s}", i, msg.Channel, msg.ClientId, msg.Id, msg.Metadata, msg.Body)
+		utils.Printlnf("[message: %d] [channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s}", i, msg.Channel, msg.ClientId, msg.Id, msg.Metadata, msg.Body)
 	}
 	return nil
 }

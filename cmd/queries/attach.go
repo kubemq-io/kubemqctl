@@ -19,23 +19,23 @@ type QueriesAttachOptions struct {
 }
 
 var queriesAttachExamples = `
-	# attach to all queries channels and output running messages
+	# attach to all 'queries' channels and output running messages
 	kubemqctl queries attach *
 	
-	# attach to some-query queries channel and output running messages
+	# attach to some-query 'queries' channel and output running messages
 	kubemqctl queries attach some-query
 
-	# attach to some-queries1 and some-queries2 queries channels and output running messages
+	# attach to some-queries1 and some-queries2 'queries' channels and output running messages
 	kubemqctl queries attach some-queries1 some-queries2 
 
-	# attach to some-queries queries channel and output running messages filter by include regex (some*)
+	# attach to some-queries 'queries' channel and output running messages filter by include regex (some*)
 	kubemqctl queries attach some-queries -i some*
 
-	# attach to some-queries queries channel and output running messages filter by exclude regex (not-some*)
+	# attach to some-queries 'queries' channel and output running messages filter by exclude regex (not-some*)
 	kubemqctl queries attach some-queries -e not-some*
 `
-var queriesAttachLong = `Attach to queries channels and display channel content`
-var queriesAttachShort = `Attach to queries channels`
+var queriesAttachLong = `Attach command allows to display 'queries' channel content for debugging proposes`
+var queriesAttachShort = `Attach to 'queries' channels command`
 
 func NewCmdQueriesAttach(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueriesAttachOptions{
@@ -57,8 +57,8 @@ func NewCmdQueriesAttach(ctx context.Context, cfg *config.Config) *cobra.Command
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().StringArrayVarP(&o.include, "include", "i", []string{}, "Set (regex) strings to include")
-	cmd.PersistentFlags().StringArrayVarP(&o.exclude, "exclude", "e", []string{}, "Set (regex) strings to exclude")
+	cmd.PersistentFlags().StringArrayVarP(&o.include, "include", "i", []string{}, "set (regex) strings to include")
+	cmd.PersistentFlags().StringArrayVarP(&o.exclude, "exclude", "e", []string{}, "set (regex) strings to exclude")
 	return cmd
 }
 

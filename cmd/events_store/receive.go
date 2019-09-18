@@ -92,7 +92,7 @@ func (o *EventsStoreReceiveOptions) Run(ctx context.Context) error {
 	if err != nil {
 		utils.Println(fmt.Errorf("receive 'events store' messages, %s", err.Error()).Error())
 	}
-	utils.Println("waiting for events store messages...")
+	utils.Println("waiting for 'events store' messages...")
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', tabwriter.TabIndent)
 	for {
 		select {
