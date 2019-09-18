@@ -28,7 +28,7 @@ var queuePeekExamples = `
 var queuePeekLong = `Peek a messages from a queue channel`
 var queuePeekShort = `Peek a messages from a queue channel`
 
-func NewCmdQueuePeek(cfg *config.Config) *cobra.Command {
+func NewCmdQueuePeek(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueuePeekOptions{
 		cfg: cfg,
 	}
@@ -40,7 +40,7 @@ func NewCmdQueuePeek(cfg *config.Config) *cobra.Command {
 		Long:    queuePeekLong,
 		Example: queuePeekExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())

@@ -1,6 +1,7 @@
 package events_store
 
 import (
+	"context"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/spf13/cobra"
 )
@@ -21,7 +22,7 @@ var eventsLong = `Execute KubeMQ 'events_store' Pub/Sub commands`
 var eventsShort = `Execute KubeMQ 'events_store' Pub/Sub commands`
 
 // NewCmdCreate returns new initialized instance of create sub command
-func NewCmdEventsStore(cfg *config.Config) *cobra.Command {
+func NewCmdEventsStore(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:       "events_store",
 		Aliases:   []string{"es"},
@@ -33,10 +34,10 @@ func NewCmdEventsStore(cfg *config.Config) *cobra.Command {
 			cmd.Help()
 		},
 	}
-	cmd.AddCommand(NewCmdEventsStoreSend(cfg))
-	cmd.AddCommand(NewCmdEventsStoreReceive(cfg))
-	cmd.AddCommand(NewCmdEventsStoreAttach(cfg))
-	cmd.AddCommand(NewCmdEventsStoreList(cfg))
+	cmd.AddCommand(NewCmdEventsStoreSend(ctx, cfg))
+	cmd.AddCommand(NewCmdEventsStoreReceive(ctx, cfg))
+	cmd.AddCommand(NewCmdEventsStoreAttach(ctx, cfg))
+	cmd.AddCommand(NewCmdEventsStoreList(ctx, cfg))
 
 	return cmd
 }

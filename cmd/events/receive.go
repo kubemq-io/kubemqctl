@@ -20,17 +20,17 @@ type EventsReceiveOptions struct {
 }
 
 var eventsReceiveExamples = `
-	# Receive messages from an events channel (blocks until next message)
+	# Receive messages from an 'events' channel (blocks until next message)
 	kubemqctl events receive some-channel
 
-	# Receive messages from an events channel with group (blocks until next message)
+	# Receive messages from an 'events' channel with group (blocks until next message)
 	kubemqctl events receive some-channel -g G1
 
 `
-var eventsReceiveLong = `Receive a message from events channel`
-var eventsReceiveShort = `Receive a message from events channel`
+var eventsReceiveLong = `Receive (Subscribe) command allows to consume one or many messages from 'events' channel`
+var eventsReceiveShort = `Receive a message from 'events' channel command`
 
-func NewCmdEventsReceive(cfg *config.Config) *cobra.Command {
+func NewCmdEventsReceive(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &EventsReceiveOptions{
 		cfg: cfg,
 	}
@@ -42,7 +42,7 @@ func NewCmdEventsReceive(cfg *config.Config) *cobra.Command {
 		Long:    eventsReceiveLong,
 		Example: eventsReceiveExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
@@ -51,7 +51,7 @@ func NewCmdEventsReceive(cfg *config.Config) *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "Set group")
+	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "set 'events' channel consumer group (load balancing)")
 	return cmd
 }
 
@@ -83,9 +83,9 @@ func (o *EventsReceiveOptions) Run(ctx context.Context) error {
 	eventsChan, err := client.SubscribeToEvents(ctx, o.channel, o.group, errChan)
 
 	if err != nil {
-		utils.Println(fmt.Errorf("receive events messages, %s", err.Error()).Error())
+		utils.Println(fmt.Errorf("receive 'events' messages, %s", err.Error()).Error())
 	}
-	utils.Println("waiting for events messages...")
+	utils.Println("waiting for 'events' messages...")
 	for {
 		select {
 		case ev, opened := <-eventsChan:

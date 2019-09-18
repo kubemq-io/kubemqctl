@@ -32,7 +32,7 @@ var queriesReceiveExamples = `
 var queriesReceiveLong = `Receive a message from a queries channel`
 var queriesReceiveShort = `Receive a message from a queries channel`
 
-func NewCmdQueriesReceive(cfg *config.Config) *cobra.Command {
+func NewCmdQueriesReceive(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueriesReceiveOptions{
 		cfg: cfg,
 	}
@@ -44,7 +44,7 @@ func NewCmdQueriesReceive(cfg *config.Config) *cobra.Command {
 		Long:    queriesReceiveLong,
 		Example: queriesReceiveExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
@@ -53,7 +53,7 @@ func NewCmdQueriesReceive(cfg *config.Config) *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "Set group")
+	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "set 'queries' channel consumer group(load balancing)")
 	cmd.PersistentFlags().BoolVarP(&o.autoResponse, "auto-response", "a", false, "Set auto response executed query")
 	return cmd
 }

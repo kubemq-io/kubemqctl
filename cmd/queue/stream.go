@@ -31,7 +31,7 @@ var queueStreamExamples = `
 var queueStreamLong = `Stream a message from a queue`
 var queueStreamShort = `Stream a message from a queue`
 
-func NewCmdQueueStream(cfg *config.Config) *cobra.Command {
+func NewCmdQueueStream(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueueStreamOptions{
 		cfg: cfg,
 	}
@@ -43,7 +43,7 @@ func NewCmdQueueStream(cfg *config.Config) *cobra.Command {
 		Long:    queueStreamLong,
 		Example: queueStreamExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())

@@ -29,12 +29,12 @@ func Execute(version string) {
 	defer utils.CheckErr(cfg.Save())
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	rootCmd.AddCommand(queue.NewCmdQueue(cfg))
-	rootCmd.AddCommand(events.NewCmdEvents(cfg))
-	rootCmd.AddCommand(events_store.NewCmdEventsStore(cfg))
-	rootCmd.AddCommand(commands.NewCmdCommands(cfg))
-	rootCmd.AddCommand(queries.NewCmdQueries(cfg))
-	rootCmd.AddCommand(configCmd.NewCmdConfig(cfg))
+	rootCmd.AddCommand(queue.NewCmdQueue(ctx, cfg))
+	rootCmd.AddCommand(events.NewCmdEvents(ctx, cfg))
+	rootCmd.AddCommand(events_store.NewCmdEventsStore(ctx, cfg))
+	rootCmd.AddCommand(commands.NewCmdCommands(ctx, cfg))
+	rootCmd.AddCommand(queries.NewCmdQueries(ctx, cfg))
+	rootCmd.AddCommand(configCmd.NewCmdConfig(ctx, cfg))
 	rootCmd.AddCommand(cluster.NewCmdCluster(ctx, cfg))
 
 	utils.CheckErr(rootCmd.Execute())
@@ -63,7 +63,7 @@ func init() {
 		viper.SetConfigName(".kubemqctl")
 		err := viper.ReadInConfig()
 		utils.CheckErr(err)
-		err = viper.Unmarshal(cfg)
+		err = viper.Unmarshal(ctx, cfg)
 		utils.CheckErr(err)
 	}
 

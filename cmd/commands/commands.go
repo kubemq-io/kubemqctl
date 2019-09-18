@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"context"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/spf13/cobra"
 )
@@ -12,14 +13,14 @@ var commandsExamples = `
 	# Execute receive commands
 	# kubemqctl commands receive
 
-	# Execute attach to commands channel
+	# Execute attach to 'commands' channel
 	# kubemqctl commands attach
 `
 var commandsLong = `Execute KubeMQ 'commands' RPC commands`
 var commandsShort = `Execute KubeMQ 'commands' RPC commands`
 
 // NewCmdCreate returns new initialized instance of create sub command
-func NewCmdCommands(cfg *config.Config) *cobra.Command {
+func NewCmdCommands(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:       "commands",
 		Aliases:   []string{"cmd"},
@@ -31,8 +32,8 @@ func NewCmdCommands(cfg *config.Config) *cobra.Command {
 			cmd.Help()
 		},
 	}
-	cmd.AddCommand(NewCmdCommandsSend(cfg))
-	cmd.AddCommand(NewCmdCommandsReceive(cfg))
-	cmd.AddCommand(NewCmdCommandsAttach(cfg))
+	cmd.AddCommand(NewCmdCommandsSend(ctx, cfg))
+	cmd.AddCommand(NewCmdCommandsReceive(ctx, cfg))
+	cmd.AddCommand(NewCmdCommandsAttach(ctx, cfg))
 	return cmd
 }

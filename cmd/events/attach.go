@@ -18,25 +18,25 @@ type EventsAttachOptions struct {
 }
 
 var eventsAttachExamples = `
-	# attach to all events channels and output running messages
+	# attach to all 'events' channels and output running messages
 	kubemqctl events attach *
 	
-	# attach to some-events events channel and output running messages
+	# attach to some-events 'events' channel and output running messages
 	kubemqctl events attach some-events
 
-	# attach to some-events1 and some-events2 events channels and output running messages
+	# attach to some-events1 and some-events2 'events' channels and output running messages
 	kubemqctl events attach some-events1 some-events2 
 
-	# attach to some-events events channel and output running messages filter by include regex (some*)
+	# attach to some-events 'events' channel and output running messages filter by include regex (some*)
 	kubemqctl events attach some-events -i some*
 
-	# attach to some-events events channel and output running messages filter by exclude regex (not-some*)
+	# attach to some-events 'events' channel and output running messages filter by exclude regex (not-some*)
 	kubemqctl events attach some-events -e not-some*
 `
-var eventsAttachLong = `Attach to events channels and display channel content`
-var eventsAttachShort = `Attach to events channels`
+var eventsAttachLong = `Attach command allows to display 'events' channel content for debugging proposes`
+var eventsAttachShort = `Attach to 'events' channels command`
 
-func NewCmdEventsAttach(cfg *config.Config) *cobra.Command {
+func NewCmdEventsAttach(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &EventsAttachOptions{
 		cfg: cfg,
 	}
@@ -48,7 +48,7 @@ func NewCmdEventsAttach(cfg *config.Config) *cobra.Command {
 		Long:    eventsAttachLong,
 		Example: eventsAttachExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
@@ -56,8 +56,8 @@ func NewCmdEventsAttach(cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().StringArrayVarP(&o.include, "include", "i", []string{}, "Set (regex) strings to include")
-	cmd.PersistentFlags().StringArrayVarP(&o.exclude, "exclude", "e", []string{}, "Set (regex) strings to exclude")
+	cmd.PersistentFlags().StringArrayVarP(&o.include, "include", "i", []string{}, "set (regex) strings to include")
+	cmd.PersistentFlags().StringArrayVarP(&o.exclude, "exclude", "e", []string{}, "set (regex) strings to exclude")
 	return cmd
 }
 

@@ -23,16 +23,16 @@ type CommandsReceiveOptions struct {
 }
 
 var commandsReceiveExamples = `
-	# Receive commands from a commands channel (blocks until next message)
+	# Receive commands from a 'commands' channel (blocks until next message)
 	kubemqctl commands receive some-channel
 
-	# Receive commands from a commands channel with group (blocks until next message)
+	# Receive commands from a 'commands' channel with group (blocks until next message)
 	kubemqctl commands receive some-channel -g G1
 `
-var commandsReceiveLong = `Receive a message from commands channel`
-var commandsReceiveShort = `Receive a message from commands channel`
+var commandsReceiveLong = `Receive (Subscribe) command allows to consume a message from 'commands' channel and response with appropriate reply`
+var commandsReceiveShort = `Receive a message from 'commands' channel command`
 
-func NewCmdCommandsReceive(cfg *config.Config) *cobra.Command {
+func NewCmdCommandsReceive(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &CommandsReceiveOptions{
 		cfg: cfg,
 	}
@@ -44,7 +44,7 @@ func NewCmdCommandsReceive(cfg *config.Config) *cobra.Command {
 		Long:    commandsReceiveLong,
 		Example: commandsReceiveExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
@@ -53,8 +53,8 @@ func NewCmdCommandsReceive(cfg *config.Config) *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "Set group")
-	cmd.PersistentFlags().BoolVarP(&o.autoResponse, "auto-response", "a", false, "Set auto response executed command")
+	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "set 'commands' channel consumer group (load balancing)")
+	cmd.PersistentFlags().BoolVarP(&o.autoResponse, "auto-response", "a", false, "set auto response executed command for each command received")
 	return cmd
 }
 

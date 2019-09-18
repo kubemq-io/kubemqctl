@@ -20,7 +20,7 @@ var queriesLong = `Execute KubeMQ 'queries' RPC based commands`
 var queriesShort = `Execute KubeMQ 'queries' RPC based commands`
 
 // NewCmdCreate returns new initialized instance of create sub query
-func NewCmdQueries(cfg *config.Config) *cobra.Command {
+func NewCmdQueries(ctx context.Context, cfg *config.Config) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:       "queries",
@@ -33,9 +33,9 @@ func NewCmdQueries(cfg *config.Config) *cobra.Command {
 			cmd.Help()
 		},
 	}
-	cmd.AddCommand(NewCmdQueriesSend(cfg))
-	cmd.AddCommand(NewCmdQueriesReceive(cfg))
-	cmd.AddCommand(NewCmdQueriesAttach(cfg))
+	cmd.AddCommand(NewCmdQueriesSend(ctx, cfg))
+	cmd.AddCommand(NewCmdQueriesReceive(ctx, cfg))
+	cmd.AddCommand(NewCmdQueriesAttach(ctx, cfg))
 
 	return cmd
 }

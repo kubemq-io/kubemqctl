@@ -27,7 +27,7 @@ var queueAckExamples = `
 var queueAckLong = `Ack all messages in a queue channel`
 var queueAckShort = `Ack all messages in a queue channel`
 
-func NewCmdQueueAck(cfg *config.Config) *cobra.Command {
+func NewCmdQueueAck(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueueAckOptions{
 		cfg: cfg,
 	}
@@ -39,7 +39,7 @@ func NewCmdQueueAck(cfg *config.Config) *cobra.Command {
 		Long:    queueAckLong,
 		Example: queueAckExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())

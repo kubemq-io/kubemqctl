@@ -21,22 +21,22 @@ var commandsAttachExamples = `
 	# attach to all commands channels and output running messages
 	kubemqctl commands attach *
 	
-	# attach to some-commands commands channel and output running messages
+	# attach to some-commands 'commands' channel and output running messages
 	kubemqctl commands attach some-commands
 
-	# attach to some-commands1 and some-commands2 commands channels and output running messages
+	# attach to some-commands1 and some-commands2 'commands' channels and output running messages
 	kubemqctl commands attach some-commands1 some-commands2 
 
-	# attach to some-commands commands channel and output running messages filter by include regex (some*)
+	# attach to some-commands 'commands' channel and output running messages filter by include regex (some*)
 	kubemqctl commands attach some-commands -i some*
 
-	# attach to some-commands commands channel and output running messages filter by exclude regex (not-some*)
+	# attach to some-commands 'commands' channel and output running messages filter by exclude regex (not-some*)
 	kubemqctl commands attach some-commands -e not-some*
 `
-var commandsAttachLong = `Attach to commands channels and display channel content`
-var commandsAttachShort = `Attach to commands channels`
+var commandsAttachLong = `Attach command allows to display 'commands' channel content for debugging proposes`
+var commandsAttachShort = `Attach to 'commands' channels command`
 
-func NewCmdCommandsAttach(cfg *config.Config) *cobra.Command {
+func NewCmdCommandsAttach(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &CommandsAttachOptions{
 		cfg: cfg,
 	}
@@ -48,7 +48,7 @@ func NewCmdCommandsAttach(cfg *config.Config) *cobra.Command {
 		Long:    commandsAttachLong,
 		Example: commandsAttachExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)

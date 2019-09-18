@@ -46,7 +46,7 @@ var queueSendExamples = `
 var queueSendLong = `Send a message to a queue channel`
 var queueSendShort = `Send a message to a queue channel`
 
-func NewCmdQueueSend(cfg *config.Config) *cobra.Command {
+func NewCmdQueueSend(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueueSendOptions{
 		cfg: cfg,
 	}
@@ -58,7 +58,7 @@ func NewCmdQueueSend(cfg *config.Config) *cobra.Command {
 		Long:    queueSendLong,
 		Example: queueSendExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())

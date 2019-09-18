@@ -22,19 +22,19 @@ type CommandsSendOptions struct {
 }
 
 var commandsSendExamples = `
-	# Send command to a commands channel
+	# Send command to a 'commands' channel
 	kubemqctl commands send some-channel some-command
 	
-	# Send command to a commands channel with metadata
+	# Send command to a 'commands' channel with metadata
 	kubemqctl commands send some-channel some-message -m some-metadata
 	
-	# Send command to a commands channel with 120 seconds timeout
+	# Send command to a 'commands' channel with 120 seconds timeout
 	kubemqctl commands send some-channel some-message -o 120
 `
-var commandsSendLong = `Send messages to commands channel`
-var commandsSendShort = `Send messages to commands channel`
+var commandsSendLong = `Send command allow to send messages to 'commands' channel with an option to set command time-out`
+var commandsSendShort = `Send messages to 'commands' channel command`
 
-func NewCmdCommandsSend(cfg *config.Config) *cobra.Command {
+func NewCmdCommandsSend(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &CommandsSendOptions{
 		cfg: cfg,
 	}
@@ -46,7 +46,7 @@ func NewCmdCommandsSend(cfg *config.Config) *cobra.Command {
 		Long:    commandsSendLong,
 		Example: commandsSendExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())

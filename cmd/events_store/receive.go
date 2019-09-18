@@ -25,16 +25,16 @@ type EventsStoreReceiveOptions struct {
 }
 
 var eventsReceiveExamples = `
-	# Receive messages from an events store channel (blocks until next message)
+	# Receive messages from an 'events store' channel (blocks until next message)
 	kubemqctl events_store receive some-channel
 
-	# Receive messages from an events channel with group(blocks until next message)
+	# Receive messages from an 'events channel' with group(blocks until next message)
 	kubemqctl events_store receive some-channel -g G1
 `
-var eventsReceiveLong = `Receive a messages from an events store`
-var eventsReceiveShort = `Receive a messages from an events store`
+var eventsReceiveLong = `Receive (Subscribe) command allows to consume messages from an 'events store' with options to set offset parameters`
+var eventsReceiveShort = `Receive a messages from an 'events store'`
 
-func NewCmdEventsStoreReceive(cfg *config.Config) *cobra.Command {
+func NewCmdEventsStoreReceive(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &EventsStoreReceiveOptions{
 		cfg: cfg,
 	}
@@ -46,7 +46,7 @@ func NewCmdEventsStoreReceive(cfg *config.Config) *cobra.Command {
 		Long:    eventsReceiveLong,
 		Example: eventsReceiveExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
@@ -55,7 +55,7 @@ func NewCmdEventsStoreReceive(cfg *config.Config) *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "Set group")
+	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "set 'events_store' channel consumer group (load balancing)")
 	return cmd
 }
 
@@ -90,7 +90,7 @@ func (o *EventsStoreReceiveOptions) Run(ctx context.Context) error {
 	eventsChan, err := client.SubscribeToEventsStore(ctx, o.channel, o.group, errChan, o.subOptions)
 
 	if err != nil {
-		utils.Println(fmt.Errorf("receive events store messages, %s", err.Error()).Error())
+		utils.Println(fmt.Errorf("receive 'events store' messages, %s", err.Error()).Error())
 	}
 	utils.Println("waiting for events store messages...")
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', tabwriter.TabIndent)

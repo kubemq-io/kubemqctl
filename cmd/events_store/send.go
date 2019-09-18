@@ -21,19 +21,19 @@ type EventsStoreSendOptions struct {
 }
 
 var eventsSendExamples = `
-	# Send message to an events store channel
+	# Send (Publish) message to an 'events store' channel
 	kubemqctl events_store send some-channel some-message
 	
-	# Send message to an events store channel with metadata
-	kubemqctl events_store send some-channel some-message -m some-metadata
+	# Send (Publish) message to an 'events store' channel with metadata
+	kubemqctl events_store send some-channel some-message --metadata some-metadata
 
-	# Send 10 messages to an events store channel
-	kubemqctl events_store send some-channel some-message -i 10
+	# Send 10 messages to an 'events store' channel
+	kubemqctl events_store send some-channel some-message -m 10
 `
-var eventsSendLong = `Send messages to an events store channel`
-var eventsSendShort = `Send messages to an events store channel`
+var eventsSendLong = `Send command allows to send (publish) one or many messages to an 'events store' channel`
+var eventsSendShort = `Send messages to an 'events store' channel command`
 
-func NewCmdEventsStoreSend(cfg *config.Config) *cobra.Command {
+func NewCmdEventsStoreSend(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &EventsStoreSendOptions{
 		cfg: cfg,
 	}
@@ -45,7 +45,7 @@ func NewCmdEventsStoreSend(cfg *config.Config) *cobra.Command {
 		Long:    eventsSendLong,
 		Example: eventsSendExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
@@ -53,8 +53,8 @@ func NewCmdEventsStoreSend(cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "m", "", "Set metadata message")
-	cmd.PersistentFlags().IntVarP(&o.iter, "iterations", "i", 1, "Set how many messages to send")
+	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "", "", "set message metadata field")
+	cmd.PersistentFlags().IntVarP(&o.iter, "messages", "m", 1, "set how many 'events store' messages to send")
 
 	return cmd
 }
@@ -90,7 +90,7 @@ func (o *EventsStoreSendOptions) Run(ctx context.Context) error {
 			SetMetadata(o.metadata)
 		res, err := msg.Send(ctx)
 		if err != nil {
-			return fmt.Errorf("sending events store message, %s", err.Error())
+			return fmt.Errorf("sending 'events store' message, %s", err.Error())
 		}
 		utils.Printlnf("[iteration: %d] [channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s, sent:%t}", i, msg.Channel, msg.ClientId, msg.Id, msg.Metadata, msg.Body, res.Sent)
 

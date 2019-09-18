@@ -31,7 +31,7 @@ var queueLong = `Execute KubeMQ 'queues' commands`
 var queueShort = `Execute KubeMQ 'queues' commands`
 
 // NewCmdCreate returns new initialized instance of create sub command
-func NewCmdQueue(cfg *config.Config) *cobra.Command {
+func NewCmdQueue(ctx context.Context, cfg *config.Config) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:       "queues",
@@ -44,13 +44,13 @@ func NewCmdQueue(cfg *config.Config) *cobra.Command {
 			cmd.Help()
 		},
 	}
-	cmd.AddCommand(NewCmdQueueSend(cfg))
-	cmd.AddCommand(NewCmdQueueReceive(cfg))
-	cmd.AddCommand(NewCmdQueuePeek(cfg))
-	cmd.AddCommand(NewCmdQueueAck(cfg))
-	cmd.AddCommand(NewCmdQueueList(cfg))
-	cmd.AddCommand(NewCmdQueueStream(cfg))
-	cmd.AddCommand(NewCmdQueueAttach(cfg))
+	cmd.AddCommand(NewCmdQueueSend(ctx, cfg))
+	cmd.AddCommand(NewCmdQueueReceive(ctx, cfg))
+	cmd.AddCommand(NewCmdQueuePeek(ctx, cfg))
+	cmd.AddCommand(NewCmdQueueAck(ctx, cfg))
+	cmd.AddCommand(NewCmdQueueList(ctx, cfg))
+	cmd.AddCommand(NewCmdQueueStream(ctx, cfg))
+	cmd.AddCommand(NewCmdQueueAttach(ctx, cfg))
 
 	return cmd
 }

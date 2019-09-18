@@ -39,7 +39,7 @@ var queueAttachExamples = `
 var queueAttachLong = `Attach to queue channels and display content`
 var queueAttachShort = `Attach to queue channels`
 
-func NewCmdQueueAttach(cfg *config.Config) *cobra.Command {
+func NewCmdQueueAttach(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueueAttachOptions{
 		cfg: cfg,
 	}
@@ -51,7 +51,7 @@ func NewCmdQueueAttach(cfg *config.Config) *cobra.Command {
 		Long:    queueAttachLong,
 		Example: queueAttachExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)

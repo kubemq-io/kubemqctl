@@ -37,7 +37,7 @@ var queriesAttachExamples = `
 var queriesAttachLong = `Attach to queries channels and display channel content`
 var queriesAttachShort = `Attach to queries channels`
 
-func NewCmdQueriesAttach(cfg *config.Config) *cobra.Command {
+func NewCmdQueriesAttach(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueriesAttachOptions{
 		cfg: cfg,
 	}
@@ -49,7 +49,7 @@ func NewCmdQueriesAttach(cfg *config.Config) *cobra.Command {
 		Long:    queriesAttachLong,
 		Example: queriesAttachExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)

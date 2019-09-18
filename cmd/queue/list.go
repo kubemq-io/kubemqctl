@@ -31,7 +31,7 @@ var queueListExamples = `
 var queueListLong = `Get a list of queues / clients`
 var queueListShort = `Get a list of queues / clients`
 
-func NewCmdQueueList(cfg *config.Config) *cobra.Command {
+func NewCmdQueueList(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueueListOptions{
 		cfg: cfg,
 	}
@@ -43,7 +43,7 @@ func NewCmdQueueList(cfg *config.Config) *cobra.Command {
 		Long:    queueListLong,
 		Example: queueListExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())

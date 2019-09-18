@@ -67,7 +67,7 @@ func NewCmdLogs(ctx context.Context, cfg *config.Config) *cobra.Command {
 		Long:    logsLong,
 		Example: logsExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args), cmd)
 			utils.CheckErr(o.Validate())

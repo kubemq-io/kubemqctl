@@ -28,10 +28,10 @@ var eventsStoreListExamples = `
 	# Get a list of events stores channels/ clients filtered by 'some-events-store' channel only
 	kubemqctl events_store list -f some-events-store
 `
-var eventsStoreListLong = `Get a list of events store channels / clients`
-var eventsStoreListShort = `Get a list of events store channels / clients`
+var eventsStoreListLong = `List command allows to get a list of events store channels / clients with details`
+var eventsStoreListShort = `Get a list of events store channels / clients command`
 
-func NewCmdEventsStoreList(cfg *config.Config) *cobra.Command {
+func NewCmdEventsStoreList(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &EventsStoreListOptions{
 		cfg: cfg,
 	}
@@ -43,7 +43,7 @@ func NewCmdEventsStoreList(cfg *config.Config) *cobra.Command {
 		Long:    eventsStoreListLong,
 		Example: eventsStoreListExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
@@ -51,7 +51,7 @@ func NewCmdEventsStoreList(cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().StringVarP(&o.filter, "filter", "f", "", "Set filter for channel / client name")
+	cmd.PersistentFlags().StringVarP(&o.filter, "filter", "f", "", "set filter for channel / client name")
 	return cmd
 }
 

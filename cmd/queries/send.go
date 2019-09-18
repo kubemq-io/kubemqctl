@@ -39,7 +39,7 @@ var queriesSendExamples = `
 var queriesSendLong = `Send messages to a queries channel`
 var queriesSendShort = `Send messages to a queries channel`
 
-func NewCmdQueriesSend(cfg *config.Config) *cobra.Command {
+func NewCmdQueriesSend(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueriesSendOptions{
 		cfg: cfg,
 	}
@@ -51,7 +51,7 @@ func NewCmdQueriesSend(cfg *config.Config) *cobra.Command {
 		Long:    queriesSendLong,
 		Example: queriesSendExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())

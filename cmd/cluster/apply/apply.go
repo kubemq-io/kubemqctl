@@ -41,7 +41,7 @@ func NewCmdApply(ctx context.Context, cfg *config.Config) *cobra.Command {
 		Long:    applyLong,
 		Example: applyExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args), cmd)
 			utils.CheckErr(o.Validate())

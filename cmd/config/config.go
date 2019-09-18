@@ -19,11 +19,11 @@ var configExamples = `
 	# Run Kubemqctl configuration wizard
 	# kubemqctl config
 `
-var configLong = `Run Kubemqctl configuration wizard`
-var configShort = `Run Kubemqctl configuration wizard`
+var configLong = `Config command allows to set Kubemqctl configuration with a wizard`
+var configShort = `Run Kubemqctl configuration wizard command`
 
 // NewCmdCreate returns new initialized instance of create sub command
-func NewCmdConfig(cfg *config.Config) *cobra.Command {
+func NewCmdConfig(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &ConfigOptions{}
 	cmd := &cobra.Command{
 		Use:     "config",
@@ -32,7 +32,7 @@ func NewCmdConfig(cfg *config.Config) *cobra.Command {
 		Long:    configLong,
 
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args, cfg))
 			utils.CheckErr(o.Validate())

@@ -36,7 +36,7 @@ var queueReceiveExamples = `
 var queueReceiveLong = `Receive a messages from a queue channel`
 var queueReceiveShort = `Receive a messages from a queue channel`
 
-func NewCmdQueueReceive(cfg *config.Config) *cobra.Command {
+func NewCmdQueueReceive(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueueReceiveOptions{
 		cfg: cfg,
 	}
@@ -48,7 +48,7 @@ func NewCmdQueueReceive(cfg *config.Config) *cobra.Command {
 		Long:    queueReceiveLong,
 		Example: queueReceiveExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
