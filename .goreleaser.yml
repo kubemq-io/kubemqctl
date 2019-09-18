@@ -4,10 +4,17 @@ builds:
       - darwin
       - linux
       - windows
+    ignore:
+      - goos: darwin
+        goarch: 386
     env:
       - CGO_ENABLED=0
     main: main.go
-
+archives:
+  -
+    format_overrides:
+      - goos: windows
+        format: zip
 checksum:
   name_template: 'checksums.txt'
 
@@ -15,11 +22,7 @@ snapshot:
   name_template: "{{ .Tag }}-next"
 
 changelog:
-  sort: asc
-  filters:
-    exclude:
-      - '^docs:'
-      - '^test:'
+ skip: true
 
 brew:
   github:
