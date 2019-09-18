@@ -14,7 +14,7 @@ jobs:
     - name: goreleaser
       uses: docker://goreleaser/goreleaser
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GORELASER_TOKEN }}
       with:
         args: release
       if: success()
