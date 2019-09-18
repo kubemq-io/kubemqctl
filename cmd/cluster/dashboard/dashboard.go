@@ -26,11 +26,11 @@ var dashboardExamples = `
 	# Run KubeMQ dashboard and update version
 	kubemqctl dashboard -u
 `
-var dashboardLong = `Run KubeMQ dashboard web view`
-var dashboardShort = `Run KubeMQ dashboard web view`
+var dashboardLong = `Dashboard command allows to start a web view of KubeMQ cluster dashboard`
+var dashboardShort = `Run KubeMQ dashboard web view command`
 
 // NewCmdCreate returns new initialized instance of create sub query
-func NewCmdDashboard(cfg *config.Config) *cobra.Command {
+func NewCmdDashboard(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := DashboardOptions{
 		cfg: cfg,
 	}

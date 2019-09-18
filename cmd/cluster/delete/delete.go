@@ -18,17 +18,17 @@ var deleteExamples = `
  	# Delete KubeMQ cluster
 	kubemqctl cluster delete
 `
-var deleteLong = `Delete KubeMQ cluster`
-var deleteShort = `Delete KubeMQ cluster`
+var deleteLong = `Delete command allows deleting one or more KubeMQ clusters deployments`
+var deleteShort = `Delete KubeMQ cluster command`
 
-func NewCmdDelete(cfg *config.Config) *cobra.Command {
+func NewCmdDelete(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &DeleteOptions{
 		cfg: cfg,
 	}
 	cmd := &cobra.Command{
 
 		Use:     "delete",
-		Aliases: []string{"del", "de"},
+		Aliases: []string{"del", "de", "d"},
 		Short:   deleteShort,
 		Long:    deleteLong,
 		Example: deleteExamples,

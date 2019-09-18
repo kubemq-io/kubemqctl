@@ -19,10 +19,10 @@ var eventsExamples = `
  	# Show KubeMQ cluster events
 	kubemqctl cluster events
 `
-var eventsLong = `Show KubeMQ cluster events`
-var eventsShort = `Show KubeMQ cluster events`
+var eventsLong = `Events command allows to show a real-time KubeMQ cluster events`
+var eventsShort = `Show KubeMQ cluster events command`
 
-func NewCmdEvents(cfg *config.Config) *cobra.Command {
+func NewCmdEvents(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &EventsOptios{
 		cfg: cfg,
 	}
@@ -72,18 +72,17 @@ func (o *EventsOptios) Run(ctx context.Context) error {
 	if len(list) == 1 {
 		selection = list[0]
 	} else {
-		multiSelected := &survey.Select{
-			Renderer: survey.Renderer{},
-			Message:  "Select KubeMQ cluster to show events",
-			Options:  list,
-			Default:  list[0],
-
+		selected := &survey.Select{
+			Renderer:      survey.Renderer{},
+			Message:       "Select KubeMQ cluster to show events",
+			Options:       list,
+			Default:       list[0],
 			PageSize:      0,
 			VimMode:       false,
 			FilterMessage: "",
 			Filter:        nil,
 		}
-		err = survey.AskOne(multiSelected, &selection)
+		err = survey.AskOne(selected, &selection)
 		if err != nil {
 			return err
 		}

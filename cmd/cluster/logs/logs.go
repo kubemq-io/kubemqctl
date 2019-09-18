@@ -39,10 +39,10 @@ var logsExamples = `
 	# Stream logs of specific container
 	kubemqctl cluster logs -c kubemq-cluster-0
 `
-var logsLong = `Stream logs from KubeMQ pods`
-var logsShort = `Stream logs from KubeMQ pods`
+var logsLong = `Stream command allows to show pods logs with powerful filtering capabilities`
+var logsShort = `Stream logs of KubeMQ cluster pods command`
 
-func NewCmdLogs(cfg *config.Config) *cobra.Command {
+func NewCmdLogs(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &LogsOptions{
 		cfg: cfg,
 		Options: &logs.Options{

@@ -3,8 +3,10 @@ package proxy
 import (
 	"context"
 	"fmt"
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
@@ -16,19 +18,13 @@ type ProxyOptions struct {
 }
 
 var proxyExamples = `
-	# proxy default/kubemq-cluster with default KubeMQ ports
+	# Proxy a KubeMQ cluster ports
 	kubemqctl cluster proxy
-
-	# proxy specific namespace/pod with default KubeMQ ports
-	kubemqctl cluster proxy kubemq kubemq-cluster1 
-
-	# proxy specific namespace/pod with specific ports
-	kubemqctl cluster proxy default nginx -p 80:80 
 `
-var proxyLong = `Proxy KubeMQ cluster connection to localhost`
-var proxyShort = `Proxy KubeMQ cluster connection to localhost`
+var proxyLong = `Proxy command allows to act as a full layer 4 proxy (port-forwarding) of a KubeMQ cluster connection to localhost. Proxy a KubeMW cluster allows the developer to interact with remote KubeMQ cluster ports as localhost `
+var proxyShort = `Proxy KubeMQ cluster connection to localhost command`
 
-func NewCmdProxy(cfg *config.Config) *cobra.Command {
+func NewCmdProxy(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &ProxyOptions{
 		cfg: cfg,
 		ProxyOptions: &k8s.ProxyOptions{
@@ -53,24 +49,12 @@ func NewCmdProxy(cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().StringArrayVarP(&o.Ports, "ports", "p", []string{
-		fmt.Sprintf("%d:%d", cfg.GrpcPort, cfg.GrpcPort),
-		fmt.Sprintf("%d:%d", cfg.RestPort, cfg.RestPort),
-		fmt.Sprintf("%d:%d", cfg.ApiPort, cfg.ApiPort),
-	}, "Set proxy ports")
 
 	return cmd
 }
 
 func (o *ProxyOptions) Complete(args []string) error {
-	if len(args) >= 2 {
-		o.Namespace = args[0]
-		o.Pod = args[1]
-		return nil
-	} else {
-		o.Namespace = o.cfg.CurrentNamespace
-		o.StatefulSet = o.cfg.CurrentStatefulSet
-	}
+	o.Ports = []string{"8080,9090,50000"}
 	return nil
 }
 
@@ -79,7 +63,38 @@ func (o *ProxyOptions) Validate() error {
 }
 
 func (o *ProxyOptions) Run(ctx context.Context) error {
-	err := k8s.SetProxy(ctx, o.ProxyOptions)
+	c, err := client.NewClient(o.cfg.KubeConfigPath)
+	if err != nil {
+		return err
+	}
+
+	list, err := c.GetKubeMQClusters()
+	if err != nil {
+		return err
+	}
+	if len(list) == 0 {
+		return fmt.Errorf("no KubeMQ clusters were found to proxy")
+	}
+	selection := ""
+	multiSelected := &survey.Select{
+		Renderer:      survey.Renderer{},
+		Message:       "Select KubeMQ cluster to Proxy",
+		Options:       list,
+		Default:       list[0],
+		PageSize:      0,
+		VimMode:       false,
+		FilterMessage: "",
+		Filter:        nil,
+	}
+	err = survey.AskOne(multiSelected, &selection)
+	if err != nil {
+		return err
+	}
+	ns, name := client.StringSplit(selection)
+	o.Namespace = ns
+	o.Pod = name
+
+	err = k8s.SetProxy(ctx, o.ProxyOptions)
 	if err != nil {
 		return err
 	}

@@ -1,14 +1,15 @@
 package cluster
 
 import (
+	"context"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/apply"
-	context "github.com/kubemq-io/kubemqctl/cmd/cluster/context"
+	kubeCtx "github.com/kubemq-io/kubemqctl/cmd/cluster/context"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/create"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/dashboard"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/delete"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/describe"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/events"
-	"github.com/kubemq-io/kubemqctl/cmd/cluster/list"
+	"github.com/kubemq-io/kubemqctl/cmd/cluster/get"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/logs"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/proxy"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/scale"
@@ -54,7 +55,7 @@ var clusterExamples = `
 var clusterLong = `Executes KubeMQ cluster management commands`
 var clusterShort = `Executes KubeMQ cluster management commands`
 
-func NewCmdCluster(cfg *config.Config) *cobra.Command {
+func NewCmdCluster(ctx context.Context, cfg *config.Config) *cobra.Command {
 
 	cmd := &cobra.Command{
 
@@ -68,16 +69,16 @@ func NewCmdCluster(cfg *config.Config) *cobra.Command {
 			cmd.Help()
 		},
 	}
-	cmd.AddCommand(logs.NewCmdLogs(cfg))
-	cmd.AddCommand(create.NewCmdCreate(cfg))
-	cmd.AddCommand(delete.NewCmdDelete(cfg))
-	cmd.AddCommand(scale.NewCmdScale(cfg))
-	cmd.AddCommand(list.NewCmdList(cfg))
-	cmd.AddCommand(context.NewCmdContext(cfg))
-	cmd.AddCommand(proxy.NewCmdProxy(cfg))
-	cmd.AddCommand(apply.NewCmdApply(cfg))
-	cmd.AddCommand(describe.NewCmdDescribe(cfg))
-	cmd.AddCommand(dashboard.NewCmdDashboard(cfg))
-	cmd.AddCommand(events.NewCmdEvents(cfg))
+	cmd.AddCommand(logs.NewCmdLogs(ctx, cfg))
+	cmd.AddCommand(create.NewCmdCreate(ctx, cfg))
+	cmd.AddCommand(delete.NewCmdDelete(ctx, cfg))
+	cmd.AddCommand(scale.NewCmdScale(ctx, cfg))
+	cmd.AddCommand(get.NewCmdList(ctx, cfg))
+	cmd.AddCommand(kubeCtx.NewCmdContext(ctx, cfg))
+	cmd.AddCommand(proxy.NewCmdProxy(ctx, cfg))
+	cmd.AddCommand(apply.NewCmdApply(ctx, cfg))
+	cmd.AddCommand(describe.NewCmdDescribe(ctx, cfg))
+	cmd.AddCommand(dashboard.NewCmdDashboard(ctx, cfg))
+	cmd.AddCommand(events.NewCmdEvents(ctx, cfg))
 	return cmd
 }

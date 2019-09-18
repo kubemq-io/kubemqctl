@@ -24,10 +24,10 @@ var describeExamples = `
 	# Describe KubeMQ cluster to a file
 	kubemqctl cluster describe -f
 `
-var describeLong = `Describe KubeMQ cluster`
-var describeShort = `Describe KubeMQ cluster`
+var describeLong = `Describe command allows describing a KubeMQ cluster to console or export to a file`
+var describeShort = `Describe KubeMQ cluster command`
 
-func NewCmdDescribe(cfg *config.Config) *cobra.Command {
+func NewCmdDescribe(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &DescribeOptions{
 		cfg: cfg,
 	}
@@ -73,21 +73,26 @@ func (o *DescribeOptions) Run(ctx context.Context) error {
 		return fmt.Errorf("no KubeMQ clusters were found to describe")
 	}
 	selection := ""
-	multiSelected := &survey.Select{
-		Renderer:      survey.Renderer{},
-		Message:       "Select KubeMQ cluster to describe",
-		Options:       list,
-		Default:       list[0],
-		Help:          "Select KubeMQ cluster to describe",
-		PageSize:      0,
-		VimMode:       false,
-		FilterMessage: "",
-		Filter:        nil,
+	if len(list) == 1 {
+		selection = list[0]
+	} else {
+		selected := &survey.Select{
+			Renderer:      survey.Renderer{},
+			Message:       "Select KubeMQ cluster to describe",
+			Options:       list,
+			Default:       list[0],
+			Help:          "Select KubeMQ cluster to describe",
+			PageSize:      0,
+			VimMode:       false,
+			FilterMessage: "",
+			Filter:        nil,
+		}
+		err = survey.AskOne(selected, &selection)
+		if err != nil {
+			return err
+		}
 	}
-	err = survey.AskOne(multiSelected, &selection)
-	if err != nil {
-		return err
-	}
+
 	ns, name := client.StringSplit(selection)
 	sd, err := deployment.NewStatefulSetDeploymentFromCluster(o.cfg, ns, name)
 

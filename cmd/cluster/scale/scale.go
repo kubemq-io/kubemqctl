@@ -22,19 +22,19 @@ type ScaleOptions struct {
 }
 
 var scaleExamples = `
-	# Scale StatufulSet 
+	# Scale KubeMQ cluster StatefulSet 
 	kubemqctl cluster cluster scale 5
 
-	# Scale StatufulSet with watch events and status
+	# Scale KubeMQ cluster StatefulSet with streaming real-time events and status
 	kubemqctl cluster scale -w -s 
 
-	# Scale StatufulSet to 0
+	# Scale KubeMQ cluster StatefulSet to 0
 	kubemqctl cluster scale 0
 `
-var scaleLong = `Scale KubeMQ cluster`
-var scaleShort = `Scale KubeMQ cluster`
+var scaleLong = `Scale command allows ro scale KubeMQ cluster replicas`
+var scaleShort = `Scale KubeMQ cluster replicas command`
 
-func NewCmdScale(cfg *config.Config) *cobra.Command {
+func NewCmdScale(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &ScaleOptions{
 		cfg:   cfg,
 		scale: -1,
@@ -47,15 +47,15 @@ func NewCmdScale(cfg *config.Config) *cobra.Command {
 		Long:    scaleLong,
 		Example: scaleExamples,
 		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 			utils.CheckErr(o.Complete(args), cmd)
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().BoolVarP(&o.watch, "watch", "w", false, "watch and print scale statefulset events")
-	cmd.PersistentFlags().BoolVarP(&o.status, "status", "s", false, "watch and print scale statefulset status")
+	cmd.PersistentFlags().BoolVarP(&o.watch, "watch", "w", false, "watch and print Scale StatefulSet events")
+	cmd.PersistentFlags().BoolVarP(&o.status, "status", "s", false, "watch and print Scale StatefulSet status")
 
 	return cmd
 }
@@ -88,16 +88,22 @@ func (o *ScaleOptions) Run(ctx context.Context) error {
 		return fmt.Errorf("no KubeMQ cluster to scale")
 	}
 	selection := ""
-	prompt := &survey.Select{
-		Renderer: survey.Renderer{},
-		Message:  "Select KubeMQ cluster to scale:",
-		Options:  list,
-		Default:  list[0],
+
+	if len(list) == 1 {
+		selection = list[0]
+	} else {
+		prompt := &survey.Select{
+			Renderer: survey.Renderer{},
+			Message:  "Select KubeMQ cluster to scale:",
+			Options:  list,
+			Default:  list[0],
+		}
+		err = survey.AskOne(prompt, &selection)
+		if err != nil {
+			return err
+		}
 	}
-	err = survey.AskOne(prompt, &selection)
-	if err != nil {
-		return err
-	}
+
 	pair := strings.Split(selection, "/")
 
 	if o.scale < 0 {

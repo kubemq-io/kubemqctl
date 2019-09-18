@@ -20,10 +20,10 @@ var contextExamples = `
 	kubemqctl cluster context
 
 `
-var contextLong = `Select kubernetes cluster context`
-var contextShort = `Select kubernetes cluster context`
+var contextLong = `Context command allows to set the default Kubernetes cluster context`
+var contextShort = `Select kubernetes cluster context command`
 
-func NewCmdContext(cfg *config.Config) *cobra.Command {
+func NewCmdContext(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &ContextOptions{
 		cfg: cfg,
 	}

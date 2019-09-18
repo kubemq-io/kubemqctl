@@ -1,17 +1,14 @@
 package root
 
 import (
+	"context"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster"
 	"github.com/kubemq-io/kubemqctl/cmd/commands"
-	config2 "github.com/kubemq-io/kubemqctl/cmd/config"
-
+	configCmd "github.com/kubemq-io/kubemqctl/cmd/config"
 	"github.com/kubemq-io/kubemqctl/cmd/events"
 	"github.com/kubemq-io/kubemqctl/cmd/events_store"
-
 	"github.com/kubemq-io/kubemqctl/cmd/queries"
 	"github.com/kubemq-io/kubemqctl/cmd/queue"
-
-	//	version2 "github.com/kubemq-io/kubemqctl/cmd/version"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
@@ -30,6 +27,16 @@ var rootCmd = &cobra.Command{
 func Execute(version string) {
 	rootCmd.Version = version
 	defer utils.CheckErr(cfg.Save())
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	rootCmd.AddCommand(queue.NewCmdQueue(cfg))
+	rootCmd.AddCommand(events.NewCmdEvents(cfg))
+	rootCmd.AddCommand(events_store.NewCmdEventsStore(cfg))
+	rootCmd.AddCommand(commands.NewCmdCommands(cfg))
+	rootCmd.AddCommand(queries.NewCmdQueries(cfg))
+	rootCmd.AddCommand(configCmd.NewCmdConfig(cfg))
+	rootCmd.AddCommand(cluster.NewCmdCluster(ctx, cfg))
+
 	utils.CheckErr(rootCmd.Execute())
 
 }
@@ -59,12 +66,5 @@ func init() {
 		err = viper.Unmarshal(cfg)
 		utils.CheckErr(err)
 	}
-	rootCmd.AddCommand(queue.NewCmdQueue(cfg))
-	rootCmd.AddCommand(events.NewCmdEvents(cfg))
-	rootCmd.AddCommand(events_store.NewCmdEventsStore(cfg))
-	rootCmd.AddCommand(commands.NewCmdCommands(cfg))
-	rootCmd.AddCommand(queries.NewCmdQueries(cfg))
-	rootCmd.AddCommand(config2.NewCmdConfig(cfg))
-	rootCmd.AddCommand(cluster.NewCmdCluster(cfg))
 
 }

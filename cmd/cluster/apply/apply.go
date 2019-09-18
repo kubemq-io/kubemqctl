@@ -13,6 +13,7 @@ import (
 type ApplyOptions struct {
 	cfg        *config.Config
 	importData string
+	fileName   string
 	watch      bool
 	status     bool
 }
@@ -25,10 +26,10 @@ var applyExamples = `
 	# kubemqctl cluster apply kubemq-cluster.yaml -w -s
 
 `
-var applyLong = `Apply a KubeMQ cluster`
-var applyShort = `Apply a KubeMQ cluster`
+var applyLong = `Apply command allows an update to a KubeMQ StatefulSet configuration with a yaml file`
+var applyShort = `Apply a KubeMQ cluster command`
 
-func NewCmdApply(cfg *config.Config) *cobra.Command {
+func NewCmdApply(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &ApplyOptions{
 		cfg: cfg,
 	}
@@ -47,22 +48,25 @@ func NewCmdApply(cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().BoolVarP(&o.watch, "watch", "w", false, "watch and print apply statefulset events")
-	cmd.PersistentFlags().BoolVarP(&o.status, "status", "s", false, "watch and print apply statefulset status")
-
+	cmd.PersistentFlags().BoolVarP(&o.watch, "watch", "w", false, "watch and print apply StatefulSet events")
+	cmd.PersistentFlags().BoolVarP(&o.status, "status", "s", false, "watch and print apply StatefulSet status")
+	cmd.PersistentFlags().StringVarP(&o.fileName, "file", "f", "", "set yaml configuration file")
+	cmd.MarkFlagRequired("file")
+	cmd.MarkFlagFilename("file", "yaml", "yml")
 	return cmd
 }
 
 func (o *ApplyOptions) Complete(args []string) error {
-	if len(args) != 0 {
-		buff, err := ioutil.ReadFile(args[0])
+
+	if o.fileName != "" {
+		buff, err := ioutil.ReadFile(o.fileName)
 		if err != nil {
 			return err
 		}
 		o.importData = string(buff)
 		return nil
 	}
-	return fmt.Errorf("invalid argument, no yaml file specified")
+	return fmt.Errorf("invalid file name to import")
 }
 
 func (o *ApplyOptions) Validate() error {

@@ -1,4 +1,4 @@
-package list
+package get
 
 import (
 	"context"
@@ -17,20 +17,20 @@ type ListOptions struct {
 }
 
 var statusExamples = `
-	# Get list of KubeMQ of clusters
+	# Get status of KubeMQ of clusters
 	kubemqctl cluster list
 `
-var statusLong = `Get list of KubeMQ of clusters`
-var statusShort = `Get list of KubeMQ of clusters`
+var statusLong = `Get command allows to show the current information of KubeMQ of clusters`
+var statusShort = `Get information of KubeMQ of clusters command`
 
-func NewCmdList(cfg *config.Config) *cobra.Command {
+func NewCmdList(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &ListOptions{
 		cfg: cfg,
 	}
 	cmd := &cobra.Command{
 
-		Use:     "list",
-		Aliases: []string{"ls", "l"},
+		Use:     "get",
+		Aliases: []string{"g"},
 		Short:   statusShort,
 		Long:    statusLong,
 		Example: statusExamples,
