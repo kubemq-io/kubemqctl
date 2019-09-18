@@ -25,13 +25,13 @@ type QueueSendOptions struct {
 }
 
 var queueSendExamples = `
-	# Send message to a queue channel
+	# Send message to a 'queues' channel
 	kubemqctl queue send some-channel some-message
 	
 	# Send message to a queue channel with metadata
 	kubemqctl queue send some-channel some-message --metadata some-metadata
 	
-	# Send 5 messages to a queue channel with metadata
+	# Send 5 messages to a queues channel with metadata
 	kubemqctl queue send some-channel some-message --metadata some-metadata -m 5
 	
 	# Send message to a queue with a message expiration of 5 seconds
@@ -66,12 +66,12 @@ func NewCmdQueueSend(ctx context.Context, cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().IntVarP(&o.expiration, "expiration", "e", 0, "Set queue message expiration seconds")
-	cmd.PersistentFlags().IntVarP(&o.delay, "delay", "d", 0, "Set queue message send delay seconds")
-	cmd.PersistentFlags().IntVarP(&o.maxReceive, "max-receive", "r", 0, "Set dead-letter max receive count")
-	cmd.PersistentFlags().IntVarP(&o.messages, "messages", "m", 1, "Set dead-letter max receive count")
-	cmd.PersistentFlags().StringVarP(&o.deadLetter, "dead-letter-queue", "q", "", "Set dead-letter queue name")
-	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "", "", "Set metadata message")
+	cmd.PersistentFlags().IntVarP(&o.expiration, "expiration", "e", 0, "set queue message expiration seconds")
+	cmd.PersistentFlags().IntVarP(&o.delay, "delay", "d", 0, "set queue message sending delay seconds")
+	cmd.PersistentFlags().IntVarP(&o.maxReceive, "max-receive", "r", 0, "set dead-letter max receive count")
+	cmd.PersistentFlags().IntVarP(&o.messages, "messages", "m", 1, "set dead-letter max receive count")
+	cmd.PersistentFlags().StringVarP(&o.deadLetter, "dead-letter-queue", "q", "", "set dead-letter queue name")
+	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "", "", "set queue message metadata field")
 
 	return cmd
 }

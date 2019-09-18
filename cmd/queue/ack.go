@@ -18,14 +18,14 @@ type QueueAckOptions struct {
 }
 
 var queueAckExamples = `
-	# Ack all messages in a queue channel 'some-channel' with 2 seconds of wait to complete operation
+	# Ack all messages in a 'queues' channel 'some-channel' with 2 seconds of wait to complete operation
 	kubemqctl queue ack some-channel
 	
-	# Ack all messages in a queue channel 'some-long-queue' with 30 seconds of wait to complete operation
+	# Ack all messages in a 'queues' channel 'some-long-queue' with 30 seconds of wait to complete operation
 	kubemqctl queue ack some-long-queue -w 30
 `
-var queueAckLong = `Ack all messages in a queue channel`
-var queueAckShort = `Ack all messages in a queue channel`
+var queueAckLong = `Ack command allows to clear / remove / ack all messages in a 'queues' channel`
+var queueAckShort = `Ack all messages in a 'queues' channel`
 
 func NewCmdQueueAck(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueueAckOptions{
@@ -48,7 +48,7 @@ func NewCmdQueueAck(ctx context.Context, cfg *config.Config) *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().IntVarP(&o.wait, "wait", "w", 2, "Set how many seconds to wait for ack all messages")
+	cmd.PersistentFlags().IntVarP(&o.wait, "wait", "w", 2, "set how many seconds to wait for ack all messages")
 
 	return cmd
 }
@@ -80,10 +80,10 @@ func (o *QueueAckOptions) Run(ctx context.Context) error {
 		SetWaitTimeSeconds(o.wait).
 		Send(ctx)
 	if err != nil {
-		return fmt.Errorf("ack all queue messages, %s", err.Error())
+		return fmt.Errorf("ack all 'queues' messages, %s", err.Error())
 	}
 	if res.IsError {
-		return fmt.Errorf("peek queue message, %s", res.Error)
+		return fmt.Errorf("ack all 'queues' message, %s", res.Error)
 	}
 	utils.Printlnf("acked %d messages", res.AffectedMessages)
 

@@ -1,30 +1,31 @@
 package queue
 
 import (
+	"context"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/spf13/cobra"
 )
 
 var queueExamples = `
-	# Execute send to queue command
+	# Execute send 'queues' command
 	kubemqctl queues send
 
-	# Execute attached to a queue command
+	# Execute attached to 'queues' command
 	kubemqctl queues attach
 
-	# Execute receive to queue command
+	# Execute receive 'queues' command
 	kubemqctl queues receive
 	
-	# Execute list queue command
+	# Execute list 'queues' command
 	kubemqctl queues list
 
-	# Execute peek queue command
+	# Execute peek 'queues' command
 	kubemqctl queues peak
 
-	# Execute ack queue command
+	# Execute ack 'queues' command
 	 kubemqctl queues ack
 
-	# Execute stream queue command
+	# Execute stream 'queues' command
 	kubemqctl queues stream
 `
 var queueLong = `Execute KubeMQ 'queues' commands`

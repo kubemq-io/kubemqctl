@@ -21,23 +21,23 @@ type QueueAttachOptions struct {
 }
 
 var queueAttachExamples = `
-	# Attach to all queues and output running messages
+	# Attach to all active 'queues' channels and output running messages
 	kubemqctl queue attach all
 	
-	# Attach to some-queue queue and output running messages
+	# Attach to some-queue queue channel and output running messages
 	kubemqctl queue attach some-queue
 
-	# Attach to some-queue1 and some-queue2 queues and output running messages
+	# Attach to some-queue1 and some-queue2 queue channels and output running messages
 	kubemqctl queue attach some-queue1 some-queue2 
 
-	# Attach to some-queue queue and output running messages filter by include regex (some*)
+	# Attach to some-queue queue channel and output running messages filter by include regex (some*)
 	kubemqctl queue attach some-queue -i some*
 
-	# Attach to some-queue queue and output running messages filter by exclude regex (not-some*)
+	# Attach to some-queue queue channel and output running messages filter by exclude regex (not-some*)
 	kubemqctl queue attach some-queue -e not-some*
 `
-var queueAttachLong = `Attach to queue channels and display content`
-var queueAttachShort = `Attach to queue channels`
+var queueAttachLong = `Attach command allows to display 'queues' channel content for debugging proposes`
+var queueAttachShort = `Attach to 'queues' channels command`
 
 func NewCmdQueueAttach(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueueAttachOptions{
@@ -59,8 +59,8 @@ func NewCmdQueueAttach(ctx context.Context, cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().StringArrayVarP(&o.include, "include", "i", []string{}, "Set (regex) strings to include")
-	cmd.PersistentFlags().StringArrayVarP(&o.exclude, "exclude", "e", []string{}, "Set (regex) strings to exclude")
+	cmd.PersistentFlags().StringArrayVarP(&o.include, "include", "i", []string{}, "aet (regex) strings to include")
+	cmd.PersistentFlags().StringArrayVarP(&o.exclude, "exclude", "e", []string{}, "set (regex) strings to exclude")
 	return cmd
 }
 
@@ -71,7 +71,7 @@ func (o *QueueAttachOptions) Complete(args []string, transport string) error {
 
 	}
 	if len(args) == 1 && args[0] == "all" {
-		utils.Println("retrieve all active queue channels list...")
+		utils.Println("retrieve all active 'queues' channels list...")
 		resp := &Response{}
 		queues := &Queues{}
 
@@ -89,7 +89,7 @@ func (o *QueueAttachOptions) Complete(args []string, transport string) error {
 		if err != nil {
 			return err
 		}
-		utils.Printlnf("found %d active queue channels.", queues.Total)
+		utils.Printlnf("found %d active 'queues' channels.", queues.Total)
 		for _, q := range queues.Queues {
 			rsc := fmt.Sprintf("queue/%s", q.Name)
 			o.resources = append(o.resources, rsc)

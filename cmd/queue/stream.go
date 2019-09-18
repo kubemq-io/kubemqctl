@@ -22,10 +22,10 @@ type QueueStreamOptions struct {
 }
 
 var queueStreamExamples = `
-	# Stream queue message in transaction mode
+	# Stream 'queues' message in transaction mode
 	kubemqctl queue stream some-channel
 
-	# Stream queue message in transaction mode with visibility set to 120 seconds and wait time of 180 seconds
+	# Stream 'queues' message in transaction mode with visibility set to 120 seconds and wait time of 180 seconds
 	kubemqctl queue stream some-channel -v 120 -w 180
 `
 var queueStreamLong = `Stream a message from a queue`
@@ -51,8 +51,8 @@ func NewCmdQueueStream(ctx context.Context, cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().IntVarP(&o.visibility, "visibility", "v", 30, "Set initial visibility seconds")
-	cmd.PersistentFlags().IntVarP(&o.wait, "wait", "w", 60, "Set how many seconds to wait for queue messages")
+	cmd.PersistentFlags().IntVarP(&o.visibility, "visibility", "v", 30, "set initial visibility seconds")
+	cmd.PersistentFlags().IntVarP(&o.wait, "wait", "w", 60, "set how many seconds to wait for 'queues' messages")
 
 	return cmd
 }
