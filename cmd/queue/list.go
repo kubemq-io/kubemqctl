@@ -28,8 +28,8 @@ var queueListExamples = `
 	# Get a list of queues / clients filtered by 'some-queue' channel only
 	kubemqctl queue list -f some-queue
 `
-var queueListLong = `Get a list of queues / clients`
-var queueListShort = `Get a list of queues / clients`
+var queueListLong = `List command allows to get a list of 'queues' channels / clients with details`
+var queueListShort = `Get a list of 'queues' channels / clients command`
 
 func NewCmdQueueList(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueueListOptions{
@@ -51,7 +51,7 @@ func NewCmdQueueList(ctx context.Context, cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().StringVarP(&o.filter, "filter", "f", "", "Set filter for channel / client name")
+	cmd.PersistentFlags().StringVarP(&o.filter, "filter", "f", "", "set filter for channel / client name")
 	return cmd
 }
 

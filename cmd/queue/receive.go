@@ -24,17 +24,17 @@ type QueueReceiveOptions struct {
 }
 
 var queueReceiveExamples = `
-	# Receive 1 messages from a 'queues' and wait for 2 seconds (default)
-	kubemqctl queue receive some-channel
+	# Receive 1 messages from a queue channel q1 and wait for 2 seconds (default)
+	kubemqctl queue receive q1
 
-	# Receive 3 messages from a 'queues' and wait for 5 seconds
-	kubemqctl queue receive some-channel -m 3 -T 5
+	# Receive 3 messages from a queue channel and wait for 5 seconds
+	kubemqctl queue receive q1 -m 3 -t 5
 
 	# Watching 'queues' channel messages
-	kubemqctl queue receive some-channel -w
+	kubemqctl queue receive q1 -w
 `
-var queueReceiveLong = `Receive a messages from a 'queues' channel`
-var queueReceiveShort = `Receive a messages from a 'queues' channel`
+var queueReceiveLong = `Receive command allows to receive one or many messages from a queue channel`
+var queueReceiveShort = `Receive a messages from a queue channel command`
 
 func NewCmdQueueReceive(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueueReceiveOptions{
@@ -57,8 +57,8 @@ func NewCmdQueueReceive(ctx context.Context, cfg *config.Config) *cobra.Command 
 		},
 	}
 
-	cmd.PersistentFlags().IntVarP(&o.messages, "messages", "m", 1, "set how many messages we want to get from queue")
-	cmd.PersistentFlags().IntVarP(&o.wait, "wait-timeout", "T", 2, "set how many seconds to wait for 'queues' messages")
+	cmd.PersistentFlags().IntVarP(&o.messages, "messages", "m", 1, "set how many messages we want to get from a queue")
+	cmd.PersistentFlags().IntVarP(&o.wait, "wait-timeout", "t", 2, "set how many seconds to wait for 'queues' messages")
 	cmd.PersistentFlags().BoolVarP(&o.watch, "watch", "w", false, "set watch on 'queues' channel")
 
 	return cmd
@@ -101,7 +101,7 @@ func (o *QueueReceiveOptions) Run(ctx context.Context) error {
 			utils.Println(fmt.Errorf("receive 'queues' messages, %s", err.Error()).Error())
 		}
 		if res.IsError {
-			utils.Println(fmt.Errorf("receive 'queues' message %s", res.Error).Error())
+			utils.Println(fmt.Errorf("receive 'queues' messages %s", res.Error).Error())
 		}
 
 		if res != nil && res.MessagesReceived > 0 {

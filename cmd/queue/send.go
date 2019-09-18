@@ -25,26 +25,26 @@ type QueueSendOptions struct {
 }
 
 var queueSendExamples = `
-	# Send message to a 'queues' channel
-	kubemqctl queue send some-channel some-message
+	# Send message to a queue channel channel
+	kubemqctl queue send q1 some-message
 	
 	# Send message to a queue channel with metadata
-	kubemqctl queue send some-channel some-message --metadata some-metadata
+	kubemqctl queue send q1 some-message --metadata some-metadata
 	
 	# Send 5 messages to a queues channel with metadata
-	kubemqctl queue send some-channel some-message --metadata some-metadata -m 5
+	kubemqctl queue send q1 some-message --metadata some-metadata -m 5
 	
-	# Send message to a queue with a message expiration of 5 seconds
-	kubemqctl queue send some-channel some-message -e 5
+	# Send message to a queue channel with a message expiration of 5 seconds
+	kubemqctl queue send q1 some-message -e 5
 
-	# Send message to a queue with a message delay of 5 seconds
-	kubemqctl queue send some-channel some-message -d 5
+	# Send message to a queue channel with a message delay of 5 seconds
+	kubemqctl queue send q1 some-message -d 5
 
-	# Send message to a queue with a message policy of max receive 5 times and dead-letter queue 'dead-letter'
-	kubemqctl queue send some-channel some-message -r 5 -q dead-letter
+	# Send message to a queue channel with a message policy of max receive 5 times and dead-letter queue 'dead-letter'
+	kubemqctl queue send q1 some-message -r 5 -q dead-letter
 `
-var queueSendLong = `Send a message to a queue channel`
-var queueSendShort = `Send a message to a queue channel`
+var queueSendLong = `Send command allows to send one or many message to a queue channel`
+var queueSendShort = `Send a message to a queue channel command`
 
 func NewCmdQueueSend(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueueSendOptions{

@@ -63,7 +63,7 @@ func init() {
 		viper.SetConfigName(".kubemqctl")
 		err := viper.ReadInConfig()
 		utils.CheckErr(err)
-		err = viper.Unmarshal(ctx, cfg)
+		err = viper.Unmarshal(cfg)
 		utils.CheckErr(err)
 	}
 

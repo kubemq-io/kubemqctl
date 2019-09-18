@@ -28,8 +28,8 @@ var eventsStoreListExamples = `
 	# Get a list of events stores channels/ clients filtered by 'some-events-store' channel only
 	kubemqctl events_store list -f some-events-store
 `
-var eventsStoreListLong = `List command allows to get a list of events store channels / clients with details`
-var eventsStoreListShort = `Get a list of events store channels / clients command`
+var eventsStoreListLong = `List command allows to get a list of 'events store' channels / clients with details`
+var eventsStoreListShort = `Get a list of 'events store' channels / clients command`
 
 func NewCmdEventsStoreList(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &EventsStoreListOptions{
