@@ -25,6 +25,7 @@ var rootCmd = &cobra.Command{
 }
 
 func Execute(version string) {
+
 	rootCmd.Version = version
 	defer utils.CheckErr(cfg.Save())
 	ctx, cancel := context.WithCancel(context.Background())
@@ -37,6 +38,7 @@ func Execute(version string) {
 	rootCmd.AddCommand(configCmd.NewCmdConfig(ctx, cfg))
 	rootCmd.AddCommand(cluster.NewCmdCluster(ctx, cfg))
 
+	//_ = doc.GenMarkdownTree(rootCmd, "./docs")
 	utils.CheckErr(rootCmd.Execute())
 
 }
