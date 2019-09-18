@@ -24,4 +24,4 @@ changelog:
 brew:
   github:
     owner: kubemq-io
-    name: kubemqctl
+    name: homebrew-tap

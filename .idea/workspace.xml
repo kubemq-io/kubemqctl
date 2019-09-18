@@ -2,47 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="docs and cleaning">
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_cluster.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_cluster_apply.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_cluster_context.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_cluster_create.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_cluster_dashboard.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_cluster_delete.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_cluster_describe.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_cluster_events.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_cluster_get.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_cluster_logs.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_cluster_proxy.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_cluster_scale.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_commands.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_commands_attach.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_commands_receive.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_commands_send.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_config.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_events.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_events_attach.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_events_receive.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_events_send.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_events_store.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_events_store_attach.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_events_store_list.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_events_store_receive.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_events_store_send.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_queries.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_queries_attach.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_queries_receive.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_queries_send.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_queues.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_queues_ack.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_queues_attach.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_queues_list.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_queues_peek.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_queues_receive.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_queues_send.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_queues_stream.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.goreleaser.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.goreleaser.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/root/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root/root.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -136,9 +97,9 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Go Build.go build kubetools" />
       <item itemvalue="Go Build.go build client.go" />
       <item itemvalue="Go Build.go build github.com/kubemq-io/kubetools" />
+      <item itemvalue="Go Build.go build kubetools" />
     </list>
     <recent_temporary>
       <list>
@@ -344,7 +305,21 @@
       <option name="project" value="LOCAL" />
       <updated>1568815524710</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="docs and cleaning">
+      <created>1568815949550</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1568815949550</updated>
+    </task>
+    <task id="LOCAL-00029" summary="release v2.0.0">
+      <created>1568820789848</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1568820789848</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -402,7 +377,8 @@
     <MESSAGE value="add events" />
     <MESSAGE value="editing cluster command documentation" />
     <MESSAGE value="docs and cleaning" />
-    <option name="LAST_COMMIT_MESSAGE" value="docs and cleaning" />
+    <MESSAGE value="release v2.0.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="release v2.0.0" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
