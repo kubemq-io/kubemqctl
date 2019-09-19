@@ -20,10 +20,10 @@ type ApplyOptions struct {
 
 var applyExamples = `
 	# Apply KubeMQ cluster deployment
-	# kubemqctl cluster apply kubemq-cluster.yaml 
+	kubemqctl cluster apply kubemq-cluster.yaml 
 
 	# Apply KubeMQ cluster deployment with watching status and events
-	# kubemqctl cluster apply kubemq-cluster.yaml -w -s
+	kubemqctl cluster apply kubemq-cluster.yaml -w -s
 
 `
 var applyLong = `Apply command allows an update to a KubeMQ StatefulSet configuration with a yaml file`

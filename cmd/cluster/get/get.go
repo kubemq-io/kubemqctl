@@ -18,7 +18,7 @@ type ListOptions struct {
 
 var statusExamples = `
 	# Get status of KubeMQ of clusters
-	kubemqctl cluster list
+	kubemqctl cluster get
 `
 var statusLong = `Get command allows to show the current information of KubeMQ of clusters`
 var statusShort = `Get information of KubeMQ of clusters command`

@@ -26,19 +26,19 @@ type CreateOptions struct {
 
 var createExamples = `
 	# Create default KubeMQ cluster
-	# kubemqctl cluster create -t b33600cc-93ef-4395-bba3-13131eb27d5e 
+	kubemqctl cluster create -t b33600cc-93ef-4395-bba3-13131eb27d5e 
 
 	# Create default KubeMQ cluster and watch events and status
-	# kubemqctl cluster create -t b3d3600cc-93ef-4395-bba3-13131eb27d5e -w -s
+	kubemqctl cluster create -t b3d3600cc-93ef-4395-bba3-13131eb27d5e -w -s
 
 	# Import KubeMQ cluster yaml file  
-	# kubemqctl cluster create -f kubemq-cluster.yaml
+	kubemqctl cluster create -f kubemq-cluster.yaml
 
 	# Create KubeMQ cluster with options
-	# kubemqctl cluster create -t b33d30scc-93ef-43565-bba3-13131sb2785e -o
+	kubemqctl cluster create -t b33d30scc-93ef-43565-bba3-13131sb2785e -o
 
 	# Export KubeMQ cluster yaml file    
-	# kubemqctl cluster create -t b3d330scc-93qf-4395-bba3-13131sb2785e -e 
+	kubemqctl cluster create -t b3d330scc-93qf-4395-bba3-13131sb2785e -e 
 `
 var createLong = `Create command allows to deploy a KubeMQ cluster with configuration options`
 var createShort = `Create a KubeMQ cluster command`

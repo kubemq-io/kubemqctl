@@ -54,7 +54,7 @@ func NewCmdProxy(ctx context.Context, cfg *config.Config) *cobra.Command {
 }
 
 func (o *ProxyOptions) Complete(args []string) error {
-	o.Ports = []string{"8080,9090,50000"}
+	o.Ports = []string{"8080", "9090", "50000"}
 	return nil
 }
 
@@ -92,7 +92,7 @@ func (o *ProxyOptions) Run(ctx context.Context) error {
 	}
 	ns, name := client.StringSplit(selection)
 	o.Namespace = ns
-	o.Pod = name
+	o.StatefulSet = name
 
 	err = k8s.SetProxy(ctx, o.ProxyOptions)
 	if err != nil {

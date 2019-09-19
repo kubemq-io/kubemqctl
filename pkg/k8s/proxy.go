@@ -18,7 +18,7 @@ type ProxyOptions struct {
 }
 
 func SetProxy(ctx context.Context, opts *ProxyOptions) error {
-	utils.Print("connecting to kuberenets cluster... ")
+
 	c, err := client.NewClient(opts.KubeConfig)
 	if err != nil {
 		return err
@@ -29,6 +29,7 @@ func SetProxy(ctx context.Context, opts *ProxyOptions) error {
 			return err
 		}
 	}
+	utils.Print("connecting to kuberenets cluster... ")
 	stopCh := make(chan struct{})
 	outCh, errOutCh := make(chan string, 1), make(chan string, 1)
 	err = c.ForwardPorts(opts.Namespace, opts.Pod, opts.Ports, stopCh, outCh, errOutCh)
