@@ -30,6 +30,7 @@ Use "kubemqctl [command] --help" for more information about a command.
 ```bash
 curl -L https://github.com/kubemq-io/kubemqctl/releases/download/latest/kubemqctl_darwin_amd64 -o /usr/local/bin/kubemqctl 
 chmod +x /usr/local/bin/kubemqctl
+
 ```
 
 ### Linux 64 bits:
@@ -37,8 +38,17 @@ chmod +x /usr/local/bin/kubemqctl
 ```bash
 curl -L https://github.com/kubemq-io/kubemqctl/releases/download/latest/kubemqctl_linux_amd64 -o /usr/local/bin/kubemqctl
 chmod +x /usr/local/bin/kubemqctl
+
 ```
 
+
+### Linux 32 bits:
+
+```bash
+curl -L https://github.com/kubemq-io/kubemqctl/releases/download/latest/kubemqctl_linux_386 -o /usr/local/bin/kubemqctl
+chmod +x /usr/local/bin/kubemqctl
+
+```
 
 ### Windows:
 
