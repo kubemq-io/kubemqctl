@@ -27,57 +27,39 @@ Use "kubemqctl [command] --help" for more information about a command.
 
 ### Mac OS:
 
-#### Homebrew
-
-Use Homebrew to install 'kubemqctl' on macOS:
-``` bash
-brew install kubemq-io/homebrew-tap/kubemqctl
-```
-
-#### Download Release
-
-Download, extract kubemqctl release, move to local bin and set permissions.
-
 ```bash
-curl -L https://github.com/kubemq-io/kubemqctl/releases/download/v<version>/kubemqctl_<version>_darwin_amd64.tar.gz | tar -xzv
-sudo mv ~/kubemqctl /usr/local/bin
+curl -L https://github.com/kubemq-io/kubemqctl/releases/download/latest/kubemqctl_darwin_amd64 -o /usr/local/bin/kubemqctl 
 chmod +x /usr/local/bin/kubemqctl
 ```
 
 ### Linux 64 bits:
 
-#### Download Release
-
-Download, extract kubemqctl release, move to local bin and set permissions.
-
 ```bash
-curl -L https://github.com/kubemq-io/kubemqctl/releases/download/v<version>/kubemqctl_<version>_linux_amd64.tar.gz | tar -xzv
-sudo mv ~/kubemqctl /usr/local/bin
-chmod +x /usr/local/bin/kubemqctl
-```
-
-### Linux 32 bits:
-
-#### Download Release
-
-Download, extract kubemqctl release, move to local bin and set permissions.
-
-```bash
-curl -L https://github.com/kubemq-io/kubemqctl/releases/download/v<version>/kubemqctl_<version>_linux_386.tar.gz | tar -xzv
-sudo mv ~/kubemqctl /usr/local/bin
+curl -L https://github.com/kubemq-io/kubemqctl/releases/download/latest/kubemqctl_linux_amd64 -o /usr/local/bin/kubemqctl
 chmod +x /usr/local/bin/kubemqctl
 ```
 
 
 ### Windows:
 
-- [Download the kubemqctl zip file](https://github.com/kubemq-io/kubemqctl/releases/download/v<version>/kubemqctl_<version>_windows_amd64.zip).
-- unzip the downloaded file
+Run in PowerShell as administrator:
+
+```powershell
+New-Item -ItemType Directory 'C:\Program Files\Kubemqctl'
+Invoke-WebRequest https://github.com/kubemq-io/kubemqctl/releases/download/latest/kubemqctl.exe -OutFile 'C:\Program Files\Kubemqctl\kubemqctl.exe'
+[Environment]::SetEnvironmentVariable('Path', [Environment]::GetEnvironmentVariable('Path', [EnvironmentVariableTarget]::Machine) + ';C:\Program Files\Kubemqctl', [EnvironmentVariableTarget]::Machine)
+$env:Path += ';C:\Program Files\Kubemqctl'
+```
+
+Or manually:
+
+- [Download the latest kubemqctl.exe](https://github.com/kubemq-io/kubemqctl/releases/download/latest/kubemqctl.exe).
+- Place the file under e.g. `C:\Program Files\Kubemqctl\kubemqctl.exe`
 - Add that directory to your system path to access it from any command prompt
- ([Windows users can follow How to: Add Tool Locations to the PATH Environment Variable in order to add kubemqctl to their PATH](https://msdn.microsoft.com/en-us/library/office/ee537574(v=office.14).aspx)).
+
 
 ## Documantation
-Please visit our [docs](https://docs.kubemq.io/tutorials/kubemqctl.html) for detailed Kubemqctl documentation.
+Please visit our [docs](https://docs.kubemq.io/kubemqctl/kubemqctl.html) for detailed Kubemqctl documentation.
 
 
 ## Support
