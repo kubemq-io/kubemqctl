@@ -1,6 +1,6 @@
 # Kubemqctl
 
-Kubemqctl is a command line interface for [KubeMQ](https://kubemq.io) Kubernetes Message Broker.
+Kubemqctl is a command line interface (CLI) for [KubeMQ](https://kubemq.io) [Kubernetes](https://kubernetes.io/) Message Broker.
 
 ```bash
 Usage:
@@ -66,6 +66,10 @@ Or manually:
 - [Download the latest kubemqctl.exe](https://github.com/kubemq-io/kubemqctl/releases/download/latest/kubemqctl.exe).
 - Place the file under e.g. `C:\Program Files\Kubemqctl\kubemqctl.exe`
 - Add that directory to your system path to access it from any command prompt
+
+## KubeMQ Token
+
+Please visit [Register/Login](https://account.kubemq.io/login/register) to obtain KubeMQ token.
 
 
 ## Documantation
