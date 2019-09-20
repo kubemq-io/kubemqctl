@@ -91,7 +91,19 @@ func (o *CreateOptions) Complete(args []string) error {
 			o.deployOptions.Token = o.cfg.DefaultToken
 			utils.Printlnf("Create using save KubeMQ token: %s", o.cfg.DefaultToken)
 		} else {
-			return fmt.Errorf("No KubeMQ token provided")
+			prompt := &conf.Input{
+				Message:    "Please enter KubeMQ Token:",
+				Validators: []conf.Validator{conf.IsValidToken()},
+				Default:    "",
+				Help:       "",
+			}
+
+			err := prompt.Ask(&o.deployOptions.Token)
+			if err != nil {
+				return err
+			}
+			o.cfg.DefaultToken = o.deployOptions.Token
+			_ = o.cfg.Save()
 		}
 
 	} else {
