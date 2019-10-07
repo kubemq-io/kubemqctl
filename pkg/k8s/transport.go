@@ -110,5 +110,5 @@ func GetRunningPod(client *client.Client, ns, sts string) (string, string, error
 		return ns, randPort, nil
 	}
 
-	return "", "", fmt.Errorf("no running pods available in %s/%s. you can change the currnet context with 'kubemqctl config' command", ns, sts)
+	return "", "", fmt.Errorf("no running pods available in %s/%s. you can change the current context with 'kubemqctl config' command", ns, sts)
 }
