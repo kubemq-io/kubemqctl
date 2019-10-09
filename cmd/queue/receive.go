@@ -106,10 +106,8 @@ func (o *QueueReceiveOptions) Run(ctx context.Context) error {
 
 		if res != nil && res.MessagesReceived > 0 {
 			printItems(res.Messages)
-		} else {
-			if !o.watch {
-				utils.Println("No new messages in queue")
-			}
+		} else if !o.watch {
+			utils.Println("No new messages in queue")
 
 		}
 		if !o.watch {
