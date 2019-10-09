@@ -132,7 +132,7 @@ func stsToStatus(sts *appsv1.StatefulSet) *StatefulSetStatus {
 		Running:   sts.Status.Replicas,
 		Ready:     sts.Status.ReadyReplicas,
 		Image:     "",
-		Age:       time.Now().Sub(sts.CreationTimestamp.Time),
+		Age:       time.Since(sts.CreationTimestamp.Time),
 		PVC:       false,
 	}
 	for _, container := range sts.Spec.Template.Spec.Containers {

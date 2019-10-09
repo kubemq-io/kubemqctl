@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func (c *Client) GetEvents(ctx context.Context, evtCh chan *apiv1.Event, done chan struct{}) error {
+func (c *Client) GetEvents(ctx context.Context, evtCh chan *apiv1.Event, done chan struct{}) {
 	kubeInformerFactory := kubeinformers.NewSharedInformerFactory(c.ClientSet, time.Second*5)
 	eventsInformer := kubeInformerFactory.Core().V1().Events().Informer()
 	stop := make(chan struct{})
@@ -40,9 +40,9 @@ func (c *Client) GetEvents(ctx context.Context, evtCh chan *apiv1.Event, done ch
 	for {
 		select {
 		case <-done:
-			return nil
+			return
 		case <-ctx.Done():
-			return nil
+			return
 
 		}
 	}
