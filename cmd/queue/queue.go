@@ -38,7 +38,7 @@ func NewCmdQueue(ctx context.Context, cfg *config.Config) *cobra.Command {
 		Use:       "queues",
 		Aliases:   []string{"q", "qu", "queue"},
 		Short:     queueShort,
-		Long:      queueShort,
+		Long:      queueLong,
 		Example:   queueExamples,
 		ValidArgs: []string{"send", "receive", "attach", "peek", "ack", "list", "stream"},
 		Run: func(cmd *cobra.Command, args []string) {

@@ -83,7 +83,7 @@ func TestClient_SwitchContext(t *testing.T) {
 	require.NoError(t, err)
 	require.NotEmpty(t, current)
 	switched := false
-	for name, _ := range contexts {
+	for name := range contexts {
 		if name != current {
 			err := c.SwitchContext(name)
 			require.NoError(t, err)
@@ -112,7 +112,7 @@ func TestClient_GetService(t *testing.T) {
 	c, err := NewClient("")
 	require.NoError(t, err)
 	require.NotNil(t, c)
-	services, err := c.GetServices("", "kube")
+	services, err := c.GetServices("", map[string]string{"Service": "kubemq-cluster"})
 	require.NoError(t, err)
 	require.NotEmpty(t, services)
 	fmt.Println(services)

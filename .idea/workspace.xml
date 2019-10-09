@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="docs and cleaning">
-      <change beforePath="$PROJECT_DIR$/.goreleaser.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.goreleaser.yml" afterDir="false" />
+    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/context/context.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/context/context.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/queue/queue.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/queue.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/attach/attach.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/attach/attach.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/client_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/client_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/events.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/events.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/deployment/templates.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/templates.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/logs/tail.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/logs/tail.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/logs/tail_test.go" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,12 +28,11 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="C:\Go\go1.13" />
+  <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1OdmsJ7UpfbJKnTEvPEFfIoGK0g" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -42,17 +51,17 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
+    <property name="settings.editor.selected.configurable" value="watcher.settings" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/.github" />
+      <recent name="$PROJECT_DIR$/cmd" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/cmd/cluster/events" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/.github" />
-      <recent name="$PROJECT_DIR$/cmd" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -97,9 +106,9 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Go Build.go build kubetools" />
       <item itemvalue="Go Build.go build client.go" />
       <item itemvalue="Go Build.go build github.com/kubemq-io/kubetools" />
-      <item itemvalue="Go Build.go build kubetools" />
     </list>
     <recent_temporary>
       <list>
@@ -299,27 +308,20 @@
       <updated>1568796808989</updated>
     </task>
     <task id="LOCAL-00027" summary="docs and cleaning">
-      <created>1568815524710</created>
+      <created>1568797705603</created>
       <option name="number" value="00027" />
       <option name="presentableId" value="LOCAL-00027" />
       <option name="project" value="LOCAL" />
-      <updated>1568815524710</updated>
+      <updated>1568797705603</updated>
     </task>
-    <task id="LOCAL-00028" summary="docs and cleaning">
-      <created>1568815949550</created>
+    <task id="LOCAL-00028" summary="add proxy ports info">
+      <created>1569161362059</created>
       <option name="number" value="00028" />
       <option name="presentableId" value="LOCAL-00028" />
       <option name="project" value="LOCAL" />
-      <updated>1568815949550</updated>
+      <updated>1569161362060</updated>
     </task>
-    <task id="LOCAL-00029" summary="release v2.0.0">
-      <created>1568820789848</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1568820789848</updated>
-    </task>
-    <option name="localTasksCounter" value="30" />
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -377,8 +379,8 @@
     <MESSAGE value="add events" />
     <MESSAGE value="editing cluster command documentation" />
     <MESSAGE value="docs and cleaning" />
-    <MESSAGE value="release v2.0.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="release v2.0.0" />
+    <MESSAGE value="add proxy ports info" />
+    <option name="LAST_COMMIT_MESSAGE" value="add proxy ports info" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

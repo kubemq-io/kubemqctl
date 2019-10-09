@@ -68,7 +68,7 @@ func (c *Client) PrintEvents(ctx context.Context, namespace, name string) error 
 			if e.InvolvedObject.Namespace != namespace || !strings.Contains(e.InvolvedObject.Name, name) {
 				continue
 			}
-			if time.Now().Sub(e.LastTimestamp.Time) < time.Second {
+			if time.Since(e.LastTimestamp.Time) < time.Second {
 				utils.Printlnf("[Event] [%s] [%s] [%s/%s] -> %s", e.Type, e.Reason, e.InvolvedObject.Kind, e.InvolvedObject.Name, strings.TrimSpace(e.Message))
 
 			}

@@ -204,7 +204,7 @@ func (c *Client) GetKubeMQClustersStatus() ([]*StatefulSetStatus, error) {
 					Running:   set.Status.Replicas,
 					Ready:     set.Status.ReadyReplicas,
 					Image:     container.Image,
-					Age:       time.Now().Sub(set.CreationTimestamp.Time),
+					Age:       time.Since(set.CreationTimestamp.Time),
 				}
 				list = append(list, sts)
 				continue

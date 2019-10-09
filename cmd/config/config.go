@@ -30,7 +30,7 @@ func NewCmdConfig(ctx context.Context, cfg *config.Config) *cobra.Command {
 		Aliases: []string{"conf", "con"},
 		Short:   configShort,
 		Long:    configLong,
-
+		Example: configExamples,
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
@@ -101,7 +101,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 			return err
 		}
 		list := []string{}
-		for key, _ := range contextMap {
+		for key := range contextMap {
 			list = append(list, key)
 		}
 		sort.Strings(list)

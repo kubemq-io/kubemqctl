@@ -15,7 +15,6 @@ import (
 )
 
 var retries = 10
-var retryInterval = 100 * time.Millisecond
 
 func runWebsocketClientReaderWriter(ctx context.Context, uri string, chRead chan string, chWrite chan string, ready chan struct{}, errCh chan error) {
 	var c *websocket.Conn

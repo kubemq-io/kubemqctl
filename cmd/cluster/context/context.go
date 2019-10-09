@@ -66,7 +66,7 @@ func (o *ContextOptions) Run(ctx context.Context) error {
 		return err
 	}
 	list := []string{}
-	for key, _ := range contextMap {
+	for key := range contextMap {
 		list = append(list, key)
 	}
 	sort.Strings(list)

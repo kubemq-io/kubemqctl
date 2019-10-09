@@ -94,13 +94,6 @@ spec:
     app: {{.AppName}}
 `
 
-var defaultNameSpaceTemplate = `
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: {{.Namespace}}
-`
-
 type Template struct {
 	Structure string
 	Data      interface{}

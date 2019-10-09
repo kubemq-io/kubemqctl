@@ -77,9 +77,9 @@ func (c *Config) GetGRPCHostPort() (string, int) {
 
 func (c *Config) GetRestHttpURI() string {
 	if c.IsSecured {
-		return fmt.Sprintf("https://%s:%s", c.Host, c.RestPort)
+		return fmt.Sprintf("https://%s:%d", c.Host, c.RestPort)
 	} else {
-		return fmt.Sprintf("http://%s:%s", c.Host, c.RestPort)
+		return fmt.Sprintf("http://%s:%d", c.Host, c.RestPort)
 	}
 
 }
