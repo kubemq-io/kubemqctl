@@ -144,7 +144,7 @@ func stsToStatus(sts *appsv1.StatefulSet) *StatefulSetStatus {
 	return stss
 }
 
-func (c *Client) GetStatefulSetEvents(ctx context.Context, evt chan *appsv1.StatefulSet, done chan struct{}) error {
+func (c *Client) GetStatefulSetEvents(ctx context.Context, evt chan *appsv1.StatefulSet, done chan struct{}) {
 	kubeInformerFactory := kubeinformers.NewSharedInformerFactory(c.ClientSet, time.Second*5)
 	stsInformer := kubeInformerFactory.Apps().V1().StatefulSets().Informer()
 	stop := make(chan struct{})
@@ -174,9 +174,9 @@ func (c *Client) GetStatefulSetEvents(ctx context.Context, evt chan *appsv1.Stat
 	for {
 		select {
 		case <-done:
-			return nil
+			return
 		case <-ctx.Done():
-			return nil
+			return
 
 		}
 	}

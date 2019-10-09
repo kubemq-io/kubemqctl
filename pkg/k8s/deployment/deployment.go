@@ -222,23 +222,38 @@ func (sd *StatefulSetDeployment) Execute(name, namespace string) (bool, error) {
 	return true, nil
 }
 
+func writeSection(w *bufio.Writer, data []byte) error {
+	var err error
+	_, err = w.Write(data)
+	if err != nil {
+		return err
+	}
+	_, err = w.WriteString(fmt.Sprintf("---\n"))
+	if err != nil {
+		return err
+	}
+	return nil
+}
 func (sd *StatefulSetDeployment) Export(out io.Writer) error {
+
 	w := bufio.NewWriter(out)
 	if sd.Namespace != nil {
 		data, err := yaml.Marshal(sd.Namespace)
 		if err != nil {
 			return err
 		}
-		w.Write(data)
-		w.WriteString(fmt.Sprintf("---\n"))
+		if err := writeSection(w, data); err != nil {
+			return err
+		}
 	}
 	if sd.StatefulSet != nil {
 		data, err := yaml.Marshal(sd.StatefulSet)
 		if err != nil {
 			return err
 		}
-		w.Write(data)
-		w.WriteString(fmt.Sprintf("---\n"))
+		if err := writeSection(w, data); err != nil {
+			return err
+		}
 	}
 
 	for _, svc := range sd.Services {
@@ -246,24 +261,27 @@ func (sd *StatefulSetDeployment) Export(out io.Writer) error {
 		if err != nil {
 			return err
 		}
-		w.Write(data)
-		w.WriteString(fmt.Sprintf("---\n"))
+		if err := writeSection(w, data); err != nil {
+			return err
+		}
 	}
 	for _, cm := range sd.ConfigMaps {
 		data, err := yaml.Marshal(cm)
 		if err != nil {
 			return err
 		}
-		w.Write(data)
-		w.WriteString(fmt.Sprintf("---\n"))
+		if err := writeSection(w, data); err != nil {
+			return err
+		}
 	}
 	for _, sec := range sd.Secrets {
 		data, err := yaml.Marshal(sec)
 		if err != nil {
 			return err
 		}
-		w.Write(data)
-		w.WriteString(fmt.Sprintf("---\n"))
+		if err := writeSection(w, data); err != nil {
+			return err
+		}
 	}
 
 	if err := w.Flush(); err != nil {
