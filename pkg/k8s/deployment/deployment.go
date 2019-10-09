@@ -151,6 +151,9 @@ func (sd *StatefulSetDeployment) CreateStatefulSetDeployment(o *Options, options
 		}
 		svc := &apiv1.Service{}
 		err = yaml.Unmarshal(spec, svc)
+		if err != nil {
+			return err
+		}
 		sd.Services = append(sd.Services, svc)
 	}
 	return nil
@@ -262,9 +265,8 @@ func (sd *StatefulSetDeployment) Export(out io.Writer) error {
 		w.Write(data)
 		w.WriteString(fmt.Sprintf("---\n"))
 	}
-	var err error
-	err = w.Flush()
-	if err != nil {
+
+	if err := w.Flush(); err != nil {
 		return err
 	}
 	return nil

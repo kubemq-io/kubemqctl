@@ -14,6 +14,7 @@ import (
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/proxy"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/scale"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 
 	"github.com/spf13/cobra"
 )
@@ -66,7 +67,7 @@ func NewCmdCluster(ctx context.Context, cfg *config.Config) *cobra.Command {
 		Example:   clusterExamples,
 		ValidArgs: []string{"create", "context", "apply", "dashboard", "delete", "describe", "list", "logs", "proxy", "scale", "events"},
 		Run: func(cmd *cobra.Command, args []string) {
-			cmd.Help()
+			utils.CheckErr(cmd.Help())
 		},
 	}
 	cmd.AddCommand(logs.NewCmdLogs(ctx, cfg))

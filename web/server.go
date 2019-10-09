@@ -53,7 +53,7 @@ func (s *ServerOptions) Run(ctx context.Context) error {
 
 		path := fmt.Sprintf("http://localhost:%d/", s.Port)
 		utils.Printlnf("start dashboard on '%s' ...", path)
-		open.Run(path)
+		utils.CheckErr(open.Run(path))
 		err := http.ListenAndServe(fmt.Sprintf(":%d", s.Port), nil)
 		if err != nil {
 			utils.CheckErr(fmt.Errorf("dashboard runs already"))

@@ -150,8 +150,8 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 			return err
 		}
 	} else {
-		var err error
-		err = sd.CreateStatefulSetDeployment(o.deployOptions, o.optionsMenu)
+
+		err := sd.CreateStatefulSetDeployment(o.deployOptions, o.optionsMenu)
 		if err != nil {
 			return err
 		}

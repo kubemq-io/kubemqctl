@@ -56,7 +56,7 @@ func FormatEventSource(es apiv1.EventSource) string {
 	return strings.Join(EventSourceString, ", ")
 }
 
-func (c *Client) PrintEvents(ctx context.Context, namespace, name string) error {
+func (c *Client) PrintEvents(ctx context.Context, namespace, name string) {
 	evtDone := make(chan struct{})
 	evtChan := make(chan *apiv1.Event)
 
@@ -74,7 +74,7 @@ func (c *Client) PrintEvents(ctx context.Context, namespace, name string) error 
 			}
 		case <-ctx.Done():
 			evtDone <- struct{}{}
-			return nil
+			return
 		}
 	}
 

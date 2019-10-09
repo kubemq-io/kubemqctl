@@ -63,6 +63,9 @@ func (o *ListOptions) Run(ctx context.Context) error {
 	}
 
 	list, err := c.GetKubeMQClustersStatus()
+	if err != nil {
+		return err
+	}
 	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
 	fmt.Fprintf(w, "NAME\tDESIRED\tRUNNING\tREADY\tIMAGE\tAGE\tSERVICES\n")
 	for _, item := range list {

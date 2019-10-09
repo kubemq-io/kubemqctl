@@ -198,6 +198,9 @@ func (c *Client) Scale(ctx context.Context, ns, name string, replicas int32) err
 func (c *Client) DescribeStatefulSet(ns, name string) (string, error) {
 
 	sts, err := c.ClientSet.AppsV1().StatefulSets(ns).Get(name, metav1.GetOptions{})
+	if err != nil {
+		return "", err
+	}
 	data, err := json.Marshal(sts)
 	if err != nil {
 		return "", err
@@ -229,7 +232,7 @@ func (c *Client) DeleteVolumeClaimsForStatefulSet(name string) error {
 	return nil
 }
 
-func (c *Client) PrintStatefulSetStatus(ctx context.Context, desired int32, namespace, name string) error {
+func (c *Client) PrintStatefulSetStatus(ctx context.Context, desired int32, namespace, name string) {
 	stsDone := make(chan struct{})
 	stsCh := make(chan *appsv1.StatefulSet)
 
@@ -248,7 +251,7 @@ func (c *Client) PrintStatefulSetStatus(ctx context.Context, desired int32, name
 			}
 		case <-ctx.Done():
 			stsDone <- struct{}{}
-			return nil
+			return
 		}
 	}
 

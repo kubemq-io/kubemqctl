@@ -65,7 +65,7 @@ func svcsToStatus(svcs []apiv1.Service) []*ServiceStatus {
 			ClusterIP: svc.Spec.ClusterIP,
 			ExternalP: "",
 			Ports:     "",
-			Age:       time.Now().Sub(svc.CreationTimestamp.Time),
+			Age:       time.Since(svc.CreationTimestamp.Time),
 		}
 
 		if string(svc.Spec.Type) == "LoadBalancer" {

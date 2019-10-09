@@ -3,6 +3,7 @@ package queue
 import (
 	"context"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -42,7 +43,7 @@ func NewCmdQueue(ctx context.Context, cfg *config.Config) *cobra.Command {
 		Example:   queueExamples,
 		ValidArgs: []string{"send", "receive", "attach", "peek", "ack", "list", "stream"},
 		Run: func(cmd *cobra.Command, args []string) {
-			cmd.Help()
+			utils.CheckErr(cmd.Help())
 		},
 	}
 	cmd.AddCommand(NewCmdQueueSend(ctx, cfg))

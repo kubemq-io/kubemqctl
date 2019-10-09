@@ -3,6 +3,7 @@ package events_store
 import (
 	"context"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -32,7 +33,7 @@ func NewCmdEventsStore(ctx context.Context, cfg *config.Config) *cobra.Command {
 		Example:   eventsExamples,
 		ValidArgs: []string{"send", "receive", "attach", "list"},
 		Run: func(cmd *cobra.Command, args []string) {
-			cmd.Help()
+			utils.CheckErr(cmd.Help())
 		},
 	}
 	cmd.AddCommand(NewCmdEventsStoreSend(ctx, cfg))
