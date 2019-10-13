@@ -51,8 +51,6 @@ func NewCmdApply(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd.PersistentFlags().BoolVarP(&o.watch, "watch", "w", false, "watch and print apply StatefulSet events")
 	cmd.PersistentFlags().BoolVarP(&o.status, "status", "s", false, "watch and print apply StatefulSet status")
 	cmd.PersistentFlags().StringVarP(&o.fileName, "file", "f", "", "set yaml configuration file")
-	utils.CheckErr(cmd.MarkFlagRequired("file"))
-	utils.CheckErr(cmd.MarkFlagFilename("file", "yaml", "yml"))
 	return cmd
 }
 

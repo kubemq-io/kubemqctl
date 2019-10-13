@@ -9,7 +9,7 @@ var CreateBasicOptions = struct {
 	Vol         int
 }{
 	Name:        "kubemq-cluster",
-	Namespace:   "default",
+	Namespace:   "kubemq",
 	Replicas:    3,
 	Image:       "latest",
 	ServiceMode: "ClusterIP",
@@ -29,7 +29,7 @@ var CreateMenu = &Menu{
 						Action: BasicClusterName,
 					},
 					&MenuItem{
-						Label:  "Set cluster namespace (default) ",
+						Label:  "Set cluster namespace (kubemq) ",
 						Action: BasicClusterNamespace,
 					},
 					&MenuItem{

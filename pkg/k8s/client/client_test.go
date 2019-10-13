@@ -135,7 +135,7 @@ func TestClient_ForwardPorts(t *testing.T) {
 	stopCh := make(chan struct{})
 	outCh, errOutCh := make(chan string, 1), make(chan string, 1)
 
-	err = c.ForwardPorts("default", "kubemq-cluster-0", []string{"50000:50000", "9090:9090", "8080:8080"}, stopCh, outCh, errOutCh)
+	err = c.ForwardPorts("kubemq", "kubemq-cluster-0", []string{"50000:50000", "9090:9090", "8080:8080"}, stopCh, outCh, errOutCh)
 	require.NoError(t, err)
 	select {
 	case out := <-outCh:
@@ -153,9 +153,9 @@ func TestClient_Scale(t *testing.T) {
 	c, err := NewClient("")
 	require.NoError(t, err)
 	require.NotNil(t, c)
-	err = c.Scale(context.Background(), "default", "kubemq-cluster", 5)
+	err = c.Scale(context.Background(), "kubemq", "kubemq-cluster", 5)
 	require.NoError(t, err)
-	err = c.Scale(context.Background(), "default", "kubemq-cluster", 3)
+	err = c.Scale(context.Background(), "kubemq", "kubemq-cluster", 3)
 	require.NoError(t, err)
 
 }
@@ -164,7 +164,7 @@ func TestClient_DescribeStatefulSet(t *testing.T) {
 	c, err := NewClient("")
 	require.NoError(t, err)
 	require.NotNil(t, c)
-	y, err := c.DescribeStatefulSet("default", "kubemq-cluster")
+	y, err := c.DescribeStatefulSet("kubemq", "kubemq-cluster")
 	require.NoError(t, err)
 	require.NotEmpty(t, y)
 	fmt.Println(y)

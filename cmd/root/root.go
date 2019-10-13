@@ -4,11 +4,13 @@ import (
 	"context"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster"
 	"github.com/kubemq-io/kubemqctl/cmd/commands"
-	configCmd "github.com/kubemq-io/kubemqctl/cmd/config"
-	"github.com/kubemq-io/kubemqctl/cmd/events"
 	"github.com/kubemq-io/kubemqctl/cmd/events_store"
 	"github.com/kubemq-io/kubemqctl/cmd/queries"
 	"github.com/kubemq-io/kubemqctl/cmd/queue"
+
+	configCmd "github.com/kubemq-io/kubemqctl/cmd/config"
+	"github.com/kubemq-io/kubemqctl/cmd/events"
+
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"

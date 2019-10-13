@@ -9,7 +9,7 @@ import (
 
 var DefaultConfig = &Config{
 	AutoIntegrated:     true,
-	CurrentNamespace:   "default",
+	CurrentNamespace:   "kubemq",
 	CurrentStatefulSet: "kubemq-cluster",
 	Host:               "localhost",
 	GrpcPort:           50000,

@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
+    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="fix linting issues">
+      <change beforePath="$PROJECT_DIR$/.config.yaml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/context/context.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/context/context.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/queue.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/queue.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/attach/attach.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/attach/attach.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/apply/apply.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/apply/apply.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/cluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/cluster.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/create.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/create.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/root/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root/root.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/client.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/k8s/client/client_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/client_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/events.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/events.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/deployment/templates.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/templates.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/logs/tail.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/logs/tail.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/logs/tail_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/basic.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/basic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/config/create_menu.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/config/create_menu.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/deployment/deployment.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/deployment.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -321,7 +320,42 @@
       <option name="project" value="LOCAL" />
       <updated>1569161362060</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="fix linting issues">
+      <created>1570613044177</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1570613044177</updated>
+    </task>
+    <task id="LOCAL-00030" summary="fix linting issues">
+      <created>1570613925957</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1570613925957</updated>
+    </task>
+    <task id="LOCAL-00031" summary="fix linting issues">
+      <created>1570614339841</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1570614339841</updated>
+    </task>
+    <task id="LOCAL-00032" summary="fix linting issues">
+      <created>1570614605625</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1570614605625</updated>
+    </task>
+    <task id="LOCAL-00033" summary="fix linting issues">
+      <created>1570615157870</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1570615157871</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -380,7 +414,8 @@
     <MESSAGE value="editing cluster command documentation" />
     <MESSAGE value="docs and cleaning" />
     <MESSAGE value="add proxy ports info" />
-    <option name="LAST_COMMIT_MESSAGE" value="add proxy ports info" />
+    <MESSAGE value="fix linting issues" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix linting issues" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

@@ -23,7 +23,7 @@ var BasicClusterNamespace = &EntryGroup{
 		Prompt: &Input{
 			Message:    "(Basic) Set cluster namespace:",
 			Validators: []Validator{IsRequired()},
-			Default:    "default",
+			Default:    "kubemq",
 			Help:       "",
 		},
 	},
