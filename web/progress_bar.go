@@ -34,9 +34,7 @@ func ProgressBarConfig(bar *pb.ProgressBar, prefix string) {
 	bar.Prefix(prefix)
 }
 
-// TrackProgress instantiates a new progress bar that will
-// display the progress of stream until closed.
-// total can be 0.
+//nolint
 func (cpb *ProgressBar) TrackProgress(src string, currentSize, totalSize int64, stream io.ReadCloser) io.ReadCloser {
 	cpb.lock.Lock()
 	defer cpb.lock.Unlock()

@@ -3,8 +3,10 @@ package dashboard
 import (
 	"context"
 	"fmt"
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/kubemq-io/kubemqctl/web"
 	"github.com/spf13/cobra"
@@ -45,7 +47,6 @@ func NewCmdDashboard(ctx context.Context, cfg *config.Config) *cobra.Command {
 			defer cancel()
 			utils.CheckErr(o.Complete(args), cmd)
 			utils.CheckErr(o.Validate())
-			utils.CheckErr(k8s.SetTransport(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
@@ -70,6 +71,54 @@ func exists(name string) bool {
 	return true
 }
 func (o *DashboardOptions) Run(ctx context.Context) error {
+	c, err := client.NewClient(o.cfg.KubeConfigPath)
+	if err != nil {
+		return err
+	}
+
+	list, err := c.GetKubeMQClusters()
+	if err != nil {
+		return err
+	}
+	if len(list) == 0 {
+		return fmt.Errorf("no KubeMQ clusters were found to connect")
+	}
+	selection := ""
+	if len(list) == 1 {
+		selection = list[0]
+	} else {
+		selected := &survey.Select{
+			Renderer:      survey.Renderer{},
+			Message:       "Select KubeMQ cluster to connect",
+			Options:       list,
+			Default:       list[0],
+			Help:          "Select KubeMQ cluster to connect",
+			PageSize:      0,
+			VimMode:       false,
+			FilterMessage: "",
+			Filter:        nil,
+		}
+		err = survey.AskOne(selected, &selection)
+		if err != nil {
+			return err
+		}
+	}
+
+	ns, name := client.StringSplit(selection)
+	prxProxy := &k8s.ProxyOptions{
+		KubeConfig:  o.cfg.KubeConfigPath,
+		Namespace:   ns,
+		StatefulSet: name,
+		Pod:         "",
+		Ports:       []string{"8080"},
+	}
+	go func() {
+		err = k8s.SetProxy(ctx, prxProxy)
+		if err != nil {
+			utils.CheckErr(err)
+		}
+	}()
+
 	s := &web.ServerOptions{
 		Cfg:  o.cfg,
 		Port: 6700,
@@ -86,7 +135,7 @@ func (o *DashboardOptions) Run(ctx context.Context) error {
 			utils.CheckErr(err)
 		}
 	}
-	err := o.setConnections(s.Path)
+	err = o.setConnections(s.Path)
 	if err != nil {
 		return err
 	}

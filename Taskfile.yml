@@ -4,13 +4,14 @@ version: '2'
 
 vars:
   BINARY_NAME: kubemqctl
-  VERSION: v2.0.1
+  VERSION: v2.1.0
 
 tasks:
   default:
     cmds:
       - go mod tidy
       - go mod vendor
+      - golangci-lint run -E gocritic,misspell,gosec
       - task: build_win
       - task: build_mac
       - task: build_linux_64
