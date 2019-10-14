@@ -13,6 +13,7 @@ import (
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/get"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/logs"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/proxy"
+	"github.com/kubemq-io/kubemqctl/cmd/cluster/register"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/scale"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
@@ -82,5 +83,6 @@ func NewCmdCluster(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd.AddCommand(describe.NewCmdDescribe(ctx, cfg))
 	cmd.AddCommand(dashboard.NewCmdDashboard(ctx, cfg))
 	cmd.AddCommand(events.NewCmdEvents(ctx, cfg))
+	cmd.AddCommand(register.NewCmdRegister(ctx, cfg))
 	return cmd
 }
