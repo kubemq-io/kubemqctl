@@ -134,7 +134,7 @@ func (c *Client) ForwardPorts(ns string, name string, ports []string, stopChan c
 	}
 
 	path := fmt.Sprintf("/api/v1/namespaces/%s/pods/%s/portforward", ns, name)
-	hostIP := strings.TrimLeft(restConfig.Host, "https:/")
+	hostIP := strings.TrimLeft(restConfig.Host, "https:/") //nolint
 	serverURL := url.URL{Scheme: "https", Path: path, Host: hostIP}
 	dialer := spdy.NewDialer(upgrader, &http.Client{Transport: roundTripper}, http.MethodPost, &serverURL)
 	readyChan := make(chan struct{}, 1)

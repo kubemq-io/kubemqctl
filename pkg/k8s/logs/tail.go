@@ -59,7 +59,7 @@ var colorList = [][2]*color.Color{
 
 func determineColor(podName string) (namespaceColor, podColor, containerColor *color.Color) {
 	hash := fnv.New32()
-	hash.Write([]byte(podName))
+	hash.Write([]byte(podName)) //nolint
 
 	idx := hash.Sum32() % uint32(len(colorList))
 
