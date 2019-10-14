@@ -14,7 +14,7 @@ var LicenseData = &EnvEntry{
 	VarName:  "KUBEMQ_LICENSE_DATA",
 	VarValue: "",
 	Prompt: &Input{
-		Message:    "(License) Enter license file data (copy/past data):",
+		Message:    "(License) Enter license file data (copy/paste data):",
 		Validators: nil,
 		Default:    "",
 		Help:       "Set KubeMQ license data",
