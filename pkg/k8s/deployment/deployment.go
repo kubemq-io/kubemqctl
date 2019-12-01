@@ -165,7 +165,7 @@ func (sd *StatefulSetDeployment) Execute(name, namespace string) (bool, error) {
 		if err != nil {
 			return false, err
 		}
-		utils.Printlnf("Namespace %s created", sd.Namespace)
+		utils.Printlnf("Namespace %s created", sd.Namespace.Namespace)
 	}
 	var err error
 

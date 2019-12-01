@@ -69,30 +69,44 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 	integrationSelect := &survey.Select{
 		Renderer: survey.Renderer{},
 		Message:  "Select KubeMQ install location:",
-		Options:  []string{"Kubernetes cluster", "Local docker container"},
-		Default:  "Kubernetes cluster",
-		Help:     "Select the location of KubeMQ server",
+		Options: []string{
+			"Kubernetes cluster",
+			"MicroK8s",
+			"K3s",
+			"Minikube",
+			"Other Kubernetes distribution",
+			"Local docker container"},
+		Default: "Kubernetes cluster",
+		Help:    "Select the location of KubeMQ server",
 	}
 	err = survey.AskOne(integrationSelect, &integrationType)
 	if err != nil {
 		return err
 	}
-	if integrationType == "Kubernetes cluster" {
+	if integrationType == "Local docker container" {
+		cfg.AutoIntegrated = false
+	} else {
 		cfg.AutoIntegrated = true
-		kubeConfigPath := ""
-		prompt := &survey.Input{
-			Renderer: survey.Renderer{},
-			Message:  "Select kube config path (press Enter for default):",
-			Default:  "",
-			Help:     "Set kube.config file path if not kubectl default",
+		switch integrationType {
+		case "Kubernetes cluster", "Minikube":
+			cfg.KubeConfigPath = ""
+		case "MicroK8s":
+			cfg.KubeConfigPath = "/var/snap/microk8s/current/credentials/client.config"
+		case "K3s":
+			cfg.KubeConfigPath = "/etc/rancher/k3s/k3s.yaml"
+		case "Other Kubernetes distribution":
+			prompt := &survey.Input{
+				Renderer: survey.Renderer{},
+				Message:  "Select kube config path (press Enter for default):",
+				Default:  "",
+				Help:     "Set kube.config file path if not kubectl default",
+			}
+			err := survey.AskOne(prompt, &cfg.KubeConfigPath)
+			if err != nil {
+				return err
+			}
 		}
-		err := survey.AskOne(prompt, &kubeConfigPath)
-		if err != nil {
-			return err
-		}
-		cfg.KubeConfigPath = kubeConfigPath
-
-		c, err := client.NewClient(kubeConfigPath)
+		c, err := client.NewClient(cfg.KubeConfigPath)
 		if err != nil {
 			return err
 		}
@@ -126,7 +140,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 			return err
 		}
 
-		list, err = o.getClusters(kubeConfigPath)
+		list, err = o.getClusters(cfg.KubeConfigPath)
 		if err != nil {
 			return err
 		}
@@ -149,9 +163,8 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 			cfg.CurrentNamespace = pair[0]
 			cfg.CurrentStatefulSet = pair[1]
 		}
-	} else {
-		cfg.AutoIntegrated = false
 	}
+
 	promptHost := &survey.Input{
 		Renderer: survey.Renderer{},
 		Message:  "Set KubeMQ Host:",

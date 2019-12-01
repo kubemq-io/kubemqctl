@@ -16,10 +16,10 @@ var RESTEnable = &EnvEntry{
 	VarName:  "REST_ENABLE",
 	VarValue: "",
 	Prompt: &Selection{
-		Message:    "(REST) Disable REST interface:",
-		Options:    []string{"false", "true"},
+		Message:    "(REST) Enable REST interface:",
+		Options:    []string{"true", "false"},
 		Validators: nil,
-		Default:    "false",
+		Default:    "true",
 		Help:       "",
 	},
 }

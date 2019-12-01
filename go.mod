@@ -1,7 +1,5 @@
 module github.com/kubemq-io/kubemqctl
 
-go 1.12
-
 require (
 	github.com/AlecAivazis/survey/v2 v2.0.4
 	github.com/cheggaaa/pb v1.0.27
@@ -32,3 +30,5 @@ require (
 	sigs.k8s.io/yaml v1.1.0
 
 )
+
+go 1.13

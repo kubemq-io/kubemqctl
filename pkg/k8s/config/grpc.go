@@ -15,10 +15,10 @@ var GrpcEnable = &EnvEntry{
 	VarName:  "GRPC_ENABLE",
 	VarValue: "0",
 	Prompt: &Selection{
-		Message:    "(gRPC) Disable gRPC interface:",
-		Options:    []string{"false", "true"},
+		Message:    "(gRPC) Enable gRPC interface:",
+		Options:    []string{"true", "false"},
 		Validators: nil,
-		Default:    "false",
+		Default:    "true",
 		Help:       "",
 	},
 }
