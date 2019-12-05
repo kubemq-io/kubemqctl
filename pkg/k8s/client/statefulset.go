@@ -102,12 +102,15 @@ func (c *Client) GetStatefulSetDeployment(ns, name string) (*StatefulSetDeployme
 	vpcs, _ := c.ClientSet.CoreV1().PersistentVolumeClaims(ns).List(metav1.ListOptions{})
 	if vpcs != nil {
 		for _, vpc := range vpcs.Items {
-			for key, value := range vpc.Spec.Selector.MatchLabels {
-				if labels[key] == value {
-					vpcList = append(vpcList, vpc)
-					continue
+			if vpc.Spec.Selector != nil {
+				for key, value := range vpc.Spec.Selector.MatchLabels {
+					if labels[key] == value {
+						vpcList = append(vpcList, vpc)
+						continue
+					}
 				}
 			}
+
 		}
 	}
 
