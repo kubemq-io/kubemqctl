@@ -66,6 +66,7 @@ func NewCmdCreate(ctx context.Context, cfg *config.Config) *cobra.Command {
 	}
 
 	cmd.PersistentFlags().StringVarP(&o.deployOptions.Token, "token", "t", "", "set KubeMQ Token")
+	cmd.PersistentFlags().StringVarP(&o.deployOptions.Version, "version", "v", "", "set KubeMQ image version")
 	cmd.PersistentFlags().BoolVarP(&o.setOptions, "options", "o", false, "create KubeMQ cluster with options")
 	cmd.PersistentFlags().BoolVarP(&o.exportFile, "export", "e", false, "generate yaml configuration file output (exporting)")
 	cmd.PersistentFlags().StringVarP(&o.file, "file", "f", "", "import configuration yaml file")
@@ -205,7 +206,9 @@ func (o *CreateOptions) setDefaultOptions() error {
 	o.deployOptions.CoreVersion = "v1"
 	o.deployOptions.Name = "kubemq-cluster"
 	o.deployOptions.Namespace = "kubemq"
-	o.deployOptions.Version = "latest"
+	if o.deployOptions.Version == "" {
+		o.deployOptions.Version = "latest"
+	}
 	o.deployOptions.Replicas = 3
 	o.deployOptions.Volume = 0
 	utils.Printlnf("Create KubeMQ cluster with default options:")
