@@ -39,6 +39,7 @@ func NewCmdConfig(ctx context.Context, cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
+	cmd.AddCommand(NewCmdGetLicense(ctx))
 	return cmd
 }
 

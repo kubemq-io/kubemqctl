@@ -4,7 +4,7 @@ version: '2'
 
 vars:
   BINARY_NAME: kubemqctl
-  VERSION: v2.2.0
+  VERSION: v2.3.0
 
 tasks:
   default:

@@ -27,7 +27,9 @@ func Printf(format string, args ...interface{}) {
 func Printlnf(format string, args ...interface{}) {
 	fmt.Println(Title(fmt.Sprintf(format, args...)))
 }
-
+func PrintlnfNoTitle(format string, args ...interface{}) {
+	fmt.Println(fmt.Sprintf(format, args...))
+}
 func PrintAndExit(msg string) {
 	fmt.Println(strings.Title(msg))
 }
