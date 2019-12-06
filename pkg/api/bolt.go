@@ -48,11 +48,14 @@ func GetLicenseData(key string, version string) (string, error) {
 	if lic.Error {
 		return "", errors.New(lic.ErrorString)
 	}
-	updateAccountStats(key, version)
+	err = updateAccountStats(key, version)
+	if err != nil {
+		return "", err
+	}
 	return lic.Data.License, nil
 }
 
-func updateAccountStats(key, version string) {
+func updateAccountStats(key, version string) error {
 	req := resty.New().R()
 	as := &accountStatsReport{
 		Key:                    key,
@@ -64,5 +67,6 @@ func updateAccountStats(key, version string) {
 		ValidationByKeyLicense: 1,
 	}
 	asr := &accountStatsResponse{}
-	req.SetResult(asr).SetError(asr).SetBody(as).Post(boltURL + "/update_stats")
+	_, err := req.SetResult(asr).SetError(asr).SetBody(as).Post(boltURL + "/update_stats")
+	return err
 }
