@@ -91,6 +91,8 @@ func (o *CommandsReceiveOptions) Run(ctx context.Context) error {
 	for {
 		utils.Println("waiting for the next command message...")
 		select {
+		case err := <-errChan:
+			return fmt.Errorf("server disconnected with error: %s", err.Error())
 		case command, opened := <-commandsChan:
 			if !opened {
 				utils.Println("server disconnected")

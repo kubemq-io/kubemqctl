@@ -103,6 +103,8 @@ func (o *EventsStoreReceiveOptions) Run(ctx context.Context) error {
 			}
 			fmt.Fprintf(w, "[channel: %s]\t[seq: %d]\t[time: %s(UTC)]\t[id: %s]\t[metadata: %s]\t[body: %s]\n", ev.Channel, ev.Sequence, ev.Timestamp.UTC().Format("2006-01-02 15:04:05"), ev.Id, ev.Metadata, ev.Body)
 			w.Flush()
+		case err := <-errChan:
+			return fmt.Errorf("server disconnected with error: %s", err.Error())
 		case <-ctx.Done():
 			return nil
 		}

@@ -91,6 +91,9 @@ func (o *QueriesReceiveOptions) Run(ctx context.Context) error {
 	for {
 		utils.Println("waiting for the next query message...")
 		select {
+		case err := <-errChan:
+			return fmt.Errorf("server disconnected with error: %s", err.Error())
+
 		case query, opened := <-queriesChan:
 			if !opened {
 				utils.Println("server disconnected")
