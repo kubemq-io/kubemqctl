@@ -98,10 +98,10 @@ func (o *QueueReceiveOptions) Run(ctx context.Context) error {
 			SetMaxNumberOfMessages(o.messages).
 			Send(ctx)
 		if err != nil {
-			utils.Println(fmt.Errorf("receive 'queues' messages, %s", err.Error()).Error())
+			return fmt.Errorf("receive 'queues' messages, %s", err.Error())
 		}
 		if res.IsError {
-			utils.Println(fmt.Errorf("receive 'queues' messages %s", res.Error).Error())
+			return fmt.Errorf("receive 'queues' messages %s", res.Error)
 		}
 
 		if res != nil && res.MessagesReceived > 0 {
