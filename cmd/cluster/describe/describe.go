@@ -94,7 +94,7 @@ func (o *DescribeOptions) Run(ctx context.Context) error {
 	}
 
 	ns, name := client.StringSplit(selection)
-	sd, err := deployment.NewStatefulSetDeploymentFromCluster(o.cfg, ns, name)
+	sd, err := deployment.NewKubeMQDeploymentFromCluster(o.cfg, ns, name)
 
 	if err != nil {
 		return err

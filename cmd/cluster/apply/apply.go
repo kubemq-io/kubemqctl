@@ -75,7 +75,8 @@ func (o *ApplyOptions) Validate() error {
 }
 
 func (o *ApplyOptions) Run(ctx context.Context) error {
-	sd, err := deployment.NewStatefulSetDeployment(o.cfg)
+
+	sd, err := deployment.NewKubeMQDeployment(o.cfg)
 	if err != nil {
 		return err
 	}
