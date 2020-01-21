@@ -21,8 +21,8 @@ func NewKubeMQManifestConfig(id, name, namespace string) *KubeMQManifestConfig {
 		Id:              id,
 		Name:            name,
 		Namespace:       namespace,
-		NamespaceConfig: DefaultNamespaceConfig(id, name),
-		StatefulSet:     DefaultStatefulSetConfig(id, name, namespace),
+		NamespaceConfig: NewNamespaceConfig(id, name),
+		StatefulSet:     NewStatefulSetConfig(id, name, namespace),
 		Services:        make(map[string]*ServiceConfig),
 		ConfigMaps:      make(map[string]*ConfigMapConfig),
 		Secrets:         make(map[string]*SecretConfig),
@@ -41,7 +41,18 @@ func DefaultKubeMQManifestConfig(id, name, namespace string) *KubeMQManifestConf
 		Secrets:         DefaultSecretConfig(id, name, namespace),
 	}
 }
-
+func (c *KubeMQManifestConfig) SetConfigMapValues(cmName, key, value string) {
+	cm, ok := c.ConfigMaps[cmName]
+	if ok {
+		cm.SetVariable(key, value)
+	}
+}
+func (c *KubeMQManifestConfig) SetSecretValues(secName, key, value string) {
+	sec, ok := c.Secrets[secName]
+	if ok {
+		sec.SetVariable(key, value)
+	}
+}
 func (c *KubeMQManifestConfig) Spec() ([]byte, error) {
 	var manifest []string
 	nsSpec, err := c.NamespaceConfig.Spec()
@@ -53,6 +64,7 @@ func (c *KubeMQManifestConfig) Spec() ([]byte, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error on statefull spec rendring: %s", err.Error())
 	}
+
 	manifest = append(manifest, string(stsSpec))
 
 	for name, svc := range c.Services {

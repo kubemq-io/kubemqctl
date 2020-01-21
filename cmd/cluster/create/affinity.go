@@ -13,7 +13,7 @@ func defaultAffinityOptions(cmd *cobra.Command) *deployAffinityOptions {
 	o := &deployAffinityOptions{
 		enabled: false,
 	}
-	cmd.PersistentFlags().BoolVarP(&o.enabled, "toleration-enabled", "", false, "enable statefulset affinity configuration")
+	cmd.PersistentFlags().BoolVarP(&o.enabled, "affinity-enabled", "", false, "enable statefulset affinity configuration")
 	return o
 }
 

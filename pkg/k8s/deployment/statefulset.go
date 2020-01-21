@@ -1,8 +1,11 @@
 package deployment
 
 import (
+	"fmt"
 	"github.com/ghodss/yaml"
 	appsv1 "k8s.io/api/apps/v1"
+	v1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/util/intstr"
 )
 
 var defaultKubeMQStatefulSetTemplate = `
@@ -35,6 +38,8 @@ spec:
               value: {{.Name}}
             - name: CLUSTER_ENABLE
               value: 'true'
+            - name: CLUSTER_ROUTES
+              value: '{{.Name}}:5228'
           envFrom:
             - secretRef:
                 name: {{.Name}}
@@ -43,6 +48,15 @@ spec:
           image: 'kubemq/kubemq:{{.ImageTag}}'
           imagePullPolicy: Always
           name: {{.Name}}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 5
+            successThreshold: 5
+            failureThreshold: 5
           ports:
             - containerPort: 50000
               name: grpc-port
@@ -86,6 +100,7 @@ type StatefulSetConfig struct {
 	Replicas    int
 	Volume      int
 	statefulset *appsv1.StatefulSet
+	healthProb  *v1.Probe
 }
 
 func ImportStatefulSetConfig(spec []byte) (*StatefulSetConfig, error) {
@@ -139,8 +154,13 @@ func (sc *StatefulSetConfig) SetImageTag(value string) *StatefulSetConfig {
 	sc.ImageTag = value
 	return sc
 }
+func (sc *StatefulSetConfig) SetHealthProbe(value *v1.Probe) *StatefulSetConfig {
+	sc.healthProb = value
+	return sc
+}
 
 func (sc *StatefulSetConfig) Spec() ([]byte, error) {
+
 	if sc.statefulset == nil {
 		t := NewTemplate(defaultKubeMQStatefulSetTemplate, sc)
 		return t.Get()
@@ -165,6 +185,32 @@ func (sc *StatefulSetConfig) Get() (*appsv1.StatefulSet, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	if len(sts.Spec.Template.Spec.Containers) == 1 {
+		container := sts.Spec.Template.Spec.Containers[0]
+		if sc.healthProb != nil {
+			container.LivenessProbe = &v1.Probe{
+				Handler: v1.Handler{
+					Exec: nil,
+					HTTPGet: &v1.HTTPGetAction{
+						Path:        "/health",
+						Port:        intstr.IntOrString{IntVal: 8080},
+						Host:        "",
+						Scheme:      "",
+						HTTPHeaders: nil,
+					},
+					TCPSocket: nil,
+				},
+				InitialDelaySeconds: sc.healthProb.InitialDelaySeconds,
+				TimeoutSeconds:      sc.healthProb.TimeoutSeconds,
+				PeriodSeconds:       sc.healthProb.PeriodSeconds,
+				SuccessThreshold:    sc.healthProb.SuccessThreshold,
+				FailureThreshold:    sc.healthProb.FailureThreshold,
+			}
+			fmt.Println(container.LivenessProbe)
+		}
+	}
 	sc.statefulset = sts
+	fmt.Println(sc.statefulset.Spec.Template.Spec.Containers[0])
 	return sts, nil
 }

@@ -5,6 +5,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/deployment"
 	"github.com/spf13/cobra"
+	"io/ioutil"
 )
 
 type deployOptions struct {
@@ -26,6 +27,7 @@ type deployOptions struct {
 	nodeSelectors   *deployNodeSelectorOptions
 	tollerations    *deployTolerationOptions
 	affinity        *deployAffinityOptions
+	healthProbe     *deployHealthOptions
 }
 
 func defaultDeployOptions(cmd *cobra.Command) *deployOptions {
@@ -48,16 +50,17 @@ func defaultDeployOptions(cmd *cobra.Command) *deployOptions {
 		nodeSelectors:   defaultNodeSelectorOptions(cmd),
 		tollerations:    defaultTolerationOptions(cmd),
 		affinity:        defaultAffinityOptions(cmd),
+		healthProbe:     defaultHealthOptions(cmd),
 	}
 	cmd.PersistentFlags().StringVarP(&o.configFilename, "config-file", "", "", "set kubemq config file")
 	cmd.PersistentFlags().StringVarP(&o.name, "name", "", "kubemq-cluster", "set kubemq cluster name")
 	cmd.PersistentFlags().StringVarP(&o.namespace, "namespace", "", "kubemq", "set kubemq cluster namespace")
-	cmd.PersistentFlags().StringVarP(&o.token, "token", "", "", "set kubemq token")
+	cmd.PersistentFlags().StringVarP(&o.token, "token", "t", "", "set kubemq token")
 	cmd.PersistentFlags().StringVarP(&o.licenseData, "license-data", "", "", "set license data")
 	cmd.PersistentFlags().StringVarP(&o.licenseDataFile, "license-data-file", "", "", "set license data filename")
 	cmd.PersistentFlags().StringVarP(&o.tag, "tag", "", "latest", "set kubemq docker image tag")
 	cmd.PersistentFlags().UintVarP(&o.volume, "volume", "", 0, "set persistence volume claim size")
-	cmd.PersistentFlags().UintVarP(&o.volume, "replicas", "", 3, "set replicas")
+	cmd.PersistentFlags().UintVarP(&o.replicas, "replicas", "", 3, "set replicas")
 	return o
 }
 
@@ -102,10 +105,20 @@ func (o *deployOptions) validate() error {
 	if err := o.affinity.validate(); err != nil {
 		return err
 	}
+	if err := o.healthProbe.validate(); err != nil {
+		return err
+	}
 	return nil
 }
 
 func (o *deployOptions) complete() error {
+	if o.licenseDataFile != "" {
+		data, err := ioutil.ReadFile(o.licenseDataFile)
+		if err != nil {
+			return fmt.Errorf("error loading license file data: %s", err.Error())
+		}
+		o.licenseData = string(data)
+	}
 	if err := o.service.complete(); err != nil {
 		return err
 	}
@@ -136,7 +149,9 @@ func (o *deployOptions) complete() error {
 	if err := o.affinity.complete(); err != nil {
 		return err
 	}
-
+	if err := o.healthProbe.complete(); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -146,6 +161,13 @@ func (o *deployOptions) getConfig() *deployment.KubeMQManifestConfig {
 	config.StatefulSet.SetImageTag(o.tag)
 	config.StatefulSet.SetReplicas(int(o.replicas))
 	config.StatefulSet.SetVolume(int(o.volume))
+	if o.token != "" {
+		config.SetConfigMapValues(o.name, "KUBEMQ_TOKEN", o.token)
+	}
+	if o.licenseData != "" {
+		config.SetSecretValues(o.name, "LICENSE_KEY_DATA", o.token)
+	}
+
 	o.service.setConfig(config)
 	o.security.setConfig(config)
 	o.authentication.setConfig(config)
@@ -155,5 +177,6 @@ func (o *deployOptions) getConfig() *deployment.KubeMQManifestConfig {
 	o.nodeSelectors.setConfig(config)
 	o.tollerations.setConfig(config)
 	o.affinity.setConfig(config)
+	o.healthProbe.setConfig(config)
 	return config
 }

@@ -13,11 +13,6 @@ import (
 type KubeMQDeployment struct {
 	Client *client.Client
 	*KubeMQManifestConfig
-	//Namespace   *apiv1.Namespace
-	//StatefulSet *appsv1.StatefulSet
-	//Services    []*apiv1.Service
-	//ConfigMaps  []*apiv1.ConfigMap
-	//Secrets     []*apiv1.Secret
 }
 
 func NewKubeMQDeployment(cfg *config.Config, manifestConfig *KubeMQManifestConfig) (*KubeMQDeployment, error) {
@@ -93,11 +88,15 @@ func (sd *KubeMQDeployment) Execute(name, namespace string) (bool, error) {
 		if err != nil {
 			return false, err
 		}
-		_, err = sd.Client.ClientSet.CoreV1().Namespaces().Create(ns)
+		createdNamespace, created, err := sd.Client.CheckAndCreateNamespace(ns)
 		if err != nil {
 			return false, err
 		}
-		utils.Printlnf("Namespace %s created", sd.Namespace)
+		if created {
+			utils.Printlnf("Namespace %s created", sd.Namespace)
+		}
+		sd.NamespaceConfig.Set(createdNamespace)
+
 	}
 	var err error
 
@@ -208,6 +207,8 @@ func (sd *KubeMQDeployment) Import(input string) error {
 				return fmt.Errorf("error parsing StatefulSet yaml (segment %d), %s", index, err)
 			}
 			sd.StatefulSet = sts
+			sd.KubeMQManifestConfig.Name = sts.Name
+			sd.KubeMQManifestConfig.Namespace = sts.Namespace
 			continue
 		}
 		if strings.Contains(seg, "kind: Service") {

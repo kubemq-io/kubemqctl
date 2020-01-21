@@ -75,8 +75,8 @@ func (o *ApplyOptions) Validate() error {
 }
 
 func (o *ApplyOptions) Run(ctx context.Context) error {
-
-	sd, err := deployment.NewKubeMQDeployment(o.cfg)
+	kuebCfg := deployment.NewKubeMQManifestConfig("", "", "")
+	sd, err := deployment.NewKubeMQDeployment(o.cfg, kuebCfg)
 	if err != nil {
 		return err
 	}
@@ -85,23 +85,25 @@ func (o *ApplyOptions) Run(ctx context.Context) error {
 		return err
 	}
 	utils.Printlnf("Apply started...")
-
-	executed, err := sd.Execute(sd.StatefulSet.Name, sd.StatefulSet.Namespace)
+	sts, err := sd.StatefulSet.Get()
+	if err != nil {
+		return err
+	}
+	executed, err := sd.Execute(sts.Name, sts.Namespace)
 	if err != nil {
 		return err
 	}
 	if !executed {
 		return nil
 	}
-	stsName := sd.StatefulSet.Name
-	stsNamespace := sd.StatefulSet.Namespace
 
 	if o.watch {
-		go sd.Client.PrintEvents(ctx, stsNamespace, stsName)
+		go sd.Client.PrintEvents(ctx, sts.Namespace, sts.Name)
 	}
 
 	if o.status {
-		go sd.Client.PrintStatefulSetStatus(ctx, *sd.StatefulSet.Spec.Replicas, stsNamespace, stsName)
+
+		go sd.Client.PrintStatefulSetStatus(ctx, *sts.Spec.Replicas, sts.Namespace, sts.Name)
 	}
 	if o.status || o.watch {
 		<-ctx.Done()
