@@ -23,10 +23,10 @@ func defaultResourceOptions(cmd *cobra.Command) *deployResourceOptions {
 		requestsMemory: "",
 	}
 	cmd.PersistentFlags().BoolVarP(&o.enabled, "resources-enabled", "", false, "enable resources configuration")
-	cmd.PersistentFlags().StringVarP(&o.limitsCpu, "resources-limits-key-cpu", "", "", "set resources limits cpu ")
-	cmd.PersistentFlags().StringVarP(&o.limitsMemory, "resources-limits-key-memory", "", "", "set resources limits memory")
-	cmd.PersistentFlags().StringVarP(&o.requestsCpu, "resources-requests-key-cpu", "", "", "set resources requests cpu")
-	cmd.PersistentFlags().StringVarP(&o.requestsMemory, "resources-requests-memory", "", "", "set resources request memory")
+	cmd.PersistentFlags().StringVarP(&o.limitsCpu, "resources-limits-key-cpu", "", "1000m", "set resources limits cpu ")
+	cmd.PersistentFlags().StringVarP(&o.limitsMemory, "resources-limits-key-memory", "", "512Mi", "set resources limits memory")
+	cmd.PersistentFlags().StringVarP(&o.requestsCpu, "resources-requests-key-cpu", "", "100m", "set resources requests cpu")
+	cmd.PersistentFlags().StringVarP(&o.requestsMemory, "resources-requests-memory", "", "256Mi", "set resources request memory")
 
 	return o
 }
@@ -58,7 +58,20 @@ func (o *deployResourceOptions) setConfig(config *deployment.KubeMQManifestConfi
 	if !o.enabled {
 		return o
 	}
-	//TODO - add code
+	tmpl := `          resources:
+            limits:	
+              cpu: %s
+              memory: %s
+            requests:
+              cpu: %s
+              memory: %s
+`
 
+	resources := fmt.Sprintf(tmpl,
+		o.limitsCpu,
+		o.limitsMemory,
+		o.requestsCpu,
+		o.requestsMemory)
+	config.StatefulSet.SetResources(resources)
 	return o
 }

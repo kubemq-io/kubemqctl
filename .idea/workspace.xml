@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cmd/cluster/create/health.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/markdown-navigator-enh.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/markdown-navigator-enh.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/apply/apply.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/apply/apply.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/affinity.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/affinity.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/deploy.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/deploy.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/describe/describe.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/describe/describe.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/namespace.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/namespace.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/deployment/keubmq_config.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/keubmq_config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/deployment/kubemq_deployment.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/kubemq_deployment.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/health.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/health.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/node_selectors.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/node_selectors.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/resources.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/resources.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/k8s/deployment/statefulset.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/statefulset.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -517,7 +511,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579539930507</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="adding attributes to statefulset">
+      <created>1579607598447</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1579607598447</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -553,7 +554,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="add bin for version v1.1.0" />
     <MESSAGE value="update readme.md" />
     <MESSAGE value="start prompt packa&#10;ge" />
     <MESSAGE value="update switch context" />
@@ -578,7 +578,8 @@
     <MESSAGE value="add error handling on server disconnect" />
     <MESSAGE value="update readme" />
     <MESSAGE value="refactor all deployment" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor all deployment" />
+    <MESSAGE value="adding attributes to statefulset" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding attributes to statefulset" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -592,10 +593,10 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1217" y="573" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579522350352" />
-    <state x="1148" y="356" key="CommitChangelistDialog2" timestamp="1579539928199">
+    <state x="1148" y="356" key="CommitChangelistDialog2" timestamp="1579607597746">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579539928199" />
+    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579607597746" />
     <state x="1317" y="599" key="FileChooserDialogImpl" timestamp="1579164157168">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
@@ -620,10 +621,10 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1045" y="486" key="SettingsEditor/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1575092531279" />
-    <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1579539933267">
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1579607600976">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579539933267" />
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579607600976" />
     <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1579164052490">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
