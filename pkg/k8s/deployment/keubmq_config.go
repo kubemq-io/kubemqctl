@@ -14,6 +14,7 @@ type KubeMQManifestConfig struct {
 	Services        map[string]*ServiceConfig
 	ConfigMaps      map[string]*ConfigMapConfig
 	Secrets         map[string]*SecretConfig
+	Ingress         map[string]*IngressConfig
 }
 
 func NewKubeMQManifestConfig(id, name, namespace string) *KubeMQManifestConfig {
@@ -21,11 +22,12 @@ func NewKubeMQManifestConfig(id, name, namespace string) *KubeMQManifestConfig {
 		Id:              id,
 		Name:            name,
 		Namespace:       namespace,
-		NamespaceConfig: NewNamespaceConfig(id, name),
+		NamespaceConfig: NewNamespaceConfig(id, namespace),
 		StatefulSet:     NewStatefulSetConfig(id, name, namespace),
 		Services:        make(map[string]*ServiceConfig),
 		ConfigMaps:      make(map[string]*ConfigMapConfig),
 		Secrets:         make(map[string]*SecretConfig),
+		Ingress:         map[string]*IngressConfig{},
 	}
 }
 
@@ -34,11 +36,12 @@ func DefaultKubeMQManifestConfig(id, name, namespace string) *KubeMQManifestConf
 		Id:              id,
 		Name:            name,
 		Namespace:       namespace,
-		NamespaceConfig: DefaultNamespaceConfig(id, name),
+		NamespaceConfig: DefaultNamespaceConfig(id, namespace),
 		StatefulSet:     DefaultStatefulSetConfig(id, name, namespace),
 		Services:        DefaultServiceConfig(id, namespace, name),
 		ConfigMaps:      DefaultConfigMap(id, name, namespace),
 		Secrets:         DefaultSecretConfig(id, name, namespace),
+		Ingress:         DefaultIngressConfig(),
 	}
 }
 func (c *KubeMQManifestConfig) SetConfigMapValues(cmName, key, value string) {
@@ -47,10 +50,16 @@ func (c *KubeMQManifestConfig) SetConfigMapValues(cmName, key, value string) {
 		cm.SetVariable(key, value)
 	}
 }
-func (c *KubeMQManifestConfig) SetSecretValues(secName, key, value string) {
+func (c *KubeMQManifestConfig) SetSecretStringValues(secName, key, value string) {
 	sec, ok := c.Secrets[secName]
 	if ok {
-		sec.SetVariable(key, value)
+		sec.SetStringVariable(key, value)
+	}
+}
+func (c *KubeMQManifestConfig) SetSecretDataValues(secName, key, value string) {
+	sec, ok := c.Secrets[secName]
+	if ok {
+		sec.SetDataVariable(key, value)
 	}
 }
 func (c *KubeMQManifestConfig) Spec() ([]byte, error) {
@@ -89,6 +98,12 @@ func (c *KubeMQManifestConfig) Spec() ([]byte, error) {
 		}
 		manifest = append(manifest, string(secretSpec))
 	}
-
+	for _, ing := range c.Ingress {
+		ingresSpec, err := ing.Spec()
+		if err != nil {
+			return nil, fmt.Errorf("error on ingres spec rendring: %s", err.Error())
+		}
+		manifest = append(manifest, string(ingresSpec))
+	}
 	return []byte(strings.Join(manifest, "\n---\n")), nil
 }

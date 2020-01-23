@@ -96,9 +96,9 @@ func (o *deployGatewayOptions) setConfig(config *deployment.KubeMQManifestConfig
 	}
 	secConfig, ok := config.Secrets[config.Name]
 	if ok {
-		secConfig.SetVariable("BROKER_GATEWAY_CERT", o.certData).
-			SetVariable("BROKER_GATEWAY_KEY", o.keyData).
-			SetVariable("BROKER_GATEWAY_CA", o.caData)
+		secConfig.SetDataVariable("BROKER_GATEWAY_CERT", o.certData).
+			SetDataVariable("BROKER_GATEWAY_KEY", o.keyData).
+			SetDataVariable("BROKER_GATEWAY_CA", o.caData)
 
 	}
 	cmConfig, ok := config.ConfigMaps[config.Name]

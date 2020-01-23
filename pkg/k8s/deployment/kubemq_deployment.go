@@ -79,6 +79,16 @@ func NewKubeMQDeploymentFromCluster(cfg *config.Config, manifestConfig *KubeMQMa
 		secConfig.Set(sec)
 		sd.Secrets[sec.Name] = secConfig
 	}
+
+	ingressList, err := c.GetIngress(sts.Namespace, sts.Spec.Template.ObjectMeta.Labels)
+	if err != nil {
+		return nil, err
+	}
+	for _, ingress := range ingressList {
+		ingressConfig := NewIngressConfig("", ingress.Name, ingress.Namespace, sts.Name)
+		ingressConfig.Set(ingress)
+		sd.Ingress[ingress.Name] = ingressConfig
+	}
 	return sd, nil
 }
 
@@ -165,6 +175,23 @@ func (sd *KubeMQDeployment) Execute(name, namespace string) (bool, error) {
 			}
 		}
 	}
+	for _, ing := range sd.Ingress {
+		requestedIng, err := ing.Get()
+		if err != nil {
+			return false, err
+		}
+		newIngress, isUpdated, err := sd.Client.CreateOrUpdateIngress(requestedIng)
+		if err != nil {
+			utils.Printlnf("Ingress %s/%s not created. Error: %s", ing.Namespace, ing.Name, utils.Title(err.Error()))
+		} else {
+			if newIngress != nil && isUpdated {
+				utils.Printlnf("Ingress %s/%s configured", ing.Namespace, ing.Name)
+			} else if newIngress != nil {
+				utils.Printlnf("Ingress %s/%s created", ing.Namespace, ing.Name)
+			}
+		}
+	}
+
 	return true, nil
 }
 
@@ -235,6 +262,15 @@ func (sd *KubeMQDeployment) Import(input string) error {
 				return fmt.Errorf("error parsing Secret yaml (segment %d), %s", index, err)
 			}
 			sd.Secrets[sec.Name] = sec
+			continue
+		}
+		if strings.Contains(seg, "kind: Ingress") {
+
+			ingress, err := ImportIngress([]byte(seg))
+			if err != nil {
+				return fmt.Errorf("error parsing Ingress yaml (segment %d), %s", index, err)
+			}
+			sd.Ingress[ingress.Name] = ingress
 			continue
 		}
 	}

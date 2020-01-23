@@ -1,6 +1,7 @@
 package deployment
 
 import (
+	"encoding/base64"
 	"github.com/ghodss/yaml"
 	apiv1 "k8s.io/api/core/v1"
 	"strings"
@@ -16,18 +17,23 @@ metadata:
     app: {{.Name}}
     deployment.id: {{.Id}}
 type: Opaque
+data:
+{{ range $key, $value := .DataVariables}}
+  {{$key}}: "{{$value}}"
+{{end}}
 stringData:
-{{ range $key, $value := .Variables}}
+{{ range $key, $value := .StringVariables}}
   {{$key}}: "{{$value}}"
 {{end}}
 `
 
 type SecretConfig struct {
-	Id        string
-	Name      string
-	Namespace string
-	Variables map[string]string
-	secret    *apiv1.Secret
+	Id              string
+	Name            string
+	Namespace       string
+	DataVariables   map[string]string
+	StringVariables map[string]string
+	secret          *apiv1.Secret
 }
 
 func ImportSecret(spec []byte) (*SecretConfig, error) {
@@ -37,33 +43,40 @@ func ImportSecret(spec []byte) (*SecretConfig, error) {
 		return nil, err
 	}
 	return &SecretConfig{
-		Id:        "",
-		Name:      sec.Name,
-		Namespace: sec.Namespace,
-		Variables: nil,
-		secret:    sec,
+		Id:              "",
+		Name:            sec.Name,
+		Namespace:       sec.Namespace,
+		DataVariables:   nil,
+		StringVariables: nil,
+		secret:          sec,
 	}, nil
 }
 func NewSecretConfig(id, name, namespace string) *SecretConfig {
 	return &SecretConfig{
-		Id:        id,
-		Name:      name,
-		Namespace: namespace,
-		Variables: map[string]string{},
+		Id:              id,
+		Name:            name,
+		Namespace:       namespace,
+		DataVariables:   map[string]string{},
+		StringVariables: map[string]string{},
 	}
 }
 func DefaultSecretConfig(id, name, namespace string) map[string]*SecretConfig {
 	secs := make(map[string]*SecretConfig)
 	secs[name] = &SecretConfig{
-		Id:        id,
-		Name:      name,
-		Namespace: namespace,
-		Variables: map[string]string{},
+		Id:              id,
+		Name:            name,
+		Namespace:       namespace,
+		DataVariables:   map[string]string{},
+		StringVariables: map[string]string{},
 	}
 	return secs
 }
-func (s *SecretConfig) SetVariable(key, value string) *SecretConfig {
-	s.Variables[strings.ToUpper(key)] = value
+func (s *SecretConfig) SetDataVariable(key, value string) *SecretConfig {
+	s.DataVariables[strings.ToUpper(key)] = base64.StdEncoding.EncodeToString([]byte(value))
+	return s
+}
+func (s *SecretConfig) SetStringVariable(key, value string) *SecretConfig {
+	s.StringVariables[strings.ToUpper(key)] = value
 	return s
 }
 func (s *SecretConfig) Spec() ([]byte, error) {

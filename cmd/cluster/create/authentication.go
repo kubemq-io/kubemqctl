@@ -62,9 +62,9 @@ func (o *deployAuthenticationOptions) setConfig(config *deployment.KubeMQManifes
 	}
 	secConfig, ok := config.Secrets[config.Name]
 	if ok {
-		secConfig.SetVariable("AUTHENTICATION_ENABLE", "true").
-			SetVariable("AUTHENTICATION_JWT_CONFIG_KEY", o.publicKeyData).
-			SetVariable("AUTHENTICATION_JWT_CONFIG_SIGNATURE_TYPE", o.publicKeyType)
+		secConfig.SetStringVariable("AUTHENTICATION_ENABLE", "true").
+			SetDataVariable("AUTHENTICATION_JWT_CONFIG_KEY", o.publicKeyData).
+			SetStringVariable("AUTHENTICATION_JWT_CONFIG_SIGNATURE_TYPE", o.publicKeyType)
 	}
 	return o
 }

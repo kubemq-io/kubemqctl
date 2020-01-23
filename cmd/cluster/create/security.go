@@ -86,9 +86,9 @@ func (o *deploySecurityOptions) setConfig(config *deployment.KubeMQManifestConfi
 	}
 	secConfig, ok := config.Secrets[config.Name]
 	if ok {
-		secConfig.SetVariable("SECURITY_CERT_DATA", o.certData).
-			SetVariable("SECURITY_KEY_DATA", o.keyData).
-			SetVariable("SECURITY_CA_DATA", o.caData)
+		secConfig.SetDataVariable("SECURITY_CERT_DATA", o.certData).
+			SetDataVariable("SECURITY_KEY_DATA", o.keyData).
+			SetDataVariable("SECURITY_CA_DATA", o.caData)
 	}
 	return o
 }

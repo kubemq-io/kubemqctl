@@ -35,10 +35,10 @@ func TestSecretConfig_Spec(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			s := SecretConfig{
-				Id:        tt.fields.Id,
-				Name:      tt.fields.Name,
-				Namespace: tt.fields.Namespace,
-				Variables: tt.fields.Variables,
+				Id:            tt.fields.Id,
+				Name:          tt.fields.Name,
+				Namespace:     tt.fields.Namespace,
+				DataVariables: tt.fields.Variables,
 			}
 			got, err := s.Spec()
 			if tt.wantErr {
