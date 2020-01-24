@@ -6,7 +6,6 @@ import (
 
 	kubeCtx "github.com/kubemq-io/kubemqctl/cmd/cluster/context"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/create"
-	"github.com/kubemq-io/kubemqctl/cmd/cluster/dashboard"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/delete"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/describe"
 	"github.com/kubemq-io/kubemqctl/cmd/cluster/events"
@@ -41,16 +40,13 @@ var clusterExamples = `
 	kubemqctl cluster scale
 
 	# Execute list of KubeMQ clusters command
-	kubemqctl cluster list
+	kubemqctl cluster get
 
 	# Execute proxy ports of KubeMQ cluster command
 	kubemqctl cluster proxy
 
 	# Execute switch Kubernetes context command
 	kubemqctl cluster context
-
-	# Execute cluster web-based dashboard
-	kubemqctl cluster dashboard
 
 	# Show cluster events
 	kubemqctl cluster events
@@ -81,7 +77,6 @@ func NewCmdCluster(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd.AddCommand(proxy.NewCmdProxy(ctx, cfg))
 	cmd.AddCommand(apply.NewCmdApply(ctx, cfg))
 	cmd.AddCommand(describe.NewCmdDescribe(ctx, cfg))
-	cmd.AddCommand(dashboard.NewCmdDashboard(ctx, cfg))
 	cmd.AddCommand(events.NewCmdEvents(ctx, cfg))
 	cmd.AddCommand(register.NewCmdRegister(ctx, cfg))
 	return cmd

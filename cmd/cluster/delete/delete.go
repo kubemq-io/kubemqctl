@@ -109,6 +109,20 @@ func (o *DeleteOptions) Run(ctx context.Context) error {
 		if err != nil {
 			utils.Printlnf("Delete services failed. Error %s", utils.Title(err.Error()))
 		}
+		err = c.DeleteConfigMapsForStatefulSet(sts)
+		if err != nil {
+			utils.Printlnf("Delete config maps failed. Error %s", utils.Title(err.Error()))
+		}
+
+		err = c.DeleteSecretsForStatefulSet(sts)
+		if err != nil {
+			utils.Printlnf("Delete secretes failed. Error %s", utils.Title(err.Error()))
+		}
+		err = c.DeleteIngressForStatefulSet(sts)
+		if err != nil {
+			utils.Printlnf("Delete ingress failed. Error %s", utils.Title(err.Error()))
+		}
+
 		err = c.DeleteVolumeClaimsForStatefulSet(sts)
 		if err != nil {
 			utils.Printlnf("Delete persistence volume claims failed. Error %s", utils.Title(err.Error()))

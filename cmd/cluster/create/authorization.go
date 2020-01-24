@@ -61,10 +61,10 @@ func (o *deployAuthorizationOptions) setConfig(config *deployment.KubeMQManifest
 	}
 	cmConfig, ok := config.ConfigMaps[config.Name]
 	if ok {
-		cmConfig.SetVariable("AUTHORIZATION_ENABLE", "true").
-			SetVariable("AUTHORIZATION_POLICY_DATA", o.policyData).
-			SetVariable("AUTHORIZATION_URL", o.url).
-			SetVariable("AUTHORIZATION_AUTO_RELOAD", fmt.Sprintf("%d", o.autoReload))
+		cmConfig.SetStringVariable("AUTHORIZATION_ENABLE", "true").
+			SetDataVariable("AUTHORIZATION_POLICY_DATA", o.policyData).
+			SetStringVariable("AUTHORIZATION_URL", o.url).
+			SetStringVariable("AUTHORIZATION_AUTO_RELOAD", fmt.Sprintf("%d", o.autoReload))
 	}
 	return o
 }

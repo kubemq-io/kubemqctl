@@ -21,6 +21,19 @@ type NamespaceConfig struct {
 	namespace *apiv1.Namespace
 }
 
+func ImportNamespaceConfig(spec []byte) (*NamespaceConfig, error) {
+	ns := &apiv1.Namespace{}
+	err := yaml.Unmarshal(spec, ns)
+	if err != nil {
+		return nil, err
+	}
+	return &NamespaceConfig{
+		Id:        "",
+		Name:      ns.Name,
+		namespace: ns,
+	}, nil
+}
+
 func NewNamespaceConfig(id, name string) *NamespaceConfig {
 	return &NamespaceConfig{
 		Id:   id,

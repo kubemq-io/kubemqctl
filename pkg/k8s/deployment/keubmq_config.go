@@ -22,12 +22,12 @@ func NewKubeMQManifestConfig(id, name, namespace string) *KubeMQManifestConfig {
 		Id:              id,
 		Name:            name,
 		Namespace:       namespace,
-		NamespaceConfig: NewNamespaceConfig(id, namespace),
-		StatefulSet:     NewStatefulSetConfig(id, name, namespace),
+		NamespaceConfig: nil,
+		StatefulSet:     nil,
 		Services:        make(map[string]*ServiceConfig),
 		ConfigMaps:      make(map[string]*ConfigMapConfig),
 		Secrets:         make(map[string]*SecretConfig),
-		Ingress:         map[string]*IngressConfig{},
+		Ingress:         make(map[string]*IngressConfig),
 	}
 }
 
@@ -47,7 +47,7 @@ func DefaultKubeMQManifestConfig(id, name, namespace string) *KubeMQManifestConf
 func (c *KubeMQManifestConfig) SetConfigMapValues(cmName, key, value string) {
 	cm, ok := c.ConfigMaps[cmName]
 	if ok {
-		cm.SetVariable(key, value)
+		cm.SetStringVariable(key, value)
 	}
 }
 func (c *KubeMQManifestConfig) SetSecretStringValues(secName, key, value string) {
@@ -62,19 +62,34 @@ func (c *KubeMQManifestConfig) SetSecretDataValues(secName, key, value string) {
 		sec.SetDataVariable(key, value)
 	}
 }
+func (c *KubeMQManifestConfig) SetConfigMapStringValues(cmName, key, value string) {
+	cm, ok := c.ConfigMaps[cmName]
+	if ok {
+		cm.SetStringVariable(key, value)
+	}
+}
+func (c *KubeMQManifestConfig) SetConfigMapDataValues(cmName, key, value string) {
+	cm, ok := c.ConfigMaps[cmName]
+	if ok {
+		cm.SetDataVariable(key, value)
+	}
+}
 func (c *KubeMQManifestConfig) Spec() ([]byte, error) {
 	var manifest []string
-	nsSpec, err := c.NamespaceConfig.Spec()
-	if err != nil {
-		return nil, fmt.Errorf("error on namespace spec rendring: %s", err.Error())
+	if c.NamespaceConfig != nil {
+		nsSpec, err := c.NamespaceConfig.Spec()
+		if err != nil {
+			return nil, fmt.Errorf("error on namespace spec rendring: %s", err.Error())
+		}
+		manifest = append(manifest, string(nsSpec))
 	}
-	manifest = append(manifest, string(nsSpec))
-	stsSpec, err := c.StatefulSet.Spec()
-	if err != nil {
-		return nil, fmt.Errorf("error on statefull spec rendring: %s", err.Error())
+	if c.StatefulSet != nil {
+		stsSpec, err := c.StatefulSet.Spec()
+		if err != nil {
+			return nil, fmt.Errorf("error on statefull spec rendring: %s", err.Error())
+		}
+		manifest = append(manifest, string(stsSpec))
 	}
-
-	manifest = append(manifest, string(stsSpec))
 
 	for name, svc := range c.Services {
 		svcSpec, err := svc.Spec()
@@ -101,7 +116,7 @@ func (c *KubeMQManifestConfig) Spec() ([]byte, error) {
 	for _, ing := range c.Ingress {
 		ingresSpec, err := ing.Spec()
 		if err != nil {
-			return nil, fmt.Errorf("error on ingres spec rendring: %s", err.Error())
+			return nil, fmt.Errorf("error on ingress spec rendring: %s", err.Error())
 		}
 		manifest = append(manifest, string(ingresSpec))
 	}

@@ -20,10 +20,10 @@ type ApplyOptions struct {
 
 var applyExamples = `
 	# Apply KubeMQ cluster deployment
-	kubemqctl cluster apply kubemq-cluster.yaml 
+	kubemqctl cluster apply -f kubemq-cluster.yaml 
 
 	# Apply KubeMQ cluster deployment with watching status and events
-	kubemqctl cluster apply kubemq-cluster.yaml -w -s
+	kubemqctl cluster apply -f kubemq-cluster.yaml -w -s
 
 `
 var applyLong = `Apply command allows an update to a KubeMQ StatefulSet configuration with a yaml file`
@@ -55,7 +55,6 @@ func NewCmdApply(ctx context.Context, cfg *config.Config) *cobra.Command {
 }
 
 func (o *ApplyOptions) Complete(args []string) error {
-
 	if o.fileName != "" {
 		buff, err := ioutil.ReadFile(o.fileName)
 		if err != nil {
@@ -87,8 +86,10 @@ func (o *ApplyOptions) Run(ctx context.Context) error {
 	utils.Printlnf("Apply started...")
 	sts, err := sd.StatefulSet.Get()
 	if err != nil {
+
 		return err
 	}
+
 	executed, err := sd.Execute(sts.Name, sts.Namespace)
 	if err != nil {
 		return err

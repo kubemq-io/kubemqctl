@@ -29,18 +29,13 @@ func NewKubeMQDeployment(cfg *config.Config, manifestConfig *KubeMQManifestConfi
 	return sd, nil
 }
 
-func NewKubeMQDeploymentFromCluster(cfg *config.Config, manifestConfig *KubeMQManifestConfig) (*KubeMQDeployment, error) {
+func NewKubeMQDeploymentFromCluster(client *client.Client, manifestConfig *KubeMQManifestConfig) (*KubeMQDeployment, error) {
 	sd := &KubeMQDeployment{
-		Client:               nil,
+		Client:               client,
 		KubeMQManifestConfig: manifestConfig,
 	}
-	c, err := client.NewClient(cfg.KubeConfigPath)
-	if err != nil {
-		return nil, err
-	}
-	sd.Client = c
 
-	sts, err := c.GetStatefulSet(sd.StatefulSet.Namespace, sd.Name)
+	sts, err := sd.Client.GetStatefulSet(sd.StatefulSet.Namespace, sd.Name)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +44,7 @@ func NewKubeMQDeploymentFromCluster(cfg *config.Config, manifestConfig *KubeMQMa
 	}
 	sd.StatefulSet.Set(sts)
 
-	svcList, err := c.GetServices(sd.Namespace, sts.Spec.Template.ObjectMeta.Labels)
+	svcList, err := sd.Client.GetServices(sd.Namespace, sts.Spec.Template.ObjectMeta.Labels)
 	if err != nil {
 		return nil, err
 	}
@@ -60,17 +55,18 @@ func NewKubeMQDeploymentFromCluster(cfg *config.Config, manifestConfig *KubeMQMa
 		sd.Services[svc.Name] = svcConfig
 	}
 
-	cmList, err := c.GetConfigMaps(sts.Namespace, sts.Spec.Template.Spec.Volumes)
+	cmList, err := sd.Client.GetConfigMaps(sts.Namespace, sts.Name)
 	if err != nil {
 		return nil, err
 	}
+
 	for _, cm := range cmList {
 		cmConfig := NewConfigMap("", cm.Name, cm.Namespace)
 		cmConfig.Set(cm)
 		sd.ConfigMaps[cm.Name] = cmConfig
 	}
 
-	secList, err := c.GetSecrets(sts.Namespace, sts.Spec.Template.Spec.Volumes)
+	secList, err := sd.Client.GetSecrets(sts.Namespace, sts.Name)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +76,7 @@ func NewKubeMQDeploymentFromCluster(cfg *config.Config, manifestConfig *KubeMQMa
 		sd.Secrets[sec.Name] = secConfig
 	}
 
-	ingressList, err := c.GetIngress(sts.Namespace, sts.Spec.Template.ObjectMeta.Labels)
+	ingressList, err := sd.Client.GetIngress(sts.Namespace, sts.Name)
 	if err != nil {
 		return nil, err
 	}
@@ -96,6 +92,7 @@ func (sd *KubeMQDeployment) Execute(name, namespace string) (bool, error) {
 	if sd.NamespaceConfig != nil {
 		ns, err := sd.NamespaceConfig.Get()
 		if err != nil {
+
 			return false, err
 		}
 		createdNamespace, created, err := sd.Client.CheckAndCreateNamespace(ns)
@@ -108,8 +105,8 @@ func (sd *KubeMQDeployment) Execute(name, namespace string) (bool, error) {
 		sd.NamespaceConfig.Set(createdNamespace)
 
 	}
-	var err error
 
+	var err error
 	requestedSts, err := sd.StatefulSet.Get()
 	if err != nil {
 		return false, err
@@ -228,6 +225,17 @@ func (sd *KubeMQDeployment) Import(input string) error {
 		segments = append(segments, input)
 	}
 	for index, seg := range segments {
+		if strings.Contains(seg, "#") {
+			continue
+		}
+		if strings.Contains(seg, "kind: Namespace") {
+			ns, err := ImportNamespaceConfig([]byte(seg))
+			if err != nil {
+				return fmt.Errorf("error parsing namespace yaml (segment %d), %s", index, err)
+			}
+			sd.NamespaceConfig = ns
+			continue
+		}
 		if strings.Contains(seg, "kind: StatefulSet") {
 			sts, err := ImportStatefulSetConfig([]byte(seg))
 			if err != nil {
@@ -279,7 +287,9 @@ func (sd *KubeMQDeployment) Import(input string) error {
 }
 
 func (sd *KubeMQDeployment) Validate() error {
-
+	if sd.StatefulSet == nil {
+		return fmt.Errorf("invalid import file, no StatefulSet was defined")
+	}
 	sts, err := sd.StatefulSet.Get()
 	if err != nil {
 		return fmt.Errorf("invalid import file, no StatefulSet was defined")

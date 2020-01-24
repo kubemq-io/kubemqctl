@@ -2,11 +2,13 @@ package config
 
 import (
 	"context"
+	"fmt"
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
+	"io/ioutil"
 	"sort"
 	"strings"
 )
@@ -55,17 +57,6 @@ func (o *ConfigOptions) Validate() error {
 func (o *ConfigOptions) Run(ctx context.Context) error {
 	cfg := o.Cfg
 
-	promptDefaultToken := &survey.Input{
-		Renderer: survey.Renderer{},
-		Message:  "Set Default KubeMQ Token (press Enter for default):",
-		Default:  cfg.DefaultToken,
-		Help:     "Set kube.config file path if not kubectl default",
-	}
-	err := survey.AskOne(promptDefaultToken, &cfg.DefaultToken)
-	if err != nil {
-		return err
-	}
-
 	integrationType := ""
 	integrationSelect := &survey.Select{
 		Renderer: survey.Renderer{},
@@ -80,7 +71,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 		Default: "Kubernetes cluster",
 		Help:    "Select the location of KubeMQ server",
 	}
-	err = survey.AskOne(integrationSelect, &integrationType)
+	err := survey.AskOne(integrationSelect, &integrationType)
 	if err != nil {
 		return err
 	}
@@ -231,14 +222,102 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 		promptCertFile := &survey.Input{
 			Renderer: survey.Renderer{},
 			Message:  "Set cert file path:",
-			Default:  "./",
+			Default:  "",
 			Help:     "Set KubeMQ cert file path",
 		}
 		err = survey.AskOne(promptCertFile, &cfg.CertFile)
 		if err != nil {
 			return err
 		}
+		_, err = ioutil.ReadFile(cfg.CertFile)
+		if err != nil {
+			return fmt.Errorf("error loading cert file: %s", err.Error())
+		}
 	}
+
+	isSetClientId := false
+	promptSetClientIDSecured := &survey.Confirm{
+		Renderer: survey.Renderer{},
+		Message:  "Would you like to set connection ClientId ?:",
+		Default:  false,
+	}
+	err = survey.AskOne(promptSetClientIDSecured, &isSetClientId)
+	if err != nil {
+		return err
+	}
+	if isSetClientId {
+		promptClientId := &survey.Input{
+			Renderer: survey.Renderer{},
+			Message:  "Set ClientId:",
+			Default:  cfg.ClientId,
+			Help:     "Set ClientId for every connection",
+		}
+		err = survey.AskOne(promptClientId, &cfg.ClientId)
+		if err != nil {
+			return err
+		}
+	} else {
+		cfg.ClientId = ""
+	}
+	isAuthToken := false
+	promptSetAuthToken := &survey.Confirm{
+		Renderer: survey.Renderer{},
+		Message:  "Would you like to set JWT Authentication token ?:",
+		Default:  false,
+	}
+	err = survey.AskOne(promptSetAuthToken, &isAuthToken)
+	if err != nil {
+		return err
+	}
+	if isAuthToken {
+		promptAuthToken := &survey.Input{
+			Renderer: survey.Renderer{},
+			Message:  "Set JWT Authentication token file",
+			Default:  cfg.AuthTokenFile,
+			Help:     "Set JWT Authentication token file",
+		}
+		err = survey.AskOne(promptAuthToken, &cfg.AuthTokenFile)
+		if err != nil {
+			return err
+		}
+		_, err = ioutil.ReadFile(cfg.AuthTokenFile)
+		if err != nil {
+			return fmt.Errorf("error loading Authentication token file: %s", err.Error())
+		}
+	} else {
+		cfg.AuthTokenFile = ""
+	}
+	isLicenseData := false
+	promptSetLicenseData := &survey.Confirm{
+		Renderer: survey.Renderer{},
+		Message:  "Would you like to set KubeMQ enterprise license file ?:",
+		Default:  false,
+	}
+	err = survey.AskOne(promptSetLicenseData, &isLicenseData)
+	if err != nil {
+		return err
+	}
+	if isLicenseData {
+		dataFile := "license.key"
+		promptLicenseDataFile := &survey.Input{
+			Renderer: survey.Renderer{},
+			Message:  "Set KubeMQ enterprise license file",
+			Default:  dataFile,
+			Help:     "Set KubeMQ enterprise license file",
+		}
+		err = survey.AskOne(promptLicenseDataFile, &dataFile)
+		if err != nil {
+			return err
+		}
+		data, err := ioutil.ReadFile(dataFile)
+		if err != nil {
+			return fmt.Errorf("error loading license data file: %s", err.Error())
+		}
+		cfg.LicenseData = string(data)
+	} else {
+		cfg.LicenseData = ""
+	}
+
 	err = cfg.Save()
 	if err != nil {
 		return err

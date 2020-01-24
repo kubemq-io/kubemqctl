@@ -30,10 +30,11 @@ func (c *Client) CheckAndCreateNamespace(namespace *apiv1.Namespace) (*apiv1.Nam
 	if err == nil && ns != nil {
 		return ns, false, nil
 	}
-	ns, err = c.ClientSet.CoreV1().Namespaces().Create(namespace)
+
+	createNs, err := c.ClientSet.CoreV1().Namespaces().Create(namespace)
 	if err != nil {
 		return nil, false, err
 	}
 
-	return ns, true, nil
+	return createNs, true, nil
 }

@@ -103,8 +103,8 @@ func (o *deployGatewayOptions) setConfig(config *deployment.KubeMQManifestConfig
 	}
 	cmConfig, ok := config.ConfigMaps[config.Name]
 	if ok {
-		cmConfig.SetVariable("BROKER_GATEWAYS", strings.Join(o.remotes, ",")).
-			SetVariable("BROKER_GATEWAY_PORT", fmt.Sprintf("%d", o.port))
+		cmConfig.SetStringVariable("BROKER_GATEWAYS", strings.Join(o.remotes, ",")).
+			SetStringVariable("BROKER_GATEWAY_PORT", fmt.Sprintf("%d", o.port))
 	}
 	srv := deployment.NewServiceConfig(config.Id, fmt.Sprintf("%s-gateway", config.Name), config.Namespace, config.Name).
 		SetContainerPort(int(o.port)).

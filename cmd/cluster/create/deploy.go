@@ -9,6 +9,7 @@ import (
 )
 
 type deployOptions struct {
+	configData      string
 	configFilename  string
 	name            string
 	namespace       string
@@ -30,6 +31,7 @@ type deployOptions struct {
 
 func defaultDeployOptions(cmd *cobra.Command) *deployOptions {
 	o := &deployOptions{
+		configData:      "",
 		configFilename:  "",
 		name:            "",
 		namespace:       "",
@@ -101,6 +103,13 @@ func (o *deployOptions) validate() error {
 }
 
 func (o *deployOptions) complete() error {
+	if o.configFilename != "" {
+		data, err := ioutil.ReadFile(o.configFilename)
+		if err != nil {
+			return fmt.Errorf("error config file data: %s", err.Error())
+		}
+		o.configData = string(data)
+	}
 	if o.licenseDataFile != "" {
 		data, err := ioutil.ReadFile(o.licenseDataFile)
 		if err != nil {
@@ -149,7 +158,9 @@ func (o *deployOptions) getConfig() *deployment.KubeMQManifestConfig {
 	if o.licenseData != "" {
 		config.SetSecretStringValues(o.name, "LICENSE_KEY_DATA", o.licenseData)
 	}
-
+	if o.configData != "" {
+		config.SetConfigMapDataValues(o.name, "CONFIG", o.configData)
+	}
 	o.service.setConfig(config)
 	o.security.setConfig(config)
 	o.authentication.setConfig(config)

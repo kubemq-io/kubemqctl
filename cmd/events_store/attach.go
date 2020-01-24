@@ -26,13 +26,13 @@ var eventsAttachExamples = `
 	kubemqctl events_store attach some-events-store
 
 	# Attach to some-events-store1 and some-events-store2 'events store' channels and output running messages
-	kubemqctl events attach some-events-store1 some-events-store2 
+	kubemqctl events_store attach some-events-store1 some-events-store2 
 
 	# Attach to some-events-store 'events store' channel and output running messages filter by include regex (some*)
-	kubemqctl events attach some-events -i some*
+	kubemqctl events_store attach some-events -i some*
 
 	# Attach to some-events-store 'events store' channel and output running messages filter by exclude regex (not-some*)
-	kubemqctl events attach some-events -e not-some*
+	kubemqctl events_store attach some-events -e not-some*
 `
 var eventsAttachLong = `Attach command allows to display 'events store' channel content for debugging proposes`
 var eventsAttachShort = `Attach to events store channels command`

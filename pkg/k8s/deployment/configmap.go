@@ -1,6 +1,7 @@
 package deployment
 
 import (
+	"encoding/base64"
 	"github.com/ghodss/yaml"
 	apiv1 "k8s.io/api/core/v1"
 	"strings"
@@ -66,8 +67,12 @@ func DefaultConfigMap(id, name, namespace string) map[string]*ConfigMapConfig {
 	return cm
 }
 
-func (c *ConfigMapConfig) SetVariable(key, value string) *ConfigMapConfig {
+func (c *ConfigMapConfig) SetStringVariable(key, value string) *ConfigMapConfig {
 	c.Variables[strings.ToUpper(key)] = value
+	return c
+}
+func (c *ConfigMapConfig) SetDataVariable(key, value string) *ConfigMapConfig {
+	c.Variables[strings.ToUpper(key)] = base64.StdEncoding.EncodeToString([]byte(value))
 	return c
 }
 func (c *ConfigMapConfig) Spec() ([]byte, error) {

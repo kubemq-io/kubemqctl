@@ -51,7 +51,7 @@ func (c *Client) CreateOrUpdateIngress(ingress *net.Ingress) (*net.Ingress, bool
 	return createdIngress, false, nil
 }
 
-func (c *Client) GetIngress(ns string, labels map[string]string) ([]*net.Ingress, error) {
+func (c *Client) GetIngress(ns string, stsName string) ([]*net.Ingress, error) {
 	ingressList := []*net.Ingress{}
 	list, err := c.ClientSet.NetworkingV1beta1().Ingresses(ns).List(metav1.ListOptions{})
 	if err != nil {
@@ -60,13 +60,10 @@ func (c *Client) GetIngress(ns string, labels map[string]string) ([]*net.Ingress
 	if list != nil {
 		for i := 0; i < len(list.Items); i++ {
 			ingress := list.Items[i]
-			ingress.APIVersion = "v1beta1"
+			ingress.APIVersion = "networking.k8s.io/v1beta1"
 			ingress.Kind = "Ingress"
-			for key, value := range ingress.Labels {
-				if labels[key] == value {
-					ingressList = append(ingressList, &ingress)
-					continue
-				}
+			if strings.Contains(ingress.Name, stsName) {
+				ingressList = append(ingressList, &ingress)
 			}
 		}
 

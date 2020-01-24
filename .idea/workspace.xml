@@ -2,21 +2,42 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/client/ingress.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/deployment/ingress.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/affinity.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/authentication.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/authentication.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/apply/apply.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/apply/apply.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/cluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/cluster.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/authorization.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/authorization.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/cluster/create/deploy.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/deploy.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/cluster/create/gateway.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/gateway.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/node_selectors.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/node_selectors.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/security.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/security.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/tolleration.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/dashboard/dashboard.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/delete/delete.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/delete/delete.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cluster/describe/describe.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/describe/describe.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/events_store/attach.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/attach.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/configmap.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/configmap.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/ingress.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/ingress.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/namespace.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/namespace.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/secret.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/secret.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/deployment/configmap.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/configmap.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/k8s/deployment/keubmq_config.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/keubmq_config.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/k8s/deployment/kubemq_deployment.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/kubemq_deployment.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/deployment/namespace.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/namespace.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/k8s/deployment/secret.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/secret.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/deployment/secret_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/secret_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/kubemq/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/kubemq/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/dashboard/3rdpartylicenses.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/dashboard/assets/kube-image.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/dashboard/assets/loading.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/dashboard/assets/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/dashboard/assets/workers/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/dashboard/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/dashboard/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/dashboard/main.75fff1484b884b1d6d90.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/dashboard/polyfills.3f11bf9959f924754af3.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/dashboard/runtime.ec2944dd8b20ec099bf3.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/dashboard/styles.00ac0c6de27b63c11576.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/progress_bar.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/server.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,13 +205,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00001" summary="add bin folder&#10;add mon command">
-      <created>1559393625176</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1559393625176</updated>
     </task>
     <task id="LOCAL-00002" summary="add send and subscribe command">
       <created>1559448803150</created>
@@ -528,7 +542,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579607598447</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="adding ingress setting to services">
+      <created>1579788170622</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1579788170622</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -564,7 +585,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="update readme.md" />
     <MESSAGE value="start prompt packa&#10;ge" />
     <MESSAGE value="update switch context" />
     <MESSAGE value="update config" />
@@ -589,7 +609,8 @@
     <MESSAGE value="update readme" />
     <MESSAGE value="refactor all deployment" />
     <MESSAGE value="adding attributes to statefulset" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding attributes to statefulset" />
+    <MESSAGE value="adding ingress setting to services" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding ingress setting to services" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -603,10 +624,10 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1217" y="573" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579522350352" />
-    <state x="1148" y="356" key="CommitChangelistDialog2" timestamp="1579627918328">
+    <state x="1148" y="356" key="CommitChangelistDialog2" timestamp="1579788169841">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579627918328" />
+    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579788169841" />
     <state x="1317" y="599" key="FileChooserDialogImpl" timestamp="1579689550277">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
@@ -631,18 +652,18 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1045" y="486" key="SettingsEditor/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1575092531279" />
-    <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1579627921178">
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1579788172348">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579627921178" />
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579788172348" />
     <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1579164052490">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579164052490" />
     <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.2560.1440/-2560.0.2560.1440@0.0.3072.1688" timestamp="1579163136060" />
-    <state x="1164" y="550" width="750" height="598" key="find.popup" timestamp="1579693495770">
+    <state x="1164" y="550" width="750" height="598" key="find.popup" timestamp="1579858238343">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1164" y="550" width="750" height="598" key="find.popup/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579693495770" />
+    <state x="1164" y="550" width="750" height="598" key="find.popup/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579858238343" />
   </component>
 </project>

@@ -1,9 +1,31 @@
 package client
 
 import (
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	apiv1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"strings"
 )
+
+func (c *Client) DeleteSecretsForStatefulSet(name string) error {
+	pair := strings.Split(name, "/")
+	secs, err := c.ClientSet.CoreV1().Secrets(pair[0]).List(metav1.ListOptions{})
+	if err != nil {
+		return err
+	}
+
+	for _, sec := range secs.Items {
+		if strings.Contains(sec.Name, pair[1]) {
+			err := c.ClientSet.CoreV1().Secrets(pair[0]).Delete(sec.Name, metav1.NewDeleteOptions(0))
+			if err != nil {
+				utils.Printlnf("Secret %s/%s not deleted. Error: %s", sec.Namespace, sec.Namespace, utils.Title(err.Error()))
+				continue
+			}
+			utils.Printlnf("Secret %s/%s deleted.", sec.Namespace, sec.Name)
+		}
+	}
+	return nil
+}
 
 func (c *Client) CreateOrUpdateSecret(sec *apiv1.Secret) (*apiv1.Secret, bool, error) {
 	ns, name := sec.Namespace, sec.Name
@@ -26,7 +48,7 @@ func (c *Client) CreateOrUpdateSecret(sec *apiv1.Secret) (*apiv1.Secret, bool, e
 	return createSec, false, nil
 }
 
-func (c *Client) GetSecrets(ns string, volumes []apiv1.Volume) ([]*apiv1.Secret, error) {
+func (c *Client) GetSecrets(ns string, stsName string) ([]*apiv1.Secret, error) {
 
 	secList := []*apiv1.Secret{}
 	secs, err := c.ClientSet.CoreV1().Secrets(ns).List(metav1.ListOptions{})
@@ -35,18 +57,12 @@ func (c *Client) GetSecrets(ns string, volumes []apiv1.Volume) ([]*apiv1.Secret,
 	}
 	if secs != nil {
 		for i := 0; i < len(secs.Items); i++ {
+
 			sec := secs.Items[i]
-			sec.APIVersion = "v1"
 			sec.Kind = "Secret"
-			for _, vm := range volumes {
-				if vm.Secret != nil {
-					if vm.Secret.SecretName == sec.Name {
-						secList = append(secList, &sec)
-						continue
-					}
-
-				}
-
+			sec.APIVersion = "v1"
+			if strings.Contains(sec.Name, stsName) {
+				secList = append(secList, &sec)
 			}
 		}
 	}

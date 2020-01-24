@@ -81,6 +81,7 @@ func (s *SecretConfig) SetStringVariable(key, value string) *SecretConfig {
 }
 func (s *SecretConfig) Spec() ([]byte, error) {
 	if s.secret == nil {
+
 		t := NewTemplate(defaultKubeMQSecretTemplate, s)
 		return t.Get()
 	}

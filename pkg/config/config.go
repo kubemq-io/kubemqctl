@@ -20,6 +20,9 @@ var DefaultConfig = &Config{
 	KubeConfigPath:     "",
 	ConnectionType:     "grpc",
 	DefaultToken:       "",
+	ClientId:           "",
+	AuthTokenFile:      "",
+	LicenseData:        "",
 }
 
 func exists(name string) bool {
@@ -57,6 +60,9 @@ type Config struct {
 	KubeConfigPath     string
 	ConnectionType     string
 	DefaultToken       string
+	ClientId           string
+	AuthTokenFile      string
+	LicenseData        string
 }
 
 func (c *Config) Save() error {

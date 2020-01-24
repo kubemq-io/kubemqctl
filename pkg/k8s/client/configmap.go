@@ -1,9 +1,31 @@
 package client
 
 import (
+	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	apiv1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"strings"
 )
+
+func (c *Client) DeleteConfigMapsForStatefulSet(name string) error {
+	pair := strings.Split(name, "/")
+	cms, err := c.ClientSet.CoreV1().ConfigMaps(pair[0]).List(metav1.ListOptions{})
+	if err != nil {
+		return err
+	}
+
+	for _, cm := range cms.Items {
+		if strings.Contains(cm.Name, pair[1]) {
+			err := c.ClientSet.CoreV1().ConfigMaps(pair[0]).Delete(cm.Name, metav1.NewDeleteOptions(0))
+			if err != nil {
+				utils.Printlnf("ConfigMap %s/%s not deleted. Error: %s", cm.Namespace, cm.Namespace, utils.Title(err.Error()))
+				continue
+			}
+			utils.Printlnf("ConfigMap %s/%s deleted.", cm.Namespace, cm.Name)
+		}
+	}
+	return nil
+}
 
 func (c *Client) CreateOrUpdateConfigMap(cm *apiv1.ConfigMap) (*apiv1.ConfigMap, bool, error) {
 	ns, name := cm.Namespace, cm.Name
@@ -34,7 +56,7 @@ func (c *Client) GetConfigMap(namespace, name string) (*apiv1.ConfigMap, error) 
 	return cm, nil
 }
 
-func (c *Client) GetConfigMaps(ns string, volumes []apiv1.Volume) ([]*apiv1.ConfigMap, error) {
+func (c *Client) GetConfigMaps(ns string, stsName string) ([]*apiv1.ConfigMap, error) {
 	cmList := []*apiv1.ConfigMap{}
 	cms, err := c.ClientSet.CoreV1().ConfigMaps(ns).List(metav1.ListOptions{})
 	if err != nil {
@@ -43,16 +65,10 @@ func (c *Client) GetConfigMaps(ns string, volumes []apiv1.Volume) ([]*apiv1.Conf
 	if cms != nil {
 		for i := 0; i < len(cms.Items); i++ {
 			cm := cms.Items[i]
-			cm.APIVersion = "v1"
 			cm.Kind = "ConfigMap"
-			for _, vm := range volumes {
-				if vm.ConfigMap != nil {
-					if vm.ConfigMap.Name == cm.Name {
-						cmList = append(cmList, &cm)
-						continue
-					}
-
-				}
+			cm.APIVersion = "v1"
+			if strings.Contains(cm.Name, stsName) {
+				cmList = append(cmList, &cm)
 			}
 		}
 	}
