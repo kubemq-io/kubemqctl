@@ -1,43 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
+    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="adapt apply and describe">
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/client/bundle.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/client/crd.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/client/operator.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/client/role.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/client/role_binding.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/client/service_account.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/operator/bundle.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/operator/kubemqclusters_crd..go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/operator/operator.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/operator/role.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/operator/role_binding.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/operator/service_account.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/operator/templates.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/apply/apply.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/apply/apply.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/cluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/cluster.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/authorization.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/authorization.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/deploy.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/deploy.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/create/gateway.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/create/gateway.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/dashboard/dashboard.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/delete/delete.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/delete/delete.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cluster/describe/describe.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cluster/describe/describe.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events_store/attach.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/attach.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/configmap.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/configmap.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/ingress.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/ingress.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/namespace.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/namespace.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/secret.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/secret.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/deployment/configmap.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/configmap.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/deployment/keubmq_config.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/keubmq_config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/deployment/kubemq_deployment.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/kubemq_deployment.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/deployment/namespace.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/namespace.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/deployment/secret.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/deployment/secret.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/kubemq/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/kubemq/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/dashboard/3rdpartylicenses.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/dashboard/assets/kube-image.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/dashboard/assets/loading.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/dashboard/assets/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/dashboard/assets/workers/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/dashboard/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/dashboard/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/dashboard/main.75fff1484b884b1d6d90.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/dashboard/polyfills.3f11bf9959f924754af3.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/dashboard/runtime.ec2944dd8b20ec099bf3.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/dashboard/styles.00ac0c6de27b63c11576.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/progress_bar.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/server.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/client.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,17 +71,17 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\client" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\operator" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\operator\runtime" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\operator\crd" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\cluster\create" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\config" />
-      <recent name="$PROJECT_DIR$/cmd/cluster/events" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubetools\cmd" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\operator" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\cluster" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\utils\register" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl" />
       <recent name="$PROJECT_DIR$/.github" />
-      <recent name="$PROJECT_DIR$/cmd" />
     </key>
   </component>
   <component name="RunManager" selected="Go Test.go test github.com/kubemq-io/kubemqctl/pkg/k8s/deployment (1)">
@@ -205,13 +185,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00002" summary="add send and subscribe command">
-      <created>1559448803150</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1559448803150</updated>
     </task>
     <task id="LOCAL-00003" summary="add send and subscribe command">
       <created>1559461714607</created>
@@ -549,7 +522,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579788170622</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="adapt apply and describe">
+      <created>1579880784456</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1579880784456</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -585,7 +565,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="start prompt packa&#10;ge" />
     <MESSAGE value="update switch context" />
     <MESSAGE value="update config" />
     <MESSAGE value="add events" />
@@ -610,7 +589,8 @@
     <MESSAGE value="refactor all deployment" />
     <MESSAGE value="adding attributes to statefulset" />
     <MESSAGE value="adding ingress setting to services" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding ingress setting to services" />
+    <MESSAGE value="adapt apply and describe" />
+    <option name="LAST_COMMIT_MESSAGE" value="adapt apply and describe" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -624,14 +604,14 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1217" y="573" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579522350352" />
-    <state x="1148" y="356" key="CommitChangelistDialog2" timestamp="1579788169841">
+    <state x="1148" y="356" key="CommitChangelistDialog2" timestamp="1580057785621">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579788169841" />
-    <state x="1317" y="599" key="FileChooserDialogImpl" timestamp="1579689550277">
+    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1580057785621" />
+    <state x="1317" y="599" key="FileChooserDialogImpl" timestamp="1580128036766">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1317" y="599" key="FileChooserDialogImpl/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579689550277" />
+    <state x="1317" y="599" key="FileChooserDialogImpl/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1580128036766" />
     <state width="3029" height="478" key="GridCell.Tab.0.bottom" timestamp="1579599408416">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
@@ -652,14 +632,14 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1045" y="486" key="SettingsEditor/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1575092531279" />
-    <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1579788172348">
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1579880786648">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579788172348" />
-    <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1579164052490">
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579880786648" />
+    <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1581947885944">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579164052490" />
+    <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1581947885944" />
     <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.2560.1440/-2560.0.2560.1440@0.0.3072.1688" timestamp="1579163136060" />
     <state x="1164" y="550" width="750" height="598" key="find.popup" timestamp="1579858238343">
       <screen x="0" y="0" width="3072" height="1688" />
