@@ -8,6 +8,7 @@ import (
 func (c *Client) CreateOrUpdateCRD(crd *v1beta1.CustomResourceDefinition) (*v1beta1.CustomResourceDefinition, bool, error) {
 	found, err := c.ClientApiExtension.ApiextensionsV1beta1().CustomResourceDefinitions().Get(crd.Name, metav1.GetOptions{})
 	if err == nil && found != nil {
+		crd.ResourceVersion = found.ResourceVersion
 		updatedCrd, err := c.ClientApiExtension.ApiextensionsV1beta1().CustomResourceDefinitions().Update(crd)
 		if err != nil {
 			return nil, true, err

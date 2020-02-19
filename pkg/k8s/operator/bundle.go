@@ -54,3 +54,23 @@ func CreateBundle(name, namespace string) (*Bundle, error) {
 		ServiceAccount: serviceAccount,
 	}, nil
 }
+
+func (b *Bundle) Validate() error {
+	if b.CRDs == nil {
+		return fmt.Errorf("no crd exsits or defined")
+	}
+	if b.Deployment == nil {
+		return fmt.Errorf("no operator deployment exsits or defined")
+	}
+	if b.Role == nil {
+		return fmt.Errorf("no role exsits or defined")
+	}
+
+	if b.RoleBinding == nil {
+		return fmt.Errorf("no role binding exsits or defined")
+	}
+	if b.ServiceAccount == nil {
+		return fmt.Errorf("no service account exsits or defined")
+	}
+	return nil
+}

@@ -15,7 +15,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name:{{.Name}}
+      name: {{.Name}}
   template:
     metadata:
       labels:

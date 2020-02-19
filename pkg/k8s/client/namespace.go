@@ -38,3 +38,37 @@ func (c *Client) CheckAndCreateNamespace(namespace *apiv1.Namespace) (*apiv1.Nam
 
 	return createNs, true, nil
 }
+func (c *Client) CreateIfNotPresentNamespace(namespace string) error {
+
+	ns, err := c.ClientSet.CoreV1().Namespaces().Get(namespace, metav1.GetOptions{})
+	if err == nil && ns != nil {
+		return nil
+	}
+
+	ns = &apiv1.Namespace{
+		TypeMeta: metav1.TypeMeta{},
+		ObjectMeta: metav1.ObjectMeta{
+			Name: namespace,
+		},
+		Spec:   apiv1.NamespaceSpec{},
+		Status: apiv1.NamespaceStatus{},
+	}
+	_, err = c.ClientSet.CoreV1().Namespaces().Create(ns)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+func (c *Client) GetNamespaceList() ([]string, error) {
+	list, err := c.ClientSet.CoreV1().Namespaces().List(metav1.ListOptions{})
+	if err != nil {
+		return nil, err
+	}
+	var nsList []string
+	for _, item := range list.Items {
+		nsList = append(nsList, item.Name)
+	}
+	return nsList, nil
+
+}
