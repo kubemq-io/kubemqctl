@@ -86,7 +86,7 @@ func (o *EventsStoreSendOptions) Run(ctx context.Context) error {
 		msg := client.ES().
 			SetChannel(o.channel).
 			SetId(uuid.New().String()).
-			SetBody([]byte(fmt.Sprintf("%s - (%d)", o.message, i))).
+			SetBody([]byte(o.message)).
 			SetMetadata(o.metadata)
 		res, err := msg.Send(ctx)
 		if err != nil {

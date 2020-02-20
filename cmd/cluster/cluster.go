@@ -39,7 +39,8 @@ var clusterExamples = `
 	# Execute scale KubeMQ cluster command
 	kubemqctl cluster scale
 
-	# Execute list of KubeMQ clusters command
+	# Execute get of KubeMQ clusters command
+
 	kubemqctl cluster get
 
 	# Execute proxy ports of KubeMQ cluster command
@@ -63,7 +64,7 @@ func NewCmdCluster(ctx context.Context, cfg *config.Config) *cobra.Command {
 		Short:     clusterShort,
 		Long:      clusterLong,
 		Example:   clusterExamples,
-		ValidArgs: []string{"create", "context", "apply", "dashboard", "delete", "describe", "list", "logs", "proxy", "scale", "events"},
+		ValidArgs: []string{"create", "context", "apply", "dashboard", "delete", "describe", "get", "logs", "proxy", "scale", "events"},
 		Run: func(cmd *cobra.Command, args []string) {
 			utils.CheckErr(cmd.Help())
 		},

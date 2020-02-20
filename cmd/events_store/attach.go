@@ -20,7 +20,7 @@ type EventsStoreAttachOptions struct {
 
 var eventsAttachExamples = `
 	# Attach to all events store channels and output running messages
-	kubemqctl events attach *
+	kubemqctl events_store attach *
 	
 	# Attach to some-events-store 'events store' channel and output running messages
 	kubemqctl events_store attach some-events-store
@@ -34,7 +34,7 @@ var eventsAttachExamples = `
 	# Attach to some-events-store 'events store' channel and output running messages filter by exclude regex (not-some*)
 	kubemqctl events_store attach some-events -e not-some*
 `
-var eventsAttachLong = `Attach command allows to display 'events store' channel content for debugging proposes`
+var eventsAttachLong = `Attach command allows to display 'events_store' channel content for debugging proposes`
 var eventsAttachShort = `Attach to events store channels command`
 
 func NewCmdEventsStoreAttach(ctx context.Context, cfg *config.Config) *cobra.Command {
