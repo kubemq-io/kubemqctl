@@ -103,7 +103,7 @@ func (o *QueueSendOptions) Run(ctx context.Context) error {
 	for i := 0; i < o.messages; i++ {
 		msg := client.QM().
 			SetChannel(o.channel).
-			SetBody([]byte(fmt.Sprintf("%s - (%d)", o.body, i))).
+			SetBody([]byte(o.body)).
 			SetMetadata(o.metadata).
 			SetPolicyExpirationSeconds(o.expiration).
 			SetPolicyDelaySeconds(o.delay).
