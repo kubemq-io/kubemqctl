@@ -1,8 +1,7 @@
 package create
 
 import (
-	"fmt"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/deployment"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/crd/cluster"
 	"github.com/spf13/cobra"
 )
 
@@ -40,26 +39,18 @@ func (o *deployHealthOptions) complete() error {
 	return nil
 }
 
-func (o *deployHealthOptions) setConfig(config *deployment.KubeMQManifestConfig) *deployHealthOptions {
+func (o *deployHealthOptions) setConfig(deployment *cluster.KubemqCluster) *deployHealthOptions {
 	if !o.enabled {
 		return o
 	}
-	tmpl := `          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8080
-            initialDelaySeconds: %d
-            periodSeconds: %d
-            timeoutSeconds: %d
-            successThreshold: %d
-            failureThreshold: %d
-`
-	prob := fmt.Sprintf(tmpl,
-		o.initialDelaySeconds,
-		o.timeoutSeconds,
-		o.periodSeconds,
-		o.successThreshold,
-		o.failureThreshold)
-	config.StatefulSet.SetHealthProbe(prob)
+	deployment.Spec.Health = &cluster.HealthConfig{
+		Enabled:             true,
+		InitialDelaySeconds: o.initialDelaySeconds,
+		PeriodSeconds:       o.periodSeconds,
+		TimeoutSeconds:      o.timeoutSeconds,
+		SuccessThreshold:    o.successThreshold,
+		FailureThreshold:    o.failureThreshold,
+	}
+
 	return o
 }

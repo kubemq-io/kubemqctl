@@ -2,63 +2,68 @@ package create
 
 import (
 	"fmt"
-	"github.com/google/uuid"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/deployment"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/crd/cluster"
 	"github.com/spf13/cobra"
 	"io/ioutil"
+	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 type deployOptions struct {
-	configData      string
-	configFilename  string
-	name            string
-	namespace       string
-	token           string
-	licenseData     string
-	licenseDataFile string
-	tag             string
-	volume          uint
-	replicas        uint
-	service         *deployServiceOptions
-	security        *deploySecurityOptions
-	authentication  *deployAuthenticationOptions
-	authorization   *deployAuthorizationOptions
-	gateway         *deployGatewayOptions
-	resources       *deployResourceOptions
-	nodeSelectors   *deployNodeSelectorOptions
-	healthProbe     *deployHealthOptions
+	configData     string
+	configFilename string
+	name           string
+	namespace      string
+	replicas       int32
+	api            *deployApiOptions
+	authentication *deployAuthenticationOptions
+	authorization  *deployAuthorizationOptions
+	gateway        *deployGatewayOptions
+	grpc           *deployGrpcOptions
+	health         *deployHealthOptions
+	image          *deployImageOptions
+	license        *deployLicenseOptions
+	log            *deployLogOptions
+	nodeSelector   *deployNodeSelectorOptions
+	notification   *deployNotificationOptions
+	queue          *deployQueueOptions
+	resources      *deployResourceOptions
+	rest           *deployRestOptions
+	routing        *deployRoutingOptions
+	store          *deployStoreOptions
+	tls            *deployTlsOptions
+	volume         *deployVolumeOptions
 }
 
 func defaultDeployOptions(cmd *cobra.Command) *deployOptions {
 	o := &deployOptions{
-		configData:      "",
-		configFilename:  "",
-		name:            "",
-		namespace:       "",
-		token:           "",
-		licenseData:     "",
-		licenseDataFile: "",
-		tag:             "",
-		volume:          0,
-		replicas:        0,
-		service:         defaultServiceConfig(cmd),
-		security:        defaultSecurityConfig(cmd),
-		authentication:  defaultAuthenticationOptions(cmd),
-		authorization:   defaultAuthorizationConfig(cmd),
-		gateway:         defaultGatewayOptions(cmd),
-		resources:       defaultResourceOptions(cmd),
-		nodeSelectors:   defaultNodeSelectorOptions(cmd),
-		healthProbe:     defaultHealthOptions(cmd),
+		configData:     "",
+		configFilename: "",
+		name:           "",
+		namespace:      "",
+		replicas:       0,
+		api:            defaultApiConfig(cmd),
+		authentication: defaultAuthenticationOptions(cmd),
+		authorization:  defaultAuthorizationConfig(cmd),
+		gateway:        defaultGatewayOptions(cmd),
+		grpc:           defaultGrpcConfig(cmd),
+		health:         defaultHealthOptions(cmd),
+		image:          defaultImageConfig(cmd),
+		license:        defaultLicenseConfig(cmd),
+		log:            defaultLogConfig(cmd),
+		nodeSelector:   defaultNodeSelectorOptions(cmd),
+		notification:   defaultNotificationConfig(cmd),
+		queue:          defaultQueueConfig(cmd),
+		resources:      defaultResourceOptions(cmd),
+		rest:           defaultRestConfig(cmd),
+		routing:        defaultRoutingConfig(cmd),
+		store:          defaultStoreConfig(cmd),
+		tls:            defaultTlsConfig(cmd),
+		volume:         defaultVolumeConfig(cmd),
 	}
 	cmd.PersistentFlags().StringVarP(&o.configFilename, "config-file", "c", "", "set kubemq config file")
 	cmd.PersistentFlags().StringVarP(&o.name, "name", "n", "kubemq-cluster", "set kubemq cluster name")
 	cmd.PersistentFlags().StringVarP(&o.namespace, "namespace", "", "kubemq", "set kubemq cluster namespace")
-	cmd.PersistentFlags().StringVarP(&o.token, "token", "t", "", "set kubemq token")
-	cmd.PersistentFlags().StringVarP(&o.licenseData, "license-data", "d", "", "set license data")
-	cmd.PersistentFlags().StringVarP(&o.licenseDataFile, "license-data-file", "l", "", "set license data filename")
-	cmd.PersistentFlags().StringVarP(&o.tag, "tag", "T", "latest", "set kubemq docker image tag")
-	cmd.PersistentFlags().UintVarP(&o.volume, "volume", "v", 0, "set persistence volume claim size")
-	cmd.PersistentFlags().UintVarP(&o.replicas, "replicas", "r", 3, "set replicas")
+	cmd.PersistentFlags().Int32VarP(&o.replicas, "replicas", "r", 3, "set replicas")
 	return o
 }
 
@@ -69,14 +74,8 @@ func (o *deployOptions) validate() error {
 	if o.namespace == "" {
 		return fmt.Errorf("error setting deploy configuration, missing kubemq cluster namespace")
 	}
-	if o.tag == "" {
-		return fmt.Errorf("error setting deploy configuration, missing kubemq cluster docker image tag")
-	}
 
-	if err := o.service.validate(); err != nil {
-		return err
-	}
-	if err := o.security.validate(); err != nil {
+	if err := o.api.validate(); err != nil {
 		return err
 	}
 
@@ -89,14 +88,48 @@ func (o *deployOptions) validate() error {
 	if err := o.gateway.validate(); err != nil {
 		return err
 	}
+	if err := o.grpc.validate(); err != nil {
+		return err
+	}
+
+	if err := o.health.validate(); err != nil {
+		return err
+	}
+	if err := o.image.validate(); err != nil {
+		return err
+	}
+	if err := o.license.validate(); err != nil {
+		return err
+	}
+	if err := o.log.validate(); err != nil {
+		return err
+	}
+	if err := o.notification.validate(); err != nil {
+		return err
+	}
 	if err := o.resources.validate(); err != nil {
 		return err
 	}
 
-	if err := o.nodeSelectors.validate(); err != nil {
+	if err := o.nodeSelector.validate(); err != nil {
 		return err
 	}
-	if err := o.healthProbe.validate(); err != nil {
+	if err := o.queue.validate(); err != nil {
+		return err
+	}
+	if err := o.rest.validate(); err != nil {
+		return err
+	}
+	if err := o.routing.validate(); err != nil {
+		return err
+	}
+	if err := o.store.validate(); err != nil {
+		return err
+	}
+	if err := o.tls.validate(); err != nil {
+		return err
+	}
+	if err := o.volume.validate(); err != nil {
 		return err
 	}
 	return nil
@@ -110,17 +143,8 @@ func (o *deployOptions) complete() error {
 		}
 		o.configData = string(data)
 	}
-	if o.licenseDataFile != "" {
-		data, err := ioutil.ReadFile(o.licenseDataFile)
-		if err != nil {
-			return fmt.Errorf("error loading license file data: %s", err.Error())
-		}
-		o.licenseData = string(data)
-	}
-	if err := o.service.complete(); err != nil {
-		return err
-	}
-	if err := o.security.complete(); err != nil {
+
+	if err := o.api.complete(); err != nil {
 		return err
 	}
 
@@ -133,41 +157,102 @@ func (o *deployOptions) complete() error {
 	if err := o.gateway.complete(); err != nil {
 		return err
 	}
+	if err := o.grpc.complete(); err != nil {
+		return err
+	}
+
+	if err := o.health.complete(); err != nil {
+		return err
+	}
+	if err := o.image.complete(); err != nil {
+		return err
+	}
+	if err := o.license.complete(); err != nil {
+		return err
+	}
+	if err := o.log.complete(); err != nil {
+		return err
+	}
+	if err := o.notification.complete(); err != nil {
+		return err
+	}
 	if err := o.resources.complete(); err != nil {
 		return err
 	}
 
-	if err := o.nodeSelectors.complete(); err != nil {
+	if err := o.nodeSelector.complete(); err != nil {
 		return err
 	}
-	if err := o.healthProbe.complete(); err != nil {
+	if err := o.queue.complete(); err != nil {
+		return err
+	}
+	if err := o.rest.complete(); err != nil {
+		return err
+	}
+	if err := o.routing.complete(); err != nil {
+		return err
+	}
+	if err := o.store.complete(); err != nil {
+		return err
+	}
+	if err := o.tls.complete(); err != nil {
+		return err
+	}
+	if err := o.volume.complete(); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *deployOptions) getConfig() *deployment.KubeMQManifestConfig {
-	id := uuid.New().String()
-	config := deployment.DefaultKubeMQManifestConfig(id, o.name, o.namespace)
-	config.StatefulSet.SetImageTag(o.tag)
-	config.StatefulSet.SetReplicas(int(o.replicas))
-	config.StatefulSet.SetVolume(int(o.volume))
-	if o.token != "" {
-		config.SetConfigMapValues(o.name, "KUBEMQ_TOKEN", o.token)
+func (o *deployOptions) getClusterDeployment() *cluster.KubemqCluster {
+
+	deployment := &cluster.KubemqCluster{
+		ObjectMeta: v1.ObjectMeta{
+			Name:      o.name,
+			Namespace: o.namespace,
+		},
+		Spec: cluster.KubemqClusterSpec{
+			Replicas:       new(int32),
+			ConfigData:     o.configData,
+			Volume:         nil,
+			License:        nil,
+			Image:          nil,
+			Api:            nil,
+			Rest:           nil,
+			Grpc:           nil,
+			Tls:            nil,
+			Resources:      nil,
+			NodeSelectors:  nil,
+			Authentication: nil,
+			Authorization:  nil,
+			Health:         nil,
+			Routing:        nil,
+			Log:            nil,
+			Notification:   nil,
+			Store:          nil,
+			Queue:          nil,
+			Gateways:       nil,
+		},
+		Status: cluster.KubemqClusterStatus{},
 	}
-	if o.licenseData != "" {
-		config.SetSecretStringValues(o.name, "LICENSE_KEY_DATA", o.licenseData)
-	}
-	if o.configData != "" {
-		config.SetConfigMapDataValues(o.name, "CONFIG", o.configData)
-	}
-	o.service.setConfig(config)
-	o.security.setConfig(config)
-	o.authentication.setConfig(config)
-	o.authorization.setConfig(config)
-	o.gateway.setConfig(config)
-	o.resources.setConfig(config)
-	o.nodeSelectors.setConfig(config)
-	o.healthProbe.setConfig(config)
-	return config
+	*deployment.Spec.Replicas = o.replicas
+	o.api.setConfig(deployment)
+	o.authentication.setConfig(deployment)
+	o.authorization.setConfig(deployment)
+	o.gateway.setConfig(deployment)
+	o.grpc.setConfig(deployment)
+	o.health.setConfig(deployment)
+	o.image.setConfig(deployment)
+	o.license.setConfig(deployment)
+	o.log.setConfig(deployment)
+	o.nodeSelector.setConfig(deployment)
+	o.notification.setConfig(deployment)
+	o.queue.setConfig(deployment)
+	o.rest.setConfig(deployment)
+	o.routing.setConfig(deployment)
+	o.store.setConfig(deployment)
+	o.tls.setConfig(deployment)
+	o.volume.setConfig(deployment)
+
+	return deployment
 }

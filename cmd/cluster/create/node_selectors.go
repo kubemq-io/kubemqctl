@@ -1,10 +1,8 @@
 package create
 
 import (
-	"fmt"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/deployment"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/crd/cluster"
 	"github.com/spf13/cobra"
-	"strings"
 )
 
 type deployNodeSelectorOptions struct {
@@ -28,14 +26,11 @@ func (o *deployNodeSelectorOptions) complete() error {
 	return nil
 }
 
-func (o *deployNodeSelectorOptions) setConfig(config *deployment.KubeMQManifestConfig) *deployNodeSelectorOptions {
+func (o *deployNodeSelectorOptions) setConfig(deployment *cluster.KubemqCluster) *deployNodeSelectorOptions {
 	if len(o.keys) > 0 {
 		return nil
 	}
-	tmpl := []string{"      nodeSelector:\n"}
-	for key, value := range o.keys {
-		tmpl = append(tmpl, fmt.Sprintf("        %s: %s\n", key, value))
-	}
-	config.StatefulSet.SetNodeSelectors(strings.Join(tmpl, ""))
+	deployment.Spec.NodeSelectors = &cluster.NodeSelectorConfig{Keys: o.keys}
+
 	return o
 }

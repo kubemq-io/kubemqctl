@@ -2,7 +2,7 @@ package create
 
 import (
 	"fmt"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/deployment"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/crd/cluster"
 	"github.com/spf13/cobra"
 	"io/ioutil"
 )
@@ -12,7 +12,7 @@ type deployAuthorizationOptions struct {
 	policyData     string
 	policyFilename string
 	url            string
-	autoReload     int
+	autoReload     int32
 }
 
 func defaultAuthorizationConfig(cmd *cobra.Command) *deployAuthorizationOptions {
@@ -27,7 +27,7 @@ func defaultAuthorizationConfig(cmd *cobra.Command) *deployAuthorizationOptions 
 	cmd.PersistentFlags().StringVarP(&o.policyData, "authorization-policy-data", "", "", "set authorization policy data")
 	cmd.PersistentFlags().StringVarP(&o.policyFilename, "authorization-policy-file", "", "", "set authorization policy filename")
 	cmd.PersistentFlags().StringVarP(&o.url, "authorization-url", "", "", "set authorization policy loading url")
-	cmd.PersistentFlags().IntVarP(&o.autoReload, "authorization-auto-reload", "", 0, "set authorization auto policy loading time interval in minutes")
+	cmd.PersistentFlags().Int32VarP(&o.autoReload, "authorization-auto-reload", "", 0, "set authorization auto policy loading time interval in minutes")
 	return o
 }
 
@@ -48,23 +48,21 @@ func (o *deployAuthorizationOptions) complete() error {
 	if o.policyFilename != "" {
 		data, err := ioutil.ReadFile(o.policyFilename)
 		if err != nil {
-			return fmt.Errorf("error loading authentication public key data: %s", err.Error())
+			return fmt.Errorf("error loading authorization public key data: %s", err.Error())
 		}
 		o.policyData = string(data)
 	}
 	return nil
 }
 
-func (o *deployAuthorizationOptions) setConfig(config *deployment.KubeMQManifestConfig) *deployAuthorizationOptions {
+func (o *deployAuthorizationOptions) setConfig(deployment *cluster.KubemqCluster) *deployAuthorizationOptions {
 	if !o.enabled {
 		return o
 	}
-	cmConfig, ok := config.ConfigMaps[config.Name]
-	if ok {
-		cmConfig.SetStringVariable("AUTHORIZATION_ENABLE", "true").
-			SetDataVariable("AUTHORIZATION_POLICY_DATA", o.policyData).
-			SetStringVariable("AUTHORIZATION_URL", o.url).
-			SetStringVariable("AUTHORIZATION_AUTO_RELOAD", fmt.Sprintf("%d", o.autoReload))
+	deployment.Spec.Authorization = &cluster.AuthorizationConfig{
+		Policy:     o.policyData,
+		Url:        o.url,
+		AutoReload: o.autoReload,
 	}
 	return o
 }

@@ -2,7 +2,7 @@ package create
 
 import (
 	"fmt"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/deployment"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/crd/cluster"
 	"github.com/spf13/cobra"
 )
 
@@ -54,24 +54,16 @@ func (o *deployResourceOptions) complete() error {
 	return nil
 }
 
-func (o *deployResourceOptions) setConfig(config *deployment.KubeMQManifestConfig) *deployResourceOptions {
+func (o *deployResourceOptions) setConfig(deployment *cluster.KubemqCluster) *deployResourceOptions {
 	if !o.enabled {
 		return o
 	}
-	tmpl := `          resources:
-            limits:	
-              cpu: %s
-              memory: %s
-            requests:
-              cpu: %s
-              memory: %s
-`
 
-	resources := fmt.Sprintf(tmpl,
-		o.limitsCpu,
-		o.limitsMemory,
-		o.requestsCpu,
-		o.requestsMemory)
-	config.StatefulSet.SetResources(resources)
+	deployment.Spec.Resources = &cluster.ResourceConfig{
+		LimitsCpu:      o.limitsCpu,
+		LimitsMemory:   o.limitsMemory,
+		RequestsCpu:    o.requestsCpu,
+		RequestsMemory: o.requestsMemory,
+	}
 	return o
 }

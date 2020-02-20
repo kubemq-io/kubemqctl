@@ -2,7 +2,7 @@ package create
 
 import (
 	"fmt"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/deployment"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/crd/cluster"
 	"github.com/spf13/cobra"
 	"io/ioutil"
 )
@@ -56,15 +56,13 @@ func (o *deployAuthenticationOptions) complete() error {
 	return nil
 }
 
-func (o *deployAuthenticationOptions) setConfig(config *deployment.KubeMQManifestConfig) *deployAuthenticationOptions {
+func (o *deployAuthenticationOptions) setConfig(deployment *cluster.KubemqCluster) *deployAuthenticationOptions {
 	if !o.enabled {
 		return o
 	}
-	secConfig, ok := config.Secrets[config.Name]
-	if ok {
-		secConfig.SetStringVariable("AUTHENTICATION_ENABLE", "true").
-			SetDataVariable("AUTHENTICATION_JWT_CONFIG_KEY", o.publicKeyData).
-			SetStringVariable("AUTHENTICATION_JWT_CONFIG_SIGNATURE_TYPE", o.publicKeyType)
+	deployment.Spec.Authentication = &cluster.AuthenticationConfig{
+		Key:  o.publicKeyData,
+		Type: o.publicKeyType,
 	}
 	return o
 }

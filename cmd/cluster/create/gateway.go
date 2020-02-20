@@ -2,16 +2,15 @@ package create
 
 import (
 	"fmt"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/deployment"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/crd/cluster"
 	"github.com/spf13/cobra"
 	"io/ioutil"
-	"strings"
 )
 
 type deployGatewayOptions struct {
 	enabled      bool
 	remotes      []string
-	port         uint
+	port         int32
 	certData     string
 	certFilename string
 	keyData      string
@@ -34,7 +33,7 @@ func defaultGatewayOptions(cmd *cobra.Command) *deployGatewayOptions {
 	}
 	cmd.PersistentFlags().BoolVarP(&o.enabled, "gateway-enabled", "", false, "enable gateway configuration")
 	cmd.PersistentFlags().StringArrayVarP(&o.remotes, "gateway-remotes", "", nil, "set tls certificate data for remote gateway")
-	cmd.PersistentFlags().UintVarP(&o.port, "gateway-port", "", 7000, "set gateway listen port value")
+	cmd.PersistentFlags().Int32VarP(&o.port, "gateway-port", "", 7000, "set gateway listen port value")
 	cmd.PersistentFlags().StringVarP(&o.certData, "gateway-cert-data", "", "", "set tls certificate data for remote gateway")
 	cmd.PersistentFlags().StringVarP(&o.certFilename, "gateway-cert-file", "", "", "set tls certificate filename for remote gateway")
 	cmd.PersistentFlags().StringVarP(&o.keyData, "gateway-key-data", "", "", "set tls key data for remote gateway")
@@ -90,27 +89,16 @@ func (o *deployGatewayOptions) complete() error {
 	return nil
 }
 
-func (o *deployGatewayOptions) setConfig(config *deployment.KubeMQManifestConfig) *deployGatewayOptions {
+func (o *deployGatewayOptions) setConfig(deployment *cluster.KubemqCluster) *deployGatewayOptions {
 	if !o.enabled {
 		return o
 	}
-	secConfig, ok := config.Secrets[config.Name]
-	if ok {
-		secConfig.SetDataVariable("BROKER_GATEWAY_CERT", o.certData).
-			SetDataVariable("BROKER_GATEWAY_KEY", o.keyData).
-			SetDataVariable("BROKER_GATEWAY_CA", o.caData)
-
+	deployment.Spec.Gateways = &cluster.GatewayConfig{
+		Remotes: o.remotes,
+		Port:    o.port,
+		Cert:    o.certData,
+		Key:     o.keyData,
+		Ca:      o.caData,
 	}
-	cmConfig, ok := config.ConfigMaps[config.Name]
-	if ok {
-		cmConfig.SetStringVariable("BROKER_GATEWAYS", strings.Join(o.remotes, ",")).
-			SetStringVariable("BROKER_GATEWAY_PORT", fmt.Sprintf("%d", o.port))
-	}
-	srv := deployment.NewServiceConfig(config.Id, fmt.Sprintf("%s-gateway", config.Name), config.Namespace, config.Name).
-		SetContainerPort(int(o.port)).
-		SetTargetPort(int(o.port)).
-		SetPortName("gateway-port")
-	config.Services[fmt.Sprintf("%s-gateway", config.Name)] = srv
-
 	return o
 }
