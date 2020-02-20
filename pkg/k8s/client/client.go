@@ -13,6 +13,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
+	apiextension "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	"k8s.io/client-go/tools/clientcmd"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 	"k8s.io/client-go/tools/portforward"
@@ -29,8 +30,9 @@ import (
 )
 
 type Client struct {
-	ClientSet    *kubernetes.Clientset
-	ClientConfig clientcmd.ClientConfig
+	ClientSet          *kubernetes.Clientset
+	ClientConfig       clientcmd.ClientConfig
+	ClientApiExtension *apiextension.Clientset
 }
 
 func NewClient(kubeConfigPath string) (*Client, error) {
@@ -57,9 +59,14 @@ func NewClient(kubeConfigPath string) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
+	clientExtension, err := apiextension.NewForConfig(restConfig)
+	if err != nil {
+		return nil, err
+	}
 	c := &Client{
-		ClientSet:    clientset,
-		ClientConfig: clientConfig,
+		ClientSet:          clientset,
+		ClientConfig:       clientConfig,
+		ClientApiExtension: clientExtension,
 	}
 	kubeCfg, _ := c.ClientConfig.ConfigAccess().GetStartingConfig()
 	utils.Printlnf("Current Kubernetes cluster context connection: %s", kubeCfg.CurrentContext)

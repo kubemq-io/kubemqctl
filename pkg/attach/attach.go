@@ -2,6 +2,7 @@ package attach
 
 import (
 	"context"
+	"encoding/base64"
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
@@ -145,7 +146,7 @@ OUTER:
 			}
 			msg = strings.Replace(msg, "\n", "", -1)
 			msg = strings.Replace(msg, "\t", " ", -1)
-			fmt.Fprintf(w, "[%s]\t[%s]\t%s\n", resType, resChannel, msg)
+			fmt.Fprintf(w, "[%s]\t[%s]\t%s\n", resType, resChannel, decodeBase64(msg))
 			w.Flush()
 		case <-ctx.Done():
 			return
@@ -156,4 +157,16 @@ OUTER:
 		}
 
 	}
+}
+
+func decodeBase64(in string) string {
+	// base64 string cannot contain space so this is indication of base64 string
+	if !strings.Contains(in, " ") {
+		sDec, err := base64.StdEncoding.DecodeString(in)
+		if err != nil {
+			return in
+		}
+		return string(sDec)
+	}
+	return in
 }

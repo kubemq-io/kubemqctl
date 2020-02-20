@@ -167,6 +167,7 @@ func (g *gRPCTransport) SubscribeToEvents(ctx context.Context, channel, group st
 		Channel:           channel,
 		Group:             group,
 	}
+
 	stream, err := g.client.SubscribeToEvents(ctx, subRequest)
 	if err != nil {
 		return nil, err

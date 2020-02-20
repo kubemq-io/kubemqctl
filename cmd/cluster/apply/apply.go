@@ -20,10 +20,10 @@ type ApplyOptions struct {
 
 var applyExamples = `
 	# Apply KubeMQ cluster deployment
-	kubemqctl cluster apply kubemq-cluster.yaml 
+	kubemqctl cluster apply -f kubemq-cluster.yaml 
 
 	# Apply KubeMQ cluster deployment with watching status and events
-	kubemqctl cluster apply kubemq-cluster.yaml -w -s
+	kubemqctl cluster apply -f kubemq-cluster.yaml -w -s
 
 `
 var applyLong = `Apply command allows an update to a KubeMQ StatefulSet configuration with a yaml file`
@@ -55,7 +55,6 @@ func NewCmdApply(ctx context.Context, cfg *config.Config) *cobra.Command {
 }
 
 func (o *ApplyOptions) Complete(args []string) error {
-
 	if o.fileName != "" {
 		buff, err := ioutil.ReadFile(o.fileName)
 		if err != nil {
@@ -75,7 +74,8 @@ func (o *ApplyOptions) Validate() error {
 }
 
 func (o *ApplyOptions) Run(ctx context.Context) error {
-	sd, err := deployment.NewStatefulSetDeployment(o.cfg)
+	kuebCfg := deployment.NewKubeMQManifestConfig("", "", "")
+	sd, err := deployment.NewKubeMQDeployment(o.cfg, kuebCfg)
 	if err != nil {
 		return err
 	}
@@ -84,23 +84,27 @@ func (o *ApplyOptions) Run(ctx context.Context) error {
 		return err
 	}
 	utils.Printlnf("Apply started...")
+	sts, err := sd.StatefulSet.Get()
+	if err != nil {
 
-	executed, err := sd.Execute(sd.StatefulSet.Name, sd.StatefulSet.Namespace)
+		return err
+	}
+
+	executed, err := sd.Execute(sts.Name, sts.Namespace)
 	if err != nil {
 		return err
 	}
 	if !executed {
 		return nil
 	}
-	stsName := sd.StatefulSet.Name
-	stsNamespace := sd.StatefulSet.Namespace
 
 	if o.watch {
-		go sd.Client.PrintEvents(ctx, stsNamespace, stsName)
+		go sd.Client.PrintEvents(ctx, sts.Namespace, sts.Name)
 	}
 
 	if o.status {
-		go sd.Client.PrintStatefulSetStatus(ctx, *sd.StatefulSet.Spec.Replicas, stsNamespace, stsName)
+
+		go sd.Client.PrintStatefulSetStatus(ctx, *sts.Spec.Replicas, sts.Namespace, sts.Name)
 	}
 	if o.status || o.watch {
 		<-ctx.Done()

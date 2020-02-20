@@ -5,6 +5,7 @@ import (
 	"github.com/kubemq-io/kubemqctl/cmd/cluster"
 	"github.com/kubemq-io/kubemqctl/cmd/commands"
 	"github.com/kubemq-io/kubemqctl/cmd/events_store"
+	"github.com/kubemq-io/kubemqctl/cmd/operator"
 	"github.com/kubemq-io/kubemqctl/cmd/queries"
 	"github.com/kubemq-io/kubemqctl/cmd/queue"
 
@@ -23,7 +24,7 @@ var Version string
 
 var rootCmd = &cobra.Command{
 	Use:       "kubemqctl",
-	ValidArgs: []string{"cluster", "config", "commands", "queries", "queues", "events", "events_store"},
+	ValidArgs: []string{"cluster", "config", "commands", "queries", "queues", "events", "events_store", "operator"},
 }
 
 func Execute(version string) {
@@ -39,6 +40,7 @@ func Execute(version string) {
 	rootCmd.AddCommand(queries.NewCmdQueries(ctx, cfg))
 	rootCmd.AddCommand(configCmd.NewCmdConfig(ctx, cfg))
 	rootCmd.AddCommand(cluster.NewCmdCluster(ctx, cfg))
+	rootCmd.AddCommand(operator.NewCmdOperator(ctx, cfg))
 
 	//_ = doc.GenMarkdownTree(rootCmd, "./docs")
 	utils.CheckErr(rootCmd.Execute())
