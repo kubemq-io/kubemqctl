@@ -7,6 +7,15 @@ import (
 	"strings"
 )
 
+var defaultGrpcConfig = &deployGrpcOptions{
+	disabled:   false,
+	port:       50000,
+	expose:     "ClusterIP",
+	nodePort:   0,
+	bufferSize: 0,
+	BodyLimit:  0,
+}
+
 type deployGrpcOptions struct {
 	disabled   bool
 	port       int32
@@ -16,7 +25,7 @@ type deployGrpcOptions struct {
 	BodyLimit  int32
 }
 
-func defaultGrpcConfig(cmd *cobra.Command) *deployGrpcOptions {
+func setGrpcConfig(cmd *cobra.Command) *deployGrpcOptions {
 	o := &deployGrpcOptions{
 		disabled: false,
 		port:     0,
@@ -45,6 +54,9 @@ func (o *deployGrpcOptions) complete() error {
 }
 
 func (o *deployGrpcOptions) setConfig(deployment *cluster.KubemqCluster) *deployGrpcOptions {
+	if isDefault(o, defaultGrpcConfig) {
+		return o
+	}
 	deployment.Spec.Grpc = &cluster.GrpcConfig{
 		Disabled:   o.disabled,
 		Port:       o.port,

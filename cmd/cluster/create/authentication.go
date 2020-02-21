@@ -14,7 +14,7 @@ type deployAuthenticationOptions struct {
 	publicKeyType     string
 }
 
-func defaultAuthenticationOptions(cmd *cobra.Command) *deployAuthenticationOptions {
+func setAuthenticationOptions(cmd *cobra.Command) *deployAuthenticationOptions {
 	o := &deployAuthenticationOptions{
 		enabled:           false,
 		publicKeyData:     "",

@@ -9,6 +9,13 @@ import (
 
 var serviceTypes = map[string]string{"clusterip": "ClusterIP", "nodeport": "NodePort", "loadbalancer": "LoadBalancer"}
 
+var defaultApiConfig = &deployApiOptions{
+	disabled: false,
+	port:     8080,
+	expose:   "ClusterIP",
+	nodePort: 0,
+}
+
 type deployApiOptions struct {
 	disabled bool
 	port     int32
@@ -16,7 +23,7 @@ type deployApiOptions struct {
 	nodePort int32
 }
 
-func defaultApiConfig(cmd *cobra.Command) *deployApiOptions {
+func setApiConfig(cmd *cobra.Command) *deployApiOptions {
 	o := &deployApiOptions{
 		disabled: false,
 		port:     0,
@@ -44,6 +51,9 @@ func (o *deployApiOptions) complete() error {
 }
 
 func (o *deployApiOptions) setConfig(deployment *cluster.KubemqCluster) *deployApiOptions {
+	if isDefault(o, defaultApiConfig) {
+		return o
+	}
 	deployment.Spec.Api = &cluster.ApiConfig{
 		Disabled: o.disabled,
 		Port:     o.port,

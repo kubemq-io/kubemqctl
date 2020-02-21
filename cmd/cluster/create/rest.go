@@ -7,6 +7,15 @@ import (
 	"strings"
 )
 
+var defaultRestConfig = &deployRestOptions{
+	disabled:   false,
+	port:       9090,
+	expose:     "ClusterIP",
+	nodePort:   0,
+	bufferSize: 0,
+	BodyLimit:  0,
+}
+
 type deployRestOptions struct {
 	disabled   bool
 	port       int32
@@ -16,7 +25,7 @@ type deployRestOptions struct {
 	BodyLimit  int32
 }
 
-func defaultRestConfig(cmd *cobra.Command) *deployRestOptions {
+func setRestConfig(cmd *cobra.Command) *deployRestOptions {
 	o := &deployRestOptions{
 		disabled: false,
 		port:     0,
@@ -45,6 +54,9 @@ func (o *deployRestOptions) complete() error {
 }
 
 func (o *deployRestOptions) setConfig(deployment *cluster.KubemqCluster) *deployRestOptions {
+	if isDefault(o, defaultRestConfig) {
+		return o
+	}
 	deployment.Spec.Rest = &cluster.RestConfig{
 		Disabled:   o.disabled,
 		Port:       o.port,

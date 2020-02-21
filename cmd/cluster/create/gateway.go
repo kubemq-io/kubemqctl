@@ -19,7 +19,7 @@ type deployGatewayOptions struct {
 	caFilename   string
 }
 
-func defaultGatewayOptions(cmd *cobra.Command) *deployGatewayOptions {
+func setGatewayOptions(cmd *cobra.Command) *deployGatewayOptions {
 	o := &deployGatewayOptions{
 		enabled:      false,
 		remotes:      nil,

@@ -7,13 +7,19 @@ import (
 	"io/ioutil"
 )
 
+var defaultLicenseConfig = &deployLicenseOptions{
+	licenseData:     "",
+	licenseFilename: "",
+	licenseToken:    "",
+}
+
 type deployLicenseOptions struct {
 	licenseData     string
 	licenseFilename string
 	licenseToken    string
 }
 
-func defaultLicenseConfig(cmd *cobra.Command) *deployLicenseOptions {
+func setLicenseConfig(cmd *cobra.Command) *deployLicenseOptions {
 	o := &deployLicenseOptions{
 		licenseData:     "",
 		licenseFilename: "",
@@ -41,6 +47,9 @@ func (o *deployLicenseOptions) complete() error {
 }
 
 func (o *deployLicenseOptions) setConfig(deployment *cluster.KubemqCluster) *deployLicenseOptions {
+	if isDefault(o, defaultLicenseConfig) {
+		return o
+	}
 	deployment.Spec.License = &cluster.LicenseConfig{
 		Data:  o.licenseData,
 		Token: o.licenseToken,

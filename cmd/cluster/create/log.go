@@ -5,12 +5,17 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var defaultLogConfig = &deployLogOptions{
+	level: 2,
+	file:  "",
+}
+
 type deployLogOptions struct {
 	level int32
 	file  string
 }
 
-func defaultLogConfig(cmd *cobra.Command) *deployLogOptions {
+func setLogConfig(cmd *cobra.Command) *deployLogOptions {
 	o := &deployLogOptions{
 		level: 2,
 		file:  "",
@@ -28,6 +33,9 @@ func (o *deployLogOptions) complete() error {
 }
 
 func (o *deployLogOptions) setConfig(deployment *cluster.KubemqCluster) *deployLogOptions {
+	if isDefault(o, defaultLogConfig) {
+		return o
+	}
 	deployment.Spec.Log = &cluster.LogConfig{
 		Level: new(int32),
 		File:  o.file,

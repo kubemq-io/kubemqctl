@@ -15,7 +15,7 @@ type deployAuthorizationOptions struct {
 	autoReload     int32
 }
 
-func defaultAuthorizationConfig(cmd *cobra.Command) *deployAuthorizationOptions {
+func setAuthorizationConfig(cmd *cobra.Command) *deployAuthorizationOptions {
 	o := &deployAuthorizationOptions{
 		enabled:        false,
 		policyData:     "",

@@ -6,6 +6,7 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
+	"reflect"
 )
 
 type CreateOptions struct {
@@ -92,4 +93,8 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 
 	return nil
 
+}
+
+func isDefault(a, b interface{}) bool {
+	return reflect.DeepEqual(a, b)
 }

@@ -14,7 +14,7 @@ type deployHealthOptions struct {
 	failureThreshold    int32
 }
 
-func defaultHealthOptions(cmd *cobra.Command) *deployHealthOptions {
+func setHealthOptions(cmd *cobra.Command) *deployHealthOptions {
 	o := &deployHealthOptions{
 		enabled: false,
 	}
