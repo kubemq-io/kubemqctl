@@ -2,6 +2,7 @@ package client
 
 import (
 	"bytes"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/clientset/v1alpha1"
 
 	"errors"
 	"fmt"
@@ -33,6 +34,7 @@ type Client struct {
 	ClientSet          *kubernetes.Clientset
 	ClientConfig       clientcmd.ClientConfig
 	ClientApiExtension *apiextension.Clientset
+	ClientV1Alpha1     *v1alpha1.V1Alpha1Client
 }
 
 func NewClient(kubeConfigPath string) (*Client, error) {
@@ -63,10 +65,15 @@ func NewClient(kubeConfigPath string) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
+	clientV1Alpha1, err := v1alpha1.NewForConfig(restConfig)
+	if err != nil {
+		return nil, err
+	}
 	c := &Client{
 		ClientSet:          clientset,
 		ClientConfig:       clientConfig,
 		ClientApiExtension: clientExtension,
+		ClientV1Alpha1:     clientV1Alpha1,
 	}
 	kubeCfg, _ := c.ClientConfig.ConfigAccess().GetStartingConfig()
 	utils.Printlnf("Current Kubernetes cluster context connection: %s", kubeCfg.CurrentContext)

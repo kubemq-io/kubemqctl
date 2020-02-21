@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-const kubeMQTokenHeader = "X-Kubemq-Server-Token"
+const kubeMQAuthTokenHeader = "authorization"
 
 type Option interface {
 	apply(*Options)
@@ -23,8 +23,9 @@ type Options struct {
 	port                 int
 	isSecured            bool
 	certFile             string
+	certData             string
 	serverOverrideDomain string
-	token                string
+	authToken            string
 	clientId             string
 	receiveBufferSize    int
 	defaultChannel       string
@@ -76,10 +77,21 @@ func WithCredentials(certFile, serverOverrideDomain string) Option {
 	})
 }
 
-// WithToken - set KubeMQ token to be used for KubeMQ connection - not mandatory, only if enforced by the KubeMQ server
-func WithToken(token string) Option {
+// WithCertificate - set secured TLS credentials from the input certificate data for client.
+// serverNameOverride is for testing only. If set to a non empty string,
+// it will override the virtual host name of authority (e.g. :authority header field) in requests.
+func WithCertificate(certData, serverOverrideDomain string) Option {
 	return newFuncOption(func(o *Options) {
-		o.token = token
+		o.isSecured = true
+		o.certData = certData
+		o.serverOverrideDomain = serverOverrideDomain
+	})
+}
+
+// WithAuthToken - set KubeMQ JWT Auth token to be used for KubeMQ connection
+func WithAuthToken(token string) Option {
+	return newFuncOption(func(o *Options) {
+		o.authToken = token
 	})
 }
 
@@ -98,7 +110,7 @@ func WithReceiveBufferSize(size int) Option {
 }
 
 // WithDefaultChannel - set default channel for any outbound requests
-func WithDefualtChannel(channel string) Option {
+func WithDefaultChannel(channel string) Option {
 	return newFuncOption(func(o *Options) {
 		o.defaultChannel = channel
 	})
@@ -125,7 +137,7 @@ func GetDefaultOptions() *Options {
 		isSecured:            false,
 		certFile:             "",
 		serverOverrideDomain: "",
-		token:                "",
+		authToken:            "",
 		clientId:             "ClientId",
 		receiveBufferSize:    10,
 		defaultChannel:       "",
@@ -139,14 +151,14 @@ func GetDefaultOptions() *Options {
 func (o *Options) Validate() error {
 	switch o.transportType {
 	case TransportTypeGRPC:
-		if o.host== "" {
+		if o.host == "" {
 			return errors.New("invalid host")
 		}
-		if o.port<=0 {
+		if o.port <= 0 {
 			return errors.New("invalid port")
 		}
 	case TransportTypeRest:
-		if o.restUri== "" {
+		if o.restUri == "" {
 			return errors.New("invalid address uri")
 		}
 	default:

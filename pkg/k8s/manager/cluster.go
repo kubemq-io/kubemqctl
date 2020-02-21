@@ -6,7 +6,14 @@ import (
 )
 
 func (m *Manager) DeployKubeMQCluster(deployment *cluster.KubemqCluster) error {
-	fmt.Println(deployment.String())
+	deployment.Kind = "KubemqCluster"
+	deployment.APIVersion = "core.k8s.kubemq.io/v1alpha1"
+	create, err := m.client.ClientV1Alpha1.KubemqClusters("kubemq").Create(deployment)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	fmt.Println(create.String())
 
 	return nil
 }
