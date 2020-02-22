@@ -18,8 +18,8 @@ var eventsExamples = `
 	kubemqctl events attach
 
 `
-var eventsLong = `Execute KubeMQ 'events' Pub/Sub commands`
-var eventsShort = `Execute KubeMQ 'events' Pub/Sub commands`
+var eventsLong = `Execute Kubemq 'events' Pub/Sub commands`
+var eventsShort = `Execute Kubemq 'events' Pub/Sub commands`
 
 // NewCmdCreate returns new initialized instance of create sub command
 func NewCmdEvents(ctx context.Context, cfg *config.Config) *cobra.Command {

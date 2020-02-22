@@ -2,7 +2,8 @@ package client
 
 import (
 	"bytes"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/clientset/v1alpha1"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/client/v1alpha1"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/types"
 
 	"errors"
 	"fmt"
@@ -15,6 +16,7 @@ import (
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
 	apiextension "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
+	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/tools/clientcmd"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 	"k8s.io/client-go/tools/portforward"
@@ -23,7 +25,6 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
-
 	"sort"
 	"strings"
 
@@ -62,6 +63,10 @@ func NewClient(kubeConfigPath string) (*Client, error) {
 		return nil, err
 	}
 	clientExtension, err := apiextension.NewForConfig(restConfig)
+	if err != nil {
+		return nil, err
+	}
+	err = types.AddToScheme(scheme.Scheme)
 	if err != nil {
 		return nil, err
 	}
@@ -181,7 +186,7 @@ func (c *Client) ForwardPorts(ns string, name string, ports []string, stopChan c
 	return nil
 }
 
-func (c *Client) GetKubeMQClusters() ([]string, error) {
+func (c *Client) GetKubemqClusters() ([]string, error) {
 
 	sets, err := c.GetStatefulSets("")
 	if err != nil {
@@ -201,7 +206,7 @@ func (c *Client) GetKubeMQClusters() ([]string, error) {
 	return list, nil
 }
 
-func (c *Client) GetKubeMQClustersStatus() ([]*StatefulSetStatus, error) {
+func (c *Client) GetKubemqClustersStatus() ([]*StatefulSetStatus, error) {
 
 	sets, err := c.GetStatefulSets("")
 	if err != nil {

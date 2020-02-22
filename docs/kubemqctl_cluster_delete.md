@@ -1,10 +1,10 @@
 ## kubemqctl cluster delete
 
-Delete KubeMQ cluster command
+Delete Kubemq cluster command
 
 ### Synopsis
 
-Delete command allows deleting one or more KubeMQ clusters deployments
+Delete command allows deleting one or more Kubemq clusters deployments
 
 ```
 kubemqctl cluster delete [flags]
@@ -14,7 +14,7 @@ kubemqctl cluster delete [flags]
 
 ```
 
- 	# Delete KubeMQ cluster
+ 	# Delete Kubemq cluster
 	kubemqctl cluster delete
 
 ```
@@ -27,6 +27,6 @@ kubemqctl cluster delete [flags]
 
 ### SEE ALSO
 
-* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes KubeMQ cluster management commands
+* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes Kubemq cluster management commands
 
 

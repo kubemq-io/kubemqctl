@@ -20,8 +20,8 @@ var eventsExamples = `
 	# Execute list of 'events store' channels command
  	kubemqctl events_store list
 `
-var eventsLong = `Execute KubeMQ 'events_store' Pub/Sub commands`
-var eventsShort = `Execute KubeMQ 'events_store' Pub/Sub commands`
+var eventsLong = `Execute Kubemq 'events_store' Pub/Sub commands`
+var eventsShort = `Execute Kubemq 'events_store' Pub/Sub commands`
 
 // NewCmdCreate returns new initialized instance of create sub command
 func NewCmdEventsStore(ctx context.Context, cfg *config.Config) *cobra.Command {

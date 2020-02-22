@@ -71,7 +71,7 @@ func (o *QueueStreamOptions) Validate() error {
 }
 
 func (o *QueueStreamOptions) Run(ctx context.Context) error {
-	client, err := kubemq.GetKubeMQClient(ctx, o.transport, o.cfg)
+	client, err := kubemq.GetKubemqClient(ctx, o.transport, o.cfg)
 	if err != nil {
 		return fmt.Errorf("create kubemq client, %s", err.Error())
 

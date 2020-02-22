@@ -1,10 +1,10 @@
 ## kubemqctl queries
 
-Execute KubeMQ 'queries' RPC based commands
+Execute Kubemq 'queries' RPC based commands
 
 ### Synopsis
 
-Execute KubeMQ 'queries' RPC based commands
+Execute Kubemq 'queries' RPC based commands
 
 ```
 kubemqctl queries [flags]

@@ -17,8 +17,8 @@ var commandsExamples = `
 	# Execute attach to 'commands' channel
 	kubemqctl commands attach
 `
-var commandsLong = `Execute KubeMQ 'commands' RPC commands`
-var commandsShort = `Execute KubeMQ 'commands' RPC commands`
+var commandsLong = `Execute Kubemq 'commands' RPC commands`
+var commandsShort = `Execute Kubemq 'commands' RPC commands`
 
 // NewCmdCreate returns new initialized instance of create sub command
 func NewCmdCommands(ctx context.Context, cfg *config.Config) *cobra.Command {

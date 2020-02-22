@@ -41,6 +41,6 @@ kubemqctl queries attach [flags]
 
 ### SEE ALSO
 
-* [kubemqctl queries](kubemqctl_queries.md)	 - Execute KubeMQ 'queries' RPC based commands
+* [kubemqctl queries](kubemqctl_queries.md)	 - Execute Kubemq 'queries' RPC based commands
 
 

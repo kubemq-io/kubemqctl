@@ -72,7 +72,7 @@ func (o *CommandsReceiveOptions) Validate() error {
 }
 
 func (o *CommandsReceiveOptions) Run(ctx context.Context) error {
-	client, err := kubemq.GetKubeMQClient(ctx, o.transport, o.cfg)
+	client, err := kubemq.GetKubemqClient(ctx, o.transport, o.cfg)
 	if err != nil {
 		return fmt.Errorf("create kubemq client, %s", err.Error())
 

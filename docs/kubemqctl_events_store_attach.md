@@ -41,6 +41,6 @@ kubemqctl events_store attach [flags]
 
 ### SEE ALSO
 
-* [kubemqctl events_store](kubemqctl_events_store.md)	 - Execute KubeMQ 'events_store' Pub/Sub commands
+* [kubemqctl events_store](kubemqctl_events_store.md)	 - Execute Kubemq 'events_store' Pub/Sub commands
 
 

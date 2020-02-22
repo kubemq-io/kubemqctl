@@ -1,10 +1,10 @@
 ## kubemqctl queues
 
-Execute KubeMQ 'queues' commands
+Execute Kubemq 'queues' commands
 
 ### Synopsis
 
-Execute KubeMQ 'queues' commands
+Execute Kubemq 'queues' commands
 
 ```
 kubemqctl queues [flags]

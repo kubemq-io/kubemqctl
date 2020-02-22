@@ -48,6 +48,6 @@ kubemqctl queues send [flags]
 
 ### SEE ALSO
 
-* [kubemqctl queues](kubemqctl_queues.md)	 - Execute KubeMQ 'queues' commands
+* [kubemqctl queues](kubemqctl_queues.md)	 - Execute Kubemq 'queues' commands
 
 

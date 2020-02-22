@@ -10,7 +10,7 @@ import (
 	"io/ioutil"
 )
 
-func GetKubeMQClient(ctx context.Context, transport string, cfg *config.Config) (*kubemq.Client, error) {
+func GetKubemqClient(ctx context.Context, transport string, cfg *config.Config) (*kubemq.Client, error) {
 	clientId := uuid.New().String()
 	if cfg.ClientId != "" {
 		clientId = cfg.ClientId

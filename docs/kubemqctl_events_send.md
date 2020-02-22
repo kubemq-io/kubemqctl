@@ -35,6 +35,6 @@ kubemqctl events send [flags]
 
 ### SEE ALSO
 
-* [kubemqctl events](kubemqctl_events.md)	 - Execute KubeMQ 'events' Pub/Sub commands
+* [kubemqctl events](kubemqctl_events.md)	 - Execute Kubemq 'events' Pub/Sub commands
 
 

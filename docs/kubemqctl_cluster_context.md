@@ -28,6 +28,6 @@ kubemqctl cluster context [flags]
 
 ### SEE ALSO
 
-* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes KubeMQ cluster management commands
+* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes Kubemq cluster management commands
 
 

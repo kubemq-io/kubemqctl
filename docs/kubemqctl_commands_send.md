@@ -35,6 +35,6 @@ kubemqctl commands send [flags]
 
 ### SEE ALSO
 
-* [kubemqctl commands](kubemqctl_commands.md)	 - Execute KubeMQ 'commands' RPC commands
+* [kubemqctl commands](kubemqctl_commands.md)	 - Execute Kubemq 'commands' RPC commands
 
 

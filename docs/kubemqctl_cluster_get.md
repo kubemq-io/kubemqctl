@@ -1,10 +1,10 @@
 ## kubemqctl cluster get
 
-Get information of KubeMQ of clusters command
+Get information of Kubemq of clusters command
 
 ### Synopsis
 
-Get command allows to show the current information of KubeMQ of clusters
+Get command allows to show the current information of Kubemq of clusters
 
 ```
 kubemqctl cluster get [flags]
@@ -14,7 +14,7 @@ kubemqctl cluster get [flags]
 
 ```
 
-	# Get status of KubeMQ of clusters
+	# Get status of Kubemq of clusters
 	kubemqctl cluster list
 
 ```
@@ -27,6 +27,6 @@ kubemqctl cluster get [flags]
 
 ### SEE ALSO
 
-* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes KubeMQ cluster management commands
+* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes Kubemq cluster management commands
 
 

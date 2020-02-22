@@ -2,10 +2,12 @@ package root
 
 import (
 	"context"
-	"github.com/kubemq-io/kubemqctl/cmd/cluster"
+	"github.com/kubemq-io/kubemqctl/cmd/get"
+
 	"github.com/kubemq-io/kubemqctl/cmd/commands"
+	"github.com/kubemq-io/kubemqctl/cmd/create"
+	deleteCmd "github.com/kubemq-io/kubemqctl/cmd/delete"
 	"github.com/kubemq-io/kubemqctl/cmd/events_store"
-	"github.com/kubemq-io/kubemqctl/cmd/operator"
 	"github.com/kubemq-io/kubemqctl/cmd/queries"
 	"github.com/kubemq-io/kubemqctl/cmd/queue"
 
@@ -39,8 +41,9 @@ func Execute(version string) {
 	rootCmd.AddCommand(commands.NewCmdCommands(ctx, cfg))
 	rootCmd.AddCommand(queries.NewCmdQueries(ctx, cfg))
 	rootCmd.AddCommand(configCmd.NewCmdConfig(ctx, cfg))
-	rootCmd.AddCommand(cluster.NewCmdCluster(ctx, cfg))
-	rootCmd.AddCommand(operator.NewCmdOperator(ctx, cfg))
+	rootCmd.AddCommand(create.NewCmdCreate(ctx, cfg))
+	rootCmd.AddCommand(deleteCmd.NewCmdDelete(ctx, cfg))
+	rootCmd.AddCommand(get.NewCmdGet(ctx, cfg))
 
 	//_ = doc.GenMarkdownTree(rootCmd, "./docs")
 	utils.CheckErr(rootCmd.Execute())

@@ -29,8 +29,8 @@ var queueExamples = `
 	# Execute stream 'queues' command
 	kubemqctl queues stream
 `
-var queueLong = `Execute KubeMQ 'queues' commands`
-var queueShort = `Execute KubeMQ 'queues' commands`
+var queueLong = `Execute Kubemq 'queues' commands`
+var queueShort = `Execute Kubemq 'queues' commands`
 
 // NewCmdCreate returns new initialized instance of create sub command
 func NewCmdQueue(ctx context.Context, cfg *config.Config) *cobra.Command {

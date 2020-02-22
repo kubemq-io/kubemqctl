@@ -1,6 +1,6 @@
 ## kubemqctl cluster logs
 
-Stream logs of KubeMQ cluster pods command
+Stream logs of Kubemq cluster pods command
 
 ### Synopsis
 
@@ -14,7 +14,7 @@ kubemqctl cluster logs [flags]
 
 ```
 
-	# Stream logs with selection of KubeMQ cluster
+	# Stream logs with selection of Kubemq cluster
 	kubemqctl cluster logs
 
 	# Stream logs of all pods in default namespace
@@ -50,6 +50,6 @@ kubemqctl cluster logs [flags]
 
 ### SEE ALSO
 
-* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes KubeMQ cluster management commands
+* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes Kubemq cluster management commands
 
 

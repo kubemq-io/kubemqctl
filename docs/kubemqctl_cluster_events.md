@@ -1,10 +1,10 @@
 ## kubemqctl cluster events
 
-Show KubeMQ cluster events command
+Show Kubemq cluster events command
 
 ### Synopsis
 
-Events command allows to show a real-time KubeMQ cluster events
+Events command allows to show a real-time Kubemq cluster events
 
 ```
 kubemqctl cluster events [flags]
@@ -14,7 +14,7 @@ kubemqctl cluster events [flags]
 
 ```
 
- 	# Show KubeMQ cluster events
+ 	# Show Kubemq cluster events
 	kubemqctl cluster events
 
 ```
@@ -27,6 +27,6 @@ kubemqctl cluster events [flags]
 
 ### SEE ALSO
 
-* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes KubeMQ cluster management commands
+* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes Kubemq cluster management commands
 
 

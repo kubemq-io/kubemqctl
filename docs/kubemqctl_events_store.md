@@ -1,10 +1,10 @@
 ## kubemqctl events_store
 
-Execute KubeMQ 'events_store' Pub/Sub commands
+Execute Kubemq 'events_store' Pub/Sub commands
 
 ### Synopsis
 
-Execute KubeMQ 'events_store' Pub/Sub commands
+Execute Kubemq 'events_store' Pub/Sub commands
 
 ```
 kubemqctl events_store [flags]

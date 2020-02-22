@@ -1,10 +1,10 @@
 ## kubemqctl cluster dashboard
 
-Dashboard command allows to start a web view of KubeMQ cluster dashboard
+Dashboard command allows to start a web view of Kubemq cluster dashboard
 
 ### Synopsis
 
-Run KubeMQ dashboard web view command
+Run Kubemq dashboard web view command
 
 ```
 kubemqctl cluster dashboard [flags]
@@ -14,10 +14,10 @@ kubemqctl cluster dashboard [flags]
 
 ```
 
-	# Run KubeMQ dashboard web view
+	# Run Kubemq dashboard web view
 	kubemqctl dashboard
 
-	# Run KubeMQ dashboard and update version
+	# Run Kubemq dashboard and update version
 	kubemqctl dashboard -u
 
 ```
@@ -31,6 +31,6 @@ kubemqctl cluster dashboard [flags]
 
 ### SEE ALSO
 
-* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes KubeMQ cluster management commands
+* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes Kubemq cluster management commands
 
 

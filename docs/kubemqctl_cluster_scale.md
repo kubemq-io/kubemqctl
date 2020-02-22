@@ -1,10 +1,10 @@
 ## kubemqctl cluster scale
 
-Scale KubeMQ cluster replicas command
+Scale Kubemq cluster replicas command
 
 ### Synopsis
 
-Scale command allows ro scale KubeMQ cluster replicas
+Scale command allows ro scale Kubemq cluster replicas
 
 ```
 kubemqctl cluster scale [flags]
@@ -14,13 +14,13 @@ kubemqctl cluster scale [flags]
 
 ```
 
-	# Scale KubeMQ cluster StatefulSet 
+	# Scale Kubemq cluster StatefulSet 
 	kubemqctl cluster cluster scale 5
 
-	# Scale KubeMQ cluster StatefulSet with streaming real-time events and status
+	# Scale Kubemq cluster StatefulSet with streaming real-time events and status
 	kubemqctl cluster scale -w -s 
 
-	# Scale KubeMQ cluster StatefulSet to 0
+	# Scale Kubemq cluster StatefulSet to 0
 	kubemqctl cluster scale 0
 
 ```
@@ -35,6 +35,6 @@ kubemqctl cluster scale [flags]
 
 ### SEE ALSO
 
-* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes KubeMQ cluster management commands
+* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes Kubemq cluster management commands
 
 

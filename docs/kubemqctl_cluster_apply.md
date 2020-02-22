@@ -1,10 +1,10 @@
 ## kubemqctl cluster apply
 
-Apply a KubeMQ cluster command
+Apply a Kubemq cluster command
 
 ### Synopsis
 
-Apply command allows an update to a KubeMQ StatefulSet configuration with a yaml file
+Apply command allows an update to a Kubemq StatefulSet configuration with a yaml file
 
 ```
 kubemqctl cluster apply [flags]
@@ -14,10 +14,10 @@ kubemqctl cluster apply [flags]
 
 ```
 
-	# Apply KubeMQ cluster deployment
+	# Apply Kubemq cluster deployment
 	# kubemqctl cluster apply kubemq-cluster.yaml 
 
-	# Apply KubeMQ cluster deployment with watching status and events
+	# Apply Kubemq cluster deployment with watching status and events
 	# kubemqctl cluster apply kubemq-cluster.yaml -w -s
 
 
@@ -34,6 +34,6 @@ kubemqctl cluster apply [flags]
 
 ### SEE ALSO
 
-* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes KubeMQ cluster management commands
+* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes Kubemq cluster management commands
 
 

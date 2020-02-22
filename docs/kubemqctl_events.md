@@ -1,10 +1,10 @@
 ## kubemqctl events
 
-Execute KubeMQ 'events' Pub/Sub commands
+Execute Kubemq 'events' Pub/Sub commands
 
 ### Synopsis
 
-Execute KubeMQ 'events' Pub/Sub commands
+Execute Kubemq 'events' Pub/Sub commands
 
 ```
 kubemqctl events [flags]

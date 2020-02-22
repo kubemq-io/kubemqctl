@@ -25,7 +25,7 @@ type RegistrationResponse struct {
 	} `json:"data"`
 }
 
-func RegisterKubeMQ(request *RegistrationRequest) error {
+func RegisterKubemq(request *RegistrationRequest) error {
 	req := resty.New().R()
 	res := &RegistrationResponse{}
 	r, err := req.SetResult(res).SetError(res).SetBody(request).Post(kubemqAPI + "/register-ext-source")
@@ -38,7 +38,7 @@ func RegisterKubeMQ(request *RegistrationRequest) error {
 	return nil
 }
 
-func ValidateRegisterKubeMQ(key, reg string) error {
+func ValidateRegisterKubemq(key, reg string) error {
 	req := resty.New().R()
 	res := &RegistrationResponse{}
 	r, err := req.SetResult(res).SetError(res).SetQueryParam("key", key).SetQueryParam("reg", reg).Get(kubemqAPI + "/validate-ext-source")

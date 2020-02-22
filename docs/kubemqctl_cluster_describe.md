@@ -1,10 +1,10 @@
 ## kubemqctl cluster describe
 
-Describe KubeMQ cluster command
+Describe Kubemq cluster command
 
 ### Synopsis
 
-Describe command allows describing a KubeMQ cluster to console or export to a file
+Describe command allows describing a Kubemq cluster to console or export to a file
 
 ```
 kubemqctl cluster describe [flags]
@@ -14,10 +14,10 @@ kubemqctl cluster describe [flags]
 
 ```
 
- 	# Describe KubeMQ cluster to console
+ 	# Describe Kubemq cluster to console
 	kubemqctl cluster describe
 
-	# Describe KubeMQ cluster to a file
+	# Describe Kubemq cluster to a file
 	kubemqctl cluster describe -f
 
 ```
@@ -31,6 +31,6 @@ kubemqctl cluster describe [flags]
 
 ### SEE ALSO
 
-* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes KubeMQ cluster management commands
+* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes Kubemq cluster management commands
 
 

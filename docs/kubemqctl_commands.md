@@ -1,10 +1,10 @@
 ## kubemqctl commands
 
-Execute KubeMQ 'commands' RPC commands
+Execute Kubemq 'commands' RPC commands
 
 ### Synopsis
 
-Execute KubeMQ 'commands' RPC commands
+Execute Kubemq 'commands' RPC commands
 
 ```
 kubemqctl commands [flags]

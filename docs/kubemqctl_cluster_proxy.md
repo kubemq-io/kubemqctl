@@ -1,10 +1,10 @@
 ## kubemqctl cluster proxy
 
-Proxy KubeMQ cluster connection to localhost command
+Proxy Kubemq cluster connection to localhost command
 
 ### Synopsis
 
-Proxy command allows to act as a full layer 4 proxy (port-forwarding) of a KubeMQ cluster connection to localhost. Proxy a KubeMW cluster allows the developer to interact with remote KubeMQ cluster ports as localhost 
+Proxy command allows to act as a full layer 4 proxy (port-forwarding) of a Kubemq cluster connection to localhost. Proxy a KubeMW cluster allows the developer to interact with remote Kubemq cluster ports as localhost
 
 ```
 kubemqctl cluster proxy [flags]
@@ -14,7 +14,7 @@ kubemqctl cluster proxy [flags]
 
 ```
 
-	# Proxy a KubeMQ cluster ports
+	# Proxy a Kubemq cluster ports
 	kubemqctl cluster proxy
 
 ```
@@ -27,6 +27,6 @@ kubemqctl cluster proxy [flags]
 
 ### SEE ALSO
 
-* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes KubeMQ cluster management commands
+* [kubemqctl cluster](kubemqctl_cluster.md)	 - Executes Kubemq cluster management commands
 
 
