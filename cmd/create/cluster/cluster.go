@@ -14,7 +14,7 @@ import (
 
 type CreateOptions struct {
 	cfg        *config.Config
-	exportFile bool
+	isDryRun   bool
 	deployOpts *deployOptions
 }
 
@@ -46,7 +46,7 @@ func NewCmdCreate(ctx context.Context, cfg *config.Config) *cobra.Command {
 	}
 
 	o.deployOpts = defaultDeployOptions(cmd)
-	cmd.PersistentFlags().BoolVarP(&o.exportFile, "export", "e", false, "generate yaml configuration file output (exporting)")
+	cmd.PersistentFlags().BoolVarP(&o.isDryRun, "dry-run", "", false, "generate cluster configuration without execute")
 
 	return cmd
 }
@@ -81,8 +81,8 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 		return err
 	}
 	dep := o.deployOpts.getClusterDeployment()
-	if o.exportFile {
-		utils.Printlnf("export to file %s.yaml completed", dep.Name)
+	if o.isDryRun {
+		utils.PrintlnfNoTitle(dep.String())
 		return nil
 	}
 	op, err := operatorManager.GetKubemqOperator("kubemq-operator", dep.Namespace)

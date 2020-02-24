@@ -119,25 +119,18 @@ func (c *Client) SwitchContext(contextName string) error {
 	return err
 }
 
-func (c *Client) GetPods(ns string, contains ...string) (map[string]apiv1.Pod, error) {
+func (c *Client) GetPods(ns string, name string) (map[string]apiv1.Pod, error) {
 	pods, err := c.ClientSet.CoreV1().Pods(ns).List(metav1.ListOptions{})
 	if err != nil {
 		return nil, err
 	}
 	list := map[string]apiv1.Pod{}
-	for _, item := range pods.Items {
-		if contains == nil {
+	items := pods.Items
+	for i := 0; i < len(items); i++ {
+		item := items[i]
+		if strings.Contains(item.Name, name+"-") {
 			list[fmt.Sprintf("%s/%s", item.Namespace, item.Name)] = item
-		} else {
-
-			for _, name := range contains {
-				if strings.Contains(item.Name, name) {
-					list[fmt.Sprintf("%s/%s", item.Namespace, item.Name)] = item
-					continue
-				}
-			}
 		}
-
 	}
 	return list, err
 }

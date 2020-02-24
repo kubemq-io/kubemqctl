@@ -3,6 +3,9 @@ package cluster
 import (
 	"context"
 	"fmt"
+	"github.com/kubemq-io/kubemqctl/cmd/get/cluster/describe"
+	"github.com/kubemq-io/kubemqctl/cmd/get/cluster/events"
+	"github.com/kubemq-io/kubemqctl/cmd/get/cluster/logs"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/cluster"
@@ -29,11 +32,12 @@ func NewCmdGet(ctx context.Context, cfg *config.Config) *cobra.Command {
 	}
 	cmd := &cobra.Command{
 
-		Use:     "cluster",
-		Aliases: []string{"c", "clusters"},
-		Short:   statusShort,
-		Long:    statusLong,
-		Example: getExamples,
+		Use:       "cluster",
+		Aliases:   []string{"c", "clusters"},
+		Short:     statusShort,
+		Long:      statusLong,
+		Example:   getExamples,
+		ValidArgs: []string{"describe", "events", "logs"},
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
@@ -42,7 +46,9 @@ func NewCmdGet(ctx context.Context, cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-
+	cmd.AddCommand(logs.NewCmdLogs(ctx, cfg))
+	cmd.AddCommand(events.NewCmdEvents(ctx, cfg))
+	cmd.AddCommand(describe.NewCmdDescribe(ctx, cfg))
 	return cmd
 }
 
@@ -76,10 +82,13 @@ func (o *getOptions) Run(ctx context.Context) error {
 	fmt.Fprintf(w, "NAME\tDESIRED\tREADY\tIMAGE\tGRPC\tREST\tAPI\n")
 	for _, name := range clusters.List() {
 		cluster := clusters.Cluster(name)
-
+		var replicas int32
+		if cluster.Status.Replicas != nil {
+			replicas = *cluster.Status.Replicas
+		}
 		fmt.Fprintf(w, "%s\t%d\t%d\t%s\t%s\t%s\t%s\n",
 			name,
-			*cluster.Status.Replicas,
+			replicas,
 			cluster.Status.Ready,
 			cluster.Status.Version,
 			cluster.Status.Grpc,

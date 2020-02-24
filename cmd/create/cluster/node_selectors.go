@@ -27,7 +27,7 @@ func (o *deployNodeSelectorOptions) complete() error {
 }
 
 func (o *deployNodeSelectorOptions) setConfig(deployment *kubemqcluster.KubemqCluster) *deployNodeSelectorOptions {
-	if len(o.keys) > 0 {
+	if len(o.keys) == 0 {
 		return nil
 	}
 	deployment.Spec.NodeSelectors = &kubemqcluster.NodeSelectorConfig{Keys: o.keys}

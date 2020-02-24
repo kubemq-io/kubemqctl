@@ -7,6 +7,7 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/cluster"
 
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
@@ -19,7 +20,7 @@ type ProxyOptions struct {
 
 var proxyExamples = `
 	# Proxy a Kubemq cluster ports
-	kubemqctl cluster proxy
+	kubemqctl set cluster proxy
 `
 var proxyLong = `Proxy command allows to act as a full layer 4 proxy (port-forwarding) of a Kubemq cluster connection to localhost. Proxy a KubeMW cluster allows the developer to interact with remote Kubemq cluster ports as localhost `
 var proxyShort = `Proxy Kubemq cluster connection to localhost command`
@@ -67,20 +68,24 @@ func (o *ProxyOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-
-	list, err := c.GetKubemqClusters()
+	clusterManager, err := cluster.NewManager(c)
 	if err != nil {
 		return err
 	}
-	if len(list) == 0 {
+	clusters, err := clusterManager.GetKubemqClusters()
+	if err != nil {
+		return err
+	}
+
+	if len(clusters.List()) == 0 {
 		return fmt.Errorf("no Kubemq clusters were found to proxy")
 	}
 	selection := ""
 	multiSelected := &survey.Select{
 		Renderer:      survey.Renderer{},
 		Message:       "Select Kubemq cluster to Proxy",
-		Options:       list,
-		Default:       list[0],
+		Options:       clusters.List(),
+		Default:       clusters.List()[0],
 		PageSize:      0,
 		VimMode:       false,
 		FilterMessage: "",

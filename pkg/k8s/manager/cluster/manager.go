@@ -68,3 +68,17 @@ func (m *Manager) GetKubemqClusters() (*KubemqClusters, error) {
 	}
 	return newKubemqClusters(list), nil
 }
+
+func (m *Manager) ScaleKubemqCluster(cluster *kubemqcluster.KubemqCluster, scaleTo int32) error {
+	if cluster == nil {
+		return nil
+	}
+	scale, err := m.client.ClientV1Alpha1.KubemqClusters(cluster.Namespace).GetScale(cluster.Name, metav1.GetOptions{})
+	if err != nil {
+		return err
+	}
+	scale.Spec.Replicas = scaleTo
+	_, err = m.client.ClientV1Alpha1.KubemqClusters(cluster.Namespace).UpdateScale(cluster.Name, scale)
+	return err
+
+}

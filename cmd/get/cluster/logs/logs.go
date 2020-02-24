@@ -3,6 +3,7 @@ package logs
 import (
 	"context"
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/cluster"
 	"strings"
 
 	"github.com/kubemq-io/kubemqctl/pkg/config"
@@ -22,24 +23,24 @@ type LogsOptions struct {
 
 var logsExamples = `
 	# Stream logs with selection of Kubemq cluster
-	kubemqctl cluster logs
+	kubemqctl get cluster logs
 
 	# Stream logs of all pods in default namespace
-	kubemqctl cluster logs .* -n default
+	kubemqctl get cluster logs .* -n default
 
 	# Stream logs of regex base pods with logs since 10m ago
-	kubemqctl cluster logs kubemq-cluster.* -s 10m
+	kubemqctl get cluster logs kubemq-cluster.* -s 10m
 
 	# Stream logs of regex base pods with logs since 10m ago include the string of 'connection'
-	kubemqctl cluster logs kubemq-cluster.* -s 10m -i connection
+	kubemqctl get cluster logs kubemq-cluster.* -s 10m -i connection
 
 	# Stream logs of regex base pods with logs exclude the string of 'error'
-	kubemqctl cluster logs kubemq-cluster.* -s 10m -e error
+	kubemqctl get cluster logs kubemq-cluster.* -s 10m -e error
 
 	# Stream logs of specific container
-	kubemqctl cluster logs -c kubemq-cluster-0
+	kubemqctl get cluster logs -c kubemq-cluster-0
 `
-var logsLong = `Stream command allows to show pods logs with powerful filtering capabilities`
+var logsLong = `Logs command allows to stream pods logs with powerful filtering capabilities`
 var logsShort = `Stream logs of Kubemq cluster pods command`
 
 func NewCmdLogs(ctx context.Context, cfg *config.Config) *cobra.Command {
@@ -62,7 +63,7 @@ func NewCmdLogs(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd := &cobra.Command{
 
 		Use:     "logs",
-		Aliases: []string{"lgs"},
+		Aliases: []string{"log", "l"},
 		Short:   logsShort,
 		Long:    logsLong,
 		Example: logsExamples,
@@ -91,20 +92,25 @@ func (o *LogsOptions) Complete(args []string) error {
 	if err != nil {
 		return err
 	}
+	clusterManager, err := cluster.NewManager(c)
+	if err != nil {
+		return err
+	}
 	if len(args) == 0 {
-		list, err := c.GetKubemqClusters()
+		clusters, err := clusterManager.GetKubemqClusters()
 		if err != nil {
 			return err
 		}
-		if len(list) == 0 {
+
+		if len(clusters.List()) == 0 {
 			goto NEXT
 		}
 		selection := ""
 		prompt := &survey.Select{
 			Renderer: survey.Renderer{},
 			Message:  "Show logs for Kubemq cluster:",
-			Options:  list,
-			Default:  list[0],
+			Options:  clusters.List(),
+			Default:  clusters.List()[0],
 		}
 		err = survey.AskOne(prompt, &selection)
 		if err != nil {

@@ -40,9 +40,9 @@ func SetProxy(ctx context.Context, opts *ProxyOptions) error {
 	select {
 	case <-outCh:
 		utils.Println("ok.")
-		utils.Printlnf("start proxy for %s/%s. press CTRL C to close.", opts.Namespace, opts.Pod)
+		utils.PrintlnfNoTitle("start proxy for %s/%s. press CTRL C to close.", opts.Namespace, opts.Pod)
 		for _, port := range opts.Ports {
-			utils.Printlnf("%s/%s:%s -> 127.0.0.1:%s", opts.Namespace, opts.Pod, port, port)
+			utils.PrintlnfNoTitle("%s/%s:%s -> 127.0.0.1:%s", opts.Namespace, opts.Pod, port, port)
 		}
 
 	case errstr := <-errOutCh:

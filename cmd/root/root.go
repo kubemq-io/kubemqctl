@@ -3,6 +3,8 @@ package root
 import (
 	"context"
 	"github.com/kubemq-io/kubemqctl/cmd/get"
+	"github.com/kubemq-io/kubemqctl/cmd/scale"
+	"github.com/kubemq-io/kubemqctl/cmd/set"
 
 	"github.com/kubemq-io/kubemqctl/cmd/commands"
 	"github.com/kubemq-io/kubemqctl/cmd/create"
@@ -26,7 +28,7 @@ var Version string
 
 var rootCmd = &cobra.Command{
 	Use:       "kubemqctl",
-	ValidArgs: []string{"cluster", "config", "commands", "queries", "queues", "events", "events_store", "operator"},
+	ValidArgs: []string{"config", "commands", "queries", "queues", "events", "events_store", "create", "get", "delete", "scale"},
 }
 
 func Execute(version string) {
@@ -44,6 +46,8 @@ func Execute(version string) {
 	rootCmd.AddCommand(create.NewCmdCreate(ctx, cfg))
 	rootCmd.AddCommand(deleteCmd.NewCmdDelete(ctx, cfg))
 	rootCmd.AddCommand(get.NewCmdGet(ctx, cfg))
+	rootCmd.AddCommand(scale.NewCmdScale(ctx, cfg))
+	rootCmd.AddCommand(set.NewCmdSet(ctx, cfg))
 
 	//_ = doc.GenMarkdownTree(rootCmd, "./docs")
 	utils.CheckErr(rootCmd.Execute())

@@ -39,6 +39,7 @@ func SetTransport(ctx context.Context, cfg *config.Config) error {
 	if err != nil {
 		return err
 	}
+	fmt.Println(cfg.CurrentNamespace, cfg.CurrentStatefulSet)
 	podNameSpace, podName, err := GetRunningPod(c, cfg.CurrentNamespace, cfg.CurrentStatefulSet)
 	if err != nil {
 		return err
