@@ -28,12 +28,6 @@ var proxyShort = `Proxy Kubemq cluster connection to localhost command`
 func NewCmdProxy(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &ProxyOptions{
 		cfg: cfg,
-		ProxyOptions: &k8s.ProxyOptions{
-			KubeConfig: cfg.KubeConfigPath,
-			Namespace:  "",
-			Pod:        "",
-			Ports:      nil,
-		},
 	}
 	cmd := &cobra.Command{
 
@@ -55,6 +49,12 @@ func NewCmdProxy(ctx context.Context, cfg *config.Config) *cobra.Command {
 }
 
 func (o *ProxyOptions) Complete(args []string) error {
+	o.ProxyOptions = &k8s.ProxyOptions{
+		KubeConfig: o.cfg.KubeConfigPath,
+		Namespace:  "",
+		Pod:        "",
+		Ports:      nil,
+	}
 	o.Ports = []string{"8080", "9090", "50000"}
 	return nil
 }

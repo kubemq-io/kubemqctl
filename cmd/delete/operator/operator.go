@@ -21,8 +21,8 @@ var deleteExamples = `
 	# Delete Kubemq operator 
 	kubemqctl delete operator  
 `
-var deleteLong = `Get command display all operators deployed across all namespaces`
-var deleteShort = `Get Kubemq Operators List`
+var deleteLong = `Delete one or more Kubemq operators`
+var deleteShort = `Delete Kubemq operator`
 
 func NewCmdDelete(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &DeleteOptions{

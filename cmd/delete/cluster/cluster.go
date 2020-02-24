@@ -19,8 +19,8 @@ var deleteExamples = `
  	# Delete Kubemq cluster
 	kubemqctl delete cluster
 `
-var deleteLong = `Delete command allows deleting one or more Kubemq clusters deployments`
-var deleteShort = `Delete Kubemq cluster command`
+var deleteLong = `Delete one or more Kubemq clusters`
+var deleteShort = `Delete Kubemq cluster`
 
 func NewCmdDelete(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &DeleteOptions{

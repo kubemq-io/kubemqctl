@@ -2,9 +2,11 @@ package root
 
 import (
 	"context"
+	"fmt"
 	"github.com/kubemq-io/kubemqctl/cmd/get"
 	"github.com/kubemq-io/kubemqctl/cmd/scale"
 	"github.com/kubemq-io/kubemqctl/cmd/set"
+	"github.com/spf13/viper"
 
 	"github.com/kubemq-io/kubemqctl/cmd/commands"
 	"github.com/kubemq-io/kubemqctl/cmd/create"
@@ -19,21 +21,48 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	"os"
 )
 
 var cfg *config.Config
 var Version string
-
+var configFile string
 var rootCmd = &cobra.Command{
 	Use:       "kubemqctl",
 	ValidArgs: []string{"config", "commands", "queries", "queues", "events", "events_store", "create", "get", "delete", "scale"},
 }
 
-func Execute(version string) {
+func loadConfig() {
+	configEnv := os.Getenv("KUBEMQCTL_CONFIG")
+	if configEnv != "" {
+		configFile = configEnv
+	}
+
+	cfg = &config.Config{}
+	if !exists(configFile) {
+		utils.Println("No configuration found, initialize first time default configuration. Run 'kubemqctl config' to run expert configuration wizard.")
+	}
+
+	defaultCfg, err := config.CheckConfigFile(configFile)
+	if err != nil && defaultCfg != nil {
+		cfg = defaultCfg
+	} else {
+
+		viper.SetConfigFile(configFile)
+		err := viper.ReadInConfig()
+		utils.CheckErr(err)
+		err = viper.Unmarshal(cfg)
+		utils.CheckErr(err)
+	}
+}
+func Execute(version string, args []string) {
 
 	rootCmd.Version = version
+	err := rootCmd.PersistentFlags().Parse(args)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	loadConfig()
 	defer utils.CheckErr(cfg.Save())
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -50,6 +79,7 @@ func Execute(version string) {
 	rootCmd.AddCommand(set.NewCmdSet(ctx, cfg))
 
 	//_ = doc.GenMarkdownTree(rootCmd, "./docs")
+
 	utils.CheckErr(rootCmd.Execute())
 
 }
@@ -63,21 +93,5 @@ func exists(name string) bool {
 	return true
 }
 func init() {
-	cfg = &config.Config{}
-	if !exists(".kubemqctl.yaml") {
-		utils.Println("No configuration found, initialize first time default configuration. Run 'kubemqctl config' to run expert configuration wizard.")
-	}
-
-	defaultCfg, err := config.CheckConfigFile()
-	if err != nil && defaultCfg != nil {
-		cfg = defaultCfg
-	} else {
-		viper.AddConfigPath("./")
-		viper.SetConfigName(".kubemqctl")
-		err := viper.ReadInConfig()
-		utils.CheckErr(err)
-		err = viper.Unmarshal(cfg)
-		utils.CheckErr(err)
-	}
-
+	rootCmd.PersistentFlags().StringVarP(&configFile, "config", "", "./.kubemqctl.yaml", "set kubemqctl configuration file")
 }

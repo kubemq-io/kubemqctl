@@ -23,8 +23,8 @@ var getExamples = `
 	# Get status of Kubemq of clusters
 	kubemqctl get clusters
 `
-var statusLong = `Get command allows to show the current information of requested resource`
-var statusShort = `Get information of requested resource`
+var getLong = `Get information of Kubemq cluster resources`
+var getShort = `Get information of Kubemq cluster resources`
 
 func NewCmdGet(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &getOptions{
@@ -34,8 +34,8 @@ func NewCmdGet(ctx context.Context, cfg *config.Config) *cobra.Command {
 
 		Use:       "cluster",
 		Aliases:   []string{"c", "clusters"},
-		Short:     statusShort,
-		Long:      statusLong,
+		Short:     getShort,
+		Long:      getLong,
 		Example:   getExamples,
 		ValidArgs: []string{"describe", "events", "logs"},
 		Run: func(cmd *cobra.Command, args []string) {

@@ -19,7 +19,7 @@ type EventsOptions struct {
 
 var eventsExamples = `
  	# Show Kubemq cluster events
-	kubemqctl cluster events
+	kubemqctl get cluster events
 `
 var eventsLong = `Events command allows to show a real-time Kubemq cluster events`
 var eventsShort = `Show Kubemq cluster events command`

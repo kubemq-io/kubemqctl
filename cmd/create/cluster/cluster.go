@@ -21,6 +21,9 @@ type CreateOptions struct {
 var createExamples = `
 	# Create default Kubemq cluster
 	kubemqctl create cluster
+	
+	# Create Kubemq cluster with options - get all flags
+	kubemqctl create cluster --help
 `
 var createLong = `Create command allows to deploy a Kubemq cluster with configuration options`
 var createShort = `Create a Kubemq cluster command`

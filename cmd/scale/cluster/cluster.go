@@ -22,7 +22,7 @@ var scaleExamples = `
 	# Scale Kubemq cluster  
 	kubemqctl scale cluster 5
 `
-var scaleLong = `Scale command allows ro scale Kubemq cluster replicas`
+var scaleLong = `Scale command allows to scale Kubemq cluster replicas`
 var scaleShort = `Scale Kubemq cluster replicas command`
 
 func NewCmdScale(ctx context.Context, cfg *config.Config) *cobra.Command {

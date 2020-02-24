@@ -18,9 +18,9 @@ type GetOptions struct {
 
 var getExamples = `
 	# Get Kubemq operators list 
-	kubemqctl operator get  
+	kubemqctl get operators  
 `
-var getLong = `Get command display all operators deployed across all namespaces`
+var getLong = `Get Kubemq Operators List`
 var getShort = `Get Kubemq Operators List`
 
 func NewCmdGet(ctx context.Context, cfg *config.Config) *cobra.Command {
