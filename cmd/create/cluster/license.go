@@ -27,7 +27,7 @@ func setLicenseConfig(cmd *cobra.Command) *deployLicenseOptions {
 	}
 	cmd.PersistentFlags().StringVarP(&o.licenseData, "license-data", "", "", "set license data")
 	cmd.PersistentFlags().StringVarP(&o.licenseFilename, "license-filename", "", "", "set license filename")
-	cmd.PersistentFlags().StringVarP(&o.licenseToken, "license-token", "", "", "set license token")
+	cmd.PersistentFlags().StringVarP(&o.licenseToken, "license-token", "t", "", "set license token")
 
 	return o
 }

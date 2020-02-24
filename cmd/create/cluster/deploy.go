@@ -253,6 +253,7 @@ func (o *deployOptions) getClusterDeployment() *kubemqcluster.KubemqCluster {
 	o.notification.setConfig(deployment)
 	o.queue.setConfig(deployment)
 	o.rest.setConfig(deployment)
+	o.resources.setConfig(deployment)
 	o.routing.setConfig(deployment)
 	o.store.setConfig(deployment)
 	o.tls.setConfig(deployment)
