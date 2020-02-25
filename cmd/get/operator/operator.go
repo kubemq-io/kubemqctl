@@ -3,6 +3,7 @@ package operator
 import (
 	"context"
 	"fmt"
+	"github.com/kubemq-io/kubemqctl/cmd/get/operator/logs"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/operator"
@@ -19,6 +20,8 @@ type GetOptions struct {
 var getExamples = `
 	# Get Kubemq operators list 
 	kubemqctl get operators  
+	# Get Kubemq operator pod logs 
+	kubemqctl get operators log
 `
 var getLong = `Get Kubemq Operators List`
 var getShort = `Get Kubemq Operators List`
@@ -42,7 +45,7 @@ func NewCmdGet(ctx context.Context, cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-
+	cmd.AddCommand(logs.NewCmdLogs(ctx, cfg))
 	return cmd
 }
 

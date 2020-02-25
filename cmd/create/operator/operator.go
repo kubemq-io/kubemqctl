@@ -75,6 +75,9 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 		return err
 	}
 	_, isUpdate, err := operatorManager.CreateOrUpdateKubemqOperator(dep)
+	if err != nil {
+		return err
+	}
 	if isUpdate {
 		utils.Printlnf("kubemq operator %s/%s configured.", dep.Namespace, dep.Name)
 	} else {

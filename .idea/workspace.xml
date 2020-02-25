@@ -2,7 +2,72 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/health.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/health.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/get/operator/logs/logs.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/kubemqctl_get_operator_logs.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/operator/operator.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/operator/operator.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/get/cluster/events/events.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/get/cluster/events/events.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/get/operator/operator.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/get/operator/operator.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_commands.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_commands.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_commands_attach.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_commands_attach.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_commands_receive.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_commands_receive.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_commands_send.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_commands_send.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_config.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_config.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_create.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_create.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_create_cluster.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_create_cluster.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_create_operator.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_create_operator.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_delete.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_delete.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_delete_cluster.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_delete_cluster.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_delete_operator.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_delete_operator.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_events.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_events.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_events_attach.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_events_attach.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_events_receive.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_events_receive.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_events_send.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_events_send.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_events_store.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_events_store.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_events_store_attach.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_events_store_attach.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_events_store_list.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_events_store_list.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_events_store_receive.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_events_store_receive.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_events_store_send.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_events_store_send.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_get.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_get.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_get_cluster.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_get_cluster.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_get_cluster_describe.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_get_cluster_describe.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_get_cluster_events.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_get_cluster_events.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_get_cluster_logs.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_get_cluster_logs.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_get_operator.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_get_operator.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_queries.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_queries.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_queries_attach.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_queries_attach.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_queries_receive.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_queries_receive.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_queries_send.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_queries_send.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_queues.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_queues.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_queues_ack.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_queues_ack.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_queues_attach.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_queues_attach.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_queues_list.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_queues_list.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_queues_peek.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_queues_peek.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_queues_receive.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_queues_receive.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_queues_send.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_queues_send.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_queues_stream.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_queues_stream.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_scale.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_scale.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_scale_cluster.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_scale_cluster.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_set.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_set.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_set_cluster.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_set_cluster.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_set_cluster_proxy.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_set_cluster_proxy.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_set_context.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_set_context.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/client_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/client_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/configmap.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/deployment.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/service.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/statefulset.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/manager.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/manager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/api.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/api.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/deepcopy.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/deepcopy.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/grpc.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/grpc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/health.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/health.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/image.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/image.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/license.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/license.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/rest.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/rest.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +112,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/set" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/get/operator" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -62,11 +127,11 @@
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\set" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get\operator" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\set" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\delete" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\cluster\create" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\crd\cluster\config" />
     </key>
   </component>
   <component name="RunManager" selected="Go Test.go test github.com/kubemq-io/kubemqctl/pkg/k8s/deployment (1)">
@@ -170,13 +235,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00012" summary="fixes after linting">
-      <created>1564240741877</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1564240741877</updated>
     </task>
     <task id="LOCAL-00013" summary="fixes after linting">
       <created>1564240915655</created>
@@ -514,7 +572,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582548740449</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="re-arrange">
+      <created>1582548950173</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1582548950173</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -589,10 +654,10 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1217" y="573" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579522350352" />
-    <state x="1148" y="356" key="CommitChangelistDialog2" timestamp="1582548739893">
+    <state x="1148" y="356" key="CommitChangelistDialog2" timestamp="1582548949655">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582548739893" />
+    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582548949655" />
     <state x="1317" y="599" key="FileChooserDialogImpl" timestamp="1582032349959">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
@@ -613,27 +678,27 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state width="3029" height="478" key="GridCell.Tab.0.right/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579599408416" />
-    <state x="1289" y="474" key="RollbackChangesDialog" timestamp="1582372712995">
+    <state x="1289" y="474" key="RollbackChangesDialog" timestamp="1582635311198">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1289" y="474" key="RollbackChangesDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582372712995" />
+    <state x="1289" y="474" key="RollbackChangesDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582635311198" />
     <state x="1045" y="486" key="SettingsEditor" timestamp="1575092531279">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1045" y="486" key="SettingsEditor/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1575092531279" />
-    <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1582548741860">
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1582548951535">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582548741860" />
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582548951535" />
     <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582204697982">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582204697982" />
     <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.2560.1440/-2560.0.2560.1440@0.0.3072.1688" timestamp="1579163136060" />
-    <state x="1164" y="550" width="752" height="598" key="find.popup" timestamp="1582384479524">
+    <state x="1164" y="550" width="752" height="598" key="find.popup" timestamp="1582635295444">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1164" y="550" width="752" height="598" key="find.popup/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582384479524" />
+    <state x="1164" y="550" width="752" height="598" key="find.popup/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582635295444" />
     <state x="1318" y="476" key="git4idea.branch.GitSmartOperationDialog" timestamp="1582202983331">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>

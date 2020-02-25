@@ -6,11 +6,6 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/operator"
 )
 
-const (
-	defaultOperatorName = "kubemq-operator"
-	defaultNamespace    = "kubemq"
-)
-
 type Manager struct {
 	*client.Client
 	*crdManager

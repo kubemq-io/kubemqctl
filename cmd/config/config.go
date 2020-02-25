@@ -6,6 +6,7 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/cluster"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"io/ioutil"
@@ -331,6 +332,15 @@ func (o *ConfigOptions) getClusters(kubeConfig string) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	return c.GetKubemqClusters()
+	clusterManager, err := cluster.NewManager(c)
+	if err != nil {
+		return nil, err
+	}
+	clusters, err := clusterManager.GetKubemqClusters()
+	if err != nil {
+		return nil, err
+	}
+
+	return clusters.List(), err
 
 }

@@ -62,7 +62,7 @@ func (o *EventsOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	pair := []string{"", ""}
+	var pair []string
 
 	if o.cluster == "" {
 		clusterManager, err := cluster.NewManager(c)
@@ -103,7 +103,7 @@ func (o *EventsOptions) Run(ctx context.Context) error {
 	} else {
 		pair = strings.Split(o.cluster, "/")
 	}
-	if pair[0] == "" || pair[1] == "" {
+	if len(pair) != 2 {
 		return fmt.Errorf("no cluster namespace/name set for event streaming")
 	}
 	utils.Printlnf("Show real-time events for %s/%s cluster:", pair[0], pair[1])

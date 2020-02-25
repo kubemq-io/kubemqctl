@@ -26,13 +26,3 @@ type GrpcConfig struct {
 	// +kubebuilder:validation:Minimum=1
 	BodyLimit int32 `json:"bodyLimit"`
 }
-
-func (c *GrpcConfig) getDefaults() *GrpcConfig {
-	if c.Port == 0 {
-		c.Port = 50000
-	}
-	if c.Expose == "" {
-		c.Expose = "ClusterIP"
-	}
-	return c
-}

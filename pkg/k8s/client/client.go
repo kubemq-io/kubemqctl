@@ -25,10 +25,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
-	"sort"
 	"strings"
-
-	"time"
 )
 
 type Client struct {
@@ -177,54 +174,6 @@ func (c *Client) ForwardPorts(ns string, name string, ports []string, stopChan c
 	}()
 
 	return nil
-}
-
-func (c *Client) GetKubemqClusters() ([]string, error) {
-
-	sets, err := c.GetStatefulSets("")
-	if err != nil {
-		return nil, err
-	}
-	var list []string
-	for key, set := range sets {
-		for _, container := range set.Spec.Template.Spec.Containers {
-			if strings.Contains(container.Image, "kubemq") {
-				list = append(list, key)
-				continue
-			}
-		}
-
-	}
-	sort.Strings(list)
-	return list, nil
-}
-
-func (c *Client) GetKubemqClustersStatus() ([]*StatefulSetStatus, error) {
-
-	sets, err := c.GetStatefulSets("")
-	if err != nil {
-		return nil, err
-	}
-	var list []*StatefulSetStatus
-	for _, set := range sets {
-		for _, container := range set.Spec.Template.Spec.Containers {
-			if strings.Contains(container.Image, "kubemq") {
-				sts := &StatefulSetStatus{
-					Name:      set.Name,
-					Namespace: set.Namespace,
-					Desired:   *set.Spec.Replicas,
-					Running:   set.Status.Replicas,
-					Ready:     set.Status.ReadyReplicas,
-					Image:     container.Image,
-					Age:       time.Since(set.CreationTimestamp.Time),
-				}
-				list = append(list, sts)
-				continue
-			}
-		}
-	}
-
-	return list, nil
 }
 
 func homeDir() string {

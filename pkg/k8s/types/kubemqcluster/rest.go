@@ -27,13 +27,3 @@ type RestConfig struct {
 	// +kubebuilder:validation:Maximum=32767
 	NodePort int32 `json:"nodePort"`
 }
-
-func (c *RestConfig) getDefaults() *RestConfig {
-	if c.Port == 0 {
-		c.Port = 9090
-	}
-	if c.Expose == "" {
-		c.Expose = "ClusterIP"
-	}
-	return c
-}

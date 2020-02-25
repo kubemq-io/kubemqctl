@@ -18,13 +18,3 @@ type ApiConfig struct {
 	// +kubebuilder:validation:Maximum=32767
 	NodePort int32 `json:"nodePort"`
 }
-
-func (c *ApiConfig) getDefaults() *ApiConfig {
-	if c.Port == 0 {
-		c.Port = 8080
-	}
-	if c.Expose == "" {
-		c.Expose = "ClusterIP"
-	}
-	return c
-}
