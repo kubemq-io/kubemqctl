@@ -28,7 +28,7 @@ func setImageConfig(cmd *cobra.Command) *deployImageOptions {
 	}
 	cmd.PersistentFlags().StringVarP(&o.registry, "image-registry", "", "docker.io", "set image registry")
 	cmd.PersistentFlags().StringVarP(&o.repository, "image-repository", "", "kubemq/kubemq", "set image repository")
-	cmd.PersistentFlags().StringVarP(&o.tag, "image-tag", "T", "latest", "set image tag")
+	cmd.PersistentFlags().StringVarP(&o.tag, "image-tag", "", "latest", "set image tag")
 	cmd.PersistentFlags().StringVarP(&o.pullPolicy, "image-pull-policy", "", "Always", "set image pull policy")
 	return o
 }

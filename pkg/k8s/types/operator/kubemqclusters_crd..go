@@ -71,78 +71,53 @@ spec:
                   type: string
                 nodePort:
                   format: int32
-                  maximum: 32767
-                  minimum: 30000
                   type: integer
                 port:
                   format: int32
-                  maximum: 65535
-                  minimum: 1
                   type: integer
               type: object
             authentication:
               properties:
                 key:
-                  minLength: 1
                   type: string
                 type:
-                  minLength: 1
-                  pattern: (HS256|HS384|HS512|RS256|RS384|RS512|ES256|ES384|ES512)
                   type: string
-              required:
-              - key
-              - type
               type: object
             authorization:
               properties:
                 autoReload:
                   format: int32
-                  minimum: 0
                   type: integer
                 policy:
-                  minLength: 1
                   type: string
                 url:
-                  minLength: 1
-                  pattern: https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)
                   type: string
               type: object
             configData:
-              minLength: 1
               type: string
             gateways:
               properties:
                 ca:
-                  minLength: 1
                   type: string
                 cert:
-                  minLength: 1
                   type: string
                 key:
-                  minLength: 1
                   type: string
                 port:
                   format: int32
-                  maximum: 65535
-                  minimum: 1
                   type: integer
                 remotes:
                   items:
                     type: string
-                  minItems: 1
                   type: array
-              required:
-              - remotes
               type: object
             grpc:
               properties:
                 bodyLimit:
                   format: int32
-                  minimum: 1
                   type: integer
                 bufferSize:
                   format: int32
-                  minimum: 1
                   type: integer
                 disabled:
                   type: boolean
@@ -151,13 +126,9 @@ spec:
                   type: string
                 nodePort:
                   format: int32
-                  maximum: 32767
-                  minimum: 30000
                   type: integer
                 port:
                   format: int32
-                  maximum: 65535
-                  minimum: 1
                   type: integer
               type: object
             health:
@@ -166,26 +137,19 @@ spec:
                   type: boolean
                 failureThreshold:
                   format: int32
-                  minimum: 0
                   type: integer
                 initialDelaySeconds:
                   format: int32
-                  minimum: 0
                   type: integer
                 periodSeconds:
                   format: int32
-                  minimum: 0
                   type: integer
                 successThreshold:
                   format: int32
-                  minimum: 0
                   type: integer
                 timeoutSeconds:
                   format: int32
-                  minimum: 0
                   type: integer
-              required:
-              - enabled
               type: object
             image:
               properties:
@@ -209,11 +173,9 @@ spec:
             log:
               properties:
                 file:
-                  minLength: 1
                   type: string
                 level:
                   format: int32
-                  minimum: 0
                   type: integer
               type: object
             nodeSelectors:
@@ -222,8 +184,6 @@ spec:
                   additionalProperties:
                     type: string
                   type: object
-              required:
-              - keys
               type: object
             notification:
               properties:
@@ -232,44 +192,41 @@ spec:
                 log:
                   type: boolean
                 prefix:
-                  minLength: 1
                   type: string
-              required:
-              - enabled
               type: object
             queue:
               properties:
                 defaultVisibilitySeconds:
                   format: int32
-                  minimum: 1
+                  minimum: 0
                   type: integer
                 defaultWaitTimeoutSeconds:
                   format: int32
-                  minimum: 1
+                  minimum: 0
                   type: integer
                 maxDelaySeconds:
                   format: int32
-                  minimum: 1
+                  minimum: 0
                   type: integer
                 maxExpirationSeconds:
                   format: int32
-                  minimum: 1
+                  minimum: 0
                   type: integer
                 maxReQueues:
                   format: int32
-                  minimum: 1
+                  minimum: 0
                   type: integer
                 maxReceiveMessagesRequest:
                   format: int32
-                  minimum: 1
+                  minimum: 0
                   type: integer
                 maxVisibilitySeconds:
                   format: int32
-                  minimum: 1
+                  minimum: 0
                   type: integer
                 maxWaitTimeoutSeconds:
                   format: int32
-                  minimum: 1
+                  minimum: 0
                   type: integer
               type: object
             replicas:
@@ -279,62 +236,42 @@ spec:
             resources:
               properties:
                 limitsCpu:
-                  minLength: 1
                   type: string
                 limitsMemory:
-                  minLength: 1
                   type: string
                 requestsCpu:
-                  minLength: 1
                   type: string
                 requestsMemory:
-                  minLength: 1
                   type: string
-              required:
-              - limitsCpu
-              - limitsMemory
-              - requestsCpu
-              - requestsMemory
               type: object
             rest:
               properties:
                 bodyLimit:
                   format: int32
-                  minimum: 1
                   type: integer
                 bufferSize:
                   format: int32
-                  minimum: 1
                   type: integer
                 disabled:
                   type: boolean
                 expose:
-                  minLength: 1
                   pattern: (ClusterIP|NodePort|LoadBalancer)
                   type: string
                 nodePort:
                   format: int32
-                  maximum: 32767
-                  minimum: 30000
                   type: integer
                 port:
                   format: int32
-                  maximum: 65535
-                  minimum: 1
                   type: integer
               type: object
             routing:
               properties:
                 autoReload:
                   format: int32
-                  minimum: 0
                   type: integer
                 data:
-                  minLength: 1
                   type: string
                 url:
-                  minLength: 1
-                  pattern: https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)
                   type: string
               type: object
             store:
@@ -362,7 +299,6 @@ spec:
                   minimum: 0
                   type: integer
                 path:
-                  minLength: 0
                   type: string
                 purgeInactiveMinutes:
                   format: int32
@@ -372,22 +308,15 @@ spec:
             tls:
               properties:
                 ca:
-                  minLength: 1
                   type: string
                 cert:
-                  minLength: 1
                   type: string
                 key:
-                  minLength: 1
                   type: string
-              required:
-              - cert
-              - key
               type: object
             volume:
               properties:
                 size:
-                  pattern: ^([1-9]?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]?)Gi$
                   type: string
               type: object
           type: object

@@ -2,7 +2,6 @@ package root
 
 import (
 	"context"
-	"fmt"
 	"github.com/kubemq-io/kubemqctl/cmd/get"
 	"github.com/kubemq-io/kubemqctl/cmd/scale"
 	"github.com/kubemq-io/kubemqctl/cmd/set"
@@ -58,10 +57,7 @@ func loadConfig() {
 func Execute(version string, args []string) {
 
 	rootCmd.Version = version
-	err := rootCmd.PersistentFlags().Parse(args)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+	_ = rootCmd.PersistentFlags().Parse(args)
 	loadConfig()
 	defer utils.CheckErr(cfg.Save())
 	ctx, cancel := context.WithCancel(context.Background())

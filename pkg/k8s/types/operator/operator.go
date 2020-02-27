@@ -39,33 +39,25 @@ spec:
                   fieldPath: metadata.name
             - name: OPERATOR_NAME
               value: "{{.Name}}"
-            - name: KUBEMQ_REGISTRY
-              value: "{{.KubemqRegistry}}"
-            - name: KUBEMQ_REPOSITORY
-              value: "{{.KubemqRepository}}"
-            - name: KUBEMQ_IMAGE_TAG
-              value: "{{.KubemqTag}}"
+            - name: RELATED_IMAGE_KUBEMQ_CLUSTER
+              value: {{.KubemqImage}}
 `
 
 type Operator struct {
-	Name             string
-	Namespace        string
-	Image            string
-	KubemqRegistry   string
-	KubemqRepository string
-	KubemqTag        string
-	deployment       *appsv1.Deployment
+	Name        string
+	Namespace   string
+	Image       string
+	KubemqImage string
+	deployment  *appsv1.Deployment
 }
 
 func CreateOperator(name, namespace string) *Operator {
 	return &Operator{
-		Name:             name,
-		Namespace:        namespace,
-		Image:            "docker.io/kubemq/kubemq-operator:latest",
-		KubemqRegistry:   "docker.io",
-		KubemqRepository: "kubemq/kubemq",
-		KubemqTag:        "latest",
-		deployment:       nil,
+		Name:        name,
+		Namespace:   namespace,
+		Image:       "docker.io/kubemq/kubemq-operator:latest",
+		KubemqImage: "docker.io/kubemq/kubemq:latest",
+		deployment:  nil,
 	}
 }
 func (op *Operator) Spec() ([]byte, error) {
