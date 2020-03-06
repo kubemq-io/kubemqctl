@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
+    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="add token get license">
+      <change afterPath="$PROJECT_DIR$/cmd/create/dashboard/dashboard.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/create/dashboard/deploy.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/create/dashboard/grafana.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/create/dashboard/prometheus.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/delete/dashboard/dashboard.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/get/dashboard/dashboard.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/get/dashboard/describe/describe.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/kubemqdashboard.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/manager/dashboard/kubemqdashboard.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/manager/dashboard/manager.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqdashboard/deepcopy.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqdashboard/kubemqdashboard.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/kubemqdashboard_crd..go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/license.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/license.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/api/bolt.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/api/bolt.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/deploy.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/deploy.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/create.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/create.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/delete/delete.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/delete/delete.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/get/cluster/describe/describe.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/get/cluster/describe/describe.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/get/get.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/get/get.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/api.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/api.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/manager.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/manager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/kubemqcluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/kubemqcluster.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/operator/bundle.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/bundle.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/operator/operator.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/operator.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/operator/role.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/role.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/register.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/register.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,26 +74,26 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/get/operator" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/get/dashboard" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="go.sdk" />
+    <property name="settings.editor.selected.configurable" value="watcher.settings" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get\dashboard" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\delete" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\client\v1alpha1" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\manager" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\set\cluster" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\manager\operator" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\scale\cluster" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get\cluster" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\set" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get\operator" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\set" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\delete" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\cluster\create" />
     </key>
   </component>
   <component name="RunManager" selected="Go Test.go test github.com/kubemq-io/kubemqctl/pkg/k8s/deployment (1)">
@@ -173,13 +197,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00014" summary="fixes after linting">
-      <created>1564241583742</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1564241583742</updated>
     </task>
     <task id="LOCAL-00015" summary="fixes after linting">
       <created>1564241720581</created>
@@ -517,7 +534,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582636238675</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="add token get license">
+      <created>1582796350434</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1582796350434</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -553,7 +577,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="update readme with linux 386" />
     <MESSAGE value="fix cluster proxy command" />
     <MESSAGE value="add option to ask for token in create command" />
     <MESSAGE value="add selection of cluster to connect" />
@@ -578,7 +601,8 @@
     <MESSAGE value="add check default on create" />
     <MESSAGE value="re-arrange" />
     <MESSAGE value="cleaning code" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleaning code" />
+    <MESSAGE value="add token get license" />
+    <option name="LAST_COMMIT_MESSAGE" value="add token get license" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -592,10 +616,10 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1217" y="573" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579522350352" />
-    <state x="1148" y="356" key="CommitChangelistDialog2" timestamp="1582636238036">
+    <state x="1148" y="356" key="CommitChangelistDialog2" timestamp="1583165840419">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582636238036" />
+    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1583165840419" />
     <state x="1205" y="624" key="EditFileWatcherDialog" timestamp="1582695780242">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
@@ -624,23 +648,23 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1289" y="474" key="RollbackChangesDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582635311198" />
-    <state x="1045" y="486" key="SettingsEditor" timestamp="1582695901201">
+    <state x="1045" y="486" key="SettingsEditor" timestamp="1583500842525">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1045" y="486" key="SettingsEditor/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582695901201" />
-    <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1582636242609">
+    <state x="1045" y="486" key="SettingsEditor/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1583500842525" />
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1582796354260">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582636242609" />
-    <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582204697982">
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582796354260" />
+    <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582827810538">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582204697982" />
+    <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582827810538" />
     <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.2560.1440/-2560.0.2560.1440@0.0.3072.1688" timestamp="1579163136060" />
-    <state x="1164" y="550" width="752" height="598" key="find.popup" timestamp="1582635295444">
+    <state x="1164" y="550" width="752" height="598" key="find.popup" timestamp="1583511245199">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1164" y="550" width="752" height="598" key="find.popup/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582635295444" />
+    <state x="1164" y="550" width="752" height="598" key="find.popup/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1583511245199" />
     <state x="1318" y="476" key="git4idea.branch.GitSmartOperationDialog" timestamp="1582202983331">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>

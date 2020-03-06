@@ -3,6 +3,7 @@ package get
 import (
 	"context"
 	"github.com/kubemq-io/kubemqctl/cmd/get/cluster"
+	"github.com/kubemq-io/kubemqctl/cmd/get/dashboard"
 	"github.com/kubemq-io/kubemqctl/cmd/get/operator"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
@@ -15,7 +16,10 @@ var getExamples = `
 	kubemqctl get clusters	
 	
 	# Execute get Kubemq operators
-	kubemqctl get operators
+	kubemqctl get operators	
+
+	# Execute get Kubemq dashboards
+	kubemqctl get dashboards
 `
 var getLong = `Executes Kubemq get commands`
 var getShort = `Executes Kubemq get commands`
@@ -36,6 +40,7 @@ func NewCmdGet(ctx context.Context, cfg *config.Config) *cobra.Command {
 	}
 	cmd.AddCommand(cluster.NewCmdGet(ctx, cfg))
 	cmd.AddCommand(operator.NewCmdGet(ctx, cfg))
+	cmd.AddCommand(dashboard.NewCmdGet(ctx, cfg))
 
 	return cmd
 }

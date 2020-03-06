@@ -132,7 +132,13 @@ func (m *Manager) GetKubemqOperator(name, namespace string) (*operator.Deploymen
 
 	bundle.Deployment, _ = m.GetOperator(name, namespace)
 	crd, _ := m.GetCrd("kubemqclusters.core.k8s.kubemq.io", namespace)
-	bundle.CRDs = append(bundle.CRDs, crd)
+	if crd != nil {
+		bundle.CRDs = append(bundle.CRDs, crd)
+	}
+	crd, _ = m.GetCrd("kubemqdashboards.core.k8s.kubemq.io", namespace)
+	if crd != nil {
+		bundle.CRDs = append(bundle.CRDs, crd)
+	}
 	bundle.Role, _ = m.GetRole(name, namespace)
 	bundle.RoleBinding, _ = m.GetRoleBinding(name, namespace)
 	bundle.ServiceAccount, _ = m.GetServiceAccount(name, namespace)

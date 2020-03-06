@@ -114,7 +114,6 @@ type KubemqClusterList struct {
 }
 
 func (k *KubemqCluster) String() string {
-
 	data, err := yaml.Marshal(k)
 	if err != nil {
 		return ""

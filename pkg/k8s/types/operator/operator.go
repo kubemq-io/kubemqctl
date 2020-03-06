@@ -41,23 +41,36 @@ spec:
               value: "{{.Name}}"
             - name: RELATED_IMAGE_KUBEMQ_CLUSTER
               value: {{.KubemqImage}}
+            - name: RELATED_IMAGE_PROMETHEUS
+              value: {{.PrometheusImage}}
+            - name: RELATED_IMAGE_GRAFANA
+              value: {{.GrafanaImage}}
+            - name: KUBEMQ_VIEW_DASHBOARD_SOURCE
+              value: {{.KubemqDashboardDashboardSource}}
+
 `
 
 type Operator struct {
-	Name        string
-	Namespace   string
-	Image       string
-	KubemqImage string
-	deployment  *appsv1.Deployment
+	Name                           string
+	Namespace                      string
+	Image                          string
+	KubemqImage                    string
+	PrometheusImage                string
+	GrafanaImage                   string
+	KubemqDashboardDashboardSource string
+	deployment                     *appsv1.Deployment
 }
 
 func CreateOperator(name, namespace string) *Operator {
 	return &Operator{
-		Name:        name,
-		Namespace:   namespace,
-		Image:       "docker.io/kubemq/kubemq-operator:latest",
-		KubemqImage: "docker.io/kubemq/kubemq:latest",
-		deployment:  nil,
+		Name:                           name,
+		Namespace:                      namespace,
+		Image:                          "docker.io/kubemq/kubemq-operator:latest",
+		KubemqImage:                    "docker.io/kubemq/kubemq:latest",
+		PrometheusImage:                "prom/prometheus",
+		GrafanaImage:                   "grafana/grafana:latest",
+		KubemqDashboardDashboardSource: "https://raw.githubusercontent.com/kubemq-io/kubemq-dashboard/master/dashboard.json",
+		deployment:                     nil,
 	}
 }
 func (op *Operator) Spec() ([]byte, error) {

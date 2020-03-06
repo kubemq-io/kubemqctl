@@ -61,8 +61,8 @@ func defaultDeployOptions(cmd *cobra.Command) *deployOptions {
 		volume:         setVolumeConfig(cmd),
 	}
 	cmd.PersistentFlags().StringVarP(&o.configFilename, "config-file", "c", "", "set kubemq config file")
-	cmd.PersistentFlags().StringVarP(&o.name, "name", "n", "kubemq-cluster", "set kubemq cluster name")
-	cmd.PersistentFlags().StringVarP(&o.namespace, "namespace", "", "kubemq", "set kubemq cluster namespace")
+	cmd.PersistentFlags().StringVarP(&o.name, "name", "", "kubemq-cluster", "set kubemq cluster name")
+	cmd.PersistentFlags().StringVarP(&o.namespace, "namespace", "n", "kubemq", "set kubemq cluster namespace")
 	cmd.PersistentFlags().Int32VarP(&o.replicas, "replicas", "r", 3, "set replicas")
 	return o
 }

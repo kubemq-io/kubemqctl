@@ -19,9 +19,13 @@ type Deployment struct {
 }
 
 func CreateDeployment(name, namespace string) (*Deployment, error) {
-	crd, err := CreateKubemqClustersCRD(namespace).Get()
+	kubemqClusterCrd, err := CreateKubemqClustersCRD(namespace).Get()
 	if err != nil {
-		return nil, fmt.Errorf("error create operator bundle, crd error: %s", err.Error())
+		return nil, fmt.Errorf("error create operator bundle, kubemq cluster crd error: %s", err.Error())
+	}
+	kubemqDashboardCrd, err := CreateKubemqDashboardCRD(namespace).Get()
+	if err != nil {
+		return nil, fmt.Errorf("error create operator bundle, kubemq dashboard crd error: %s", err.Error())
 	}
 
 	role, err := CreateRole(name, namespace).Get()
@@ -47,7 +51,7 @@ func CreateDeployment(name, namespace string) (*Deployment, error) {
 	return &Deployment{
 		Name:           name,
 		Namespace:      namespace,
-		CRDs:           []*v1beta1.CustomResourceDefinition{crd},
+		CRDs:           []*v1beta1.CustomResourceDefinition{kubemqClusterCrd, kubemqDashboardCrd},
 		Deployment:     operator,
 		Role:           role,
 		RoleBinding:    roleBinding,

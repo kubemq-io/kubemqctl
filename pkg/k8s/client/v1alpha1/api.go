@@ -35,3 +35,9 @@ func (c *V1Alpha1Client) KubemqClusters(namespace string) KubemqClusterInterface
 		ns:     namespace,
 	}
 }
+func (c *V1Alpha1Client) KubemqDashboard(namespace string) KubemqDashboardInterface {
+	return &kubemqDashboard{
+		client: c.restClient,
+		ns:     namespace,
+	}
+}

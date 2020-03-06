@@ -56,7 +56,7 @@ rules:
 - apiGroups:
   - apps
   resourceNames:
-  - {{.Name}}
+  - kubemq-operator
   resources:
   - deployments/finalizers
   verbs:
@@ -79,6 +79,7 @@ rules:
   resources:
   - '*'
   - kubemqclusters
+  - kubemqdashboards
   verbs:
   - create
   - delete
@@ -87,7 +88,6 @@ rules:
   - patch
   - update
   - watch
-  - core.k8s.kubemq.io
 - apiGroups:
   - extensions
   resources:

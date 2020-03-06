@@ -6,7 +6,7 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/cluster"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/dashboard"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -16,11 +16,11 @@ type DescribeOptions struct {
 }
 
 var describeExamples = `
-	# Describe Kubemq cluster to console
-	kubemqctl get cluster describe
+	# Describe Kubemq dashboard to console
+	kubemqctl get dashboard describe
 `
-var describeLong = `Describe command allows describing a Kubemq cluster to console`
-var describeShort = `Describe Kubemq cluster command`
+var describeLong = `Describe command allows describing a Kubemq dashboard to console`
+var describeShort = `Describe Kubemq dashboard command`
 
 func NewCmdDescribe(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &DescribeOptions{
@@ -59,28 +59,28 @@ func (o *DescribeOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	clusterManager, err := cluster.NewManager(c)
+	dashboardManager, err := dashboard.NewManager(c)
 	if err != nil {
 		return err
 	}
-	clusters, err := clusterManager.GetKubemqClusters()
+	dashboards, err := dashboardManager.GetKubemqDashboardes()
 	if err != nil {
 		return err
 	}
 
-	if len(clusters.List()) == 0 {
-		return fmt.Errorf("no Kubemq clusters were found to describe")
+	if len(dashboards.List()) == 0 {
+		return fmt.Errorf("no Kubemq dashboards were found to describe")
 	}
 
 	selection := ""
-	if len(clusters.List()) == 1 {
-		selection = clusters.List()[0]
+	if len(dashboards.List()) == 1 {
+		selection = dashboards.List()[0]
 	} else {
 		selected := &survey.Select{
 			Renderer:      survey.Renderer{},
-			Message:       "Select Kubemq cluster to describe",
-			Options:       clusters.List(),
-			Default:       clusters.List()[0],
+			Message:       "Select Kubemq dashboard to describe",
+			Options:       dashboards.List(),
+			Default:       dashboards.List()[0],
 			PageSize:      0,
 			VimMode:       false,
 			FilterMessage: "",
@@ -93,7 +93,7 @@ func (o *DescribeOptions) Run(ctx context.Context) error {
 
 	}
 
-	spec := clusters.Cluster(selection)
+	spec := dashboards.Dashboard(selection)
 	utils.PrintlnfNoTitle(spec.String())
 	return nil
 }
