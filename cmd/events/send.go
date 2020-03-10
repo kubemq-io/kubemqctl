@@ -32,6 +32,9 @@ var eventsSendExamples = `
 	
 	# Send (Publish) batch of 10 messages to a 'events' channel
 	kubemqctl events send some-channel some-message -m 10
+
+	# Send (Publish) batch of 100 messages to a 'events' channel in stream mode
+	kubemqctl events send some-channel some-message -m 100 -s
 `
 var eventsSendLong = `Send command allows to send (publish) one or many messages to an 'events' channel`
 var eventsSendShort = `Send messages to an 'events' channel command`

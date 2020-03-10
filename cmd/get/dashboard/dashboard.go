@@ -3,14 +3,16 @@ package dashboard
 import (
 	"context"
 	"fmt"
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/kubemq-io/kubemqctl/cmd/get/dashboard/describe"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/dashboard"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
+	"github.com/pkg/browser"
 	"github.com/spf13/cobra"
-	"os"
-	"text/tabwriter"
+	"strings"
 )
 
 type getOptions struct {
@@ -73,19 +75,45 @@ func (o *getOptions) Run(ctx context.Context) error {
 	if len(dashboards.List()) == 0 {
 		return fmt.Errorf("no Kubemq dashboards were found")
 	}
-	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
-	fmt.Fprintf(w, "NAME\tSTATUS\tVIEW-ADDRESS\tPROMETHEUS-VERSION\tGRPC\tGRAFANA-VERSION\n")
-	for _, name := range dashboards.List() {
-		dashboard := dashboards.Dashboard(name)
+	var ns, name string
 
-		fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\n",
-			name,
-			dashboard.Status.Status,
-			dashboard.Status.Address,
-			dashboard.Status.PrometheusVersion,
-			dashboard.Status.GrafanaVersion,
-		)
+	if len(dashboards.List()) == 1 {
+		ns, name = StringSplit(dashboards.List()[0])
+	} else {
+		selection := ""
+		selected := &survey.Select{
+			Renderer:      survey.Renderer{},
+			Message:       "Select dashboard to launch",
+			Options:       dashboards.List(),
+			Default:       dashboards.List()[0],
+			PageSize:      0,
+			VimMode:       false,
+			FilterMessage: "",
+			Filter:        nil,
+		}
+		err = survey.AskOne(selected, &selection)
+		if err != nil {
+			return err
+		}
+		ns, name = StringSplit(selection)
 	}
-	w.Flush()
+
+	grafnaPort, _, err := k8s.GetDashboardTransport(ctx, o.cfg, ns, name)
+	if err != nil {
+		return err
+	}
+	err = browser.OpenURL(fmt.Sprintf("http://localhost:%s/d/kubemqdashboard/kubemq-dashboard", grafnaPort))
+	if err != nil {
+		return err
+	}
+	<-ctx.Done()
 	return nil
+}
+
+func StringSplit(input string) (string, string) {
+	pair := strings.Split(input, "/")
+	if len(pair) == 2 {
+		return pair[0], pair[1]
+	}
+	return "", ""
 }

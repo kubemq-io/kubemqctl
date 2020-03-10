@@ -32,6 +32,9 @@ var eventsSendExamples = `
 
 	# Send 10 messages to an 'events store' channel
 	kubemqctl events_store send some-channel some-message -m 10
+
+	# Send 100 messages to an 'events store' channel in stream mode
+	kubemqctl events_store send some-channel some-message -m 100 -s
 `
 var eventsSendLong = `Send command allows to send (publish) one or many messages to an 'events store' channel`
 var eventsSendShort = `Send messages to an 'events store' channel command`
@@ -88,21 +91,11 @@ func (o *EventsStoreSendOptions) Run(ctx context.Context) error {
 
 	if o.isStream {
 		utils.Printlnf("Streaming %d events store messages...", o.messages)
-		eventsCh := make(chan *kubemq2.EventStore, 10000)
-		eventsResultsCh := make(chan *kubemq2.EventStoreResult, 10000)
+		eventsCh := make(chan *kubemq2.EventStore, 1000)
+		eventsResultsCh := make(chan *kubemq2.EventStoreResult, 1000)
 		errCh := make(chan error, 10)
 
 		go client.StreamEventsStore(ctx, eventsCh, eventsResultsCh, errCh)
-		go func() {
-			for {
-				select {
-				case <-eventsResultsCh:
-
-				case <-ctx.Done():
-					return
-				}
-			}
-		}()
 		startTime := time.Now()
 		for i := 1; i <= o.messages; i++ {
 			eventsCh <- client.ES().
@@ -110,9 +103,10 @@ func (o *EventsStoreSendOptions) Run(ctx context.Context) error {
 				SetId(uuid.New().String()).
 				SetBody([]byte(o.message)).
 				SetMetadata(o.metadata)
+			<-eventsResultsCh
 		}
 		utils.Printlnf("%d events store messages streamed in %s.", o.messages, time.Since(startTime))
-		time.Sleep(time.Second)
+		time.Sleep(2 * time.Second)
 	} else {
 		for i := 1; i <= o.messages; i++ {
 			msg := client.ES().
@@ -125,7 +119,6 @@ func (o *EventsStoreSendOptions) Run(ctx context.Context) error {
 				return fmt.Errorf("sending 'events store' message, %s", err.Error())
 			}
 			utils.Printlnf("[message: %d] [channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s, sent:%t}", i, msg.Channel, msg.ClientId, msg.Id, msg.Metadata, msg.Body, res.Sent)
-
 		}
 
 	}

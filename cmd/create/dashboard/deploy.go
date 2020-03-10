@@ -22,7 +22,7 @@ func defaultDeployOptions(cmd *cobra.Command) *deployOptions {
 	}
 	cmd.PersistentFlags().StringVarP(&o.name, "name", "", "kubemq-dashboard", "set kubemq dashboard name")
 	cmd.PersistentFlags().StringVarP(&o.namespace, "namespace", "n", "kubemq", "set kubemq dashboard namespace")
-	cmd.PersistentFlags().Int32VarP(&o.port, "port", "p", 32000, "set kubemq dashboard port")
+	cmd.PersistentFlags().Int32VarP(&o.port, "port", "p", 0, "set kubemq dashboard port")
 	return o
 }
 
