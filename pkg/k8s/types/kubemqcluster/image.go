@@ -3,13 +3,7 @@ package kubemqcluster
 type ImageConfig struct {
 
 	// +optional
-	Registry string `json:"registry"`
-
-	// +optional
-	Repository string `json:"repository"`
-
-	// +optional
-	Tag string `json:"tag"`
+	Image string `json:"image"`
 
 	// +optional
 	// +kubebuilder:validation:Pattern=(IfNotPresent|Always|Never)

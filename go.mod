@@ -6,6 +6,8 @@ require (
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-resty/resty v1.8.0
 	github.com/go-resty/resty/v2 v2.0.0
+	github.com/gogo/protobuf v1.2.2-0.20190723190241-65acae22fc9d
+	github.com/google/gofuzz v1.0.0
 	github.com/google/uuid v1.1.1
 	github.com/gorilla/websocket v1.4.0
 	github.com/kubemq-io/kubemq-go v1.3.2

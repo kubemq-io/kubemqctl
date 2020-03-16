@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/operator"
+	apiv1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 type Manager struct {
@@ -25,8 +27,28 @@ func NewManager(c *client.Client) (*Manager, error) {
 		serviceAccountManager: &serviceAccountManager{c},
 	}, nil
 }
+func (m *Manager) checkAndCreateNamespace(ns string) error {
+	newNs := &apiv1.Namespace{
+		TypeMeta: metav1.TypeMeta{
+			Kind:       "Namespace",
+			APIVersion: "v1",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name: ns,
+		},
+		Spec:   apiv1.NamespaceSpec{},
+		Status: apiv1.NamespaceStatus{},
+	}
+	_, _, err := m.Client.CheckAndCreateNamespace(newNs)
+	return err
+}
 
 func (m *Manager) CreateOrUpdateKubemqOperator(operatorDeployment *operator.Deployment) (*operator.Deployment, bool, error) {
+	err := m.checkAndCreateNamespace(operatorDeployment.Namespace)
+	if err != nil {
+		return nil, false, err
+	}
+
 	newBundle := &operator.Deployment{
 		Name:           operatorDeployment.Name,
 		Namespace:      operatorDeployment.Namespace,

@@ -10,7 +10,6 @@ apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
   name: kubemqclusters.core.k8s.kubemq.io
-  namespace: {{.Namespace}}
 spec:
   additionalPrinterColumns:
   - JSONPath: .status.version
@@ -153,14 +152,10 @@ spec:
               type: object
             image:
               properties:
+                image:
+                  type: string
                 pullPolicy:
                   pattern: (IfNotPresent|Always|Never)
-                  type: string
-                registry:
-                  type: string
-                repository:
-                  type: string
-                tag:
                   type: string
               type: object
             license:

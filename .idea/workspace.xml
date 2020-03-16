@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="add kubemq dashboard">
+    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/image.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/image.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/create/dashboard/dashboard.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/dashboard/dashboard.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/dashboard/deploy.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/dashboard/deploy.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events/send.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events_store/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/send.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/get/dashboard/dashboard.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/get/dashboard/dashboard.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/transport.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/manager.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/manager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/image.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/image.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/operator/kubemqclusters_crd..go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/kubemqclusters_crd..go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +54,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/get/dashboard" />
+    <property name="last_opened_file_path" value="$GOPATH$/projects/kubemq/community-operators" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -177,13 +177,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00017" summary="add vendor folder">
-      <created>1564291078096</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1564291078096</updated>
     </task>
     <task id="LOCAL-00018" summary="add bin for version v1.1.0">
       <created>1564291256338</created>
@@ -521,7 +514,14 @@
       <option name="project" value="LOCAL" />
       <updated>1583660406835</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="update dashboard commands">
+      <created>1583862921859</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1583862921859</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -557,7 +557,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="add option to ask for token in create command" />
     <MESSAGE value="add selection of cluster to connect" />
     <MESSAGE value="add register trial version of kubemq cluster" />
     <MESSAGE value="fix linting issues" />
@@ -582,7 +581,8 @@
     <MESSAGE value="cleaning code" />
     <MESSAGE value="add token get license" />
     <MESSAGE value="add kubemq dashboard" />
-    <option name="LAST_COMMIT_MESSAGE" value="add kubemq dashboard" />
+    <MESSAGE value="update dashboard commands" />
+    <option name="LAST_COMMIT_MESSAGE" value="update dashboard commands" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -596,18 +596,18 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1217" y="573" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579522350352" />
-    <state x="1148" y="356" key="CommitChangelistDialog2" timestamp="1583668279517">
+    <state x="1148" y="356" key="CommitChangelistDialog2" timestamp="1583862921433">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1583668279517" />
-    <state x="1205" y="624" key="EditFileWatcherDialog" timestamp="1582695780242">
+    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1583862921433" />
+    <state x="1205" y="624" key="EditFileWatcherDialog" timestamp="1584367186168">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1205" y="624" key="EditFileWatcherDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582695780242" />
-    <state x="1317" y="599" key="FileChooserDialogImpl" timestamp="1582032349959">
+    <state x="1205" y="624" key="EditFileWatcherDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1584367186168" />
+    <state x="1317" y="599" key="FileChooserDialogImpl" timestamp="1584004182998">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1317" y="599" key="FileChooserDialogImpl/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582032349959" />
+    <state x="1317" y="599" key="FileChooserDialogImpl/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1584004182998" />
     <state width="3029" height="478" key="GridCell.Tab.0.bottom" timestamp="1579599408416">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
@@ -628,23 +628,23 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1289" y="474" key="RollbackChangesDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582635311198" />
-    <state x="1045" y="486" key="SettingsEditor" timestamp="1583500842525">
+    <state x="1045" y="486" key="SettingsEditor" timestamp="1584367193942">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1045" y="486" key="SettingsEditor/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1583500842525" />
-    <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1583787602699">
+    <state x="1045" y="486" key="SettingsEditor/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1584367193942" />
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1583862929299">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1583787602699" />
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1583862929299" />
     <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582827810538">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582827810538" />
     <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.2560.1440/-2560.0.2560.1440@0.0.3072.1688" timestamp="1579163136060" />
-    <state x="1164" y="550" width="752" height="598" key="find.popup" timestamp="1583511245199">
+    <state x="1164" y="550" width="752" height="598" key="find.popup" timestamp="1584367598126">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1164" y="550" width="752" height="598" key="find.popup/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1583511245199" />
+    <state x="1164" y="550" width="752" height="598" key="find.popup/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1584367598126" />
     <state x="1318" y="476" key="git4idea.branch.GitSmartOperationDialog" timestamp="1582202983331">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>

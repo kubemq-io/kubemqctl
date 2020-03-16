@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectTasksOptions">
     <enabled-global>
-      <option value="golangci-lint" />
       <option value="go fmt" />
+      <option value="golangci-lint" />
     </enabled-global>
   </component>
 </project>

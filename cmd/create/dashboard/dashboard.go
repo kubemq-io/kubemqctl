@@ -113,7 +113,7 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 	} else {
 		utils.Printlnf("kubemq dashboard %s/%s created.", dashboard.Namespace, dashboard.Name)
 	}
-	utils.Println("run: 'kubemqctl get dashboard' for opening dashboard in default browser")
+	utils.Println("run: 'kubemqctl get dashboard' for opening dashboard in default browser (it might take couple seconds to load all components")
 	return nil
 
 }
