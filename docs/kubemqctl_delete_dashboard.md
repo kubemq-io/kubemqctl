@@ -1,29 +1,28 @@
-## kubemqctl delete operator
+## kubemqctl delete dashboard
 
-Delete Kubemq operator
+Delete Kubemq dashboard
 
 ### Synopsis
 
-Delete one or more Kubemq operators
+Delete one or more Kubemq dashboards
 
 ```
-kubemqctl delete operator [flags]
+kubemqctl delete dashboard [flags]
 ```
 
 ### Examples
 
 ```
 
-	# Delete Kubemq operator 
-	kubemqctl delete operator  
+ 	# Delete Kubemq dashboard
+	kubemqctl delete dashboard
 
 ```
 
 ### Options
 
 ```
-  -h, --help         help for operator
-      --remove-all   remove all operator components
+  -h, --help   help for dashboard
 ```
 
 ### Options inherited from parent commands

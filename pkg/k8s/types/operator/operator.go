@@ -47,7 +47,8 @@ spec:
               value: {{.GrafanaImage}}
             - name: KUBEMQ_VIEW_DASHBOARD_SOURCE
               value: {{.KubemqDashboardDashboardSource}}
-
+            - name: KUBEMQ_LICENSE_MODE
+              value: "COMMUNITY"
 `
 
 type Operator struct {

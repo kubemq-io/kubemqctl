@@ -66,9 +66,6 @@ func (o *deployLicenseOptions) setConfig(deployment *kubemqcluster.KubemqCluster
 	if isDefault(o, defaultLicenseConfig) {
 		return o
 	}
-	deployment.Spec.License = &kubemqcluster.LicenseConfig{
-		Data:  o.licenseData,
-		Token: o.licenseToken,
-	}
+	deployment.Spec.License = o.licenseData
 	return o
 }

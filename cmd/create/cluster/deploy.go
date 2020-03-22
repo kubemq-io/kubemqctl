@@ -219,7 +219,6 @@ func (o *deployOptions) getClusterDeployment() *kubemqcluster.KubemqCluster {
 			Replicas:       new(int32),
 			ConfigData:     o.configData,
 			Volume:         nil,
-			License:        nil,
 			Image:          nil,
 			Api:            nil,
 			Rest:           nil,

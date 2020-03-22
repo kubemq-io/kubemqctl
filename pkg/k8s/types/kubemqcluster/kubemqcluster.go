@@ -11,14 +11,14 @@ type KubemqClusterSpec struct {
 	Replicas *int32 `json:"replicas,omitempty"`
 
 	// +optional
+	License string `json:"license,omitempty"`
+
+	// +optional
 	// +kubebuilder:validation:MinLength=1
 	ConfigData string `json:"configData,omitempty"`
 
 	// +optional
 	Volume *VolumeConfig `json:"volume,omitempty"`
-
-	// +optional
-	License *LicenseConfig `json:"license,omitempty"`
 
 	// +optional
 	Image *ImageConfig `json:"image,omitempty"`
@@ -84,6 +84,14 @@ type KubemqClusterStatus struct {
 	Api string `json:"api"`
 
 	Selector string `json:"selector"`
+
+	LicenseType string `json:"license_type"`
+
+	LicenseTo string `json:"license_to"`
+
+	LicenseExpire string `json:"license_expire"`
+
+	Status string `json:"status"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -92,11 +100,15 @@ type KubemqClusterStatus struct {
 // +kubebuilder:resource:path=kubemqclusters,scope=Namespaced
 // +kubebuilder:subresource:scale:specpath=.spec.replicas,statuspath=.status.replicas,selectorpath=.status.selector
 // +kubebuilder:printcolumn:JSONPath=".status.version",name=Version,type=string
+// +kubebuilder:printcolumn:JSONPath=".status.status",name=Status,type=string
 // +kubebuilder:printcolumn:JSONPath=".status.replicas",name=Replicas,type=string
 // +kubebuilder:printcolumn:JSONPath=".status.ready",name=Ready,type=string
 // +kubebuilder:printcolumn:JSONPath=".status.grpc",name=gRPC,type=string
 // +kubebuilder:printcolumn:JSONPath=".status.rest",name=Rest,type=string
 // +kubebuilder:printcolumn:JSONPath=".status.api",name=API,type=string
+// +kubebuilder:printcolumn:JSONPath=".status.license_type",name=License-type,type=string
+// +kubebuilder:printcolumn:JSONPath=".status.license_to",name=License-To,type=string
+// +kubebuilder:printcolumn:JSONPath=".status.license_expire",name=License-Expire,type=string
 type KubemqCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

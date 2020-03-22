@@ -5,6 +5,7 @@ import (
 	"github.com/kubemq-io/kubemqctl/cmd/get"
 	"github.com/kubemq-io/kubemqctl/cmd/scale"
 	"github.com/kubemq-io/kubemqctl/cmd/set"
+	"github.com/spf13/cobra/doc"
 	"github.com/spf13/viper"
 
 	"github.com/kubemq-io/kubemqctl/cmd/commands"
@@ -74,7 +75,7 @@ func Execute(version string, args []string) {
 	rootCmd.AddCommand(scale.NewCmdScale(ctx, cfg))
 	rootCmd.AddCommand(set.NewCmdSet(ctx, cfg))
 
-	//_ = doc.GenMarkdownTree(rootCmd, "./docs")
+	_ = doc.GenMarkdownTree(rootCmd, "./docs")
 
 	utils.CheckErr(rootCmd.Execute())
 
