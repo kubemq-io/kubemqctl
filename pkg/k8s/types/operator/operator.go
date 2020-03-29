@@ -68,7 +68,7 @@ func CreateOperator(name, namespace string) *Operator {
 		Namespace:                      namespace,
 		Image:                          "docker.io/kubemq/kubemq-operator:latest",
 		KubemqImage:                    "docker.io/kubemq/kubemq:latest",
-		PrometheusImage:                "prom/prometheus",
+		PrometheusImage:                "prom/prometheus:latest",
 		GrafanaImage:                   "grafana/grafana:latest",
 		KubemqDashboardDashboardSource: "https://raw.githubusercontent.com/kubemq-io/kubemq-dashboard/master/dashboard.json",
 		deployment:                     nil,

@@ -34,8 +34,9 @@ func NewCmdCreate(ctx context.Context, cfg *config.Config) *cobra.Command {
 	}
 	cmd := &cobra.Command{
 
-		Use:     "cluster",
-		Aliases: []string{"c"},
+		Use: "cluster",
+		// create for backwards compatibility
+		Aliases: []string{"c", "create"},
 		Short:   createShort,
 		Long:    createLong,
 		Example: createExamples,
