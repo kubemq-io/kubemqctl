@@ -10,14 +10,17 @@ var defaultVolumeConfig = &deployVolumeOptions{
 }
 
 type deployVolumeOptions struct {
-	size string
+	size         string
+	storageClass string
 }
 
 func setVolumeConfig(cmd *cobra.Command) *deployVolumeOptions {
 	o := &deployVolumeOptions{
-		size: "",
+		size:         "",
+		storageClass: "",
 	}
 	cmd.PersistentFlags().StringVarP(&o.size, "volume-size", "v", "", "set persisted volume size")
+	cmd.PersistentFlags().StringVarP(&o.storageClass, "volume-storage-class", "", "", "set persisted volume storage class")
 	return o
 }
 
@@ -33,7 +36,8 @@ func (o *deployVolumeOptions) setConfig(deployment *kubemqcluster.KubemqCluster)
 		return o
 	}
 	deployment.Spec.Volume = &kubemqcluster.VolumeConfig{
-		Size: o.size,
+		Size:         o.size,
+		StorageClass: o.storageClass,
 	}
 	return o
 }

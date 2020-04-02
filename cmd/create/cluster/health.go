@@ -19,11 +19,11 @@ func setHealthOptions(cmd *cobra.Command) *deployHealthOptions {
 		enabled: false,
 	}
 	cmd.PersistentFlags().BoolVarP(&o.enabled, "health-enabled", "", false, "enable resources configuration")
-	cmd.PersistentFlags().Int32VarP(&o.initialDelaySeconds, "health-initial-delay", "", 5, "set health prob initial delay seconds ")
+	cmd.PersistentFlags().Int32VarP(&o.initialDelaySeconds, "health-initial-delay", "", 10, "set health prob initial delay seconds ")
 	cmd.PersistentFlags().Int32VarP(&o.periodSeconds, "health-period-seconds", "", 10, "set health prob period seconds ")
 	cmd.PersistentFlags().Int32VarP(&o.timeoutSeconds, "health-timout-seconds", "", 5, "set health prob timeout seconds ")
 	cmd.PersistentFlags().Int32VarP(&o.successThreshold, "health-success-threshold", "", 1, "set health prob success threshold")
-	cmd.PersistentFlags().Int32VarP(&o.failureThreshold, "health-failure-threshold", "", 6, "set health prob failure threshold")
+	cmd.PersistentFlags().Int32VarP(&o.failureThreshold, "health-failure-threshold", "", 12, "set health prob failure threshold")
 
 	return o
 }

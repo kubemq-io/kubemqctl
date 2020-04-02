@@ -12,36 +12,36 @@ metadata:
   name: kubemqclusters.core.k8s.kubemq.io
 spec:
   additionalPrinterColumns:
-    - JSONPath: .status.version
-      name: Version
-      type: string
-    - JSONPath: .status.status
-      name: Status
-      type: string
-    - JSONPath: .status.replicas
-      name: Replicas
-      type: string
-    - JSONPath: .status.ready
-      name: Ready
-      type: string
-    - JSONPath: .status.grpc
-      name: gRPC
-      type: string
-    - JSONPath: .status.rest
-      name: Rest
-      type: string
-    - JSONPath: .status.api
-      name: API
-      type: string
-    - JSONPath: .status.license_type
-      name: License-type
-      type: string
-    - JSONPath: .status.license_to
-      name: License-To
-      type: string
-    - JSONPath: .status.license_expire
-      name: License-Expire
-      type: string
+  - JSONPath: .status.version
+    name: Version
+    type: string
+  - JSONPath: .status.status
+    name: Status
+    type: string
+  - JSONPath: .status.replicas
+    name: Replicas
+    type: string
+  - JSONPath: .status.ready
+    name: Ready
+    type: string
+  - JSONPath: .status.grpc
+    name: gRPC
+    type: string
+  - JSONPath: .status.rest
+    name: Rest
+    type: string
+  - JSONPath: .status.api
+    name: API
+    type: string
+  - JSONPath: .status.license_type
+    name: License-type
+    type: string
+  - JSONPath: .status.license_to
+    name: License-To
+    type: string
+  - JSONPath: .status.license_expire
+    name: License-Expire
+    type: string
   group: core.k8s.kubemq.io
   names:
     kind: KubemqCluster
@@ -320,6 +320,8 @@ spec:
               properties:
                 size:
                   type: string
+                storageClass:
+                  type: string
               type: object
           type: object
         status:
@@ -350,24 +352,24 @@ spec:
             version:
               type: string
           required:
-            - api
-            - grpc
-            - license_expire
-            - license_to
-            - license_type
-            - ready
-            - replicas
-            - rest
-            - selector
-            - status
-            - version
+          - api
+          - grpc
+          - license_expire
+          - license_to
+          - license_type
+          - ready
+          - replicas
+          - rest
+          - selector
+          - status
+          - version
           type: object
       type: object
   version: v1alpha1
   versions:
-    - name: v1alpha1
-      served: true
-      storage: true
+  - name: v1alpha1
+    served: true
+    storage: true
 `
 
 type KubemqClustersCRD struct {

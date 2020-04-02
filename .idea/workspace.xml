@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
+    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="update license flow">
+      <change beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/health.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/health.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/volume.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/volume.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_commands.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_commands.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_commands_attach.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_commands_attach.md" afterDir="false" />
@@ -53,6 +56,8 @@
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_set_cluster.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_set_cluster.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_set_cluster_proxy.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_set_cluster_proxy.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_set_context.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_set_context.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/volume.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/volume.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/operator/kubemqclusters_crd..go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/kubemqclusters_crd..go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,19 +109,19 @@
     <property name="settings.editor.selected.configurable" value="watcher.settings" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\set\cluster" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\manager\operator" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\scale\cluster" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get\cluster" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\set" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get\dashboard" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\delete" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\client\v1alpha1" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\set\cluster" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\manager\operator" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\scale\cluster" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get\cluster" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\set" />
     </key>
   </component>
   <component name="RunManager" selected="Go Test.go test github.com/kubemq-io/kubemqctl/pkg/k8s/deployment (1)">
@@ -639,14 +644,18 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1217" y="573" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579522350352" />
-    <state x="1148" y="356" key="CommitChangelistDialog2" timestamp="1585474842820">
+    <state x="1148" y="356" key="CommitChangelistDialog2" timestamp="1585811563514">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585474842820" />
-    <state x="1205" y="624" key="EditFileWatcherDialog" timestamp="1585472675882">
+    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585811563514" />
+    <state x="287" y="153" key="DiffContextDialog" timestamp="1585811552493">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1205" y="624" key="EditFileWatcherDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585472675882" />
+    <state x="287" y="153" key="DiffContextDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585811552493" />
+    <state x="1205" y="624" key="EditFileWatcherDialog" timestamp="1585812413711">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="1205" y="624" key="EditFileWatcherDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585812413711" />
     <state x="1317" y="599" key="FileChooserDialogImpl" timestamp="1585487812678">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
@@ -667,27 +676,27 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state width="3029" height="478" key="GridCell.Tab.0.right/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579599408416" />
-    <state x="1289" y="474" key="RollbackChangesDialog" timestamp="1585474802922">
+    <state x="1289" y="474" key="RollbackChangesDialog" timestamp="1585811560806">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1289" y="474" key="RollbackChangesDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585474802922" />
-    <state x="1045" y="486" key="SettingsEditor" timestamp="1585472686127">
+    <state x="1289" y="474" key="RollbackChangesDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585811560806" />
+    <state x="1045" y="486" key="SettingsEditor" timestamp="1585812415204">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1045" y="486" key="SettingsEditor/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585472686127" />
+    <state x="1045" y="486" key="SettingsEditor/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585812415204" />
     <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1585474845984">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585474845984" />
-    <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582827810538">
+    <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585810541022">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582827810538" />
+    <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585810541022" />
     <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.2560.1440/-2560.0.2560.1440@0.0.3072.1688" timestamp="1579163136060" />
-    <state x="1164" y="550" width="752" height="598" key="find.popup" timestamp="1585474203458">
+    <state x="1859" y="236" width="752" height="598" key="find.popup" timestamp="1585811446624">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1164" y="550" width="752" height="598" key="find.popup/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585474203458" />
+    <state x="1859" y="236" width="752" height="598" key="find.popup/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585811446624" />
     <state x="1318" y="476" key="git4idea.branch.GitSmartOperationDialog" timestamp="1585722005421">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
