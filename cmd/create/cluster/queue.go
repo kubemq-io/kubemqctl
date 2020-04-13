@@ -43,7 +43,7 @@ func setQueueConfig(cmd *cobra.Command) *deployQueueOptions {
 	cmd.PersistentFlags().Int32VarP(&o.maxWaitTimeoutSeconds, "queue-max-wait-timeout-seconds", "", 3600, "set max wait timeout allowed for message")
 	cmd.PersistentFlags().Int32VarP(&o.maxExpirationSeconds, "queue-max-expiration-seconds", "", 43200, "set max expiration allowed for message")
 	cmd.PersistentFlags().Int32VarP(&o.maxDelaySeconds, "queue-max-delay-seconds", "", 43200, "set max delay seconds allowed for message")
-	cmd.PersistentFlags().Int32VarP(&o.maxReQueues, "queue-max-requeues", "", 1024, "set max retires to receive message before discard")
+	cmd.PersistentFlags().Int32VarP(&o.maxReQueues, "queue-max-requeue", "", 1024, "set max retires to receive message before discard")
 	cmd.PersistentFlags().Int32VarP(&o.maxVisibilitySeconds, "queue-max-visibility-seconds", "", 43200, "set max time of hold received message before returning to queue")
 	cmd.PersistentFlags().Int32VarP(&o.defaultVisibilitySeconds, "queue-default-visibility-seconds", "", 60, "set default time of hold received message before returning to queue")
 	cmd.PersistentFlags().Int32VarP(&o.defaultWaitTimeoutSeconds, "queue-default-wait-timeout-seconds", "", 1, "set default time to wait for a message in a queue")

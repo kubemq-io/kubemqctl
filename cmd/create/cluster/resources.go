@@ -23,10 +23,10 @@ func setResourceOptions(cmd *cobra.Command) *deployResourceOptions {
 		requestsMemory: "",
 	}
 	cmd.PersistentFlags().BoolVarP(&o.enabled, "resources-enabled", "", false, "enable resources configuration")
-	cmd.PersistentFlags().StringVarP(&o.limitsCpu, "resources-limits-key-cpu", "", "1000m", "set resources limits cpu ")
-	cmd.PersistentFlags().StringVarP(&o.limitsMemory, "resources-limits-key-memory", "", "512Mi", "set resources limits memory")
-	cmd.PersistentFlags().StringVarP(&o.requestsCpu, "resources-requests-key-cpu", "", "100m", "set resources requests cpu")
-	cmd.PersistentFlags().StringVarP(&o.requestsMemory, "resources-requests-memory", "", "256Mi", "set resources request memory")
+	cmd.PersistentFlags().StringVarP(&o.limitsCpu, "resources-limits-key-cpu", "", "2", "set resources limits cpu ")
+	cmd.PersistentFlags().StringVarP(&o.limitsMemory, "resources-limits-key-memory", "", "2Gi", "set resources limits memory")
+	cmd.PersistentFlags().StringVarP(&o.requestsCpu, "resources-requests-key-cpu", "", "2", "set resources requests cpu")
+	cmd.PersistentFlags().StringVarP(&o.requestsMemory, "resources-requests-memory", "", "512M", "set resources request memory")
 
 	return o
 }

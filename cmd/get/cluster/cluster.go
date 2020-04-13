@@ -79,14 +79,14 @@ func (o *getOptions) Run(ctx context.Context) error {
 		return fmt.Errorf("no Kubemq clusters were found")
 	}
 	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
-	fmt.Fprintf(w, "NAME\tDESIRED\tREADY\tIMAGE\tGRPC\tREST\tAPI\n")
+	fmt.Fprintf(w, "NAME\tDESIRED\tREADY\tIMAGE\tGRPC\tREST\tAPI\tLICENSE-TO\tLICENSE-TYPE\tLICENSE-EXPIRE\n")
 	for _, name := range clusters.List() {
 		cluster := clusters.Cluster(name)
 		var replicas int32
 		if cluster.Status.Replicas != nil {
 			replicas = *cluster.Status.Replicas
 		}
-		fmt.Fprintf(w, "%s\t%d\t%d\t%s\t%s\t%s\t%s\n",
+		fmt.Fprintf(w, "%s\t%d\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
 			name,
 			replicas,
 			cluster.Status.Ready,
@@ -94,6 +94,9 @@ func (o *getOptions) Run(ctx context.Context) error {
 			cluster.Status.Grpc,
 			cluster.Status.Rest,
 			cluster.Status.Api,
+			cluster.Status.LicenseTo,
+			cluster.Status.LicenseType,
+			cluster.Status.LicenseExpire,
 		)
 	}
 	w.Flush()

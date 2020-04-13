@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="update license flow">
-      <change beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
+    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/health.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/health.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/volume.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/volume.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/license.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/license.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/log.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/log.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/queue.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/queue.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/resources.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/resources.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/routing.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/routing.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/tls.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/tls.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/get/cluster/cluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/get/cluster/cluster.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_commands.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_commands.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_commands_attach.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_commands_attach.md" afterDir="false" />
@@ -56,8 +60,7 @@
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_set_cluster.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_set_cluster.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_set_cluster_proxy.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_set_cluster_proxy.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_set_context.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_set_context.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/volume.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/volume.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/operator/kubemqclusters_crd..go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/kubemqclusters_crd..go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/operator/operator.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/operator.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +88,6 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -206,18 +208,6 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="" />
@@ -225,13 +215,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00023" summary="add events">
-      <created>1568750170706</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1568750170706</updated>
     </task>
     <task id="LOCAL-00024" summary="editing cluster command documentation">
       <created>1568792947195</created>
@@ -569,20 +552,25 @@
       <option name="project" value="LOCAL" />
       <updated>1585474844046</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="update new operator version 0.5.1">
+      <created>1585813511426</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1585813511427</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -601,11 +589,11 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="add register trial version of kubemq cluster" />
     <MESSAGE value="fix linting issues" />
     <MESSAGE value="fix typo" />
     <MESSAGE value="-v2.2.0&#10;- Add support for K3s, MicroK8s, minikube&#10;- Change description of Enable gRPC and Enable Rest&#10;- Change for printing namespace name" />
@@ -630,7 +618,8 @@
     <MESSAGE value="add kubemq dashboard" />
     <MESSAGE value="update dashboard commands" />
     <MESSAGE value="update license flow" />
-    <option name="LAST_COMMIT_MESSAGE" value="update license flow" />
+    <MESSAGE value="update new operator version 0.5.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="update new operator version 0.5.1" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -644,10 +633,10 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1217" y="573" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579522350352" />
-    <state x="1148" y="356" key="CommitChangelistDialog2" timestamp="1585811563514">
+    <state x="1148" y="356" key="CommitChangelistDialog2" timestamp="1585813510486">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585811563514" />
+    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585813510486" />
     <state x="287" y="153" key="DiffContextDialog" timestamp="1585811552493">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
@@ -684,10 +673,10 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1045" y="486" key="SettingsEditor/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585812415204" />
-    <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1585474845984">
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1585813515059">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585474845984" />
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585813515059" />
     <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585810541022">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>

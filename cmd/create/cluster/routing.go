@@ -29,7 +29,7 @@ func setRoutingConfig(cmd *cobra.Command) *deployRoutingOptions {
 		autoReload:      0,
 	}
 	cmd.PersistentFlags().StringVarP(&o.routingData, "routing-data", "", "", "set routing data")
-	cmd.PersistentFlags().StringVarP(&o.routingFilename, "routing-filename", "", "", "set routing filename")
+	cmd.PersistentFlags().StringVarP(&o.routingFilename, "routing-file", "", "", "set routing filename")
 	cmd.PersistentFlags().StringVarP(&o.url, "routing-url", "", "", "set routing loading url")
 	cmd.PersistentFlags().Int32VarP(&o.autoReload, "routing-auto-reload", "", 0, "set routing auto loading time interval in minutes")
 	return o

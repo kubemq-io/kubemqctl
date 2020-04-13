@@ -20,7 +20,7 @@ func setLogConfig(cmd *cobra.Command) *deployLogOptions {
 		level: 2,
 		file:  "",
 	}
-	cmd.PersistentFlags().Int32VarP(&o.level, "log-data", "", 2, "set log level")
+	cmd.PersistentFlags().Int32VarP(&o.level, "log-level", "", 2, "set log level")
 	cmd.PersistentFlags().StringVarP(&o.file, "log-file", "", "", "set log filename")
 	return o
 }

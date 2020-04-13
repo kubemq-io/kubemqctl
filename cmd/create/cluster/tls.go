@@ -27,7 +27,7 @@ func setTolsConfig(cmd *cobra.Command) *deployTlsOptions {
 		caData:       "",
 		caFilename:   "",
 	}
-	cmd.PersistentFlags().BoolVarP(&o.enabled, "tls-enabled", "", false, "enable tls tls configuration")
+	cmd.PersistentFlags().BoolVarP(&o.enabled, "tls-enabled", "", false, "enable tls configuration")
 	cmd.PersistentFlags().StringVarP(&o.certData, "tls-cert-data", "", "", "set tls certificate data")
 	cmd.PersistentFlags().StringVarP(&o.certFilename, "tls-cert-file", "", "", "set tls certificate filename")
 	cmd.PersistentFlags().StringVarP(&o.keyData, "tls-key-data", "", "", "set tls key data")
