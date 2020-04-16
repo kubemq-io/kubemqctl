@@ -94,8 +94,8 @@ func SetTransport(ctx context.Context, cfg *config.Config) error {
 	return nil
 }
 
-func GetRunningPod(client *client.Client, ns, sts string) (string, string, error) {
-	pods, err := client.GetPods(ns, sts)
+func GetRunningPod(client *client.Client, ns, name string) (string, string, error) {
+	pods, err := client.GetPods(ns, name)
 	if err != nil {
 		return "", "", err
 	}
@@ -110,5 +110,65 @@ func GetRunningPod(client *client.Client, ns, sts string) (string, string, error
 		return ns, randPort, nil
 	}
 
-	return "", "", fmt.Errorf("no running pods available in %s/%s. you can change the current context with 'kubemqctl config' command", ns, sts)
+	return "", "", fmt.Errorf("no running pods available in %s/%s.", ns, name)
+}
+
+func GetDashboardTransport(ctx context.Context, cfg *config.Config, ns, name string) (string, string, error) {
+	if !cfg.AutoIntegrated {
+		return "3000", "8080", nil
+	}
+	utils.Print("connecting to kubernetes cluster... ")
+	c, err := client.NewClient(cfg.KubeConfigPath)
+	if err != nil {
+		return "", "", err
+	}
+	podNameSpace, podName, err := GetRunningPod(c, ns, name)
+	if err != nil {
+		return "", "", err
+	}
+	freePorts, err := getFreePorts(2)
+	if err != nil {
+		return "", "", err
+	}
+
+	ports := []string{
+		fmt.Sprintf("%d:%d", freePorts[0], 3000),
+		fmt.Sprintf("%d:%d", freePorts[1], 8080),
+	}
+
+	stopCh := make(chan struct{})
+	outCh, errOutCh := make(chan string, 1), make(chan string, 1)
+	err = c.ForwardPorts(podNameSpace, podName, ports, stopCh, outCh, errOutCh)
+	if err != nil {
+		return "", "", err
+	}
+	select {
+	case <-outCh:
+		utils.Printlnf("->  connected to %s/%s at Grafana Port %s Prometheus Port %s, ok", podNameSpace, podName, ports[0], ports[1])
+	case errstr := <-errOutCh:
+		return "", "", fmt.Errorf(errstr)
+
+	case <-time.After(30 * time.Second):
+		return "", "", fmt.Errorf("timeout during setting of transport layer to kubernetes cluster")
+
+	case <-ctx.Done():
+		close(stopCh)
+		return "", "", nil
+	}
+
+	go func() {
+		for {
+			select {
+			case <-outCh:
+
+			case errstr := <-errOutCh:
+				utils.CheckErr(errors.New(errstr))
+				return
+			case <-ctx.Done():
+				close(stopCh)
+				return
+			}
+		}
+	}()
+	return fmt.Sprintf("%d", freePorts[0]), fmt.Sprintf("%d", freePorts[1]), nil
 }

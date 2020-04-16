@@ -6,6 +6,7 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/cluster"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"io/ioutil"
@@ -41,7 +42,7 @@ func NewCmdConfig(ctx context.Context, cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.AddCommand(NewCmdGetLicense(ctx))
+	//cmd.AddCommand(NewCmdGetLicense(ctx))
 	return cmd
 }
 
@@ -60,7 +61,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 	integrationType := ""
 	integrationSelect := &survey.Select{
 		Renderer: survey.Renderer{},
-		Message:  "Select KubeMQ install location:",
+		Message:  "Select Kubemq install location:",
 		Options: []string{
 			"Kubernetes cluster",
 			"MicroK8s",
@@ -69,7 +70,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 			"Other Kubernetes distribution",
 			"Local docker container"},
 		Default: "Kubernetes cluster",
-		Help:    "Select the location of KubeMQ server",
+		Help:    "Select the location of Kubemq server",
 	}
 	err := survey.AskOne(integrationSelect, &integrationType)
 	if err != nil {
@@ -137,15 +138,15 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 			return err
 		}
 		if list == nil {
-			utils.Println("No KubeMQ clusters were found for selection")
+			utils.Println("No Kubemq clusters were found for selection")
 		} else {
 			clusterSelected := ""
 			clusterSelect := &survey.Select{
 				Renderer: survey.Renderer{},
-				Message:  "Select current KubeMQ cluster:",
+				Message:  "Select current Kubemq cluster:",
 				Options:  list,
 				Default:  list[0],
-				Help:     "Select the default KubeMQ cluster from available KubeMQ clusters",
+				Help:     "Select the default Kubemq cluster from available Kubemq clusters",
 			}
 			err := survey.AskOne(clusterSelect, &clusterSelected)
 			if err != nil {
@@ -159,9 +160,9 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 
 	promptHost := &survey.Input{
 		Renderer: survey.Renderer{},
-		Message:  "Set KubeMQ Host:",
+		Message:  "Set Kubemq Host:",
 		Default:  "localhost",
-		Help:     "Set KubeMQ host",
+		Help:     "Set Kubemq host",
 	}
 	err = survey.AskOne(promptHost, &cfg.Host, survey.WithValidator(survey.MinLength(1)))
 	if err != nil {
@@ -169,9 +170,9 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 	}
 	promptGrpcPort := &survey.Input{
 		Renderer: survey.Renderer{},
-		Message:  "Set KubeMQ gRPC port interface:",
+		Message:  "Set Kubemq gRPC port interface:",
 		Default:  "50000",
-		Help:     "Set KubeMQ gRPC port",
+		Help:     "Set Kubemq gRPC port",
 	}
 	err = survey.AskOne(promptGrpcPort, &cfg.GrpcPort)
 	if err != nil {
@@ -179,9 +180,9 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 	}
 	promptRestPort := &survey.Input{
 		Renderer: survey.Renderer{},
-		Message:  "Set KubeMQ Rest port interface:",
+		Message:  "Set Kubemq Rest port interface:",
 		Default:  "9090",
-		Help:     "Set KubeMQ Rest port",
+		Help:     "Set Kubemq Rest port",
 	}
 	err = survey.AskOne(promptRestPort, &cfg.RestPort)
 	if err != nil {
@@ -189,9 +190,9 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 	}
 	promptAPIPort := &survey.Input{
 		Renderer: survey.Renderer{},
-		Message:  "Set KubeMQ Api port interface:",
+		Message:  "Set Kubemq Api port interface:",
 		Default:  "8080",
-		Help:     "Set KubeMQ Api port",
+		Help:     "Set Kubemq Api port",
 	}
 	err = survey.AskOne(promptAPIPort, &cfg.ApiPort)
 	if err != nil {
@@ -212,7 +213,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 		Renderer: survey.Renderer{},
 		Message:  "Set secured connection ?:",
 		Default:  false,
-		Help:     "Set KubeMQ secured connection",
+		Help:     "Set Kubemq secured connection",
 	}
 	err = survey.AskOne(promptIsSecured, &cfg.IsSecured)
 	if err != nil {
@@ -223,7 +224,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 			Renderer: survey.Renderer{},
 			Message:  "Set cert file path:",
 			Default:  "",
-			Help:     "Set KubeMQ cert file path",
+			Help:     "Set Kubemq cert file path",
 		}
 		err = survey.AskOne(promptCertFile, &cfg.CertFile)
 		if err != nil {
@@ -290,7 +291,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 	isLicenseData := false
 	promptSetLicenseData := &survey.Confirm{
 		Renderer: survey.Renderer{},
-		Message:  "Would you like to set KubeMQ enterprise license file ?:",
+		Message:  "Would you like to set Kubemq enterprise license file ?:",
 		Default:  false,
 	}
 	err = survey.AskOne(promptSetLicenseData, &isLicenseData)
@@ -301,9 +302,9 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 		dataFile := "license.key"
 		promptLicenseDataFile := &survey.Input{
 			Renderer: survey.Renderer{},
-			Message:  "Set KubeMQ enterprise license file",
+			Message:  "Set Kubemq enterprise license file",
 			Default:  dataFile,
-			Help:     "Set KubeMQ enterprise license file",
+			Help:     "Set Kubemq enterprise license file",
 		}
 		err = survey.AskOne(promptLicenseDataFile, &dataFile)
 		if err != nil {
@@ -331,6 +332,15 @@ func (o *ConfigOptions) getClusters(kubeConfig string) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	return c.GetKubeMQClusters()
+	clusterManager, err := cluster.NewManager(c)
+	if err != nil {
+		return nil, err
+	}
+	clusters, err := clusterManager.GetKubemqClusters()
+	if err != nil {
+		return nil, err
+	}
+
+	return clusters.List(), err
 
 }

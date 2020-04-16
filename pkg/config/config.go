@@ -33,13 +33,13 @@ func exists(name string) bool {
 	}
 	return true
 }
-func CheckConfigFile() (*Config, error) {
-	if !exists(".kubemqctl.yaml") {
+func CheckConfigFile(configFile string) (*Config, error) {
+	if !exists(configFile) {
 		data, err := yaml.Marshal(DefaultConfig)
 		if err != nil {
 			return DefaultConfig, err
 		}
-		err = ioutil.WriteFile(".kubemqctl.yaml", data, 0644)
+		err = ioutil.WriteFile(configFile, data, 0644)
 		if err != nil {
 			return DefaultConfig, err
 		}

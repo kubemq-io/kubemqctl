@@ -80,7 +80,7 @@ func (o *QueueAttachOptions) Complete(args []string, transport string) error {
 			return err
 		}
 		if !r.IsSuccess() {
-			return fmt.Errorf("not available in current KubeMQ version, consider upgrade KubeMQ version")
+			return fmt.Errorf("not available in current Kubemq version, consider upgrade Kubemq version")
 		}
 		if resp.Error {
 			return fmt.Errorf(resp.ErrorString)

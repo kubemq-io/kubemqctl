@@ -2,6 +2,8 @@ package client
 
 import (
 	"bytes"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/client/v1alpha1"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/types"
 
 	"errors"
 	"fmt"
@@ -14,6 +16,7 @@ import (
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
 	apiextension "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
+	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/tools/clientcmd"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 	"k8s.io/client-go/tools/portforward"
@@ -22,17 +25,14 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
-
-	"sort"
 	"strings"
-
-	"time"
 )
 
 type Client struct {
 	ClientSet          *kubernetes.Clientset
 	ClientConfig       clientcmd.ClientConfig
 	ClientApiExtension *apiextension.Clientset
+	ClientV1Alpha1     *v1alpha1.V1Alpha1Client
 }
 
 func NewClient(kubeConfigPath string) (*Client, error) {
@@ -63,10 +63,19 @@ func NewClient(kubeConfigPath string) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
+	err = types.AddToScheme(scheme.Scheme)
+	if err != nil {
+		return nil, err
+	}
+	clientV1Alpha1, err := v1alpha1.NewForConfig(restConfig)
+	if err != nil {
+		return nil, err
+	}
 	c := &Client{
 		ClientSet:          clientset,
 		ClientConfig:       clientConfig,
 		ClientApiExtension: clientExtension,
+		ClientV1Alpha1:     clientV1Alpha1,
 	}
 	kubeCfg, _ := c.ClientConfig.ConfigAccess().GetStartingConfig()
 	utils.Printlnf("Current Kubernetes cluster context connection: %s", kubeCfg.CurrentContext)
@@ -107,25 +116,18 @@ func (c *Client) SwitchContext(contextName string) error {
 	return err
 }
 
-func (c *Client) GetPods(ns string, contains ...string) (map[string]apiv1.Pod, error) {
+func (c *Client) GetPods(ns string, name string) (map[string]apiv1.Pod, error) {
 	pods, err := c.ClientSet.CoreV1().Pods(ns).List(metav1.ListOptions{})
 	if err != nil {
 		return nil, err
 	}
 	list := map[string]apiv1.Pod{}
-	for _, item := range pods.Items {
-		if contains == nil {
+	items := pods.Items
+	for i := 0; i < len(items); i++ {
+		item := items[i]
+		if strings.Contains(item.Name, name+"-") {
 			list[fmt.Sprintf("%s/%s", item.Namespace, item.Name)] = item
-		} else {
-
-			for _, name := range contains {
-				if strings.Contains(item.Name, name) {
-					list[fmt.Sprintf("%s/%s", item.Namespace, item.Name)] = item
-					continue
-				}
-			}
 		}
-
 	}
 	return list, err
 }
@@ -172,54 +174,6 @@ func (c *Client) ForwardPorts(ns string, name string, ports []string, stopChan c
 	}()
 
 	return nil
-}
-
-func (c *Client) GetKubeMQClusters() ([]string, error) {
-
-	sets, err := c.GetStatefulSets("")
-	if err != nil {
-		return nil, err
-	}
-	var list []string
-	for key, set := range sets {
-		for _, container := range set.Spec.Template.Spec.Containers {
-			if strings.Contains(container.Image, "kubemq") {
-				list = append(list, key)
-				continue
-			}
-		}
-
-	}
-	sort.Strings(list)
-	return list, nil
-}
-
-func (c *Client) GetKubeMQClustersStatus() ([]*StatefulSetStatus, error) {
-
-	sets, err := c.GetStatefulSets("")
-	if err != nil {
-		return nil, err
-	}
-	var list []*StatefulSetStatus
-	for _, set := range sets {
-		for _, container := range set.Spec.Template.Spec.Containers {
-			if strings.Contains(container.Image, "kubemq") {
-				sts := &StatefulSetStatus{
-					Name:      set.Name,
-					Namespace: set.Namespace,
-					Desired:   *set.Spec.Replicas,
-					Running:   set.Status.Replicas,
-					Ready:     set.Status.ReadyReplicas,
-					Image:     container.Image,
-					Age:       time.Since(set.CreationTimestamp.Time),
-				}
-				list = append(list, sts)
-				continue
-			}
-		}
-	}
-
-	return list, nil
 }
 
 func homeDir() string {

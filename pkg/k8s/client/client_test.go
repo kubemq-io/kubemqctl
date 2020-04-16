@@ -1,7 +1,6 @@
 package client
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"github.com/stretchr/testify/require"
@@ -97,27 +96,6 @@ func TestClient_SwitchContext(t *testing.T) {
 	require.True(t, switched)
 }
 
-func TestClient_GetStatefulSets(t *testing.T) {
-	c, err := NewClient("")
-	require.NoError(t, err)
-	require.NotNil(t, c)
-	sts, err := c.GetStatefulSets("")
-	require.NoError(t, err)
-	require.NotEmpty(t, sts)
-	fmt.Println(sts)
-
-}
-
-func TestClient_GetService(t *testing.T) {
-	c, err := NewClient("")
-	require.NoError(t, err)
-	require.NotNil(t, c)
-	services, err := c.GetServices("", map[string]string{"Service": "kubemq-cluster"})
-	require.NoError(t, err)
-	require.NotEmpty(t, services)
-	fmt.Println(services)
-
-}
 func TestClient_GetPods(t *testing.T) {
 	c, err := NewClient("")
 	require.NoError(t, err)
@@ -147,26 +125,5 @@ func TestClient_ForwardPorts(t *testing.T) {
 	case <-time.After(5 * time.Second):
 		require.NoError(t, errors.New("timeout"))
 	}
-
-}
-func TestClient_Scale(t *testing.T) {
-	c, err := NewClient("")
-	require.NoError(t, err)
-	require.NotNil(t, c)
-	err = c.Scale(context.Background(), "kubemq", "kubemq-cluster", 5)
-	require.NoError(t, err)
-	err = c.Scale(context.Background(), "kubemq", "kubemq-cluster", 3)
-	require.NoError(t, err)
-
-}
-
-func TestClient_DescribeStatefulSet(t *testing.T) {
-	c, err := NewClient("")
-	require.NoError(t, err)
-	require.NotNil(t, c)
-	y, err := c.DescribeStatefulSet("kubemq", "kubemq-cluster")
-	require.NoError(t, err)
-	require.NotEmpty(t, y)
-	fmt.Println(y)
 
 }

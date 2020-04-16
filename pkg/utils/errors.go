@@ -15,7 +15,7 @@ func CheckErr(err error, cmd ...*cobra.Command) {
 	if !strings.HasPrefix(msg, "error: ") {
 		msg = fmt.Sprintf("error: %s", msg)
 	}
-	fmt.Fprintln(os.Stderr, strings.Title(msg))
+	fmt.Fprintln(os.Stderr, msg)
 	if cmd != nil {
 		if cmd[0].HasExample() {
 			fmt.Fprintln(os.Stderr, "Try:", cmd[0].Example)

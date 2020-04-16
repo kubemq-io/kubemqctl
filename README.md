@@ -1,20 +1,20 @@
 # Kubemqctl
 
-Kubemqctl is a command line interface (CLI) for [KubeMQ](https://kubemq.io) [Kubernetes](https://kubernetes.io/) Message Broker.
+Kubemqctl is a command line interface (CLI) for [Kubemq](https://kubemq.io) [Kubernetes](https://kubernetes.io/) Message Broker.
 
 ```bash
 Usage:
   kubemqctl [command]
 
 Available Commands:
-  cluster      Executes KubeMQ cluster management commands
-  commands     Execute KubeMQ 'commands' RPC commands
+  cluster      Executes Kubemq cluster management commands
+  commands     Execute Kubemq 'commands' RPC commands
   config       Run Kubemqctl configuration wizard command
-  events       Execute KubeMQ 'events' Pub/Sub commands
-  events_store Execute KubeMQ 'events_store' Pub/Sub commands
+  events       Execute Kubemq 'events' Pub/Sub commands
+  events_store Execute Kubemq 'events_store' Pub/Sub commands
   help         Help about any command
-  queries      Execute KubeMQ 'queries' RPC based commands
-  queues       Execute KubeMQ 'queues' commands
+  queries      Execute Kubemq 'queries' RPC based commands
+  queues       Execute Kubemq 'queues' commands
 
 Flags:
   -h, --help      help for kubemqctl
@@ -67,9 +67,9 @@ Or manually:
 - Place the file under e.g. `C:\Program Files\Kubemqctl\kubemqctl.exe`
 - Add that directory to your system path to access it from any command prompt
 
-## KubeMQ Token
+## Kubemq Token
 
-Please visit [Register/Login](https://account.kubemq.io/login/register) to obtain KubeMQ token.
+Please visit [Register/Login](https://account.kubemq.io/login/register) to obtain Kubemq token.
 
 
 ## Documantation

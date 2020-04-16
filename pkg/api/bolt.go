@@ -3,41 +3,20 @@ package api
 import (
 	"errors"
 	"github.com/go-resty/resty/v2"
-	"io/ioutil"
 )
 
-const boltURL = "https://bolt.kubemq.io/v1"
+const boltURL = "https://bolt.kubemq.io"
 
-type license struct {
+type response struct {
 	Error       bool   `json:"error"`
 	ErrorString string `json:"error_string"`
-	Data        struct {
-		License string `json:"license"`
-	} `json:"data"`
-}
-type accountStatsResponse struct {
-	Error       bool   `json:"error"`
-	ErrorString string `json:"error_string"`
+	Data        string `json:"data"`
 }
 
-type accountStatsReport struct {
-	Key                    string `json:"key"`
-	Host                   string `json:"host"`
-	Source                 int    `json:"source"`
-	IsClustered            bool   `json:"is_clustered"`
-	Version                string `json:"version"`
-	ActivationReports      int    `json:"activation_reports"`
-	ValidationByKeyLicense int    `json:"validation_by_key_license"`
-}
-
-func SaveToFile(filename string, data string) error {
-	return ioutil.WriteFile(filename, []byte(data), 0644)
-}
-
-func GetLicenseData(key string, version string) (string, error) {
+func GetLicenseDataByToken(key string) (string, error) {
 	req := resty.New().R()
-	lic := &license{}
-	r, err := req.SetResult(lic).SetError(lic).SetQueryParam("key", key).Get(boltURL + "/license")
+	lic := &response{}
+	r, err := req.SetResult(lic).SetError(lic).SetQueryParam("key", key).Get(boltURL + "/getlicensebykey")
 	if err != nil {
 		return "", err
 	}
@@ -48,25 +27,6 @@ func GetLicenseData(key string, version string) (string, error) {
 	if lic.Error {
 		return "", errors.New(lic.ErrorString)
 	}
-	err = updateAccountStats(key, version)
-	if err != nil {
-		return "", err
-	}
-	return lic.Data.License, nil
-}
 
-func updateAccountStats(key, version string) error {
-	req := resty.New().R()
-	as := &accountStatsReport{
-		Key:                    key,
-		Host:                   "kubemqctl",
-		Source:                 3,
-		Version:                version,
-		ActivationReports:      1,
-		IsClustered:            true,
-		ValidationByKeyLicense: 1,
-	}
-	asr := &accountStatsResponse{}
-	_, err := req.SetResult(asr).SetError(asr).SetBody(as).Post(boltURL + "/update_stats")
-	return err
+	return lic.Data, nil
 }

@@ -83,7 +83,7 @@ func (o *QueueReceiveOptions) Run(ctx context.Context) error {
 	} else {
 		utils.Printlnf("Pulling %d messages from %s 'queues' channel, waiting for %d seconds...", o.messages, o.channel, o.wait)
 	}
-	client, err := kubemq.GetKubeMQClient(ctx, o.transport, o.cfg)
+	client, err := kubemq.GetKubemqClient(ctx, o.transport, o.cfg)
 	if err != nil {
 		return fmt.Errorf("create kubemq client, %s", err.Error())
 

@@ -18,8 +18,8 @@ var queriesExamples = `
 	kubemqctl queries attach
 
 `
-var queriesLong = `Execute KubeMQ 'queries' RPC based commands`
-var queriesShort = `Execute KubeMQ 'queries' RPC based commands`
+var queriesLong = `Execute Kubemq 'queries' RPC based commands`
+var queriesShort = `Execute Kubemq 'queries' RPC based commands`
 
 // NewCmdCreate returns new initialized instance of create sub query
 func NewCmdQueries(ctx context.Context, cfg *config.Config) *cobra.Command {

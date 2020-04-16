@@ -13,17 +13,15 @@ func Title(input string) string {
 	return strings.Join(words, " ")
 }
 func Println(msg string) {
-
 	fmt.Println(Title(msg))
 }
 
 func Print(msg string) {
-	fmt.Print(strings.Title(msg))
+	fmt.Print(Title(msg))
 }
 func Printf(format string, args ...interface{}) {
-	fmt.Print(strings.Title(fmt.Sprintf(format, args...)))
+	fmt.Print(Title(fmt.Sprintf(format, args...)))
 }
-
 func Printlnf(format string, args ...interface{}) {
 	fmt.Println(Title(fmt.Sprintf(format, args...)))
 }
@@ -31,9 +29,9 @@ func PrintlnfNoTitle(format string, args ...interface{}) {
 	fmt.Println(fmt.Sprintf(format, args...))
 }
 func PrintAndExit(msg string) {
-	fmt.Println(strings.Title(msg))
+	fmt.Println(Title(msg))
 }
 
 func PrintfAndExit(format string, args ...interface{}) {
-	fmt.Println(strings.Title(fmt.Sprintf(format, args...)))
+	fmt.Println(Title(fmt.Sprintf(format, args...)))
 }

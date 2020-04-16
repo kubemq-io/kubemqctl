@@ -2,12 +2,13 @@ package kubemq
 
 import (
 	"context"
+	"crypto/x509"
 	"fmt"
 	"io"
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/kubemq-io/kubemq-go/pb"
+	pb "github.com/kubemq-io/protobuf/go"
 	"go.opencensus.io/trace"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
@@ -23,11 +24,25 @@ type gRPCTransport struct {
 func newGRPCTransport(ctx context.Context, opts *Options) (Transport, *ServerInfo, error) {
 	var connOptions []grpc.DialOption
 	if opts.isSecured {
-		creds, err := credentials.NewClientTLSFromFile(opts.certFile, opts.serverOverrideDomain)
-		if err != nil {
-			return nil, nil, fmt.Errorf("could not load tls cert: %s", err)
+		if opts.certFile != "" {
+			creds, err := credentials.NewClientTLSFromFile(opts.certFile, opts.serverOverrideDomain)
+			if err != nil {
+				return nil, nil, fmt.Errorf("could not load tls cert: %s", err)
+			}
+			connOptions = append(connOptions, grpc.WithTransportCredentials(creds))
+		} else if opts.certData != "" {
+			certPool := x509.NewCertPool()
+			if !certPool.AppendCertsFromPEM([]byte(opts.certData)) {
+				return nil, nil, fmt.Errorf("credentials: failed to append certificates to pool")
+			}
+			creds := credentials.NewClientTLSFromCert(certPool, opts.serverOverrideDomain)
+
+			connOptions = append(connOptions, grpc.WithTransportCredentials(creds))
+
+		} else {
+			return nil, nil, fmt.Errorf("no valid tls security provided")
 		}
-		connOptions = append(connOptions, grpc.WithTransportCredentials(creds))
+
 	} else {
 		connOptions = append(connOptions, grpc.WithInsecure())
 	}
@@ -56,7 +71,7 @@ func newGRPCTransport(ctx context.Context, opts *Options) (Transport, *ServerInf
 
 	si, err := g.Ping(ctx)
 	if err != nil {
-		return nil, &ServerInfo{}, nil
+		return nil, &ServerInfo{}, err
 	}
 
 	return g, si, nil
@@ -64,8 +79,8 @@ func newGRPCTransport(ctx context.Context, opts *Options) (Transport, *ServerInf
 
 func (g *gRPCTransport) SetUnaryInterceptor() grpc.UnaryClientInterceptor {
 	return func(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
-		if g.opts.token != "" {
-			ctx = metadata.AppendToOutgoingContext(ctx, kubeMQTokenHeader, g.opts.token)
+		if g.opts.authToken != "" {
+			ctx = metadata.AppendToOutgoingContext(ctx, kubeMQAuthTokenHeader, g.opts.authToken)
 		}
 		return invoker(ctx, method, req, reply, cc, opts...)
 	}
@@ -73,8 +88,8 @@ func (g *gRPCTransport) SetUnaryInterceptor() grpc.UnaryClientInterceptor {
 
 func (g *gRPCTransport) SetStreamInterceptor() grpc.StreamClientInterceptor {
 	return func(ctx context.Context, desc *grpc.StreamDesc, cc *grpc.ClientConn, method string, streamer grpc.Streamer, opts ...grpc.CallOption) (grpc.ClientStream, error) {
-		if g.opts.token != "" {
-			ctx = metadata.AppendToOutgoingContext(ctx, kubeMQTokenHeader, g.opts.token)
+		if g.opts.authToken != "" {
+			ctx = metadata.AppendToOutgoingContext(ctx, kubeMQAuthTokenHeader, g.opts.authToken)
 		}
 		return streamer(ctx, desc, cc, method, opts...)
 	}
@@ -167,7 +182,6 @@ func (g *gRPCTransport) SubscribeToEvents(ctx context.Context, channel, group st
 		Channel:           channel,
 		Group:             group,
 	}
-
 	stream, err := g.client.SubscribeToEvents(ctx, subRequest)
 	if err != nil {
 		return nil, err
