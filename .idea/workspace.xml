@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="update for v2.0.4 release">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Taskfile.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Taskfile.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/manager.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/manager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/operator/bundle.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/bundle.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vendor/github.com/davecgh/go-spew/LICENSE" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/vendor/github.com/davecgh/go-spew/spew/bypass.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/vendor/github.com/davecgh/go-spew/spew/bypasssafe.go" beforeDir="false" />
@@ -888,6 +891,7 @@
     <property name="GO_FMT" value="false" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Markdown" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Module.GOPATH.is.expanded" value="false" />
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
@@ -902,13 +906,6 @@
     <property name="settings.editor.selected.configurable" value="watcher.settings" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get\dashboard" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\delete" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\client\v1alpha1" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\set\cluster" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\manager\operator" />
@@ -1013,20 +1010,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00025" summary="docs and cleaning">
-      <created>1568795410681</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1568795410681</updated>
-    </task>
-    <task id="LOCAL-00026" summary="docs and cleaning">
-      <created>1568796808989</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1568796808989</updated>
     </task>
     <task id="LOCAL-00027" summary="docs and cleaning">
       <created>1568815524710</created>
@@ -1357,7 +1340,21 @@
       <option name="project" value="LOCAL" />
       <updated>1587028447677</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="update role to support k8s v1.12 which not support ingress networking">
+      <created>1587374394447</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1587374394447</updated>
+    </task>
+    <task id="LOCAL-00075" summary="roll back to role changes">
+      <created>1587440536761</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1587440536761</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1392,8 +1389,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="fix typo" />
-    <MESSAGE value="-v2.2.0&#10;- Add support for K3s, MicroK8s, minikube&#10;- Change description of Enable gRPC and Enable Rest&#10;- Change for printing namespace name" />
     <MESSAGE value="-- add -v flag for set kubemq version in create" />
     <MESSAGE value="fix panic when cluster get with pvc is nil" />
     <MESSAGE value="add get_license command for offline use" />
@@ -1417,7 +1412,9 @@
     <MESSAGE value="update license flow" />
     <MESSAGE value="update new operator version 0.5.1" />
     <MESSAGE value="release v3.0.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="release v3.0.0" />
+    <MESSAGE value="update role to support k8s v1.12 which not support ingress networking" />
+    <MESSAGE value="roll back to role changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="roll back to role changes" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -1427,36 +1424,16 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1320" y="555" key="#com.intellij.ide.util.MemberChooser/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582362494966" />
-    <state x="1217" y="573" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1579522350352">
-      <screen x="0" y="0" width="3072" height="1688" />
-    </state>
-    <state x="1217" y="573" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579522350352" />
-    <state x="658" y="186" width="1669" height="1359" key="CommitChangelistDialog2" timestamp="1587028695928">
+    <state x="1148" y="356" width="1669" height="1359" key="CommitChangelistDialog2" timestamp="1587440535368">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="658" y="186" width="1669" height="1359" key="CommitChangelistDialog2/0.0.3072.1688/-2560.0.2560.1400/3840.0.2560.1400@0.0.3072.1688" timestamp="1587028695928" />
-    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582106788096" />
+    <state x="1148" y="356" key="CommitChangelistDialog2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1587440535368" />
     <state x="1205" y="624" key="EditFileWatcherDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585812413711" />
     <state x="1317" y="599" key="FileChooserDialogImpl" timestamp="1585487812678">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1317" y="599" key="FileChooserDialogImpl/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1585487812678" />
-    <state width="3029" height="478" key="GridCell.Tab.0.bottom" timestamp="1579599408416">
-      <screen x="0" y="0" width="3072" height="1688" />
-    </state>
-    <state width="3029" height="478" key="GridCell.Tab.0.bottom/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579599408416" />
-    <state width="3029" height="478" key="GridCell.Tab.0.center" timestamp="1579599408416">
-      <screen x="0" y="0" width="3072" height="1688" />
-    </state>
-    <state width="3029" height="478" key="GridCell.Tab.0.center/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579599408416" />
-    <state width="3029" height="478" key="GridCell.Tab.0.left" timestamp="1579599408416">
-      <screen x="0" y="0" width="3072" height="1688" />
-    </state>
-    <state width="3029" height="478" key="GridCell.Tab.0.left/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579599408416" />
-    <state width="3029" height="478" key="GridCell.Tab.0.right" timestamp="1579599408416">
-      <screen x="0" y="0" width="3072" height="1688" />
-    </state>
-    <state width="3029" height="478" key="GridCell.Tab.0.right/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1579599408416" />
     <state x="1289" y="474" key="RollbackChangesDialog" timestamp="1585811560806">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
@@ -1465,16 +1442,20 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1045" y="489" key="SettingsEditor/0.0.3072.1688/-2560.0.2560.1400/3840.0.2560.1400@0.0.3072.1688" timestamp="1587028349070" />
-    <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1587028452052">
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1587440538914">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/-2560.0.2560.1400/3840.0.2560.1400@0.0.3072.1688" timestamp="1587028452052" />
-    <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1582106793170" />
-    <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1581947885944">
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1587440538914" />
+    <state x="93" y="93" width="2886" height="1502" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1587568793828">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
+    <state x="93" y="93" width="2886" height="1502" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1587568793828" />
+    <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1590153975987">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/-3840.0.2560.1400/3840.-679.1728.3032@0.0.3072.1688" timestamp="1590153975987" />
     <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.2560.1400/-2560.0.2560.1400@0.0.3072.1688" timestamp="1581947885944" />
-    <state x="1346" y="761" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.2560.1440/-2560.0.2560.1440@0.0.3072.1688" timestamp="1579163136060" />
     <state x="1859" y="236" width="752" height="598" key="find.popup" timestamp="1585811446624">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>

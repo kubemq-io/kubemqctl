@@ -50,20 +50,30 @@ func (m *Manager) CreateOrUpdateKubemqOperator(operatorDeployment *operator.Depl
 	}
 
 	newBundle := &operator.Deployment{
-		Name:           operatorDeployment.Name,
-		Namespace:      operatorDeployment.Namespace,
-		CRDs:           nil,
-		Deployment:     nil,
-		Role:           nil,
-		RoleBinding:    nil,
-		ServiceAccount: nil,
+		Name:                   operatorDeployment.Name,
+		Namespace:              operatorDeployment.Namespace,
+		CRDs:                   nil,
+		Deployment:             nil,
+		Role:                   nil,
+		RoleBinding:            nil,
+		OperatorServiceAccount: nil,
+		ClusterServiceAccount:  nil,
 	}
 	isBundleUpdated := false
-	serviceAccount, isUpdated, err := m.CreateOrUpdateServiceAccount(operatorDeployment.ServiceAccount)
+	operatorServiceAccount, isUpdated, err := m.CreateOrUpdateServiceAccount(operatorDeployment.OperatorServiceAccount)
 	if err != nil {
 		return nil, false, fmt.Errorf("error create or update service account, error: %s", err.Error())
 	}
-	newBundle.ServiceAccount = serviceAccount
+	newBundle.OperatorServiceAccount = operatorServiceAccount
+	if isUpdated {
+		isBundleUpdated = true
+	}
+
+	clusterServiceAccount, isUpdated, err := m.CreateOrUpdateServiceAccount(operatorDeployment.ClusterServiceAccount)
+	if err != nil {
+		return nil, false, fmt.Errorf("error create or update service account, error: %s", err.Error())
+	}
+	newBundle.ClusterServiceAccount = clusterServiceAccount
 	if isUpdated {
 		isBundleUpdated = true
 	}
@@ -132,7 +142,11 @@ func (m *Manager) DeleteKubemqOperator(deployment *operator.Deployment, isAll bo
 			return fmt.Errorf("delete role binding failed, error: %s", err.Error())
 		}
 
-		err = m.DeleteServiceAccount(deployment.ServiceAccount)
+		err = m.DeleteServiceAccount(deployment.OperatorServiceAccount)
+		if err != nil {
+			return fmt.Errorf("delete service acount failed, error: %s", err.Error())
+		}
+		err = m.DeleteServiceAccount(deployment.ClusterServiceAccount)
 		if err != nil {
 			return fmt.Errorf("delete service acount failed, error: %s", err.Error())
 		}
@@ -143,13 +157,14 @@ func (m *Manager) DeleteKubemqOperator(deployment *operator.Deployment, isAll bo
 
 func (m *Manager) GetKubemqOperator(name, namespace string) (*operator.Deployment, error) {
 	bundle := &operator.Deployment{
-		Name:           name,
-		Namespace:      namespace,
-		CRDs:           nil,
-		Deployment:     nil,
-		Role:           nil,
-		RoleBinding:    nil,
-		ServiceAccount: nil,
+		Name:                   name,
+		Namespace:              namespace,
+		CRDs:                   nil,
+		Deployment:             nil,
+		Role:                   nil,
+		RoleBinding:            nil,
+		OperatorServiceAccount: nil,
+		ClusterServiceAccount:  nil,
 	}
 
 	bundle.Deployment, _ = m.GetOperator(name, namespace)
@@ -163,8 +178,8 @@ func (m *Manager) GetKubemqOperator(name, namespace string) (*operator.Deploymen
 	}
 	bundle.Role, _ = m.GetRole(name, namespace)
 	bundle.RoleBinding, _ = m.GetRoleBinding(name, namespace)
-	bundle.ServiceAccount, _ = m.GetServiceAccount(name, namespace)
-
+	bundle.OperatorServiceAccount, _ = m.GetServiceAccount(name, namespace)
+	bundle.ClusterServiceAccount, _ = m.GetServiceAccount("kubemq-cluster", namespace)
 	return bundle, nil
 }
 func (m *Manager) GetKubemqOperators() (*Operators, error) {

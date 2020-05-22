@@ -15,7 +15,8 @@ type Deployment struct {
 	*appsv1.Deployment
 	*rbac.Role
 	*rbac.RoleBinding
-	*apiv1.ServiceAccount
+	OperatorServiceAccount *apiv1.ServiceAccount
+	ClusterServiceAccount  *apiv1.ServiceAccount
 }
 
 func CreateDeployment(name, namespace string) (*Deployment, error) {
@@ -42,6 +43,10 @@ func CreateDeployment(name, namespace string) (*Deployment, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error create operator bundle, service account error: %s", err.Error())
 	}
+	clusterServiceAccount, err := CreateServiceAccount("kubemq-cluster", namespace).Get()
+	if err != nil {
+		return nil, fmt.Errorf("error create operator bundle, service account error: %s", err.Error())
+	}
 
 	operator, err := CreateOperator(name, namespace).Get()
 	if err != nil {
@@ -49,13 +54,14 @@ func CreateDeployment(name, namespace string) (*Deployment, error) {
 	}
 
 	return &Deployment{
-		Name:           name,
-		Namespace:      namespace,
-		CRDs:           []*v1beta1.CustomResourceDefinition{kubemqClusterCrd, kubemqDashboardCrd},
-		Deployment:     operator,
-		Role:           role,
-		RoleBinding:    roleBinding,
-		ServiceAccount: serviceAccount,
+		Name:                   name,
+		Namespace:              namespace,
+		CRDs:                   []*v1beta1.CustomResourceDefinition{kubemqClusterCrd, kubemqDashboardCrd},
+		Deployment:             operator,
+		Role:                   role,
+		RoleBinding:            roleBinding,
+		OperatorServiceAccount: serviceAccount,
+		ClusterServiceAccount:  clusterServiceAccount,
 	}, nil
 }
 
@@ -73,8 +79,12 @@ func (b *Deployment) IsValid() error {
 	if b.RoleBinding == nil {
 		return fmt.Errorf("no role binding exsits or defined")
 	}
-	if b.ServiceAccount == nil {
+	if b.OperatorServiceAccount == nil {
 		return fmt.Errorf("no service account exsits or defined")
 	}
+	if b.ClusterServiceAccount == nil {
+		return fmt.Errorf("no service account exsits or defined")
+	}
+
 	return nil
 }
