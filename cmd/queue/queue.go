@@ -21,7 +21,7 @@ var queueExamples = `
 	kubemqctl queues list
 
 	# Execute peek 'queues' command
-	kubemqctl queues peak
+	kubemqctl queues peek
 
 	# Execute ack 'queues' command
 	 kubemqctl queues ack
