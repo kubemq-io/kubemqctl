@@ -3,15 +3,16 @@ package config
 import (
 	"context"
 	"fmt"
+	"io/ioutil"
+	"sort"
+	"strings"
+
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/cluster"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
-	"io/ioutil"
-	"sort"
-	"strings"
 )
 
 type ConfigOptions struct {
@@ -137,7 +138,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 		if err != nil {
 			return err
 		}
-		if list == nil {
+		if list == nil || len(list) == 0 {
 			utils.Println("No Kubemq clusters were found for selection")
 		} else {
 			clusterSelected := ""
