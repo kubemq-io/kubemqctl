@@ -15,19 +15,22 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: {{.Name}}
+      app: {{.Name}}
   template:
     metadata:
       labels:
-        name: {{.Name}}
+        app: {{.Name}}
     spec:
-      serviceAccountName: {{.Name}}
+      serviceAccountName: kubemq-operator
       containers:
-        - name: {{.Name}}
-          image: {{.Image}}
+        - name: kubemq-operator
+          image: docker.io/kubemq/kubemq-operator:latest
           command:
-          - kubemq-operator
+            - kubemq-operator
           imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+            - containerPort: 8090
           env:
             - name: WATCH_NAMESPACE
               valueFrom:
@@ -37,18 +40,30 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: OPERATOR_NAME
-              value: "{{.Name}}"
+            - name: SOURCE
+              value: "kubemqctl"
+            - name: DEBUG_MODE
+              value: "false"
             - name: RELATED_IMAGE_KUBEMQ_CLUSTER
-              value: {{.KubemqImage}}
+              value: "docker.io/kubemq/kubemq:latest"
             - name: RELATED_IMAGE_PROMETHEUS
-              value: {{.PrometheusImage}}
+              value: "prom/prometheus:latest"
             - name: RELATED_IMAGE_GRAFANA
-              value: {{.GrafanaImage}}
+              value: "grafana/grafana:latest"
             - name: KUBEMQ_VIEW_DASHBOARD_SOURCE
-              value: {{.KubemqDashboardDashboardSource}}
+              value: "https://raw.githubusercontent.com/kubemq-io/kubemq-dashboard/master/dashboard.json"
+            - name: OPERATOR_NAME
+              value: "kubemq-operator"
             - name: KUBEMQ_LICENSE_MODE
               value: "COMMUNITY"
+            - name: CONNECTOR_TARGETS_IMAGE
+              value: "kubemq/kubemq-targets:latest"
+            - name: CONNECTOR_SOURCES_IMAGE
+              value: "kubemq/kubemq-sources:latest"
+            - name: CONNECTOR_BRIDGES_IMAGE
+              value: "kubemq/kubemq-bridges:latest"
+            - name: CONNECTOR_TASKS_IMAGE
+              value: "kubemq/kubemq-tasks:latest"
 `
 
 type Operator struct {

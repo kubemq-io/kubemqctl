@@ -5,44 +5,44 @@ import (
 	rbac "k8s.io/api/rbac/v1"
 )
 
-var roleBinding = `
-kind: RoleBinding
+var clusterRoleBinding = `
+kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: kubemq-cluster
+  name: kubemq-operator
   namespace: {{.Namespace}}
 subjects:
-  - kind: ServiceAccount
-    name: kubemq-cluster
-    namespace: {{.Namespace}}
+- kind: ServiceAccount
+  name: kubemq-operator
+  namespace: {{.Namespace}}
 roleRef:
-  kind: Role
-  name: kubemq-cluster
+  kind: ClusterRole
+  name: kubemq-operator
   apiGroup: rbac.authorization.k8s.io
 `
 
-type RoleBinding struct {
+type ClusterRoleBinding struct {
 	Name      string
 	Namespace string
-	role      *rbac.RoleBinding
+	role      *rbac.ClusterRoleBinding
 }
 
-func CreateRoleBinding(name, namespace string) *RoleBinding {
-	return &RoleBinding{
+func CreateClusterRoleBinding(name, namespace string) *ClusterRoleBinding {
+	return &ClusterRoleBinding{
 		Name:      name,
 		Namespace: namespace,
 		role:      nil,
 	}
 }
-func (rb *RoleBinding) Spec() ([]byte, error) {
-	t := NewTemplate(roleBinding, rb)
+func (rb *ClusterRoleBinding) Spec() ([]byte, error) {
+	t := NewTemplate(clusterRoleBinding, rb)
 	return t.Get()
 }
-func (rb *RoleBinding) Get() (*rbac.RoleBinding, error) {
+func (rb *ClusterRoleBinding) Get() (*rbac.ClusterRoleBinding, error) {
 	if rb.role != nil {
 		return rb.role, nil
 	}
-	roleBinding := &rbac.RoleBinding{}
+	roleBinding := &rbac.ClusterRoleBinding{}
 	data, err := rb.Spec()
 	if err != nil {
 		return nil, err

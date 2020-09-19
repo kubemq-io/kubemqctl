@@ -13,6 +13,8 @@ type Deployment struct {
 	Namespace string
 	CRDs      []*v1beta1.CustomResourceDefinition
 	*appsv1.Deployment
+	*rbac.ClusterRole
+	*rbac.ClusterRoleBinding
 	*rbac.Role
 	*rbac.RoleBinding
 	OperatorServiceAccount *apiv1.ServiceAccount
@@ -29,17 +31,26 @@ func CreateDeployment(name, namespace string) (*Deployment, error) {
 		return nil, fmt.Errorf("error create operator bundle, kubemq dashboard crd error: %s", err.Error())
 	}
 
+	clusterRole, err := CreateClusterRole(name, namespace).Get()
+	if err != nil {
+		return nil, fmt.Errorf("error create operator bundle, clusterRole error: %s", err.Error())
+	}
+
+	clusterRoleBinding, err := CreateClusterRoleBinding(name, namespace).Get()
+	if err != nil {
+		return nil, fmt.Errorf("error create operator bundle, clusterRole binding error: %s", err.Error())
+	}
 	role, err := CreateRole(name, namespace).Get()
 	if err != nil {
-		return nil, fmt.Errorf("error create operator bundle, role error: %s", err.Error())
+		return nil, fmt.Errorf("error create operator bundle, clusterRole error: %s", err.Error())
 	}
 
 	roleBinding, err := CreateRoleBinding(name, namespace).Get()
 	if err != nil {
-		return nil, fmt.Errorf("error create operator bundle, role binding error: %s", err.Error())
+		return nil, fmt.Errorf("error create operator bundle, clusterRole binding error: %s", err.Error())
 	}
 
-	serviceAccount, err := CreateServiceAccount(name, namespace).Get()
+	serviceAccount, err := CreateServiceAccount("kubemq-operator", namespace).Get()
 	if err != nil {
 		return nil, fmt.Errorf("error create operator bundle, service account error: %s", err.Error())
 	}
@@ -58,6 +69,8 @@ func CreateDeployment(name, namespace string) (*Deployment, error) {
 		Namespace:              namespace,
 		CRDs:                   []*v1beta1.CustomResourceDefinition{kubemqClusterCrd, kubemqDashboardCrd},
 		Deployment:             operator,
+		ClusterRole:            clusterRole,
+		ClusterRoleBinding:     clusterRoleBinding,
 		Role:                   role,
 		RoleBinding:            roleBinding,
 		OperatorServiceAccount: serviceAccount,
@@ -72,6 +85,14 @@ func (b *Deployment) IsValid() error {
 	if b.Deployment == nil {
 		return fmt.Errorf("no operator deployment exsits or defined")
 	}
+	if b.ClusterRole == nil {
+		return fmt.Errorf("no cluster role exsits or defined")
+	}
+
+	if b.ClusterRoleBinding == nil {
+		return fmt.Errorf("no cluser role binding exsits or defined")
+	}
+
 	if b.Role == nil {
 		return fmt.Errorf("no role exsits or defined")
 	}
@@ -79,6 +100,7 @@ func (b *Deployment) IsValid() error {
 	if b.RoleBinding == nil {
 		return fmt.Errorf("no role binding exsits or defined")
 	}
+
 	if b.OperatorServiceAccount == nil {
 		return fmt.Errorf("no service account exsits or defined")
 	}
