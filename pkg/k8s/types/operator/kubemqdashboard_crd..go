@@ -5,10 +5,12 @@ import (
 	v1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 )
 
-var crdKubemqDashboard = `
-apiVersion: apiextensions.k8s.io/v1beta1
+var crdKubemqDashboard = `apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.3.0
+  creationTimestamp: null
   name: kubemqdashboards.core.k8s.kubemq.io
 spec:
   additionalPrinterColumns:
@@ -97,14 +99,12 @@ spec:
 `
 
 type KubemqDashboardCRD struct {
-	Namespace string
-	crd       *v1beta1.CustomResourceDefinition
+	crd *v1beta1.CustomResourceDefinition
 }
 
-func CreateKubemqDashboardCRD(namespace string) *KubemqDashboardCRD {
+func CreateKubemqDashboardCRD() *KubemqDashboardCRD {
 	return &KubemqDashboardCRD{
-		Namespace: namespace,
-		crd:       nil,
+		crd: nil,
 	}
 }
 func (sa *KubemqDashboardCRD) Spec() ([]byte, error) {

@@ -97,11 +97,15 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 		if err != nil {
 			return err
 		}
-		_, _, err = operatorManager.CreateOrUpdateKubemqOperator(operatorDeployment)
+		_, isUpdated, err := operatorManager.CreateOrUpdateKubemqOperator(operatorDeployment)
 		if err != nil {
 			return nil
 		}
-		utils.Printlnf("Kubemq operator %s/%s created.", dep.Namespace, dep.Name)
+		if isUpdated {
+			utils.Printlnf("Kubemq operator %s/kubemq-operator configured.", dep.Namespace)
+		} else {
+			utils.Printlnf("Kubemq operator %s/kubemq-operator created.", dep.Namespace)
+		}
 	}
 
 	dashboard, isUpdate, err := dashabordManager.CreateOrUpdateKubemqDashboard(dep)

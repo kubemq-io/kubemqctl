@@ -149,10 +149,6 @@ func (in *KubemqClusterSpec) DeepCopyInto(out *KubemqClusterSpec) {
 		in, out := &in.Queue, &out.Queue
 		*out = (*in).DeepCopy()
 	}
-	if in.Gateways != nil {
-		in, out := &in.Gateways, &out.Gateways
-		*out = (*in).DeepCopy()
-	}
 	return
 }
 

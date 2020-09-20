@@ -10,7 +10,7 @@ type clusterRoleBindingManager struct {
 	*client.Client
 }
 
-func (m *clusterRoleBindingManager) CreateOrUpdateRoleBinding(roleBinding *rbac.ClusterRoleBinding) (*rbac.ClusterRoleBinding, bool, error) {
+func (m *clusterRoleBindingManager) CreateOrUpdateClusterRoleBinding(roleBinding *rbac.ClusterRoleBinding) (*rbac.ClusterRoleBinding, bool, error) {
 	found, err := m.ClientSet.RbacV1().ClusterRoleBindings().Get(roleBinding.Name, metav1.GetOptions{})
 	if err == nil && found != nil {
 		updatedRoleBinding, err := m.ClientSet.RbacV1().ClusterRoleBindings().Update(roleBinding)

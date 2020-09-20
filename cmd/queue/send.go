@@ -127,7 +127,7 @@ func (o *QueueSendOptions) Run(ctx context.Context) error {
 			if res.ExpirationAt > 0 {
 				exp = fmt.Sprintf(", expire at: %s", time.Unix(0, res.ExpirationAt))
 			}
-			utils.Printlnf("[channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s, sent at: %s%s%s}", msg.Channel, msg.ClientId, res.MessageID, msg.Metadata, msg.Body, time.Unix(0, res.SentAt).Format("2006-01-02 15:04:05.999"), exp, delay)
+			utils.Printlnf("[channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s, sent at: %s%s%s}", msg.Channel, msg.ClientID, res.MessageID, msg.Metadata, msg.Body, time.Unix(0, res.SentAt).Format("2006-01-02 15:04:05.999"), exp, delay)
 		}
 	}
 

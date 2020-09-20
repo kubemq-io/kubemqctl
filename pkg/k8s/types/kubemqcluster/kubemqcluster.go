@@ -64,9 +64,6 @@ type KubemqClusterSpec struct {
 
 	// +optional
 	Queue *QueueConfig `json:"queue,omitempty"`
-
-	// +optional
-	Gateways *GatewayConfig `json:"gateways,omitempty"`
 }
 
 // KubemqClusterStatus defines the observed state of KubemqCluster

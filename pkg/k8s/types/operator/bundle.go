@@ -22,32 +22,36 @@ type Deployment struct {
 }
 
 func CreateDeployment(name, namespace string) (*Deployment, error) {
-	kubemqClusterCrd, err := CreateKubemqClustersCRD(namespace).Get()
+	kubemqClusterCrd, err := CreateKubemqClustersCRD().Get()
 	if err != nil {
 		return nil, fmt.Errorf("error create operator bundle, kubemq cluster crd error: %s", err.Error())
 	}
-	kubemqDashboardCrd, err := CreateKubemqDashboardCRD(namespace).Get()
+	kubemqDashboardCrd, err := CreateKubemqDashboardCRD().Get()
 	if err != nil {
 		return nil, fmt.Errorf("error create operator bundle, kubemq dashboard crd error: %s", err.Error())
 	}
-
-	clusterRole, err := CreateClusterRole(name, namespace).Get()
+	kubemqConnectorCrd, err := CreateKubemqConnectorCRD().Get()
 	if err != nil {
-		return nil, fmt.Errorf("error create operator bundle, clusterRole error: %s", err.Error())
+		return nil, fmt.Errorf("error create operator bundle, kubemq connector crd error: %s", err.Error())
 	}
 
-	clusterRoleBinding, err := CreateClusterRoleBinding(name, namespace).Get()
+	clusterRole, err := CreateClusterRole("kubemq-operator").Get()
 	if err != nil {
-		return nil, fmt.Errorf("error create operator bundle, clusterRole binding error: %s", err.Error())
+		return nil, fmt.Errorf("error create operator bundle, cluster role error: %s", err.Error())
+	}
+
+	clusterRoleBinding, err := CreateClusterRoleBinding(fmt.Sprintf("kubemq-operator-%s-crb", namespace), namespace).Get()
+	if err != nil {
+		return nil, fmt.Errorf("error create operator bundle, cluster role binding error: %s", err.Error())
 	}
 	role, err := CreateRole(name, namespace).Get()
 	if err != nil {
-		return nil, fmt.Errorf("error create operator bundle, clusterRole error: %s", err.Error())
+		return nil, fmt.Errorf("error create operator bundle, cluster role error: %s", err.Error())
 	}
 
 	roleBinding, err := CreateRoleBinding(name, namespace).Get()
 	if err != nil {
-		return nil, fmt.Errorf("error create operator bundle, clusterRole binding error: %s", err.Error())
+		return nil, fmt.Errorf("error create operator bundle, cluster role binding error: %s", err.Error())
 	}
 
 	serviceAccount, err := CreateServiceAccount("kubemq-operator", namespace).Get()
@@ -67,7 +71,7 @@ func CreateDeployment(name, namespace string) (*Deployment, error) {
 	return &Deployment{
 		Name:                   name,
 		Namespace:              namespace,
-		CRDs:                   []*v1beta1.CustomResourceDefinition{kubemqClusterCrd, kubemqDashboardCrd},
+		CRDs:                   []*v1beta1.CustomResourceDefinition{kubemqClusterCrd, kubemqDashboardCrd, kubemqConnectorCrd},
 		Deployment:             operator,
 		ClusterRole:            clusterRole,
 		ClusterRoleBinding:     clusterRoleBinding,
@@ -91,14 +95,6 @@ func (b *Deployment) IsValid() error {
 
 	if b.ClusterRoleBinding == nil {
 		return fmt.Errorf("no cluser role binding exsits or defined")
-	}
-
-	if b.Role == nil {
-		return fmt.Errorf("no role exsits or defined")
-	}
-
-	if b.RoleBinding == nil {
-		return fmt.Errorf("no role binding exsits or defined")
 	}
 
 	if b.OperatorServiceAccount == nil {

@@ -87,7 +87,7 @@ func (o *QueueStreamOptions) Run(ctx context.Context) error {
 		if err != nil {
 			return err
 		}
-		utils.Printlnf("[channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s}", msg.Channel, msg.ClientId, msg.Id, msg.Metadata, msg.Body)
+		utils.Printlnf("[channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s}", msg.Channel, msg.ClientID, msg.MessageID, msg.Metadata, msg.Body)
 	PROMPT:
 		action, result, err := o.prompt()
 		if err != nil {

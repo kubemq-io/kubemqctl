@@ -75,16 +75,14 @@ rules:
 `
 
 type ClusterRole struct {
-	Name      string
-	Namespace string
-	role      *rbac.ClusterRole
+	Name string
+	role *rbac.ClusterRole
 }
 
-func CreateClusterRole(name, namespace string) *ClusterRole {
+func CreateClusterRole(name string) *ClusterRole {
 	return &ClusterRole{
-		Name:      name,
-		Namespace: namespace,
-		role:      nil,
+		Name: name,
+		role: nil,
 	}
 }
 func (rb *ClusterRole) Spec() ([]byte, error) {

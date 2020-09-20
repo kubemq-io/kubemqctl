@@ -15,6 +15,8 @@ type Manager struct {
 	*clusterRoleManager
 	*clusterRoleBindingManager
 	*serviceAccountManager
+	*roleManager
+	*roleBindingManager
 }
 
 func NewManager(c *client.Client) (*Manager, error) {
@@ -25,6 +27,8 @@ func NewManager(c *client.Client) (*Manager, error) {
 		clusterRoleManager:        &clusterRoleManager{c},
 		clusterRoleBindingManager: &clusterRoleBindingManager{c},
 		serviceAccountManager:     &serviceAccountManager{c},
+		roleManager:               &roleManager{c},
+		roleBindingManager:        &roleBindingManager{c},
 	}, nil
 }
 func (m *Manager) checkAndCreateNamespace(ns string) error {
@@ -56,6 +60,8 @@ func (m *Manager) CreateOrUpdateKubemqOperator(operatorDeployment *operator.Depl
 		Deployment:             nil,
 		ClusterRole:            nil,
 		ClusterRoleBinding:     nil,
+		Role:                   nil,
+		RoleBinding:            nil,
 		OperatorServiceAccount: nil,
 		ClusterServiceAccount:  nil,
 	}
@@ -78,20 +84,38 @@ func (m *Manager) CreateOrUpdateKubemqOperator(operatorDeployment *operator.Depl
 		isBundleUpdated = true
 	}
 
-	role, isUpdated, err := m.CreateOrUpdateRole(operatorDeployment.ClusterRole)
+	clusterRole, isUpdated, err := m.CreateOrUpdateClusterRole(operatorDeployment.ClusterRole)
 	if err != nil {
-		return nil, false, fmt.Errorf("error create or update role, error: %s", err.Error())
+		return nil, false, fmt.Errorf("error create or update cluster role, error: %s", err.Error())
 	}
-	newBundle.ClusterRole = role
+	newBundle.ClusterRole = clusterRole
 	if isUpdated {
 		isBundleUpdated = true
 	}
 
-	roleBinding, isUpdated, err := m.CreateOrUpdateRoleBinding(operatorDeployment.ClusterRoleBinding)
+	clusterRoleBinding, isUpdated, err := m.CreateOrUpdateClusterRoleBinding(operatorDeployment.ClusterRoleBinding)
+	if err != nil {
+		return nil, false, fmt.Errorf("error create or update cluster role binding, error: %s", err.Error())
+	}
+	newBundle.ClusterRoleBinding = clusterRoleBinding
+	if isUpdated {
+		isBundleUpdated = true
+	}
+
+	role, isUpdated, err := m.CreateOrUpdateRole(operatorDeployment.Role)
+	if err != nil {
+		return nil, false, fmt.Errorf("error create or update role, error: %s", err.Error())
+	}
+	newBundle.Role = role
+	if isUpdated {
+		isBundleUpdated = true
+	}
+
+	roleBinding, isUpdated, err := m.CreateOrUpdateRoleBinding(operatorDeployment.RoleBinding)
 	if err != nil {
 		return nil, false, fmt.Errorf("error create or update role binding, error: %s", err.Error())
 	}
-	newBundle.ClusterRoleBinding = roleBinding
+	newBundle.RoleBinding = roleBinding
 	if isUpdated {
 		isBundleUpdated = true
 	}
@@ -125,23 +149,35 @@ func (m *Manager) DeleteKubemqOperator(deployment *operator.Deployment, isAll bo
 	}
 
 	if isAll {
-		for _, crd := range deployment.CRDs {
-			err := m.DeleteCrd(crd)
-			if err != nil {
-				return fmt.Errorf("delete crd failed, error: %s", err.Error())
-			}
-		}
+		//for _, crd := range deployment.CRDs {
+		//	err := m.DeleteCrd(crd)
+		//	if err != nil {
+		//		return fmt.Errorf("delete crd failed, error: %s", err.Error())
+		//	}
+		//}
 
 		err = m.DeleteClusterRole(deployment.ClusterRole)
 		if err != nil {
-			return fmt.Errorf("delete role failed, error: %s", err.Error())
+			return fmt.Errorf("delete cluster role failed, error: %s", err.Error())
 		}
 
 		err = m.DeleteClusterRoleBinding(deployment.ClusterRoleBinding)
 		if err != nil {
-			return fmt.Errorf("delete role binding failed, error: %s", err.Error())
+			return fmt.Errorf("delete cluster role binding failed, error: %s", err.Error())
+		}
+		if deployment.Role != nil {
+			err = m.DeleteRole(deployment.Role)
+			if err != nil {
+				return fmt.Errorf("delete role failed, error: %s", err.Error())
+			}
 		}
 
+		if deployment.RoleBinding != nil {
+			err = m.DeleteRoleBinding(deployment.RoleBinding)
+			if err != nil {
+				return fmt.Errorf("delete role binding failed, error: %s", err.Error())
+			}
+		}
 		err = m.DeleteServiceAccount(deployment.OperatorServiceAccount)
 		if err != nil {
 			return fmt.Errorf("delete service acount failed, error: %s", err.Error())
@@ -163,6 +199,8 @@ func (m *Manager) GetKubemqOperator(name, namespace string) (*operator.Deploymen
 		Deployment:             nil,
 		ClusterRole:            nil,
 		ClusterRoleBinding:     nil,
+		Role:                   nil,
+		RoleBinding:            nil,
 		OperatorServiceAccount: nil,
 		ClusterServiceAccount:  nil,
 	}
@@ -176,9 +214,15 @@ func (m *Manager) GetKubemqOperator(name, namespace string) (*operator.Deploymen
 	if crd != nil {
 		bundle.CRDs = append(bundle.CRDs, crd)
 	}
-	bundle.ClusterRole, _ = m.GetClusterRole(name, namespace)
-	bundle.ClusterRoleBinding, _ = m.GetClusterRoleBinding(name, namespace)
-	bundle.OperatorServiceAccount, _ = m.GetServiceAccount(name, namespace)
+	crd, _ = m.GetCrd("kubemqconnectors.core.k8s.kubemq.io", namespace)
+	if crd != nil {
+		bundle.CRDs = append(bundle.CRDs, crd)
+	}
+	bundle.ClusterRole, _ = m.GetClusterRole("kubemq-operator")
+	bundle.ClusterRoleBinding, _ = m.GetClusterRoleBinding(fmt.Sprintf("kubemq-operator-%s-crb", namespace), namespace)
+	bundle.Role, _ = m.GetRole("kubemq-cluster", namespace)
+	bundle.RoleBinding, _ = m.GetRoleBinding("kubemq-cluster", namespace)
+	bundle.OperatorServiceAccount, _ = m.GetServiceAccount("kubemq-operator", namespace)
 	bundle.ClusterServiceAccount, _ = m.GetServiceAccount("kubemq-cluster", namespace)
 	return bundle, nil
 }

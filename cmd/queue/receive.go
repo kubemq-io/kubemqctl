@@ -122,7 +122,7 @@ func printItems(items []*kubemq2.QueueMessage) {
 	for _, item := range items {
 		fmt.Fprintf(w, "[channel: %s]\t[id: %s]\t[seq: %d]\t[timestamp: %s]\t[metadata: %s]\t[body: %s]\n",
 			item.Channel,
-			item.Id,
+			item.MessageID,
 			item.Attributes.Sequence,
 			time.Unix(0, item.Attributes.Timestamp).Format("2006-01-02 15:04:05.999"), item.Metadata,
 			item.Body)

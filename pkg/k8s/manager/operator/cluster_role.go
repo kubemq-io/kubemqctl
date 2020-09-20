@@ -10,7 +10,7 @@ type clusterRoleManager struct {
 	*client.Client
 }
 
-func (m *clusterRoleManager) CreateOrUpdateRole(role *rbac.ClusterRole) (*rbac.ClusterRole, bool, error) {
+func (m *clusterRoleManager) CreateOrUpdateClusterRole(role *rbac.ClusterRole) (*rbac.ClusterRole, bool, error) {
 	found, err := m.ClientSet.RbacV1().ClusterRoles().Get(role.Name, metav1.GetOptions{})
 	if err == nil && found != nil {
 		updatedRole, err := m.ClientSet.RbacV1().ClusterRoles().Update(role)
@@ -36,7 +36,7 @@ func (m *clusterRoleManager) DeleteClusterRole(role *rbac.ClusterRole) error {
 
 }
 
-func (m *clusterRoleManager) GetClusterRole(name, namespace string) (*rbac.ClusterRole, error) {
+func (m *clusterRoleManager) GetClusterRole(name string) (*rbac.ClusterRole, error) {
 	role, err := m.ClientSet.RbacV1().ClusterRoles().Get(name, metav1.GetOptions{})
 	if err != nil {
 		return nil, err

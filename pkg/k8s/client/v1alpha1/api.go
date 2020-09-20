@@ -41,3 +41,10 @@ func (c *V1Alpha1Client) KubemqDashboard(namespace string) KubemqDashboardInterf
 		ns:     namespace,
 	}
 }
+
+func (c *V1Alpha1Client) KubemqConnector(namespace string) KubemqConnectorInterface {
+	return &kubemqConnector{
+		client: c.restClient,
+		ns:     namespace,
+	}
+}

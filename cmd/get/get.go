@@ -3,6 +3,7 @@ package get
 import (
 	"context"
 	"github.com/kubemq-io/kubemqctl/cmd/get/cluster"
+	"github.com/kubemq-io/kubemqctl/cmd/get/connector"
 	"github.com/kubemq-io/kubemqctl/cmd/get/dashboard"
 	"github.com/kubemq-io/kubemqctl/cmd/get/operator"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
@@ -19,7 +20,10 @@ var getExamples = `
 	kubemqctl get operators	
 
 	# Execute get Kubemq dashboards
-	kubemqctl get dashboards
+	kubemqctl get dashboards	
+
+	# Execute get Kubemq connectors
+	kubemqctl get connectors
 `
 var getLong = `Executes Kubemq get commands`
 var getShort = `Executes Kubemq get commands`
@@ -33,7 +37,7 @@ func NewCmdGet(ctx context.Context, cfg *config.Config) *cobra.Command {
 		Short:     getShort,
 		Long:      getLong,
 		Example:   getExamples,
-		ValidArgs: []string{"cluster", "operator"},
+		ValidArgs: []string{"cluster", "operator", "dashboard", "connector"},
 		Run: func(cmd *cobra.Command, args []string) {
 			utils.CheckErr(cmd.Help())
 		},
@@ -41,6 +45,7 @@ func NewCmdGet(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd.AddCommand(cluster.NewCmdGet(ctx, cfg))
 	cmd.AddCommand(operator.NewCmdGet(ctx, cfg))
 	cmd.AddCommand(dashboard.NewCmdGet(ctx, cfg))
+	cmd.AddCommand(connector.NewCmdGet(ctx, cfg))
 
 	return cmd
 }

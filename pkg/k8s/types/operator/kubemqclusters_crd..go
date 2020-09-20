@@ -57,7 +57,6 @@ spec:
     status: {}
   validation:
     openAPIV3Schema:
-      description: KubemqCluster is the Schema for the kubemqclusters API
       properties:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation
@@ -72,6 +71,7 @@ spec:
         metadata:
           type: object
         spec:
+          description: KubemqClusterSpec defines the desired state of KubemqCluster
           properties:
             api:
               properties:
@@ -106,22 +106,6 @@ spec:
               type: object
             configData:
               type: string
-            gateways:
-              properties:
-                ca:
-                  type: string
-                cert:
-                  type: string
-                key:
-                  type: string
-                port:
-                  format: int32
-                  type: integer
-                remotes:
-                  items:
-                    type: string
-                  type: array
-              type: object
             grpc:
               properties:
                 bodyLimit:
@@ -373,14 +357,12 @@ spec:
 `
 
 type KubemqClustersCRD struct {
-	Namespace string
-	crd       *v1beta1.CustomResourceDefinition
+	crd *v1beta1.CustomResourceDefinition
 }
 
-func CreateKubemqClustersCRD(namespace string) *KubemqClustersCRD {
+func CreateKubemqClustersCRD() *KubemqClustersCRD {
 	return &KubemqClustersCRD{
-		Namespace: namespace,
-		crd:       nil,
+		crd: nil,
 	}
 }
 func (sa *KubemqClustersCRD) Spec() ([]byte, error) {

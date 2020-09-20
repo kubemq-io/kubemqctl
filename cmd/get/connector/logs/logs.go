@@ -3,7 +3,7 @@ package logs
 import (
 	"context"
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/operator"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/connector"
 	"strings"
 
 	"github.com/kubemq-io/kubemqctl/pkg/config"
@@ -22,26 +22,26 @@ type LogsOptions struct {
 }
 
 var logsExamples = `
-	# Stream logs with selection of Kubemq operator
-	kubemqctl get operator logs
+	# Stream logs with selection of Kubemq connector
+	kubemqctl get connector logs
 
 	# Stream logs of all pods in default namespace
-	kubemqctl get operator logs .* -n default
+	kubemqctl get connector logs .* -n default
 
 	# Stream logs of regex base pods with logs since 10m ago
-	kubemqctl get operator logs kubemq-operator.* -s 10m
+	kubemqctl get connector logs kubemq-connector.* -s 10m
 
 	# Stream logs of regex base pods with logs since 10m ago include the string of 'connection'
-	kubemqctl get operator logs kubemq-operator.* -s 10m -i connection
+	kubemqctl get connector logs kubemq-connector.* -s 10m -i connection
 
 	# Stream logs of regex base pods with logs exclude the string of 'error'
-	kubemqctl get operator logs kubemq-operator.* -s 10m -e error
+	kubemqctl get connector logs kubemq-connector.* -s 10m -e error
 
 	# Stream logs of specific container
-	kubemqctl get operator logs -c kubemq-operator-0
+	kubemqctl get connector logs -c kubemq-connector-0
 `
 var logsLong = `Logs command allows to stream pods logs with powerful filtering capabilities`
-var logsShort = `Stream logs of Kubemq operator pods command`
+var logsShort = `Stream logs of Kubemq connector pods command`
 
 func NewCmdLogs(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &LogsOptions{
@@ -92,25 +92,25 @@ func (o *LogsOptions) Complete(args []string) error {
 	if err != nil {
 		return err
 	}
-	operatorManager, err := operator.NewManager(c)
+	connectorManager, err := connector.NewManager(c)
 	if err != nil {
 		return err
 	}
 	if len(args) == 0 {
-		operators, err := operatorManager.GetKubemqOperators()
+		connectors, err := connectorManager.GetKubemqConnectors()
 		if err != nil {
 			return err
 		}
 
-		if len(operators.List()) == 0 {
+		if len(connectors.List()) == 0 {
 			goto NEXT
 		}
 		selection := ""
 		prompt := &survey.Select{
 			Renderer: survey.Renderer{},
-			Message:  "Show logs for Kubemq operator:",
-			Options:  operators.List(),
-			Default:  operators.List()[0],
+			Message:  "Show logs for Kubemq connectors:",
+			Options:  connectors.List(),
+			Default:  connectors.List()[0],
 		}
 		err = survey.AskOne(prompt, &selection)
 		if err != nil {

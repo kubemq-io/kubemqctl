@@ -9,7 +9,7 @@ var clusterRoleBinding = `
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: kubemq-operator
+  name: {{.Name}}
   namespace: {{.Namespace}}
 subjects:
 - kind: ServiceAccount

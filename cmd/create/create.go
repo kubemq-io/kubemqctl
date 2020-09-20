@@ -3,6 +3,7 @@ package create
 import (
 	"context"
 	"github.com/kubemq-io/kubemqctl/cmd/create/cluster"
+	"github.com/kubemq-io/kubemqctl/cmd/create/connector"
 	"github.com/kubemq-io/kubemqctl/cmd/create/dashboard"
 	"github.com/kubemq-io/kubemqctl/cmd/create/operator"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
@@ -20,6 +21,9 @@ var createExamples = `
 
 	# Execute create Kubemq dashboard
 	kubemqctl create dashboard
+	
+    # Execute create Kubemq connector
+	kubemqctl create connector
 `
 var createLong = `Executes Kubemq create commands`
 var createShort = `Executes Kubemq create commands`
@@ -28,9 +32,8 @@ func NewCmdCreate(ctx context.Context, cfg *config.Config) *cobra.Command {
 
 	cmd := &cobra.Command{
 
-		Use: "create",
-		// cluster for backwards compatibility
-		Aliases:   []string{"c", "cluster"},
+		Use:       "create",
+		Aliases:   []string{"c"},
 		Short:     createShort,
 		Long:      createLong,
 		Example:   createExamples,
@@ -42,6 +45,7 @@ func NewCmdCreate(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd.AddCommand(cluster.NewCmdCreate(ctx, cfg))
 	cmd.AddCommand(operator.NewCmdCreate(ctx, cfg))
 	cmd.AddCommand(dashboard.NewCmdCreate(ctx, cfg))
+	cmd.AddCommand(connector.NewCmdCreate(ctx, cfg))
 
 	return cmd
 }

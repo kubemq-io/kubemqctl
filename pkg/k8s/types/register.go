@@ -2,6 +2,7 @@ package types
 
 import (
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/kubemqcluster"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/kubemqconnector"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/kubemqdashboard"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -24,6 +25,8 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 		&kubemqcluster.KubemqClusterList{},
 		&kubemqdashboard.KubemqDashboard{},
 		&kubemqdashboard.KubemqDashboardList{},
+		&kubemqconnector.KubemqConnector{},
+		&kubemqconnector.KubemqConnectorList{},
 	)
 
 	metav1.AddToGroupVersion(scheme, SchemeGroupVersion)

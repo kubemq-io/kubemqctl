@@ -1,10 +1,10 @@
-package cluster
+package connector
 
 import (
 	"context"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/cluster"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/connector"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/operator"
 	operatorTypes "github.com/kubemq-io/kubemqctl/pkg/k8s/types/operator"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
@@ -19,14 +19,14 @@ type CreateOptions struct {
 }
 
 var createExamples = `
-	# Create default Kubemq cluster
-	kubemqctl create cluster
+	# Create Kubemq connector
+	kubemqctl create connector
 	
-	# Create Kubemq cluster with options - get all flags
-	kubemqctl create cluster --help
+	# Create Kubemq connector with options - get all flags
+	kubemqctl create connector --help
 `
-var createLong = `Create command allows to deploy a Kubemq cluster with configuration options`
-var createShort = `Create a Kubemq cluster command`
+var createLong = `Create command allows to deploy a Kubemq connector with configuration options`
+var createShort = `Create a Kubemq connector command`
 
 func NewCmdCreate(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &CreateOptions{
@@ -34,9 +34,8 @@ func NewCmdCreate(ctx context.Context, cfg *config.Config) *cobra.Command {
 	}
 	cmd := &cobra.Command{
 
-		Use: "cluster",
-		// create for backwards compatibility
-		Aliases: []string{"c", "create"},
+		Use:     "connector",
+		Aliases: []string{"cn", "con"},
 		Short:   createShort,
 		Long:    createLong,
 		Example: createExamples,
@@ -50,7 +49,7 @@ func NewCmdCreate(ctx context.Context, cfg *config.Config) *cobra.Command {
 	}
 
 	o.deployOpts = defaultDeployOptions(cmd)
-	cmd.PersistentFlags().BoolVarP(&o.isDryRun, "dry-run", "", false, "generate cluster configuration without execute")
+	cmd.PersistentFlags().BoolVarP(&o.isDryRun, "dry-run", "", false, "generate connector configuration without execute")
 
 	return cmd
 }
@@ -76,7 +75,7 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	clusterManager, err := cluster.NewManager(newClient)
+	connectorManager, err := connector.NewManager(newClient)
 	if err != nil {
 		return err
 	}
@@ -84,7 +83,7 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	dep := o.deployOpts.getClusterDeployment()
+	dep := o.deployOpts.getConnectorDeployment()
 	if o.isDryRun {
 		utils.PrintlnfNoTitle(dep.String())
 		return nil
@@ -107,16 +106,17 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 		} else {
 			utils.Printlnf("Kubemq operator %s/kubemq-operator created.", dep.Namespace)
 		}
+
 	}
 
-	cluster, isUpdate, err := clusterManager.CreateOrUpdateKubemqCluster(dep)
+	connector, isUpdate, err := connectorManager.CreateOrUpdateKubemqConnector(dep)
 	if err != nil {
 		return err
 	}
 	if isUpdate {
-		utils.Printlnf("kubemq cluster %s/%s configured.", cluster.Namespace, cluster.Name)
+		utils.Printlnf("kubemq connector %s/%s configured.", connector.Namespace, connector.Name)
 	} else {
-		utils.Printlnf("kubemq cluster %s/%s created.", cluster.Namespace, cluster.Name)
+		utils.Printlnf("kubemq connector %s/%s created.", connector.Namespace, connector.Name)
 	}
 
 	return nil

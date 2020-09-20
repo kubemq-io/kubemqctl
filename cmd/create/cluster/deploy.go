@@ -17,7 +17,6 @@ type deployOptions struct {
 	api            *deployApiOptions
 	authentication *deployAuthenticationOptions
 	authorization  *deployAuthorizationOptions
-	gateway        *deployGatewayOptions
 	grpc           *deployGrpcOptions
 	health         *deployHealthOptions
 	image          *deployImageOptions
@@ -44,7 +43,6 @@ func defaultDeployOptions(cmd *cobra.Command) *deployOptions {
 		api:            setApiConfig(cmd),
 		authentication: setAuthenticationOptions(cmd),
 		authorization:  setAuthorizationConfig(cmd),
-		gateway:        setGatewayOptions(cmd),
 		grpc:           setGrpcConfig(cmd),
 		health:         setHealthOptions(cmd),
 		image:          setImageConfig(cmd),
@@ -85,9 +83,7 @@ func (o *deployOptions) validate() error {
 	if err := o.authorization.validate(); err != nil {
 		return err
 	}
-	if err := o.gateway.validate(); err != nil {
-		return err
-	}
+
 	if err := o.grpc.validate(); err != nil {
 		return err
 	}
@@ -152,9 +148,6 @@ func (o *deployOptions) complete() error {
 		return err
 	}
 	if err := o.authorization.complete(); err != nil {
-		return err
-	}
-	if err := o.gateway.complete(); err != nil {
 		return err
 	}
 	if err := o.grpc.complete(); err != nil {
@@ -234,7 +227,6 @@ func (o *deployOptions) getClusterDeployment() *kubemqcluster.KubemqCluster {
 			Notification:   nil,
 			Store:          nil,
 			Queue:          nil,
-			Gateways:       nil,
 		},
 		Status: kubemqcluster.KubemqClusterStatus{},
 	}
@@ -242,7 +234,6 @@ func (o *deployOptions) getClusterDeployment() *kubemqcluster.KubemqCluster {
 	o.api.setConfig(deployment)
 	o.authentication.setConfig(deployment)
 	o.authorization.setConfig(deployment)
-	o.gateway.setConfig(deployment)
 	o.grpc.setConfig(deployment)
 	o.health.setConfig(deployment)
 	o.image.setConfig(deployment)
