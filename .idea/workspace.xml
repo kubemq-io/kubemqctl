@@ -1,48 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="update for v2.0.4 release">
-      <change afterPath="$PROJECT_DIR$/cmd/create/connector/connector.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/create/connector/deploy.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/delete/connector/connector.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/get/connector/connector.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/get/connector/describe/describe.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/get/connector/logs/logs.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/connector-bridges-binding.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/kubemqconnector.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/manager/connector/kubemqconnector.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/manager/connector/manager.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/role.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/role_binding.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqconnector/deepcopy.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqconnector/kubemqconnector.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/kubemqconnector_crd..go" afterDir="false" />
+    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/cluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/cluster.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/deploy.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/deploy.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/gateway.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/create.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/create.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/dashboard/dashboard.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/dashboard/dashboard.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/delete/delete.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/delete/delete.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/get/get.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/get/get.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/get/operator/logs/logs.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/get/operator/logs/logs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/receive.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/send.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/stream.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/stream.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/api.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/api.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/cluster_role.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/cluster_role.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/cluster_role_binding.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/cluster_role_binding.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/manager.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/manager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/connector/connector.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/connector/connector.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/connector/deploy.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/connector/deploy.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/pod.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/deepcopy.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/deepcopy.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/gateway.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/kubemqcluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/kubemqcluster.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/operator/bundle.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/bundle.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/operator/cluster_role.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/cluster_role.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/operator/cluster_role_binding.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/cluster_role_binding.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/operator/kubemqclusters_crd..go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/kubemqclusters_crd..go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/operator/kubemqdashboard_crd..go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/kubemqdashboard_crd..go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/register.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/register.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,13 +168,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00029" summary="release v2.0.0">
-      <created>1568820789848</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1568820789848</updated>
     </task>
     <task id="LOCAL-00030" summary="remove homebrew file">
       <created>1568822518070</created>
@@ -547,7 +505,14 @@
       <option name="project" value="LOCAL" />
       <updated>1591383963221</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="update for v3.1.0 release">
+      <created>1600615849709</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1600615849723</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -582,7 +547,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="add get_license command for offline use" />
     <MESSAGE value="add error check for api call" />
     <MESSAGE value="add error handling on server disconnect" />
     <MESSAGE value="update readme" />
@@ -607,7 +571,8 @@
     <MESSAGE value="roll back to role changes" />
     <MESSAGE value="adding service account for kubemq cluster statefulset creation" />
     <MESSAGE value="fix for bad trim host name" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix for bad trim host name" />
+    <MESSAGE value="update for v3.1.0 release" />
+    <option name="LAST_COMMIT_MESSAGE" value="update for v3.1.0 release" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -621,10 +586,19 @@
       <screen x="1680" y="-1110" width="2560" height="1440" />
     </state>
     <state x="2595" y="-592" key="#com.intellij.fileTypes.FileTypeChooser/4240.-1110.2560.1440/1680.-1110.2560.1440/0.0.1680.1050@1680.-1110.2560.1440" timestamp="1600587842401" />
-    <state x="2461" y="-751" key="SettingsEditor" timestamp="1600590644372">
+    <state x="2524" y="-956" key="CommitChangelistDialog2" timestamp="1600615849157">
       <screen x="1680" y="-1110" width="2560" height="1440" />
     </state>
+    <state x="2524" y="-956" key="CommitChangelistDialog2/4240.-1110.2560.1440/1680.-1110.2560.1440/0.0.1680.1050@1680.-1110.2560.1440" timestamp="1600615849157" />
+    <state x="2461" y="-751" key="SettingsEditor" timestamp="1600667520862">
+      <screen x="1680" y="-1110" width="2560" height="1440" />
+    </state>
+    <state x="2461" y="-751" key="SettingsEditor/4240.-1087.2560.1417/1680.-1110.2560.1440/0.23.1680.1027@1680.-1110.2560.1440" timestamp="1600667520862" />
     <state x="2461" y="-751" key="SettingsEditor/4240.-1110.2560.1440/1680.-1110.2560.1440/0.0.1680.1050@1680.-1110.2560.1440" timestamp="1600590644372" />
+    <state x="2560" y="-654" key="Vcs.Push.Dialog.v2" timestamp="1600615851691">
+      <screen x="1680" y="-1110" width="2560" height="1440" />
+    </state>
+    <state x="2560" y="-654" key="Vcs.Push.Dialog.v2/4240.-1110.2560.1440/1680.-1110.2560.1440/0.0.1680.1050@1680.-1110.2560.1440" timestamp="1600615851691" />
     <state x="1292" y="754" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600527725210">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>

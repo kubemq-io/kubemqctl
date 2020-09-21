@@ -14,7 +14,7 @@ func PodStatus(p *v1.Pod) string {
 	if len(p.Status.ContainerStatuses) > 0 {
 		cs := p.Status.ContainerStatuses[0]
 		if cs.State.Running != nil {
-			fields["Current Status"] = fmt.Sprintf("Running")
+			fields["Current Status"] = "Running"
 		}
 		if cs.State.Waiting != nil {
 			fields["Current Status"] = fmt.Sprintf("Waiting (%s)", cs.State.Waiting.Reason)

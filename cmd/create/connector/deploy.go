@@ -65,7 +65,7 @@ func (o *deployOptions) complete() error {
 			Message: "Choose Connector type:",
 			Options: []string{"targets", "sources", "bridges"},
 		}
-		survey.AskOne(prompt, &o.connectorType)
+		_ = survey.AskOne(prompt, &o.connectorType)
 	}
 	if o.configFile != "" {
 		data, err := ioutil.ReadFile(o.configFile)
@@ -79,7 +79,7 @@ func (o *deployOptions) complete() error {
 			Message:  "Config file",
 			FileName: "*.yaml",
 		}
-		survey.AskOne(prompt, &o.configData)
+		_ = survey.AskOne(prompt, &o.configData)
 	}
 	return nil
 }

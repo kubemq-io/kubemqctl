@@ -138,7 +138,7 @@ func (o *ConfigOptions) Run(ctx context.Context) error {
 		if err != nil {
 			return err
 		}
-		if list == nil || len(list) == 0 {
+		if len(list) == 0 {
 			utils.Println("No Kubemq clusters were found for selection")
 		} else {
 			clusterSelected := ""
