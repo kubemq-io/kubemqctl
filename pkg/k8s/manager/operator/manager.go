@@ -149,13 +149,6 @@ func (m *Manager) DeleteKubemqOperator(deployment *operator.Deployment, isAll bo
 	}
 
 	if isAll {
-		//for _, crd := range deployment.CRDs {
-		//	err := m.DeleteCrd(crd)
-		//	if err != nil {
-		//		return fmt.Errorf("delete crd failed, error: %s", err.Error())
-		//	}
-		//}
-
 		err = m.DeleteClusterRole(deployment.ClusterRole)
 		if err != nil {
 			return fmt.Errorf("delete cluster role failed, error: %s", err.Error())
@@ -218,6 +211,7 @@ func (m *Manager) GetKubemqOperator(name, namespace string) (*operator.Deploymen
 	if crd != nil {
 		bundle.CRDs = append(bundle.CRDs, crd)
 	}
+
 	bundle.ClusterRole, _ = m.GetClusterRole("kubemq-operator")
 	bundle.ClusterRoleBinding, _ = m.GetClusterRoleBinding(fmt.Sprintf("kubemq-operator-%s-crb", namespace), namespace)
 	bundle.Role, _ = m.GetRole("kubemq-cluster", namespace)
@@ -238,6 +232,7 @@ func (m *Manager) GetKubemqOperators() (*Operators, error) {
 			return nil, err
 		}
 		if err := op.IsValid(); err == nil {
+
 			list = append(list, op)
 		}
 	}

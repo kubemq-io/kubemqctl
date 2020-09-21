@@ -3,11 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/connector/connector.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/connector/connector.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/connector/deploy.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/connector/deploy.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/pod.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/deepcopy.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/deepcopy.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/create.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/create.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/manager.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/manager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/operator/bundle.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/bundle.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +20,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="/usr/local/go" />
+  <component name="GOROOT" path="C:\Go" />
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -578,10 +577,11 @@
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1489" y="261" key="#GOROOT" timestamp="1600583955365">
-      <screen x="-2560" y="-390" width="2560" height="1440" />
+    <state x="-2555" y="763" key="#GOROOT" timestamp="1600674267271">
+      <screen x="-3840" y="0" width="3072" height="1688" />
     </state>
     <state x="-1489" y="261" key="#GOROOT/-2560.-390.2560.1440/0.0.1680.1050@-2560.-390.2560.1440" timestamp="1600583955365" />
+    <state x="-2555" y="763" key="#GOROOT/-3840.0.3072.1688/3840.0.3072.1688/0.0.3072.1688@-3840.0.3072.1688" timestamp="1600674267271" />
     <state x="2595" y="-592" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600587842401">
       <screen x="1680" y="-1110" width="2560" height="1440" />
     </state>
@@ -599,14 +599,19 @@
       <screen x="1680" y="-1110" width="2560" height="1440" />
     </state>
     <state x="2560" y="-654" key="Vcs.Push.Dialog.v2/4240.-1110.2560.1440/1680.-1110.2560.1440/0.0.1680.1050@1680.-1110.2560.1440" timestamp="1600615851691" />
+    <state x="93" y="93" width="2886" height="1502" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1600681497406">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="93" y="93" width="2886" height="1502" key="com.intellij.history.integration.ui.views.FileHistoryDialog/-3840.0.3072.1688/3840.0.3072.1688/0.0.3072.1688@0.0.3072.1688" timestamp="1600681497406" />
     <state x="1292" y="754" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600527725210">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1292" y="754" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-3840.0.3072.1688/3840.0.3072.1688/0.0.3072.1688@0.0.3072.1688" timestamp="1599043674673" />
     <state x="1292" y="754" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/3840.0.3072.1688/0.0.3072.1688/-3840.0.3072.1688@0.0.3072.1688" timestamp="1600527725210" />
-    <state x="1226" y="551" width="619" height="586" key="find.popup" timestamp="1600529494363">
+    <state x="1226" y="551" width="638" height="586" key="find.popup" timestamp="1600685505110">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
+    <state x="1226" y="551" width="638" height="586" key="find.popup/-3840.0.3072.1688/3840.0.3072.1688/0.0.3072.1688@0.0.3072.1688" timestamp="1600685505110" />
     <state x="1226" y="551" width="619" height="586" key="find.popup/3840.0.3072.1688/0.0.3072.1688/-3840.0.3072.1688@0.0.3072.1688" timestamp="1600529494363" />
   </component>
 </project>

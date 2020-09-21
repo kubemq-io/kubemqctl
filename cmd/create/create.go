@@ -22,7 +22,7 @@ var createExamples = `
 	# Execute create Kubemq dashboard
 	kubemqctl create dashboard
 	
-    # Execute create Kubemq connector
+	# Execute create Kubemq connector
 	kubemqctl create connector
 `
 var createLong = `Executes Kubemq create commands`
