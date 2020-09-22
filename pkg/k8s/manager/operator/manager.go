@@ -183,6 +183,10 @@ func (m *Manager) DeleteKubemqOperator(deployment *operator.Deployment, isAll bo
 
 	return nil
 }
+func (m *Manager) IsKubemqOperatorExists(namespace string) bool {
+	_, err := m.GetOperator("kubemq-operator", namespace)
+	return err == nil
+}
 
 func (m *Manager) GetKubemqOperator(name, namespace string) (*operator.Deployment, error) {
 	bundle := &operator.Deployment{

@@ -88,24 +88,18 @@ func (o *CreateOptions) Run(ctx context.Context) error {
 		utils.PrintlnfNoTitle(dep.String())
 		return nil
 	}
-	op, err := operatorManager.GetKubemqOperator("kubemq-operator", dep.Namespace)
-	if err != nil {
-		return err
-	}
-	if err := op.IsValid(); err != nil {
+	if !operatorManager.IsKubemqOperatorExists(dep.Namespace) {
 		operatorDeployment, err := operatorTypes.CreateDeployment("kubemq-operator", dep.Namespace)
 		if err != nil {
 			return err
 		}
-		_, isUpdated, err := operatorManager.CreateOrUpdateKubemqOperator(operatorDeployment)
+		_, _, err = operatorManager.CreateOrUpdateKubemqOperator(operatorDeployment)
 		if err != nil {
-			return nil
+			return err
 		}
-		if isUpdated {
-			utils.Printlnf("Kubemq operator %s/kubemq-operator configured.", dep.Namespace)
-		} else {
-			utils.Printlnf("Kubemq operator %s/kubemq-operator created.", dep.Namespace)
-		}
+		utils.Printlnf("Kubemq operator %s/kubemq-operator created.", dep.Namespace)
+	} else {
+		utils.Printlnf("Kubemq operator %s/kubemq-operator exists", dep.Namespace)
 	}
 
 	dashboard, isUpdate, err := dashabordManager.CreateOrUpdateKubemqDashboard(dep)

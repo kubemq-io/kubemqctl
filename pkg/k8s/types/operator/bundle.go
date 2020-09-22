@@ -40,7 +40,7 @@ func CreateDeployment(name, namespace string) (*Deployment, error) {
 		return nil, fmt.Errorf("error create operator bundle, cluster role error: %s", err.Error())
 	}
 
-	clusterRoleBinding, err := CreateClusterRoleBinding(fmt.Sprintf("kubemq-operator- ", namespace), namespace).Get()
+	clusterRoleBinding, err := CreateClusterRoleBinding(fmt.Sprintf("kubemq-operator-%s-crb", namespace), namespace).Get()
 	if err != nil {
 		return nil, fmt.Errorf("error create operator bundle, cluster role binding error: %s", err.Error())
 	}
