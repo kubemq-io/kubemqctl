@@ -7,6 +7,8 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	client2 "github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/cluster"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/operator"
+	operatorTypes "github.com/kubemq-io/kubemqctl/pkg/k8s/types/operator"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -63,7 +65,10 @@ func (o *DeleteOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-
+	operatorManager, err := operator.NewManager(client)
+	if err != nil {
+		return err
+	}
 	clusters, err := clusterManager.GetKubemqClusters()
 	if err != nil {
 		return err
@@ -104,7 +109,21 @@ func (o *DeleteOptions) Run(ctx context.Context) error {
 		return nil
 	}
 	for _, selected := range selection {
-		err := clusterManager.DeleteKubemqCluster(clusters.Cluster(selected))
+		cluster := clusters.Cluster(selected)
+		if !operatorManager.IsKubemqOperatorExists(cluster.Namespace) {
+			operatorDeployment, err := operatorTypes.CreateDeployment("kubemq-operator", cluster.Namespace)
+			if err != nil {
+				return err
+			}
+			_, _, err = operatorManager.CreateOrUpdateKubemqOperator(operatorDeployment)
+			if err != nil {
+				return err
+			}
+			utils.Printlnf("Kubemq operator %s/kubemq-operator created.", cluster.Namespace)
+		} else {
+			utils.Printlnf("Kubemq operator %s/kubemq-operator exists", cluster.Namespace)
+		}
+		err := clusterManager.DeleteKubemqCluster(cluster)
 		if err != nil {
 			return err
 		}

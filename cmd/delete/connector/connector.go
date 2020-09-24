@@ -7,6 +7,8 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	client2 "github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/connector"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/operator"
+	operatorTypes "github.com/kubemq-io/kubemqctl/pkg/k8s/types/operator"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -64,6 +66,10 @@ func (o *DeleteOptions) Run(ctx context.Context) error {
 		return err
 	}
 
+	operatorManager, err := operator.NewManager(client)
+	if err != nil {
+		return err
+	}
 	connectors, err := connectorManager.GetKubemqConnectors()
 	if err != nil {
 		return err
@@ -104,7 +110,21 @@ func (o *DeleteOptions) Run(ctx context.Context) error {
 		return nil
 	}
 	for _, selected := range selection {
-		err := connectorManager.DeleteKubemqConnector(connectors.Connector(selected))
+		connector := connectors.Connector(selected)
+		if !operatorManager.IsKubemqOperatorExists(connector.Namespace) {
+			operatorDeployment, err := operatorTypes.CreateDeployment("kubemq-operator", connector.Namespace)
+			if err != nil {
+				return err
+			}
+			_, _, err = operatorManager.CreateOrUpdateKubemqOperator(operatorDeployment)
+			if err != nil {
+				return err
+			}
+			utils.Printlnf("Kubemq operator %s/kubemq-operator created.", connector.Namespace)
+		} else {
+			utils.Printlnf("Kubemq operator %s/kubemq-operator exists", connector.Namespace)
+		}
+		err := connectorManager.DeleteKubemqConnector(connector)
 		if err != nil {
 			return err
 		}

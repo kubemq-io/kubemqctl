@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/operator"
+	appsv1 "k8s.io/api/apps/v1"
 	apiv1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -141,45 +142,53 @@ func (m *Manager) CreateOrUpdateKubemqOperator(operatorDeployment *operator.Depl
 	}
 	return newBundle, isBundleUpdated, nil
 }
-
-func (m *Manager) DeleteKubemqOperator(deployment *operator.Deployment, isAll bool) error {
-	err := m.DeleteOperator(deployment.Deployment)
+func (m *Manager) DeleteKubemqOperatorDeployment(deployment *appsv1.Deployment) error {
+	err := m.DeleteOperator(deployment)
 	if err != nil {
 		return fmt.Errorf("delete operator failed, error: %s", err.Error())
 	}
 
-	if isAll {
-		err = m.DeleteClusterRole(deployment.ClusterRole)
-		if err != nil {
-			return fmt.Errorf("delete cluster role failed, error: %s", err.Error())
-		}
-
-		err = m.DeleteClusterRoleBinding(deployment.ClusterRoleBinding)
-		if err != nil {
-			return fmt.Errorf("delete cluster role binding failed, error: %s", err.Error())
-		}
-		if deployment.Role != nil {
-			err = m.DeleteRole(deployment.Role)
-			if err != nil {
-				return fmt.Errorf("delete role failed, error: %s", err.Error())
-			}
-		}
-
-		if deployment.RoleBinding != nil {
-			err = m.DeleteRoleBinding(deployment.RoleBinding)
-			if err != nil {
-				return fmt.Errorf("delete role binding failed, error: %s", err.Error())
-			}
-		}
-		err = m.DeleteServiceAccount(deployment.OperatorServiceAccount)
-		if err != nil {
-			return fmt.Errorf("delete service acount failed, error: %s", err.Error())
-		}
-		err = m.DeleteServiceAccount(deployment.ClusterServiceAccount)
-		if err != nil {
-			return fmt.Errorf("delete service acount failed, error: %s", err.Error())
-		}
-	}
+	return nil
+}
+func (m *Manager) RemoveAll() error {
+	//
+	//err := m.DeleteOperator(deployment.Deployment)
+	//if err != nil {
+	//	return fmt.Errorf("delete operator failed, error: %s", err.Error())
+	//}
+	//
+	//if isAll {
+	//	err = m.DeleteClusterRole(deployment.ClusterRole)
+	//	if err != nil {
+	//		return fmt.Errorf("delete cluster role failed, error: %s", err.Error())
+	//	}
+	//
+	//	err = m.DeleteClusterRoleBinding(deployment.ClusterRoleBinding)
+	//	if err != nil {
+	//		return fmt.Errorf("delete cluster role binding failed, error: %s", err.Error())
+	//	}
+	//	if deployment.Role != nil {
+	//		err = m.DeleteRole(deployment.Role)
+	//		if err != nil {
+	//			return fmt.Errorf("delete role failed, error: %s", err.Error())
+	//		}
+	//	}
+	//
+	//	if deployment.RoleBinding != nil {
+	//		err = m.DeleteRoleBinding(deployment.RoleBinding)
+	//		if err != nil {
+	//			return fmt.Errorf("delete role binding failed, error: %s", err.Error())
+	//		}
+	//	}
+	//	err = m.DeleteServiceAccount(deployment.OperatorServiceAccount)
+	//	if err != nil {
+	//		return fmt.Errorf("delete service acount failed, error: %s", err.Error())
+	//	}
+	//	err = m.DeleteServiceAccount(deployment.ClusterServiceAccount)
+	//	if err != nil {
+	//		return fmt.Errorf("delete service acount failed, error: %s", err.Error())
+	//	}
+	//}
 
 	return nil
 }
@@ -224,7 +233,7 @@ func (m *Manager) GetKubemqOperator(name, namespace string) (*operator.Deploymen
 	bundle.ClusterServiceAccount, _ = m.GetServiceAccount("kubemq-cluster", namespace)
 	return bundle, nil
 }
-func (m *Manager) GetKubemqOperators() (*Operators, error) {
+func (m *Manager) GetKubemqOperatorsBundle() (*Operators, error) {
 	nsList, err := m.GetNamespaceList()
 	if err != nil {
 		return nil, err
@@ -235,10 +244,25 @@ func (m *Manager) GetKubemqOperators() (*Operators, error) {
 		if err != nil {
 			return nil, err
 		}
-		if err := op.IsValid(); err == nil {
 
+		if err := op.IsValid(); err == nil {
 			list = append(list, op)
 		}
 	}
 	return newOperators(list), nil
+}
+func (m *Manager) GetKubemqOperatorsDeployments() ([]*appsv1.Deployment, error) {
+	nsList, err := m.GetNamespaceList()
+	if err != nil {
+		return nil, err
+	}
+	var list []*appsv1.Deployment
+	for i := 0; i < len(nsList); i++ {
+		op, err := m.GetOperator("kubemq-operator", nsList[i])
+		if err == nil {
+			list = append(list, op)
+		}
+
+	}
+	return list, nil
 }

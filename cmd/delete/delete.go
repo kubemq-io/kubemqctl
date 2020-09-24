@@ -3,6 +3,7 @@ package delete
 import (
 	"context"
 	"github.com/kubemq-io/kubemqctl/cmd/delete/cluster"
+	"github.com/kubemq-io/kubemqctl/cmd/delete/components"
 	"github.com/kubemq-io/kubemqctl/cmd/delete/connector"
 	"github.com/kubemq-io/kubemqctl/cmd/delete/dashboard"
 	"github.com/kubemq-io/kubemqctl/cmd/delete/operator"
@@ -24,6 +25,9 @@ var deleteExample = `
 
    # Execute delete Kubemq Connector
 	kubemqctl delete connector
+
+   # Execute delete Kubemq Components
+	kubemqctl delete connector
 `
 var createLong = `Executes delete commands`
 var createShort = `Executes delete commands`
@@ -37,7 +41,7 @@ func NewCmdDelete(ctx context.Context, cfg *config.Config) *cobra.Command {
 		Short:     createShort,
 		Long:      createLong,
 		Example:   deleteExample,
-		ValidArgs: []string{"cluster", "operator", "dashboard", "connector"},
+		ValidArgs: []string{"cluster", "operator", "dashboard", "connector", "component"},
 		Run: func(cmd *cobra.Command, args []string) {
 			utils.CheckErr(cmd.Help())
 		},
@@ -46,5 +50,6 @@ func NewCmdDelete(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd.AddCommand(operator.NewCmdDelete(ctx, cfg))
 	cmd.AddCommand(dashboard.NewCmdDelete(ctx, cfg))
 	cmd.AddCommand(connector.NewCmdDelete(ctx, cfg))
+	cmd.AddCommand(components.NewCmdDelete(ctx, cfg))
 	return cmd
 }

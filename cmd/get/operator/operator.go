@@ -69,20 +69,21 @@ func (o *GetOptions) Run(ctx context.Context) error {
 	}
 
 	utils.Println("Getting Kubemq Operators List...")
-	operators, err := operatorManager.GetKubemqOperators()
+	operators, err := operatorManager.GetKubemqOperatorsDeployments()
 	if err != nil {
 		return err
 	}
-	if len(operators.List()) == 0 {
+	if len(operators) == 0 {
 		return fmt.Errorf("no Kubemq operators were found in the cluster")
 	}
 	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
-	fmt.Fprintf(w, "OPERATOR\n")
-	for _, item := range operators.List() {
-		fmt.Fprintf(w, "%s\n",
-			item,
+	fmt.Fprintf(w, "NAME\tNAMSPACE\n")
+	for _, item := range operators {
+		fmt.Fprintf(w, "%s\t%s\n",
+			item.Name,
+			item.Namespace,
 		)
 	}
-	w.Flush()
+	_ = w.Flush()
 	return nil
 }

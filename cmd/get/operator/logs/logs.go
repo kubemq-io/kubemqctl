@@ -97,7 +97,7 @@ func (o *LogsOptions) Complete(args []string) error {
 		return err
 	}
 	if len(args) == 0 {
-		operators, err := operatorManager.GetKubemqOperators()
+		operators, err := operatorManager.GetKubemqOperatorsBundle()
 		if err != nil {
 			return err
 		}

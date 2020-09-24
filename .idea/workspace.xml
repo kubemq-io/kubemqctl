@@ -2,11 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/cmd/delete/components/components.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/create.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/create.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/delete/cluster/cluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/delete/cluster/cluster.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/delete/connector/connector.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/delete/connector/connector.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/delete/dashboard/dashboard.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/delete/dashboard/dashboard.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/delete/delete.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/delete/delete.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/delete/operator/operator.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/delete/operator/operator.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/get/operator/logs/logs.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/get/operator/logs/logs.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/get/operator/operator.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/get/operator/operator.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/manager.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/manager.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/operator/bundle.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/bundle.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +34,9 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GoVcsConfiguration">
+    <option name="GO_FMT" value="false" />
+  </component>
   <component name="KubernetesApiPersistence">
     <option name="context" value="docker-for-desktop" />
     <option name="namespace" value="default" />
@@ -43,7 +51,6 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="DefaultGoTemplateProperty" value="Go File" />
-    <property name="GO_FMT" value="false" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Markdown" />
@@ -54,7 +61,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/get/connector" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/delete" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -62,19 +69,19 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/cmd/get/connector" />
-      <recent name="$PROJECT_DIR$/pkg/k8s/types/operator" />
-      <recent name="$PROJECT_DIR$/cmd/get" />
-      <recent name="$PROJECT_DIR$/cmd/delete" />
-      <recent name="$PROJECT_DIR$/cmd/create" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\set\cluster" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\manager\operator" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\scale\cluster" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get\cluster" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\set" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\delete" />
+      <recent name="$PROJECT_DIR$/cmd/get/connector" />
+      <recent name="$PROJECT_DIR$/pkg/k8s/types/operator" />
+      <recent name="$PROJECT_DIR$/cmd/get" />
+      <recent name="$PROJECT_DIR$/cmd/delete" />
     </key>
   </component>
   <component name="RunManager" selected="Go Test.go test github.com/kubemq-io/kubemqctl/pkg/k8s/deployment (1)">
@@ -167,20 +174,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00030" summary="remove homebrew file">
-      <created>1568822518070</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1568822518070</updated>
-    </task>
-    <task id="LOCAL-00031" summary="update readme">
-      <created>1568826783165</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1568826783165</updated>
     </task>
     <task id="LOCAL-00032" summary="update readme">
       <created>1568874122653</created>
@@ -511,7 +504,21 @@
       <option name="project" value="LOCAL" />
       <updated>1600615849723</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="update for v3.1.1 release">
+      <created>1600694709092</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1600694709092</updated>
+    </task>
+    <task id="LOCAL-00080" summary="-v3.1.1 - check operator deployment before create">
+      <created>1600759901254</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1600759901254</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -546,8 +553,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="add error check for api call" />
-    <MESSAGE value="add error handling on server disconnect" />
     <MESSAGE value="update readme" />
     <MESSAGE value="refactor all deployment" />
     <MESSAGE value="adding attributes to statefulset" />
@@ -571,7 +576,9 @@
     <MESSAGE value="adding service account for kubemq cluster statefulset creation" />
     <MESSAGE value="fix for bad trim host name" />
     <MESSAGE value="update for v3.1.0 release" />
-    <option name="LAST_COMMIT_MESSAGE" value="update for v3.1.0 release" />
+    <MESSAGE value="update for v3.1.1 release" />
+    <MESSAGE value="-v3.1.1 - check operator deployment before create" />
+    <option name="LAST_COMMIT_MESSAGE" value="-v3.1.1 - check operator deployment before create" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -586,18 +593,20 @@
       <screen x="1680" y="-1110" width="2560" height="1440" />
     </state>
     <state x="2595" y="-592" key="#com.intellij.fileTypes.FileTypeChooser/4240.-1110.2560.1440/1680.-1110.2560.1440/0.0.1680.1050@1680.-1110.2560.1440" timestamp="1600587842401" />
-    <state x="2524" y="-956" key="CommitChangelistDialog2" timestamp="1600615849157">
-      <screen x="1680" y="-1110" width="2560" height="1440" />
+    <state x="1013" y="181" width="1366" height="1348" key="CommitChangelistDialog2" timestamp="1600759900463">
+      <screen x="0" y="0" width="3072" height="1688" />
     </state>
+    <state x="1013" y="181" width="1366" height="1348" key="CommitChangelistDialog2/-3840.0.3072.1688/3840.0.3072.1688/0.0.3072.1688@0.0.3072.1688" timestamp="1600759900463" />
     <state x="2524" y="-956" key="CommitChangelistDialog2/4240.-1110.2560.1440/1680.-1110.2560.1440/0.0.1680.1050@1680.-1110.2560.1440" timestamp="1600615849157" />
     <state x="2461" y="-751" key="SettingsEditor" timestamp="1600667520862">
       <screen x="1680" y="-1110" width="2560" height="1440" />
     </state>
     <state x="2461" y="-751" key="SettingsEditor/4240.-1087.2560.1417/1680.-1110.2560.1440/0.23.1680.1027@1680.-1110.2560.1440" timestamp="1600667520862" />
     <state x="2461" y="-751" key="SettingsEditor/4240.-1110.2560.1440/1680.-1110.2560.1440/0.0.1680.1050@1680.-1110.2560.1440" timestamp="1600590644372" />
-    <state x="2560" y="-654" key="Vcs.Push.Dialog.v2" timestamp="1600615851691">
-      <screen x="1680" y="-1110" width="2560" height="1440" />
+    <state x="1056" y="535" key="Vcs.Push.Dialog.v2" timestamp="1600759906090">
+      <screen x="0" y="0" width="3072" height="1688" />
     </state>
+    <state x="1056" y="535" key="Vcs.Push.Dialog.v2/-3840.0.3072.1688/3840.0.3072.1688/0.0.3072.1688@0.0.3072.1688" timestamp="1600759906090" />
     <state x="2560" y="-654" key="Vcs.Push.Dialog.v2/4240.-1110.2560.1440/1680.-1110.2560.1440/0.0.1680.1050@1680.-1110.2560.1440" timestamp="1600615851691" />
     <state x="93" y="93" width="2886" height="1502" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1600681497406">
       <screen x="0" y="0" width="3072" height="1688" />
