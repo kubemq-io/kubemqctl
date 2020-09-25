@@ -7,6 +7,12 @@ vars:
   VERSION: v3.1.1
 
 tasks:
+  check_update:
+    cmds:
+      - go list -u -m -json -mod=mod all | go-mod-outdated -update -direct
+  lint:
+    cmds:
+      - golangci-lint run --disable gocritic --enable misspell --enable gosec
   default:
     cmds:
       - go mod tidy

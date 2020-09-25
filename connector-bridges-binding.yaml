@@ -1,14 +1,33 @@
 bindings:
-  - name: bridges-example-binding
+  - name: cluster-a-d-events-aggregate1
     properties:
-      log_level: "error"
+      log_level: "debug"
     sources:
       kind: source.events
       name: cluster-sources
       connections:
         - address: "kubemq-cluster-grpc:50000"
-          client_id: "cluster-events-source"
-          channel: "events.source"
+          client_id: "cluster-a-events-source"
+          auth_token: ""
+          channel: "events.a"
+          group:   ""
+          concurrency: "1"
+          auto_reconnect: "true"
+          reconnect_interval_seconds: "1"
+          max_reconnects: "0"
+        - address: "kubemq-cluster-grpc:50000"
+          client_id: "cluster-b-events-source"
+          auth_token: ""
+          channel: "events.b"
+          group:   ""
+          concurrency: "1"
+          auto_reconnect: "true"
+          reconnect_interval_seconds: "1"
+          max_reconnects: "0"
+        - address: "kubemq-cluster-grpc:50000"
+          client_id: "cluster-c-d-events-source"
+          auth_token: ""
+          channel: "events.c"
           group:   ""
           concurrency: "1"
           auto_reconnect: "true"
@@ -19,5 +38,6 @@ bindings:
       name: cluster-targets
       connections:
         - address: "kubemq-cluster-grpc:50000"
-          client_id: "cluster-events-target"
-          channels: "events.target"
+          client_id: "cluster-a-d-events-target"
+          auth_token: ""
+          channels: "events.aggregate"
