@@ -2,6 +2,7 @@ package root
 
 import (
 	"context"
+	"github.com/kubemq-io/kubemqctl/cmd/build"
 	"github.com/kubemq-io/kubemqctl/cmd/get"
 	"github.com/kubemq-io/kubemqctl/cmd/scale"
 	"github.com/kubemq-io/kubemqctl/cmd/set"
@@ -73,7 +74,7 @@ func Execute(version string, args []string) {
 	rootCmd.AddCommand(get.NewCmdGet(ctx, cfg))
 	rootCmd.AddCommand(scale.NewCmdScale(ctx, cfg))
 	rootCmd.AddCommand(set.NewCmdSet(ctx, cfg))
-
+	rootCmd.AddCommand(build.NewCmdBuild(ctx, cfg))
 	//_ = doc.GenMarkdownTree(rootCmd, "./docs")
 
 	utils.CheckErr(rootCmd.Execute())

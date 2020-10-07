@@ -7,14 +7,14 @@ import (
 )
 
 type KubemqClusters struct {
-	items []*kubemqcluster.KubemqCluster
+	Items []*kubemqcluster.KubemqCluster
 	m     map[string]*kubemqcluster.KubemqCluster
 	list  []string
 }
 
 func newKubemqClusters(items []*kubemqcluster.KubemqCluster) *KubemqClusters {
 	k := &KubemqClusters{
-		items: items,
+		Items: items,
 		m:     map[string]*kubemqcluster.KubemqCluster{},
 		list:  []string{},
 	}
