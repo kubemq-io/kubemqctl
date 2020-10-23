@@ -11,7 +11,6 @@ type Manager struct {
 }
 
 func NewManager(c *client.Client) (*Manager, error) {
-
 	return &Manager{
 		client: c,
 	}, nil
@@ -21,11 +20,11 @@ func (m *Manager) CreateOrUpdateKubemqConnector(connector *kubemqconnector.Kubem
 	found, err := m.client.ClientV1Alpha1.KubemqConnector(connector.Namespace).Get(connector.Name, metav1.GetOptions{})
 	if err == nil && found != nil {
 		connector.ResourceVersion = found.ResourceVersion
-		updatedDashboard, err := m.client.ClientV1Alpha1.KubemqConnector(connector.Namespace).Update(connector)
+		updatedUpdate, err := m.client.ClientV1Alpha1.KubemqConnector(connector.Namespace).Update(connector)
 		if err != nil {
 			return nil, true, err
 		}
-		return updatedDashboard, true, nil
+		return updatedUpdate, true, nil
 	}
 
 	newDashboard, err := m.client.ClientV1Alpha1.KubemqConnector(connector.Namespace).Create(connector)
@@ -52,19 +51,15 @@ func (m *Manager) GetConnector(name, namespace string) (*kubemqconnector.KubemqC
 }
 
 func (m *Manager) GetKubemqConnectors() (*KubemqConnectors, error) {
-	nsList, err := m.client.GetNamespaceList()
+	var list []*kubemqconnector.KubemqConnector
+	values, err := m.client.ClientV1Alpha1.KubemqConnector("").List(metav1.ListOptions{})
 	if err != nil {
 		return nil, err
 	}
-	var list []*kubemqconnector.KubemqConnector
-	for i := 0; i < len(nsList); i++ {
-		connectors, err := m.client.ClientV1Alpha1.KubemqConnector(nsList[i]).List(metav1.ListOptions{})
-		if err != nil {
-			return nil, err
-		}
-		for i := 0; i < len(connectors.Items); i++ {
-			list = append(list, &connectors.Items[i])
-		}
+
+	for i := 0; i < len(values.Items); i++ {
+		list = append(list, &values.Items[i])
 	}
-	return newKubemqConnectors(list), nil
+	connectors := newKubemqConnectors().SetItems(list)
+	return connectors, nil
 }

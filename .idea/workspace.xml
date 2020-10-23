@@ -2,12 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cmd/build/build.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/markdown-navigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/markdown-navigator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/build/cluster.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/build/connector.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/build/deploy.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/build/resources.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/manage/cluster/cluster.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/manage/connector/connector.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/manage/connector/dto.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/manage/connector/handler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/manage/manage.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/build/build.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/build/build.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/root/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root/root.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/cluster/kubemqclusters.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/cluster/kubemqclusters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/connector/kubemqconnector.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/connector/kubemqconnector.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/connector/manager.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/connector/manager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/utils/helpers.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/utils/helpers.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,19 +75,19 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\set\cluster" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\manager\operator" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\scale\cluster" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get\cluster" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\set" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\delete" />
       <recent name="$PROJECT_DIR$/cmd/get/connector" />
       <recent name="$PROJECT_DIR$/pkg/k8s/types/operator" />
       <recent name="$PROJECT_DIR$/cmd/get" />
       <recent name="$PROJECT_DIR$/cmd/delete" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\manage\connector" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\set\cluster" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\manager\operator" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\scale\cluster" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get\cluster" />
     </key>
   </component>
   <component name="RunManager" selected="Go Test.go test github.com/kubemq-io/kubemqctl/pkg/k8s/deployment (1)">
@@ -600,6 +610,10 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1550" y="638" key="FileChooserDialogImpl/3840.0.3072.1688/0.0.3072.1688/716.2160.1920.1040@0.0.3072.1688" timestamp="1601990810359" />
+    <state x="1267" y="766" width="727" height="155" key="GitCloneDialog" timestamp="1602128857527">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="1267" y="766" width="727" height="155" key="GitCloneDialog/0.0.3072.1688/-3840.0.3072.1688/3840.0.2560.1400@0.0.3072.1688" timestamp="1602128857527" />
     <state x="937" y="347" width="1679" height="1100" key="SettingsEditor" timestamp="1601991030145">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
@@ -623,10 +637,11 @@
     <state x="1292" y="754" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-3840.0.3072.1688/3840.0.3072.1688/0.0.3072.1688@0.0.3072.1688" timestamp="1599043674673" />
     <state x="1292" y="754" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/3840.0.3072.1688/0.0.3072.1688/-3840.0.3072.1688@0.0.3072.1688" timestamp="1600527725210" />
     <state x="1292" y="754" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/3840.0.3072.1688/716.2160.1920.1040/0.0.3072.1688@0.0.3072.1688" timestamp="1602052473122" />
-    <state x="1226" y="551" width="638" height="586" key="find.popup" timestamp="1600685505110">
+    <state x="1226" y="551" width="1565" height="807" key="find.popup" timestamp="1603353454116">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1226" y="551" width="638" height="586" key="find.popup/-3840.0.3072.1688/3840.0.3072.1688/0.0.3072.1688@0.0.3072.1688" timestamp="1600685505110" />
+    <state x="1226" y="551" width="1565" height="807" key="find.popup/0.0.3072.1688/-3840.0.3072.1688/3840.0.2560.1400@0.0.3072.1688" timestamp="1603353454116" />
     <state x="1226" y="551" width="619" height="586" key="find.popup/3840.0.3072.1688/0.0.3072.1688/-3840.0.3072.1688@0.0.3072.1688" timestamp="1600529494363" />
   </component>
 </project>
