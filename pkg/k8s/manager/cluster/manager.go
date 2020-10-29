@@ -52,21 +52,17 @@ func (m *Manager) GetCluster(name, namespace string) (*kubemqcluster.KubemqClust
 }
 
 func (m *Manager) GetKubemqClusters() (*KubemqClusters, error) {
-	nsList, err := m.client.GetNamespaceList()
+	var list []*kubemqcluster.KubemqCluster
+	values, err := m.client.ClientV1Alpha1.KubemqClusters("").List(metav1.ListOptions{})
 	if err != nil {
 		return nil, err
 	}
-	var list []*kubemqcluster.KubemqCluster
-	for i := 0; i < len(nsList); i++ {
-		clusters, err := m.client.ClientV1Alpha1.KubemqClusters(nsList[i]).List(metav1.ListOptions{})
-		if err != nil {
-			return nil, err
-		}
-		for i := 0; i < len(clusters.Items); i++ {
-			list = append(list, &clusters.Items[i])
-		}
+
+	for i := 0; i < len(values.Items); i++ {
+		list = append(list, &values.Items[i])
 	}
-	return newKubemqClusters(list), nil
+	connectors := newKubemqClusters().SetItems(list)
+	return connectors, nil
 }
 
 func (m *Manager) ScaleKubemqCluster(cluster *kubemqcluster.KubemqCluster, scaleTo int32) error {

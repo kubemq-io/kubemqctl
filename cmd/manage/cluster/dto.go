@@ -1,36 +1,14 @@
-package build
+package cluster
 
 import (
-	clusterbuilder "github.com/kubemq-hub/builder/cluster"
+	builder "github.com/kubemq-hub/builder/cluster"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/cluster"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/kubemqcluster"
-	"github.com/kubemq-io/kubemqctl/pkg/utils"
+
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-type ClustersBuilder struct {
-	deployments []*kubemqcluster.KubemqCluster
-	resources   *resources
-}
-
-func newClustersBuilder() *ClustersBuilder {
-	return &ClustersBuilder{}
-}
-func (c *ClustersBuilder) SetResources(value *resources) *ClustersBuilder {
-	c.resources = value
-	return c
-}
-
-func (c *ClustersBuilder) render() error {
-	cluster, err := clusterbuilder.
-		NewCluster(nil).
-		Render()
-	if err != nil {
-		return err
-	}
-	if err := c.resources.updateClusterName(cluster.Namespace, cluster.Name); err != nil {
-		return err
-	}
-
+func ToDeployment(cluster *builder.Cluster) *kubemqcluster.KubemqCluster {
 	deployment := &kubemqcluster.KubemqCluster{
 		TypeMeta: v1.TypeMeta{
 			Kind:       "KubemqCluster",
@@ -38,7 +16,7 @@ func (c *ClustersBuilder) render() error {
 		},
 		ObjectMeta: v1.ObjectMeta{
 			Name:      cluster.Name,
-			Namespace: cluster.Name,
+			Namespace: cluster.Namespace,
 		},
 		Spec: kubemqcluster.KubemqClusterSpec{
 			Replicas:       new(int32),
@@ -216,19 +194,188 @@ func (c *ClustersBuilder) render() error {
 		*deployment.Spec.Queue.DefaultVisibilitySeconds = int32(cluster.Queue.DefaultVisibilitySeconds)
 		*deployment.Spec.Queue.DefaultWaitTimeoutSeconds = int32(cluster.Queue.DefaultWaitTimeoutSeconds)
 	}
-	c.deployments = append(c.deployments, deployment)
-	return nil
+	return deployment
 }
-func (c *ClustersBuilder) add() error {
-	for {
-		utils.Println("Adding new KubeMQ Cluster:")
-		if err := c.render(); err != nil {
-			utils.Printlnf("Error adding new KubeMQ Cluster: %s", err.Error())
-		} else {
-			utils.Println("Adding new KubeMQ Cluster completed successfully!")
-			return nil
-		}
 
+func FromDeployment(deployment *kubemqcluster.KubemqCluster) *builder.Cluster {
+	cluster := &builder.Cluster{
+		Name:           deployment.Name,
+		Namespace:      deployment.Namespace,
+		Replicas:       0,
+		Authentication: nil,
+		Authorization:  nil,
+		Health:         nil,
+		Image:          nil,
+		License:        deployment.Spec.License,
+		Log:            nil,
+		NodeSelectors:  nil,
+		Notification:   nil,
+		Queue:          nil,
+		Resource:       nil,
+		Api:            nil,
+		Grpc:           nil,
+		Rest:           nil,
+		Routing:        nil,
+		Store:          nil,
+		Tls:            nil,
+		Volume:         nil,
+		Status:         nil,
+	}
+	spec := deployment.Spec
+	if spec.Replicas != nil {
+		cluster.Replicas = int(*spec.Replicas)
 	}
 
+	if spec.Authentication != nil {
+		cluster.Authentication = &builder.Authentication{
+			Key:  spec.Authentication.Key,
+			Type: spec.Authentication.Type,
+		}
+	}
+
+	if spec.Authorization != nil {
+		cluster.Authorization = &builder.Authorization{
+			Policy:     spec.Authorization.Policy,
+			Url:        spec.Authorization.Url,
+			AutoReload: int(spec.Authorization.AutoReload),
+		}
+	}
+
+	if spec.Health != nil {
+		cluster.Health = &builder.Health{
+			Enabled:             spec.Health.Enabled,
+			InitialDelaySeconds: int(spec.Health.InitialDelaySeconds),
+			PeriodSeconds:       int(spec.Health.PeriodSeconds),
+			TimeoutSeconds:      int(spec.Health.TimeoutSeconds),
+			SuccessThreshold:    int(spec.Health.SuccessThreshold),
+			FailureThreshold:    int(spec.Health.FailureThreshold),
+		}
+	}
+	if spec.Image != nil {
+		cluster.Image = &builder.Image{
+			Image:      spec.Image.Image,
+			PullPolicy: spec.Image.PullPolicy,
+		}
+	}
+
+	if spec.Log != nil {
+		cluster.Log = &builder.Log{
+			Level: int(*spec.Log.Level),
+		}
+	}
+	if spec.NodeSelectors != nil {
+		cluster.NodeSelectors = map[string]string{}
+		for key, val := range spec.NodeSelectors.Keys {
+			cluster.NodeSelectors[key] = val
+		}
+	}
+	if spec.Notification != nil {
+		cluster.Notification = &builder.Notification{
+			Prefix:  spec.Notification.Prefix,
+			Enabled: spec.Notification.Enabled,
+		}
+	}
+	if spec.Queue != nil {
+		cluster.Queue = &builder.Queue{
+			MaxReceiveMessagesRequest: int(*spec.Queue.MaxReceiveMessagesRequest),
+			MaxWaitTimeoutSeconds:     int(*spec.Queue.MaxWaitTimeoutSeconds),
+			MaxExpirationSeconds:      int(*spec.Queue.MaxExpirationSeconds),
+			MaxDelaySeconds:           int(*spec.Queue.MaxDelaySeconds),
+			MaxReQueues:               int(*spec.Queue.MaxReQueues),
+			MaxVisibilitySeconds:      int(*spec.Queue.MaxVisibilitySeconds),
+			DefaultVisibilitySeconds:  int(*spec.Queue.DefaultVisibilitySeconds),
+			DefaultWaitTimeoutSeconds: int(*spec.Queue.DefaultWaitTimeoutSeconds),
+		}
+	}
+	if spec.Resources != nil {
+		cluster.Resource = &builder.Resource{
+			LimitsCpu:      spec.Resources.LimitsCpu,
+			LimitsMemory:   spec.Resources.LimitsMemory,
+			RequestsCpu:    spec.Resources.RequestsCpu,
+			RequestsMemory: spec.Resources.RequestsMemory,
+		}
+	}
+	if spec.Api != nil {
+		cluster.Api = &builder.Service{
+			NodePort:   int(spec.Api.NodePort),
+			Expose:     spec.Api.Expose,
+			BufferSize: 0,
+			BodyLimit:  0,
+		}
+	}
+	if spec.Grpc != nil {
+		cluster.Grpc = &builder.Service{
+			NodePort:   int(spec.Grpc.NodePort),
+			Expose:     spec.Grpc.Expose,
+			BufferSize: int(spec.Grpc.BufferSize),
+			BodyLimit:  int(spec.Grpc.BodyLimit),
+		}
+	}
+	if spec.Rest != nil {
+		cluster.Rest = &builder.Service{
+			NodePort:   int(spec.Rest.NodePort),
+			Expose:     spec.Rest.Expose,
+			BufferSize: int(spec.Rest.BufferSize),
+			BodyLimit:  int(spec.Rest.BodyLimit),
+		}
+	}
+	if spec.Routing != nil {
+		cluster.Routing = &builder.Routing{
+			Data:       spec.Routing.Data,
+			Url:        spec.Routing.Url,
+			AutoReload: int(spec.Routing.AutoReload),
+		}
+	}
+	if spec.Store != nil {
+		cluster.Store = &builder.Store{
+			Clean:                    spec.Store.Clean,
+			Path:                     spec.Store.Path,
+			MaxChannels:              int(*spec.Store.MaxChannels),
+			MaxSubscribers:           int(*spec.Store.MaxSubscribers),
+			MaxMessages:              int(*spec.Store.MaxMessages),
+			MaxChannelSize:           int(*spec.Store.MaxChannelSize),
+			MessagesRetentionMinutes: int(*spec.Store.MessagesRetentionMinutes),
+			PurgeInactiveMinutes:     int(*spec.Store.PurgeInactiveMinutes),
+		}
+	}
+	if spec.Tls != nil {
+		cluster.Tls = &builder.Tls{
+			Cert: spec.Tls.Cert,
+			Key:  spec.Tls.Key,
+			Ca:   spec.Tls.Ca,
+		}
+	}
+	if spec.Volume != nil {
+		cluster.Volume = &builder.Volume{
+			Size:         spec.Volume.Size,
+			StorageClass: spec.Volume.StorageClass,
+		}
+	}
+
+	status := deployment.Status
+	cluster.Status = &builder.Status{
+
+		Version:       status.Version,
+		Ready:         status.Ready,
+		Grpc:          status.Grpc,
+		Rest:          status.Rest,
+		Api:           status.Api,
+		Selector:      status.Selector,
+		LicenseType:   status.LicenseType,
+		LicenseTo:     status.LicenseTo,
+		LicenseExpire: status.LicenseExpire,
+		Status:        status.Status,
+	}
+	if status.Replicas != nil {
+		cluster.Status.Replicas = *status.Replicas
+	}
+	return cluster
+}
+
+func FromDeploymentList(list *cluster.KubemqClusters) []*builder.Cluster {
+	var clustersList []*builder.Cluster
+	for _, deployment := range list.Items() {
+		clustersList = append(clustersList, FromDeployment(deployment))
+	}
+	return clustersList
 }

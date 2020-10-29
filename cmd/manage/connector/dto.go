@@ -45,6 +45,14 @@ func FromDeployment(deployment *kubemqconnector.KubemqConnector) *builder.Connec
 	if deployment.Spec.Replicas != nil {
 		con.Replicas = int(*deployment.Spec.Replicas)
 	}
+	status := deployment.Status
+	con.Status = &builder.Status{
+		Replicas: status.Replicas,
+		Type:     status.Type,
+		Image:    status.Image,
+		Api:      status.Api,
+		Status:   status.Status,
+	}
 	return con
 }
 

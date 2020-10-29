@@ -2,21 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cmd/build/cluster.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/build/connector.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/build/deploy.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/build/resources.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/manage/cluster/cluster.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/manage/connector/connector.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/manage/connector/dto.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/manage/connector/handler.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/manage/manage.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/manage/cluster/dto.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/manage/cluster/handler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/manage/context/handler.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/build/build.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/build/build.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/build/cluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/build/cluster.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/build/connector.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/build/connector.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/build/deploy.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/build/deploy.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/manage/cluster/cluster.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/manage/connector/connector.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/manage/connector/dto.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/manage/connector/dto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/manage/connector/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/manage/connector/handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/manage/manage.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/manage/manage.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/root/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root/root.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/connector/kubemqconnector.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/connector/kubemqconnector.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/connector/manager.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/connector/manager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/cluster/kubemqclusters.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/cluster/kubemqclusters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/cluster/manager.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/cluster/manager.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/utils/helpers.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/utils/helpers.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,7 +69,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/delete" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/manage/context" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -76,11 +78,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\manage\context" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\manage\cluster" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\delete" />
       <recent name="$PROJECT_DIR$/cmd/get/connector" />
       <recent name="$PROJECT_DIR$/pkg/k8s/types/operator" />
-      <recent name="$PROJECT_DIR$/cmd/get" />
-      <recent name="$PROJECT_DIR$/cmd/delete" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\manage\connector" />
@@ -627,10 +629,11 @@
     <state x="1056" y="535" key="Vcs.Push.Dialog.v2/-3840.0.3072.1688/3840.0.3072.1688/0.0.3072.1688@0.0.3072.1688" timestamp="1600759906090" />
     <state x="1056" y="535" key="Vcs.Push.Dialog.v2/3840.0.3072.1688/0.0.3072.1688/-3840.0.3072.1688@0.0.3072.1688" timestamp="1600939315728" />
     <state x="2560" y="-654" key="Vcs.Push.Dialog.v2/4240.-1110.2560.1440/1680.-1110.2560.1440/0.0.1680.1050@1680.-1110.2560.1440" timestamp="1600615851691" />
-    <state x="93" y="93" width="2886" height="1502" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1600681497406">
+    <state x="93" y="93" width="2886" height="1502" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1603896883500">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="93" y="93" width="2886" height="1502" key="com.intellij.history.integration.ui.views.FileHistoryDialog/-3840.0.3072.1688/3840.0.3072.1688/0.0.3072.1688@0.0.3072.1688" timestamp="1600681497406" />
+    <state x="93" y="93" width="2886" height="1502" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.3072.1688/-3840.0.3072.1688/3840.0.2560.1400@0.0.3072.1688" timestamp="1603896883500" />
     <state x="1292" y="754" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1602052473122">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
