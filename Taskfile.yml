@@ -4,7 +4,7 @@ version: '2'
 
 vars:
   BINARY_NAME: kubemqctl
-  VERSION: v3.1.1
+  VERSION: v3.2.0
 
 tasks:
   check_update:

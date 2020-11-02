@@ -24,7 +24,7 @@ func SetProxy(ctx context.Context, opts *ProxyOptions) error {
 		return err
 	}
 	if opts.Pod == "" {
-		opts.Namespace, opts.Pod, err = GetRunningPod(c, opts.Namespace, opts.StatefulSet)
+		opts.Namespace, opts.Pod, err = GetRunningClusterPod(c, opts.Namespace, opts.StatefulSet)
 		if err != nil {
 			return err
 		}

@@ -39,7 +39,7 @@ func SetTransport(ctx context.Context, cfg *config.Config) error {
 	if err != nil {
 		return err
 	}
-	podNameSpace, podName, err := GetRunningPod(c, cfg.CurrentNamespace, cfg.CurrentStatefulSet)
+	podNameSpace, podName, err := GetRunningClusterPod(c, cfg.CurrentNamespace, cfg.CurrentStatefulSet)
 	if err != nil {
 		return err
 	}
@@ -93,15 +93,23 @@ func SetTransport(ctx context.Context, cfg *config.Config) error {
 	}()
 	return nil
 }
+func possibleMap(name string) map[string]string {
+	m := map[string]string{}
+	for i := 0; i < 16; i++ {
+		m[fmt.Sprintf("%s-%d", name, i)] = name
+	}
+	return m
+}
 
-func GetRunningPod(client *client.Client, ns, name string) (string, string, error) {
+func GetRunningClusterPod(client *client.Client, ns, name string) (string, string, error) {
 	pods, err := client.GetPods(ns, name)
 	if err != nil {
 		return "", "", err
 	}
+	podsMap := possibleMap(name)
 	list := NewRandomList()
 	for _, pod := range pods {
-		if pod.Status.Phase == v1.PodRunning {
+		if pod.Status.Phase == v1.PodRunning && podsMap[pod.Name] != "" {
 			list.Add(pod.Name)
 		}
 	}
@@ -122,7 +130,7 @@ func GetDashboardTransport(ctx context.Context, cfg *config.Config, ns, name str
 	if err != nil {
 		return "", "", err
 	}
-	podNameSpace, podName, err := GetRunningPod(c, ns, name)
+	podNameSpace, podName, err := GetRunningClusterPod(c, ns, name)
 	if err != nil {
 		return "", "", err
 	}

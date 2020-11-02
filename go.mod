@@ -9,7 +9,7 @@ require (
 	github.com/google/uuid v1.1.2
 	github.com/gookit/color v1.3.1 // indirect
 	github.com/gorilla/websocket v1.4.0
-	github.com/kubemq-hub/builder v0.4.0
+	github.com/kubemq-hub/builder v0.5.7
 	github.com/kubemq-io/kubemq-go v1.4.3
 	github.com/magiconair/properties v1.8.1 // indirect
 	github.com/mattn/go-isatty v0.0.9 // indirect
@@ -30,4 +30,4 @@ require (
 
 go 1.15
 
-replace github.com/kubemq-hub/builder => ../../kubemq-hub/builder
+//replace github.com/kubemq-hub/builder => ../../kubemq-hub/builder
