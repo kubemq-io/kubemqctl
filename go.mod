@@ -8,7 +8,7 @@ require (
 	github.com/go-resty/resty/v2 v2.0.0
 	github.com/google/uuid v1.1.2
 	github.com/gorilla/websocket v1.4.0
-	github.com/kubemq-hub/builder v0.5.7
+	github.com/kubemq-hub/builder v0.5.8
 	github.com/kubemq-io/kubemq-go v1.4.3
 	github.com/magiconair/properties v1.8.1 // indirect
 	github.com/mattn/go-isatty v0.0.9 // indirect

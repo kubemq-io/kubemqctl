@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Taskfile.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Taskfile.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/proxy.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/proxy.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/transport.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,20 +165,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00035" summary="fix cluster proxy command">
-      <created>1568893707184</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1568893707184</updated>
-    </task>
-    <task id="LOCAL-00036" summary="add option to ask for token in create command">
-      <created>1568972986260</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1568972986260</updated>
     </task>
     <task id="LOCAL-00037" summary="add selection of cluster to connect">
       <created>1571042066964</created>
@@ -512,7 +495,21 @@
       <option name="project" value="LOCAL" />
       <updated>1603984415354</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="release v3.2.0">
+      <created>1604333229700</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1604333229700</updated>
+    </task>
+    <task id="LOCAL-00085" summary="release v3.2.0">
+      <created>1604333448197</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1604333448197</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -547,7 +544,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="adding ingress setting to services" />
     <MESSAGE value="adapt apply and describe" />
     <MESSAGE value="add operator implementation" />
     <MESSAGE value="add decode msg in attach" />
@@ -572,7 +568,8 @@
     <MESSAGE value="-v3.1.1 - refactor delete" />
     <MESSAGE value="-v3.1.1 - update task file" />
     <MESSAGE value="update manager" />
-    <option name="LAST_COMMIT_MESSAGE" value="update manager" />
+    <MESSAGE value="release v3.2.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="release v3.2.0" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -587,12 +584,12 @@
       <screen x="1680" y="-1110" width="2560" height="1440" />
     </state>
     <state x="2595" y="-592" key="#com.intellij.fileTypes.FileTypeChooser/4240.-1110.2560.1440/1680.-1110.2560.1440/0.0.1680.1050@1680.-1110.2560.1440" timestamp="1600587842401" />
-    <state x="1013" y="181" width="1366" height="1348" key="CommitChangelistDialog2" timestamp="1603984414663">
+    <state x="1013" y="181" width="1366" height="1348" key="CommitChangelistDialog2" timestamp="1604333447502">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1013" y="181" key="CommitChangelistDialog2/-3840.0.3072.1688/3840.0.3072.1688/0.0.3072.1688/716.2160.1920.1040@0.0.3072.1688" timestamp="1601032682613" />
     <state x="1013" y="181" width="1366" height="1348" key="CommitChangelistDialog2/-3840.0.3072.1688/3840.0.3072.1688/0.0.3072.1688@0.0.3072.1688" timestamp="1600759900463" />
-    <state x="1013" y="181" key="CommitChangelistDialog2/0.0.3072.1688/-3840.0.3072.1688/3840.0.2560.1400@0.0.3072.1688" timestamp="1603984414663" />
+    <state x="1013" y="181" key="CommitChangelistDialog2/0.0.3072.1688/-3840.0.3072.1688/3840.0.2560.1400@0.0.3072.1688" timestamp="1604333447502" />
     <state x="1013" y="181" key="CommitChangelistDialog2/3840.0.3072.1688/0.0.3072.1688/-3840.0.3072.1688@0.0.3072.1688" timestamp="1600939313344" />
     <state x="2524" y="-956" key="CommitChangelistDialog2/4240.-1110.2560.1440/1680.-1110.2560.1440/0.0.1680.1050@1680.-1110.2560.1440" timestamp="1600615849157" />
     <state x="1550" y="638" key="FileChooserDialogImpl" timestamp="1601990810359">
@@ -609,12 +606,12 @@
     <state x="937" y="347" width="1679" height="1100" key="SettingsEditor/3840.0.3072.1688/0.0.3072.1688/716.2160.1920.1040@0.0.3072.1688" timestamp="1601991030145" />
     <state x="2461" y="-751" key="SettingsEditor/4240.-1087.2560.1417/1680.-1110.2560.1440/0.23.1680.1027@1680.-1110.2560.1440" timestamp="1600667520862" />
     <state x="2461" y="-751" key="SettingsEditor/4240.-1110.2560.1440/1680.-1110.2560.1440/0.0.1680.1050@1680.-1110.2560.1440" timestamp="1600590644372" />
-    <state x="1056" y="535" key="Vcs.Push.Dialog.v2" timestamp="1603984416942">
+    <state x="1056" y="535" key="Vcs.Push.Dialog.v2" timestamp="1604333449744">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1056" y="535" key="Vcs.Push.Dialog.v2/-3840.0.3072.1688/3840.0.3072.1688/0.0.3072.1688/716.2160.1920.1040@0.0.3072.1688" timestamp="1601032684945" />
     <state x="1056" y="535" key="Vcs.Push.Dialog.v2/-3840.0.3072.1688/3840.0.3072.1688/0.0.3072.1688@0.0.3072.1688" timestamp="1600759906090" />
-    <state x="1056" y="535" key="Vcs.Push.Dialog.v2/0.0.3072.1688/-3840.0.3072.1688/3840.0.2560.1400@0.0.3072.1688" timestamp="1603984416942" />
+    <state x="1056" y="535" key="Vcs.Push.Dialog.v2/0.0.3072.1688/-3840.0.3072.1688/3840.0.2560.1400@0.0.3072.1688" timestamp="1604333449744" />
     <state x="1056" y="535" key="Vcs.Push.Dialog.v2/3840.0.3072.1688/0.0.3072.1688/-3840.0.3072.1688@0.0.3072.1688" timestamp="1600939315728" />
     <state x="2560" y="-654" key="Vcs.Push.Dialog.v2/4240.-1110.2560.1440/1680.-1110.2560.1440/0.0.1680.1050@1680.-1110.2560.1440" timestamp="1600615851691" />
     <state x="93" y="93" width="2886" height="1502" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1603896883500">
