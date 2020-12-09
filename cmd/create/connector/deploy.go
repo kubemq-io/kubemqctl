@@ -44,7 +44,7 @@ func (o *deployOptions) validate() error {
 		return fmt.Errorf("invalid port value, must be greater than 0")
 	}
 
-	if o.connectorType != "targets" && o.connectorType != "source" && o.connectorType != "bridges" {
+	if o.connectorType != "targets" && o.connectorType != "sources" && o.connectorType != "bridges" {
 		return fmt.Errorf("invalid connector type, must be one of targets/sources/bridges")
 	}
 
@@ -75,11 +75,7 @@ func (o *deployOptions) complete() error {
 		o.configData = string(data)
 	}
 	if o.configData == "" {
-		prompt := &survey.Editor{
-			Message:  "Config file",
-			FileName: "*.yaml",
-		}
-		_ = survey.AskOne(prompt, &o.configData)
+		o.configData = "bindings: null"
 	}
 	return nil
 }
@@ -105,6 +101,6 @@ func (o *deployOptions) getConnectorDeployment() *kubemqconnector.KubemqConnecto
 		},
 		Status: kubemqconnector.KubemqConnectorStatus{},
 	}
-
+	*deployment.Spec.Replicas = o.replicas
 	return deployment
 }

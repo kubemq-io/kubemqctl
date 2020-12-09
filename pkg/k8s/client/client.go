@@ -175,6 +175,49 @@ func (c *Client) ForwardPorts(ns string, name string, ports []string, stopChan c
 
 	return nil
 }
+func (c *Client) ForwardPortsToService(ns string, name string, ports []string, stopChan chan struct{}, outCh chan string, errOutCh chan string) error {
+	restConfig, err := c.ClientConfig.ClientConfig()
+	if err != nil {
+		return err
+	}
+	roundTripper, upgrader, err := spdy.RoundTripperFor(restConfig)
+	if err != nil {
+		return err
+	}
+
+	path := fmt.Sprintf("/api/v1/namespaces/%s/service/%s/portforward", ns, name)
+	hostIP := strings.Replace(restConfig.Host, "https://", "", -1) //nolint
+	serverURL := url.URL{Scheme: "https", Path: path, Host: hostIP}
+	dialer := spdy.NewDialer(upgrader, &http.Client{Transport: roundTripper}, http.MethodPost, &serverURL)
+	readyChan := make(chan struct{}, 1)
+	out, errOut := new(bytes.Buffer), new(bytes.Buffer)
+	forwarder, err := portforward.New(dialer, ports, stopChan, readyChan, out, errOut)
+	if err != nil {
+		return err
+	}
+
+	go func() {
+		for range readyChan { // Kubernetes will close this channel when it has something to tell us.
+		}
+		if len(errOut.String()) != 0 {
+			errOutCh <- errOut.String()
+			close(stopChan)
+		} else if len(out.String()) != 0 {
+
+			outCh <- out.String()
+		}
+
+	}()
+
+	go func() {
+		if err = forwarder.ForwardPorts(); err != nil { // Locks until stopChan is closed.
+			errOutCh <- err.Error()
+
+		}
+	}()
+
+	return nil
+}
 
 func homeDir() string {
 	if h := os.Getenv("HOME"); h != "" {

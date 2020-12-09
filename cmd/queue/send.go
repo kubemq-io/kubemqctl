@@ -62,7 +62,7 @@ func NewCmdQueueSend(ctx context.Context, cfg *config.Config) *cobra.Command {
 			defer cancel()
 			utils.CheckErr(o.Complete(args, cfg.ConnectionType), cmd)
 			utils.CheckErr(o.Validate())
-			utils.CheckErr(k8s.SetTransport(ctx, cfg))
+			utils.CheckErr(k8s.SetTransportWithService(ctx, cfg))
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
