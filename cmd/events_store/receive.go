@@ -17,11 +17,18 @@ import (
 )
 
 type EventsStoreReceiveOptions struct {
-	cfg        *config.Config
-	transport  string
-	channel    string
-	group      string
-	subOptions kubemq2.SubscriptionOption
+	cfg           *config.Config
+	transport     string
+	channel       string
+	group         string
+	startNew      bool
+	startFirst    bool
+	startLast     bool
+	startSequence int
+	startTime     string
+	startDuration string
+	hasFlags      bool
+	subOptions    kubemq2.SubscriptionOption
 }
 
 var eventsReceiveExamples = `
@@ -56,6 +63,12 @@ func NewCmdEventsStoreReceive(ctx context.Context, cfg *config.Config) *cobra.Co
 	}
 
 	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "set 'events_store' channel consumer group (load balancing)")
+	cmd.PersistentFlags().BoolVar(&o.startNew, "start-new", false, "start from new message only")
+	cmd.PersistentFlags().BoolVar(&o.startFirst, "start-first", false, "start from first message in the channel")
+	cmd.PersistentFlags().BoolVar(&o.startLast, "start-last", false, "start from last message in the channel")
+	cmd.PersistentFlags().IntVar(&o.startSequence, "start-sequence", 0, "start from message sequence")
+	cmd.PersistentFlags().StringVar(&o.startTime, "start-time", "", "start from timestamp format 2006-01-02 15:04:05")
+	cmd.PersistentFlags().StringVar(&o.startDuration, "start-duration", "", "start from time duration i.e. 1h")
 	return cmd
 }
 
@@ -63,9 +76,47 @@ func (o *EventsStoreReceiveOptions) Complete(args []string, transport string) er
 	o.transport = transport
 	if len(args) >= 1 {
 		o.channel = args[0]
+	} else {
+		return fmt.Errorf("missing channel argument")
+	}
+
+	if o.startNew {
+		o.subOptions = kubemq2.StartFromNewEvents()
 		return nil
 	}
-	return fmt.Errorf("missing channel argument")
+	if o.startFirst {
+		o.subOptions = kubemq2.StartFromFirstEvent()
+		return nil
+	}
+	if o.startLast {
+		o.subOptions = kubemq2.StartFromLastEvent()
+		return nil
+	}
+	if o.startSequence > 0 {
+		o.subOptions = kubemq2.StartFromSequence(o.startSequence)
+		return nil
+	}
+	if o.startTime != "" {
+		t, err := time.Parse("2006-01-02 15:04:05", o.startTime)
+		if err != nil {
+			return fmt.Errorf("start time format error, %s", err.Error())
+		}
+		o.subOptions = kubemq2.StartFromTime(t.UTC())
+		return nil
+	}
+	if o.startDuration != "" {
+		d, err := time.ParseDuration(o.startDuration)
+		if err != nil {
+			return fmt.Errorf("start duration format error, %s", err.Error())
+		}
+		o.subOptions = kubemq2.StartFromTimeDelta(d)
+		return nil
+	}
+	err := o.promptOptions()
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *EventsStoreReceiveOptions) Validate() error {
@@ -81,10 +132,6 @@ func (o *EventsStoreReceiveOptions) Run(ctx context.Context) error {
 	defer func() {
 		client.Close()
 	}()
-	err = o.promptOptions()
-	if err != nil {
-		return err
-	}
 
 	errChan := make(chan error, 1)
 	eventsChan, err := client.SubscribeToEventsStore(ctx, o.channel, o.group, errChan, o.subOptions)
