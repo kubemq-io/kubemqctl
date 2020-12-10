@@ -9,7 +9,7 @@ require (
 	github.com/google/uuid v1.1.2
 	github.com/gorilla/websocket v1.4.0
 	github.com/kubemq-hub/builder v0.5.9
-	github.com/kubemq-io/kubemq-go v1.4.4
+	github.com/kubemq-io/kubemq-go v1.4.5
 	github.com/magiconair/properties v1.8.1 // indirect
 	github.com/mattn/go-isatty v0.0.9 // indirect
 	github.com/pelletier/go-toml v1.4.0 // indirect
