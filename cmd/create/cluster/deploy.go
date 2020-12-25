@@ -9,59 +9,69 @@ import (
 )
 
 type deployOptions struct {
-	configData     string
-	configFilename string
-	name           string
-	namespace      string
-	replicas       int32
-	api            *deployApiOptions
-	authentication *deployAuthenticationOptions
-	authorization  *deployAuthorizationOptions
-	grpc           *deployGrpcOptions
-	health         *deployHealthOptions
-	image          *deployImageOptions
-	license        *deployLicenseOptions
-	log            *deployLogOptions
-	nodeSelector   *deployNodeSelectorOptions
-	notification   *deployNotificationOptions
-	queue          *deployQueueOptions
-	resources      *deployResourceOptions
-	rest           *deployRestOptions
-	routing        *deployRoutingOptions
-	store          *deployStoreOptions
-	tls            *deployTlsOptions
-	volume         *deployVolumeOptions
+	configData            string
+	configFilename        string
+	name                  string
+	namespace             string
+	replicas              int32
+	standalone            bool
+	statefulSetConfigData string
+	key                   string
+	api                   *deployApiOptions
+	authentication        *deployAuthenticationOptions
+	authorization         *deployAuthorizationOptions
+	grpc                  *deployGrpcOptions
+	health                *deployHealthOptions
+	image                 *deployImageOptions
+	license               *deployLicenseOptions
+	log                   *deployLogOptions
+	nodeSelector          *deployNodeSelectorOptions
+	notification          *deployNotificationOptions
+	queue                 *deployQueueOptions
+	resources             *deployResourceOptions
+	rest                  *deployRestOptions
+	routing               *deployRoutingOptions
+	store                 *deployStoreOptions
+	tls                   *deployTlsOptions
+	volume                *deployVolumeOptions
 }
 
 func defaultDeployOptions(cmd *cobra.Command) *deployOptions {
 	o := &deployOptions{
-		configData:     "",
-		configFilename: "",
-		name:           "",
-		namespace:      "",
-		replicas:       0,
-		api:            setApiConfig(cmd),
-		authentication: setAuthenticationOptions(cmd),
-		authorization:  setAuthorizationConfig(cmd),
-		grpc:           setGrpcConfig(cmd),
-		health:         setHealthOptions(cmd),
-		image:          setImageConfig(cmd),
-		license:        setLicenseConfig(cmd),
-		log:            setLogConfig(cmd),
-		nodeSelector:   setNodeSelectorOptions(cmd),
-		notification:   setNotificationConfig(cmd),
-		queue:          setQueueConfig(cmd),
-		resources:      setResourceOptions(cmd),
-		rest:           setRestConfig(cmd),
-		routing:        setRoutingConfig(cmd),
-		store:          setStoreConfig(cmd),
-		tls:            setTolsConfig(cmd),
-		volume:         setVolumeConfig(cmd),
+		configData:            "",
+		configFilename:        "",
+		name:                  "",
+		namespace:             "",
+		replicas:              0,
+		standalone:            false,
+		statefulSetConfigData: "",
+		key:                   "",
+		api:                   setApiConfig(cmd),
+		authentication:        setAuthenticationOptions(cmd),
+		authorization:         setAuthorizationConfig(cmd),
+		grpc:                  setGrpcConfig(cmd),
+		health:                setHealthOptions(cmd),
+		image:                 setImageConfig(cmd),
+		license:               setLicenseConfig(cmd),
+		log:                   setLogConfig(cmd),
+		nodeSelector:          setNodeSelectorOptions(cmd),
+		notification:          setNotificationConfig(cmd),
+		queue:                 setQueueConfig(cmd),
+		resources:             setResourceOptions(cmd),
+		rest:                  setRestConfig(cmd),
+		routing:               setRoutingConfig(cmd),
+		store:                 setStoreConfig(cmd),
+		tls:                   setTolsConfig(cmd),
+		volume:                setVolumeConfig(cmd),
 	}
 	cmd.PersistentFlags().StringVarP(&o.configFilename, "config-file", "c", "", "set kubemq config file")
 	cmd.PersistentFlags().StringVarP(&o.name, "name", "", "kubemq-cluster", "set kubemq cluster name")
 	cmd.PersistentFlags().StringVarP(&o.namespace, "namespace", "n", "kubemq", "set kubemq cluster namespace")
+	cmd.PersistentFlags().StringVarP(&o.key, "key", "", "", "set kubemq license key")
+	cmd.PersistentFlags().StringVarP(&o.statefulSetConfigData, "statefulset-config-data", "", "", "set kubemq cluster statefulset configuration data")
+	cmd.PersistentFlags().BoolVarP(&o.standalone, "standalone", "", false, "set kubemq cluster standalone mode")
 	cmd.PersistentFlags().Int32VarP(&o.replicas, "replicas", "r", 3, "set replicas")
+
 	return o
 }
 
@@ -209,24 +219,28 @@ func (o *deployOptions) getClusterDeployment() *kubemqcluster.KubemqCluster {
 			Namespace: o.namespace,
 		},
 		Spec: kubemqcluster.KubemqClusterSpec{
-			Replicas:       new(int32),
-			ConfigData:     o.configData,
-			Volume:         nil,
-			Image:          nil,
-			Api:            nil,
-			Rest:           nil,
-			Grpc:           nil,
-			Tls:            nil,
-			Resources:      nil,
-			NodeSelectors:  nil,
-			Authentication: nil,
-			Authorization:  nil,
-			Health:         nil,
-			Routing:        nil,
-			Log:            nil,
-			Notification:   nil,
-			Store:          nil,
-			Queue:          nil,
+			Replicas:              new(int32),
+			License:               "",
+			ConfigData:            o.configData,
+			Key:                   o.key,
+			Standalone:            o.standalone,
+			Volume:                nil,
+			Image:                 nil,
+			Api:                   nil,
+			Rest:                  nil,
+			Grpc:                  nil,
+			Tls:                   nil,
+			Resources:             nil,
+			NodeSelectors:         nil,
+			Authentication:        nil,
+			Authorization:         nil,
+			Health:                nil,
+			Routing:               nil,
+			Log:                   nil,
+			Notification:          nil,
+			Store:                 nil,
+			Queue:                 nil,
+			StatefulSetConfigData: o.statefulSetConfigData,
 		},
 		Status: kubemqcluster.KubemqClusterStatus{},
 	}

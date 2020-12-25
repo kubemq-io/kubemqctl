@@ -2,15 +2,18 @@ package kubemqcluster
 
 type ResourceConfig struct {
 
-	// +kubebuilder:validation:MinLength=1
-	LimitsCpu string `json:"limitsCpu"`
+	// +optional
+	LimitsCpu string `json:"limitsCpu,omitempty"`
+	// +optional
+	LimitsMemory string `json:"limitsMemory,omitempty"`
+	// +optional
+	LimitsEphemeralStorage string `json:"limitsEphemeralStorage,omitempty"`
 
-	// +kubebuilder:validation:MinLength=1
-	LimitsMemory string `json:"limitsMemory"`
+	// +optional
+	RequestsCpu string `json:"requestsCpu,omitempty"`
+	// +optional
+	RequestsMemory string `json:"requestsMemory,omitempty"`
 
-	// +kubebuilder:validation:MinLength=1
-	RequestsCpu string `json:"requestsCpu"`
-
-	// +kubebuilder:validation:MinLength=1
-	RequestsMemory string `json:"requestsMemory"`
+	// +optional
+	RequestsEphemeralStorage string `json:"requestsEphemeralStorage,omitempty"`
 }

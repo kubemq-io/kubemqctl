@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
+    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="v3.2.3 release">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events_store/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/receive.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/deploy.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/deploy.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/resources.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/resources.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/kubemqcluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/kubemqcluster.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/resources.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/resources.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/operator/kubemqclusters_crd..go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/kubemqclusters_crd..go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,20 +170,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00039" summary="fix linting issues">
-      <created>1571042178634</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1571042178634</updated>
-    </task>
-    <task id="LOCAL-00040" summary="fix typo">
-      <created>1571075382964</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1571075382964</updated>
     </task>
     <task id="LOCAL-00041" summary="-v2.2.0&#10;- Add support for K3s, MicroK8s, minikube&#10;- Change description of Enable gRPC and Enable Rest&#10;- Change for printing namespace name">
       <created>1575196529546</created>
@@ -510,7 +500,21 @@
       <option name="project" value="LOCAL" />
       <updated>1607517943055</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="add flags to event store">
+      <created>1607587168517</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1607587168517</updated>
+    </task>
+    <task id="LOCAL-00089" summary="v3.2.3 release">
+      <created>1607587374295</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1607587374295</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -545,8 +549,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="add decode msg in attach" />
-    <MESSAGE value="complete operator deployment" />
     <MESSAGE value="fix examples" />
     <MESSAGE value="add check default on create" />
     <MESSAGE value="re-arrange" />
@@ -570,7 +572,9 @@
     <MESSAGE value="release v3.2.0" />
     <MESSAGE value="release v3.2.1" />
     <MESSAGE value="update to create connector" />
-    <option name="LAST_COMMIT_MESSAGE" value="update to create connector" />
+    <MESSAGE value="add flags to event store" />
+    <MESSAGE value="v3.2.3 release" />
+    <option name="LAST_COMMIT_MESSAGE" value="v3.2.3 release" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

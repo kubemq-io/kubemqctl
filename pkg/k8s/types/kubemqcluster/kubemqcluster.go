@@ -16,7 +16,11 @@ type KubemqClusterSpec struct {
 	// +optional
 	// +kubebuilder:validation:MinLength=1
 	ConfigData string `json:"configData,omitempty"`
+	// +optional
+	Key string `json:"key,omitempty"`
 
+	// +optional
+	Standalone bool `json:"standalone"`
 	// +optional
 	Volume *VolumeConfig `json:"volume,omitempty"`
 
@@ -64,6 +68,9 @@ type KubemqClusterSpec struct {
 
 	// +optional
 	Queue *QueueConfig `json:"queue,omitempty"`
+
+	// +optional
+	StatefulSetConfigData string `json:"statefulsetConfigData,omitempty"`
 }
 
 // KubemqClusterStatus defines the observed state of KubemqCluster
