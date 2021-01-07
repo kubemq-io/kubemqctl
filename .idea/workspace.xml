@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="v3.2.3 release">
+    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/deploy.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/deploy.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/resources.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/resources.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/kubemqcluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/kubemqcluster.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/resources.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/kubemqcluster/resources.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/types/operator/kubemqclusters_crd..go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/types/operator/kubemqclusters_crd..go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/queue/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/send.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/client.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,13 +168,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00041" summary="-v2.2.0&#10;- Add support for K3s, MicroK8s, minikube&#10;- Change description of Enable gRPC and Enable Rest&#10;- Change for printing namespace name">
-      <created>1575196529546</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1575196529546</updated>
     </task>
     <task id="LOCAL-00042" summary="-- add -v flag for set kubemq version in create">
       <created>1575551248577</created>
@@ -514,7 +505,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607587374295</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="add support for cluster pod standalone">
+      <created>1608883670236</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1608883670236</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -549,7 +547,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="fix examples" />
     <MESSAGE value="add check default on create" />
     <MESSAGE value="re-arrange" />
     <MESSAGE value="cleaning code" />
@@ -574,7 +571,8 @@
     <MESSAGE value="update to create connector" />
     <MESSAGE value="add flags to event store" />
     <MESSAGE value="v3.2.3 release" />
-    <option name="LAST_COMMIT_MESSAGE" value="v3.2.3 release" />
+    <MESSAGE value="add support for cluster pod standalone" />
+    <option name="LAST_COMMIT_MESSAGE" value="add support for cluster pod standalone" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
