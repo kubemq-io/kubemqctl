@@ -9,8 +9,6 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
-	"os"
-	"text/tabwriter"
 	"time"
 )
 
@@ -80,8 +78,6 @@ func (o *QueriesReceiveOptions) Run(ctx context.Context) error {
 	defer func() {
 		client.Close()
 	}()
-	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', tabwriter.TabIndent)
-
 	errChan := make(chan error, 1)
 	queriesChan, err := client.SubscribeToQueries(ctx, o.channel, o.group, errChan)
 
@@ -99,8 +95,9 @@ func (o *QueriesReceiveOptions) Run(ctx context.Context) error {
 				utils.Println("server disconnected")
 				return nil
 			}
-			fmt.Fprintf(w, "[channel: %s]\t[id: %s]\t[metadata: %s]\t[body: %s]\n", query.Channel, query.Id, query.Metadata, query.Body)
-			w.Flush()
+			printQueryReceive(query)
+			//fmt.Fprintf(w, "[channel: %s]\t[id: %s]\t[metadata: %s]\t[body: %s]\n", query.Channel, query.Id, query.Metadata, query.Body)
+			//w.Flush()
 			if o.autoResponse {
 				err = client.R().SetRequestId(query.Id).SetExecutedAt(time.Now()).SetResponseTo(query.ResponseTo).SetBody([]byte("executed your query")).Send(ctx)
 				if err != nil {

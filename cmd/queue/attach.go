@@ -2,7 +2,6 @@ package queue
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"github.com/go-resty/resty"
 	"github.com/kubemq-io/kubemqctl/pkg/attach"

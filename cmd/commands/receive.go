@@ -9,8 +9,6 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
-	"os"
-	"text/tabwriter"
 	"time"
 )
 
@@ -80,7 +78,6 @@ func (o *CommandsReceiveOptions) Run(ctx context.Context) error {
 	defer func() {
 		client.Close()
 	}()
-	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', tabwriter.TabIndent)
 
 	errChan := make(chan error, 1)
 	commandsChan, err := client.SubscribeToCommands(ctx, o.channel, o.group, errChan)
@@ -98,8 +95,7 @@ func (o *CommandsReceiveOptions) Run(ctx context.Context) error {
 				utils.Println("server disconnected")
 				return nil
 			}
-			fmt.Fprintf(w, "[channel: %s]\t[id: %s]\t[metadata: %s]\t[body: %s]\n", command.Channel, command.Id, command.Metadata, command.Body)
-			w.Flush()
+			printCommandReceive(command)
 			if o.autoResponse {
 				err = client.R().SetRequestId(command.Id).SetExecutedAt(time.Now()).SetResponseTo(command.ResponseTo).Send(ctx)
 				if err != nil {

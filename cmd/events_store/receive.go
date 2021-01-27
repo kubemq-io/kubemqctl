@@ -10,9 +10,7 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
-	"os"
 	"strconv"
-	"text/tabwriter"
 	"time"
 )
 
@@ -140,7 +138,7 @@ func (o *EventsStoreReceiveOptions) Run(ctx context.Context) error {
 		utils.Println(fmt.Errorf("receive 'events store' messages, %s", err.Error()).Error())
 	}
 	utils.Println("waiting for 'events store' messages...")
-	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', tabwriter.TabIndent)
+
 	for {
 		select {
 		case ev, opened := <-eventsChan:
@@ -148,8 +146,7 @@ func (o *EventsStoreReceiveOptions) Run(ctx context.Context) error {
 				utils.Println("server disconnected")
 				return nil
 			}
-			fmt.Fprintf(w, "[channel: %s]\t[seq: %d]\t[time: %s(UTC)]\t[id: %s]\t[metadata: %s]\t[body: %s]\n", ev.Channel, ev.Sequence, ev.Timestamp.UTC().Format("2006-01-02 15:04:05"), ev.Id, ev.Metadata, ev.Body)
-			w.Flush()
+			printEventReceive(ev)
 		case err := <-errChan:
 			return fmt.Errorf("server disconnected with error: %s", err.Error())
 		case <-ctx.Done():

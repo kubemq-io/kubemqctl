@@ -117,7 +117,7 @@ func (o *EventsSendOptions) Run(ctx context.Context) error {
 			if err != nil {
 				return fmt.Errorf("sending 'events' message, %s", err.Error())
 			}
-			utils.Printlnf("[message: %d] [channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s}", i, msg.Channel, msg.ClientId, msg.Id, msg.Metadata, msg.Body)
+			printEvent(msg)
 		}
 	}
 

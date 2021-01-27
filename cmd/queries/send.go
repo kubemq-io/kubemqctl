@@ -104,6 +104,6 @@ func (o *QueriesSendOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return fmt.Errorf("sending query message, %s", err.Error())
 	}
-	utils.Printlnf("[channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s, cache-hit: %t, executed: %t, executed at: %s, error: %s}", msg.Channel, msg.ClientId, msg.Id, res.Metadata, res.Body, res.CacheHit, res.Executed, res.ExecutedAt.Format("2006-01-02 15:04:05"), res.Error)
+	printQueryResponse(res)
 	return nil
 }

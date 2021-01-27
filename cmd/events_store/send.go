@@ -114,11 +114,11 @@ func (o *EventsStoreSendOptions) Run(ctx context.Context) error {
 				SetId(uuid.New().String()).
 				SetBody([]byte(o.message)).
 				SetMetadata(o.metadata)
-			res, err := msg.Send(ctx)
+			_, err := msg.Send(ctx)
 			if err != nil {
 				return fmt.Errorf("sending 'events store' message, %s", err.Error())
 			}
-			utils.Printlnf("[message: %d] [channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s, sent:%t}", i, msg.Channel, msg.ClientId, msg.Id, msg.Metadata, msg.Body, res.Sent)
+			printEventStore(msg)
 		}
 
 	}

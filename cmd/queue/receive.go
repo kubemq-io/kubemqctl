@@ -3,15 +3,11 @@ package queue
 import (
 	"context"
 	"fmt"
-	kubemq2 "github.com/kubemq-io/kubemq-go"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s"
 	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
-	"os"
-	"text/tabwriter"
-	"time"
 )
 
 type QueueReceiveOptions struct {
@@ -115,17 +111,4 @@ func (o *QueueReceiveOptions) Run(ctx context.Context) error {
 		}
 	}
 
-}
-
-func printItems(items []*kubemq2.QueueMessage) {
-	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.TabIndent)
-	for _, item := range items {
-		fmt.Fprintf(w, "[channel: %s]\t[id: %s]\t[seq: %d]\t[timestamp: %s]\t[metadata: %s]\t[body: %s]\n",
-			item.Channel,
-			item.MessageID,
-			item.Attributes.Sequence,
-			time.Unix(0, item.Attributes.Timestamp).Format("2006-01-02 15:04:05.999"), item.Metadata,
-			item.Body)
-	}
-	w.Flush()
 }

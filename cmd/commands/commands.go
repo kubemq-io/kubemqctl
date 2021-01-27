@@ -24,7 +24,7 @@ var commandsShort = `Execute Kubemq 'commands' RPC commands`
 func NewCmdCommands(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:       "commands",
-		Aliases:   []string{"cmd"},
+		Aliases:   []string{"cmd", "command"},
 		Short:     commandsShort,
 		Long:      commandsLong,
 		Example:   commandsExamples,

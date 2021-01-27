@@ -94,7 +94,6 @@ func (o *CommandsSendOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return fmt.Errorf("sending commands message, %s", err.Error())
 	}
-	utils.Printlnf("[channel: %s] [client id: %s] -> {id: %s, executed: %t, executed at: %s, error: %s}", msg.Channel, msg.ClientId, msg.Id, res.Executed, res.ExecutedAt.Format("2006-01-02 15:04:05"), res.Error)
-
+	printCommandResponse(res)
 	return nil
 }

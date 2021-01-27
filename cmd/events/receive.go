@@ -8,8 +8,6 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
-	"os"
-	"text/tabwriter"
 )
 
 type EventsReceiveOptions struct {
@@ -77,7 +75,6 @@ func (o *EventsReceiveOptions) Run(ctx context.Context) error {
 	defer func() {
 		client.Close()
 	}()
-	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', tabwriter.TabIndent)
 
 	errChan := make(chan error, 1)
 	eventsChan, err := client.SubscribeToEvents(ctx, o.channel, o.group, errChan)
@@ -93,8 +90,7 @@ func (o *EventsReceiveOptions) Run(ctx context.Context) error {
 				utils.Println("server disconnected")
 				return nil
 			}
-			fmt.Fprintf(w, "[channel: %s]\t[id: %s]\t[metadata: %s]\t[body: %s]\n", ev.Channel, ev.Id, ev.Metadata, ev.Body)
-			w.Flush()
+			printEvent(ev)
 		case err := <-errChan:
 			return fmt.Errorf("server disconnected with error: %s", err.Error())
 		case <-ctx.Done():

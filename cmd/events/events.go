@@ -25,7 +25,7 @@ var eventsShort = `Execute Kubemq 'events' Pub/Sub commands`
 func NewCmdEvents(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:       "events",
-		Aliases:   []string{"e"},
+		Aliases:   []string{"e", "ev"},
 		Short:     eventsShort,
 		Long:      eventsLong,
 		Example:   eventsExamples,

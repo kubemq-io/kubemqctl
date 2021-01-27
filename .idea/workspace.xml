@@ -2,10 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/cmd/commands/helper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/events/helper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/events_store/helper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/queries/helper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/queue/helper.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/send.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/commands/commands.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/commands/commands.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/commands/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/commands/receive.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/commands/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/commands/send.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/deploy.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/deploy.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/license.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/license.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/events/events.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events/events.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/events/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events/receive.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/events/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events/send.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/events_store/list.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/list.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/events_store/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/receive.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/events_store/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/send.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/get/cluster/cluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/get/cluster/cluster.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/get/cluster/license/license.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/queries/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queries/receive.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/queries/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queries/send.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/queue/attach.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/attach.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/queue/list.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/list.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/queue/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/receive.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/api/bolt.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +76,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/manage/context" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/events_store" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -64,11 +85,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\events_store" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\events" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\commands" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\queries" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\manage\context" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\manage\cluster" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\delete" />
-      <recent name="$PROJECT_DIR$/cmd/get/connector" />
-      <recent name="$PROJECT_DIR$/pkg/k8s/types/operator" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\manage\connector" />
@@ -168,20 +189,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00042" summary="-- add -v flag for set kubemq version in create">
-      <created>1575551248577</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1575551248577</updated>
-    </task>
-    <task id="LOCAL-00043" summary="fix panic when cluster get with pvc is nil">
-      <created>1575551290866</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1575551290866</updated>
     </task>
     <task id="LOCAL-00044" summary="add get_license command for offline use">
       <created>1575626052276</created>
@@ -512,7 +519,21 @@
       <option name="project" value="LOCAL" />
       <updated>1608883670236</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="fix send queue messages - fails">
+      <created>1610011395668</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1610011395668</updated>
+    </task>
+    <task id="LOCAL-00092" summary="release v3.3.1">
+      <created>1610011426038</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1610011426038</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -547,8 +568,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="add check default on create" />
-    <MESSAGE value="re-arrange" />
     <MESSAGE value="cleaning code" />
     <MESSAGE value="add token get license" />
     <MESSAGE value="add kubemq dashboard" />
@@ -572,7 +591,9 @@
     <MESSAGE value="add flags to event store" />
     <MESSAGE value="v3.2.3 release" />
     <MESSAGE value="add support for cluster pod standalone" />
-    <option name="LAST_COMMIT_MESSAGE" value="add support for cluster pod standalone" />
+    <MESSAGE value="fix send queue messages - fails" />
+    <MESSAGE value="release v3.3.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="release v3.3.1" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
