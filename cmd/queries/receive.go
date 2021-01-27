@@ -21,14 +21,14 @@ type QueriesReceiveOptions struct {
 }
 
 var queriesReceiveExamples = `
-	# Receive 'queries'  from a 'queries' channel (blocks until next message)
+	# Receive 'queries'  from a 'queries' channel (blocks until next body)
 	kubemqctl queries receive some-channel
 
-	# Receive 'queries' from a 'queries' channel with group(blocks until next message)
+	# Receive 'queries' from a 'queries' channel with group(blocks until next body)
 	kubemqctl queries receive some-channel -g G1
 `
-var queriesReceiveLong = `Receive (Subscribe) command allows to receive a message from a 'queries' channel and response with appropriate reply`
-var queriesReceiveShort = `Receive a message from a 'queries' channel`
+var queriesReceiveLong = `Receive (Subscribe) command allows to receive a body from a 'queries' channel and response with appropriate reply`
+var queriesReceiveShort = `Receive a body from a 'queries' channel`
 
 func NewCmdQueriesReceive(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &QueriesReceiveOptions{
@@ -85,7 +85,7 @@ func (o *QueriesReceiveOptions) Run(ctx context.Context) error {
 		utils.Println(fmt.Errorf("receive 'queries' messages, %s", err.Error()).Error())
 	}
 	for {
-		utils.Println("waiting for the next query message...")
+		utils.Println("waiting for the next query body...")
 		select {
 		case err := <-errChan:
 			return fmt.Errorf("server disconnected with error: %s", err.Error())
@@ -122,7 +122,7 @@ func (o *QueriesReceiveOptions) Run(ctx context.Context) error {
 				respBody := ""
 				prompt := &survey.Input{
 					Renderer: survey.Renderer{},
-					Message:  "Set response message",
+					Message:  "Set response body",
 					Default:  "response-to",
 					Help:     "",
 				}

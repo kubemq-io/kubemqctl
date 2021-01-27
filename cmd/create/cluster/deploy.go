@@ -67,7 +67,7 @@ func defaultDeployOptions(cmd *cobra.Command) *deployOptions {
 	cmd.PersistentFlags().StringVarP(&o.configFilename, "config-file", "c", "", "set kubemq config file")
 	cmd.PersistentFlags().StringVarP(&o.name, "name", "", "kubemq-cluster", "set kubemq cluster name")
 	cmd.PersistentFlags().StringVarP(&o.namespace, "namespace", "n", "kubemq", "set kubemq cluster namespace")
-	cmd.PersistentFlags().StringVarP(&o.key, "key", "", "", "set kubemq license key")
+	cmd.PersistentFlags().StringVarP(&o.key, "key", "k", "", "set kubemq license key")
 	cmd.PersistentFlags().StringVarP(&o.statefulSetConfigData, "statefulset-config-data", "", "", "set kubemq cluster statefulset configuration data")
 	cmd.PersistentFlags().BoolVarP(&o.standalone, "standalone", "", false, "set kubemq cluster standalone mode")
 	cmd.PersistentFlags().Int32VarP(&o.replicas, "replicas", "r", 3, "set replicas")
@@ -82,7 +82,6 @@ func (o *deployOptions) validate() error {
 	if o.namespace == "" {
 		return fmt.Errorf("error setting deploy configuration, missing kubemq cluster namespace")
 	}
-
 	if err := o.api.validate(); err != nil {
 		return err
 	}
@@ -137,6 +136,10 @@ func (o *deployOptions) validate() error {
 	}
 	if err := o.volume.validate(); err != nil {
 		return err
+	}
+
+	if o.license.licenseData == "" && o.key == "" {
+		return fmt.Errorf("license key is required, get a key at https://account.kubemq.io/login/register")
 	}
 	return nil
 }

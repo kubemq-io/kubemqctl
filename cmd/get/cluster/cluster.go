@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/kubemq-io/kubemqctl/cmd/get/cluster/describe"
 	"github.com/kubemq-io/kubemqctl/cmd/get/cluster/events"
-	"github.com/kubemq-io/kubemqctl/cmd/get/cluster/license"
 	"github.com/kubemq-io/kubemqctl/cmd/get/cluster/logs"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
@@ -50,7 +49,6 @@ func NewCmdGet(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd.AddCommand(logs.NewCmdLogs(ctx, cfg))
 	cmd.AddCommand(events.NewCmdEvents(ctx, cfg))
 	cmd.AddCommand(describe.NewCmdDescribe(ctx, cfg))
-	cmd.AddCommand(license.NewCmdLicense(ctx, cfg))
 	return cmd
 }
 

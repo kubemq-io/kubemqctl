@@ -8,7 +8,7 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
-	"time"
+	"io/ioutil"
 )
 
 type QueueSendOptions struct {
@@ -22,6 +22,7 @@ type QueueSendOptions struct {
 	metadata   string
 	deadLetter string
 	messages   int
+	fileName   string
 }
 
 var queueSendExamples = `
@@ -72,18 +73,35 @@ func NewCmdQueueSend(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd.PersistentFlags().IntVarP(&o.messages, "messages", "m", 1, "set dead-letter max receive count")
 	cmd.PersistentFlags().StringVarP(&o.deadLetter, "dead-letter-queue", "q", "", "set dead-letter queue name")
 	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "", "", "set queue message metadata field")
+	cmd.PersistentFlags().StringVarP(&o.fileName, "file", "f", "", "set load message body from file")
 
 	return cmd
 }
 
 func (o *QueueSendOptions) Complete(args []string, transport string) error {
 	o.transport = transport
-	if len(args) >= 2 {
+	if len(args) >= 1 {
 		o.channel = args[0]
-		o.body = args[1]
-		return nil
+
+	} else {
+		return fmt.Errorf("missing channel argument")
 	}
-	return fmt.Errorf("missing arguments, must be 2 arguments, channel and a message")
+
+	if o.fileName != "" {
+		data, err := ioutil.ReadFile(o.fileName)
+		if err != nil {
+			return err
+		}
+		o.body = string(data)
+	} else {
+		if len(args) >= 2 {
+			o.body = args[1]
+		} else {
+			return fmt.Errorf("missing body argument")
+		}
+	}
+	return nil
+
 }
 
 func (o *QueueSendOptions) Validate() error {
@@ -117,17 +135,9 @@ func (o *QueueSendOptions) Run(ctx context.Context) error {
 		if res != nil {
 			if res.IsError {
 				return fmt.Errorf("sending queue message response, %s", res.Error)
-
 			}
-			var delay string
-			var exp string
-			if res.DelayedTo > 0 {
-				delay = fmt.Sprintf(", delayed to: %s", time.Unix(0, res.DelayedTo))
-			}
-			if res.ExpirationAt > 0 {
-				exp = fmt.Sprintf(", expire at: %s", time.Unix(0, res.ExpirationAt))
-			}
-			utils.Printlnf("[channel: %s] [client id: %s] -> {id: %s, metadata: %s, body: %s, sent at: %s%s%s}", msg.Channel, msg.ClientID, res.MessageID, msg.Metadata, msg.Body, time.Unix(0, res.SentAt).Format("2006-01-02 15:04:05.999"), exp, delay)
+			fmt.Println("Sent:")
+			printQueueMessage(msg)
 		}
 	}
 

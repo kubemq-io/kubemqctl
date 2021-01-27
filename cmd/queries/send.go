@@ -9,6 +9,7 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
+	"io/ioutil"
 	"time"
 )
 
@@ -16,11 +17,12 @@ type QueriesSendOptions struct {
 	cfg       *config.Config
 	transport string
 	channel   string
-	message   string
+	body      string
 	metadata  string
 	timeout   int
 	cacheKey  string
 	cacheTTL  time.Duration
+	fileName  string
 }
 
 var queriesSendExamples = `
@@ -28,13 +30,13 @@ var queriesSendExamples = `
 	kubemqctl queries send some-channel some-query
 	
 	# Send query to a 'queries' channel with metadata
-	kubemqctl queries send some-channel some-message -m some-metadata
+	kubemqctl queries send some-channel some-body -m some-metadata
 	
 	# Send query to a 'queries' channel with 120 seconds timeout
-	kubemqctl queries send some-channel some-message -o 120
+	kubemqctl queries send some-channel some-body -o 120
 	
 	# Send query to a 'queries' channel with cache-key and cache duration of 1m
-	kubemqctl queries send some-channel some-message -c cache-key -d 1m
+	kubemqctl queries send some-channel some-body -c cache-key -d 1m
 `
 var queriesSendLong = `Send command allow to send messages to 'queries' channel with an option to set query time-out and caching parameters`
 var queriesSendShort = `Send messages to a 'queries' channel command`
@@ -59,24 +61,38 @@ func NewCmdQueriesSend(ctx context.Context, cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "m", "", "set query message metadata field")
+	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "m", "", "set query body metadata field")
 	cmd.PersistentFlags().StringVarP(&o.cacheKey, "cache-key", "c", "", "set query cache key")
 	cmd.PersistentFlags().IntVarP(&o.timeout, "timeout", "o", 30, "set query timeout")
 	cmd.PersistentFlags().DurationVarP(&o.cacheTTL, "cache-duration", "d", 10*time.Minute, "set cache duration timeout")
-
+	cmd.PersistentFlags().StringVarP(&o.fileName, "file", "f", "", "set load body from file")
 	return cmd
 }
 
 func (o *QueriesSendOptions) Complete(args []string, transport string) error {
 	o.transport = transport
-	if len(args) >= 2 {
+	if len(args) >= 1 {
 		o.channel = args[0]
-		o.message = args[1]
-		return nil
-	}
-	return fmt.Errorf("missing arguments, must be 2 arguments, channel and a message")
-}
 
+	} else {
+		return fmt.Errorf("missing channel argument")
+	}
+
+	if o.fileName != "" {
+		data, err := ioutil.ReadFile(o.fileName)
+		if err != nil {
+			return err
+		}
+		o.body = string(data)
+	} else {
+		if len(args) >= 2 {
+			o.body = args[1]
+		} else {
+			return fmt.Errorf("missing body argument")
+		}
+	}
+	return nil
+}
 func (o *QueriesSendOptions) Validate() error {
 	return nil
 }
@@ -90,19 +106,19 @@ func (o *QueriesSendOptions) Run(ctx context.Context) error {
 	defer func() {
 		client.Close()
 	}()
-
+	fmt.Println("Sending Query:")
 	msg := client.Q().
 		SetChannel(o.channel).
 		SetId(uuid.New().String()).
-		SetBody([]byte(o.message)).
+		SetBody([]byte(o.body)).
 		SetMetadata(o.metadata).
 		SetTimeout(time.Duration(o.timeout) * time.Second).
 		SetCacheKey(o.cacheKey).
 		SetCacheTTL(o.cacheTTL)
-
+	printQuery(msg)
 	res, err := msg.Send(ctx)
 	if err != nil {
-		return fmt.Errorf("sending query message, %s", err.Error())
+		return fmt.Errorf("sending query body, %s", err.Error())
 	}
 	printQueryResponse(res)
 	return nil

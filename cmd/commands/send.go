@@ -9,6 +9,7 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
+	"io/ioutil"
 	"time"
 )
 
@@ -16,9 +17,10 @@ type CommandsSendOptions struct {
 	cfg       *config.Config
 	transport string
 	channel   string
-	message   string
+	body      string
 	metadata  string
 	timeout   int
+	fileName  string
 }
 
 var commandsSendExamples = `
@@ -26,10 +28,10 @@ var commandsSendExamples = `
 	kubemqctl commands send some-channel some-command
 	
 	# Send command to a 'commands' channel with metadata
-	kubemqctl commands send some-channel some-message -m some-metadata
+	kubemqctl commands send some-channel some-body -m some-metadata
 	
 	# Send command to a 'commands' channel with 120 seconds timeout
-	kubemqctl commands send some-channel some-message -o 120
+	kubemqctl commands send some-channel some-body -o 120
 `
 var commandsSendLong = `Send command allow to send messages to 'commands' channel with an option to set command time-out`
 var commandsSendShort = `Send messages to 'commands' channel command`
@@ -54,20 +56,35 @@ func NewCmdCommandsSend(ctx context.Context, cfg *config.Config) *cobra.Command 
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "m", "", "Set metadata message")
+	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "m", "", "Set metadata body")
 	cmd.PersistentFlags().IntVarP(&o.timeout, "timeout", "o", 30, "Set command timeout")
-
+	cmd.PersistentFlags().StringVarP(&o.fileName, "file", "f", "", "set load body from file")
 	return cmd
 }
 
 func (o *CommandsSendOptions) Complete(args []string, transport string) error {
 	o.transport = transport
-	if len(args) >= 2 {
+	if len(args) >= 1 {
 		o.channel = args[0]
-		o.message = args[1]
-		return nil
+
+	} else {
+		return fmt.Errorf("missing channel argument")
 	}
-	return fmt.Errorf("missing arguments, must be 2 arguments, channel and a message")
+
+	if o.fileName != "" {
+		data, err := ioutil.ReadFile(o.fileName)
+		if err != nil {
+			return err
+		}
+		o.body = string(data)
+	} else {
+		if len(args) >= 2 {
+			o.body = args[1]
+		} else {
+			return fmt.Errorf("missing body argument")
+		}
+	}
+	return nil
 }
 
 func (o *CommandsSendOptions) Validate() error {
@@ -87,12 +104,14 @@ func (o *CommandsSendOptions) Run(ctx context.Context) error {
 	msg := client.C().
 		SetChannel(o.channel).
 		SetId(uuid.New().String()).
-		SetBody([]byte(o.message)).
+		SetBody([]byte(o.body)).
 		SetMetadata(o.metadata).
 		SetTimeout(time.Duration(o.timeout) * time.Second)
+	fmt.Println("Sending Command:")
+	printCommand(msg)
 	res, err := msg.Send(ctx)
 	if err != nil {
-		return fmt.Errorf("sending commands message, %s", err.Error())
+		return fmt.Errorf("sending commands body, %s", err.Error())
 	}
 	printCommandResponse(res)
 	return nil

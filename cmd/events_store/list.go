@@ -2,7 +2,7 @@ package events_store
 
 import (
 	"context"
-	jsonEnc "encoding/json"
+	"encoding/json"
 	"fmt"
 	"github.com/go-resty/resty"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
@@ -88,10 +88,10 @@ func (o *EventsStoreListOptions) Run(ctx context.Context) error {
 }
 
 type Response struct {
-	Node        string             `json:"node"`
-	Error       bool               `json:"error"`
-	ErrorString string             `json:"error_string"`
-	Data        jsonEnc.RawMessage `json:"data"`
+	Node        string          `json:"node"`
+	Error       bool            `json:"error"`
+	ErrorString string          `json:"error_string"`
+	Data        json.RawMessage `json:"data"`
 }
 
 type Queues struct {

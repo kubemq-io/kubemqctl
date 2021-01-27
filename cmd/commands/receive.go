@@ -21,14 +21,14 @@ type CommandsReceiveOptions struct {
 }
 
 var commandsReceiveExamples = `
-	# Receive commands from a 'commands' channel (blocks until next message)
+	# Receive commands from a 'commands' channel (blocks until next body)
 	kubemqctl commands receive some-channel
 
-	# Receive commands from a 'commands' channel with group (blocks until next message)
+	# Receive commands from a 'commands' channel with group (blocks until next body)
 	kubemqctl commands receive some-channel -g G1
 `
-var commandsReceiveLong = `Receive (Subscribe) command allows to consume a message from 'commands' channel and response with appropriate reply`
-var commandsReceiveShort = `Receive a message from 'commands' channel command`
+var commandsReceiveLong = `Receive (Subscribe) command allows to consume a body from 'commands' channel and response with appropriate reply`
+var commandsReceiveShort = `Receive a body from 'commands' channel command`
 
 func NewCmdCommandsReceive(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &CommandsReceiveOptions{
@@ -86,7 +86,7 @@ func (o *CommandsReceiveOptions) Run(ctx context.Context) error {
 		utils.Println(fmt.Errorf("receive commands messages, %s", err.Error()).Error())
 	}
 	for {
-		utils.Println("waiting for the next command message...")
+		utils.Println("waiting for the next command body...")
 		select {
 		case err := <-errChan:
 			return fmt.Errorf("server disconnected with error: %s", err.Error())

@@ -18,15 +18,15 @@ type EventsReceiveOptions struct {
 }
 
 var eventsReceiveExamples = `
-	# Receive messages from an 'events' channel (blocks until next message)
+	# Receive messages from an 'events' channel (blocks until next body)
 	kubemqctl events receive some-channel
 
-	# Receive messages from an 'events' channel with group (blocks until next message)
+	# Receive messages from an 'events' channel with group (blocks until next body)
 	kubemqctl events receive some-channel -g G1
 
 `
 var eventsReceiveLong = `Receive (Subscribe) command allows to consume one or many messages from 'events' channel`
-var eventsReceiveShort = `Receive a message from 'events' channel command`
+var eventsReceiveShort = `Receive a body from 'events' channel command`
 
 func NewCmdEventsReceive(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &EventsReceiveOptions{

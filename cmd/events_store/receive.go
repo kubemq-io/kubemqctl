@@ -30,10 +30,10 @@ type EventsStoreReceiveOptions struct {
 }
 
 var eventsReceiveExamples = `
-	# Receive messages from an 'events store' channel (blocks until next message)
+	# Receive messages from an 'events store' channel (blocks until next body)
 	kubemqctl events_store receive some-channel
 
-	# Receive messages from an 'events channel' with group(blocks until next message)
+	# Receive messages from an 'events channel' with group(blocks until next body)
 	kubemqctl events_store receive some-channel -g G1
 `
 var eventsReceiveLong = `Receive (Subscribe) command allows to consume messages from an 'events store' with options to set offset parameters`
@@ -61,10 +61,10 @@ func NewCmdEventsStoreReceive(ctx context.Context, cfg *config.Config) *cobra.Co
 	}
 
 	cmd.PersistentFlags().StringVarP(&o.group, "group", "g", "", "set 'events_store' channel consumer group (load balancing)")
-	cmd.PersistentFlags().BoolVar(&o.startNew, "start-new", false, "start from new message only")
-	cmd.PersistentFlags().BoolVar(&o.startFirst, "start-first", false, "start from first message in the channel")
-	cmd.PersistentFlags().BoolVar(&o.startLast, "start-last", false, "start from last message in the channel")
-	cmd.PersistentFlags().IntVar(&o.startSequence, "start-sequence", 0, "start from message sequence")
+	cmd.PersistentFlags().BoolVar(&o.startNew, "start-new", false, "start from new body only")
+	cmd.PersistentFlags().BoolVar(&o.startFirst, "start-first", false, "start from first body in the channel")
+	cmd.PersistentFlags().BoolVar(&o.startLast, "start-last", false, "start from last body in the channel")
+	cmd.PersistentFlags().IntVar(&o.startSequence, "start-sequence", 0, "start from body sequence")
 	cmd.PersistentFlags().StringVar(&o.startTime, "start-time", "", "start from timestamp format 2006-01-02 15:04:05")
 	cmd.PersistentFlags().StringVar(&o.startDuration, "start-duration", "", "start from time duration i.e. 1h")
 	return cmd
@@ -160,7 +160,7 @@ func (o *EventsStoreReceiveOptions) promptOptions() error {
 	action := ""
 	prompt := &survey.Select{
 		Message: "Start receive events store messages options:",
-		Options: []string{"start from new messages only", "start from first message", "start from last message", "start from sequence", "start from time", "start from duration"},
+		Options: []string{"start from new messages only", "start from first body", "start from last body", "start from sequence", "start from time", "start from duration"},
 	}
 	err := survey.AskOne(prompt, &action)
 	if err != nil {
@@ -170,10 +170,10 @@ func (o *EventsStoreReceiveOptions) promptOptions() error {
 	case "start from new messages only":
 		o.subOptions = kubemq2.StartFromNewEvents()
 		return nil
-	case "start from first message":
+	case "start from first body":
 		o.subOptions = kubemq2.StartFromFirstEvent()
 		return nil
-	case "start from last message":
+	case "start from last body":
 		o.subOptions = kubemq2.StartFromLastEvent()
 		return nil
 	case "start from sequence":
@@ -182,7 +182,7 @@ func (o *EventsStoreReceiveOptions) promptOptions() error {
 			Renderer: survey.Renderer{},
 			Message:  "Set sequence:",
 			Default:  "1",
-			Help:     "1 is the first message",
+			Help:     "1 is the first body",
 		}
 
 		err := survey.AskOne(prompt, &seqStr)
