@@ -6,6 +6,7 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s"
 	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
+	"github.com/kubemq-io/kubemqctl/pkg/targets"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"io/ioutil"
@@ -23,6 +24,7 @@ type QueueSendOptions struct {
 	deadLetter string
 	messages   int
 	fileName   string
+	build      bool
 }
 
 var queueSendExamples = `
@@ -74,6 +76,7 @@ func NewCmdQueueSend(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd.PersistentFlags().StringVarP(&o.deadLetter, "dead-letter-queue", "q", "", "set dead-letter queue name")
 	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "", "", "set queue message metadata field")
 	cmd.PersistentFlags().StringVarP(&o.fileName, "file", "f", "", "set load message body from file")
+	cmd.PersistentFlags().BoolVarP(&o.build, "build", "b", false, "build kubemq targets request")
 
 	return cmd
 }
@@ -86,7 +89,14 @@ func (o *QueueSendOptions) Complete(args []string, transport string) error {
 	} else {
 		return fmt.Errorf("missing channel argument")
 	}
-
+	if o.build {
+		data, err := targets.BuildRequest()
+		if err != nil {
+			return err
+		}
+		o.body = string(data)
+		return nil
+	}
 	if o.fileName != "" {
 		data, err := ioutil.ReadFile(o.fileName)
 		if err != nil {

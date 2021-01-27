@@ -7,6 +7,7 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s"
 	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
+	"github.com/kubemq-io/kubemqctl/pkg/targets"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"io/ioutil"
@@ -23,6 +24,7 @@ type QueriesSendOptions struct {
 	cacheKey  string
 	cacheTTL  time.Duration
 	fileName  string
+	build     bool
 }
 
 var queriesSendExamples = `
@@ -66,6 +68,7 @@ func NewCmdQueriesSend(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd.PersistentFlags().IntVarP(&o.timeout, "timeout", "o", 30, "set query timeout")
 	cmd.PersistentFlags().DurationVarP(&o.cacheTTL, "cache-duration", "d", 10*time.Minute, "set cache duration timeout")
 	cmd.PersistentFlags().StringVarP(&o.fileName, "file", "f", "", "set load body from file")
+	cmd.PersistentFlags().BoolVarP(&o.build, "build", "b", false, "build kubemq targets request")
 	return cmd
 }
 
@@ -77,7 +80,14 @@ func (o *QueriesSendOptions) Complete(args []string, transport string) error {
 	} else {
 		return fmt.Errorf("missing channel argument")
 	}
-
+	if o.build {
+		data, err := targets.BuildRequest()
+		if err != nil {
+			return err
+		}
+		o.body = string(data)
+		return nil
+	}
 	if o.fileName != "" {
 		data, err := ioutil.ReadFile(o.fileName)
 		if err != nil {
@@ -120,6 +130,7 @@ func (o *QueriesSendOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return fmt.Errorf("sending query body, %s", err.Error())
 	}
+	fmt.Println("Getting Response:")
 	printQueryResponse(res)
 	return nil
 }

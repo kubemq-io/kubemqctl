@@ -8,6 +8,7 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s"
 	"github.com/kubemq-io/kubemqctl/pkg/kubemq"
+	"github.com/kubemq-io/kubemqctl/pkg/targets"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
 	"io/ioutil"
@@ -23,6 +24,7 @@ type EventsSendOptions struct {
 	messages  int
 	isStream  bool
 	fileName  string
+	build     bool
 }
 
 var eventsSendExamples = `
@@ -65,6 +67,7 @@ func NewCmdEventsSend(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd.PersistentFlags().IntVarP(&o.messages, "messages", "m", 1, "set how many 'events' messages to send")
 	cmd.PersistentFlags().BoolVarP(&o.isStream, "stream", "s", false, "set stream of all messages at once")
 	cmd.PersistentFlags().StringVarP(&o.fileName, "file", "f", "", "set body body from file")
+	cmd.PersistentFlags().BoolVarP(&o.build, "build", "b", false, "build kubemq targets request")
 	return cmd
 }
 
@@ -76,7 +79,14 @@ func (o *EventsSendOptions) Complete(args []string, transport string) error {
 	} else {
 		return fmt.Errorf("missing channel argument")
 	}
-
+	if o.build {
+		data, err := targets.BuildRequest()
+		if err != nil {
+			return err
+		}
+		o.body = string(data)
+		return nil
+	}
 	if o.fileName != "" {
 		data, err := ioutil.ReadFile(o.fileName)
 		if err != nil {

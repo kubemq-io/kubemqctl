@@ -2,30 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/request.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/targets/build.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/targets/metadata.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/targets/request.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/targets/response.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/redis.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/commands/helper.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/commands/helper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/commands/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/commands/receive.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Taskfile.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Taskfile.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/commands/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/commands/send.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/create/cluster/deploy.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/deploy.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/license.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/license.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events/helper.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events/helper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events/receive.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/events/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events/send.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events_store/helper.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/helper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events_store/list.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/list.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/events_store/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/receive.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/events_store/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/send.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/get/cluster/cluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/get/cluster/cluster.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/get/cluster/license/license.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queries/helper.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queries/helper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queries/receive.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queries/receive.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/queries/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queries/send.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/attach.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/attach.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/helper.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/helper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/list.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/list.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/queue/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/send.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/api/bolt.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +64,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/events_store" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/pkg/targets" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -84,11 +73,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\targets" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\events_store" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\events" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\commands" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\queries" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\manage\context" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\manage\connector" />
@@ -188,13 +177,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00045" summary="add error check for api call">
-      <created>1575626248282</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1575626248282</updated>
     </task>
     <task id="LOCAL-00046" summary="add error handling on server disconnect">
       <created>1575974452577</created>
@@ -532,7 +514,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611744253937</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="add load body from file support">
+      <created>1611750522832</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1611750522832</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -567,7 +556,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="add token get license" />
     <MESSAGE value="add kubemq dashboard" />
     <MESSAGE value="update dashboard commands" />
     <MESSAGE value="update license flow" />
@@ -592,7 +580,8 @@
     <MESSAGE value="fix send queue messages - fails" />
     <MESSAGE value="release v3.3.1" />
     <MESSAGE value="print reformat" />
-    <option name="LAST_COMMIT_MESSAGE" value="print reformat" />
+    <MESSAGE value="add load body from file support" />
+    <option name="LAST_COMMIT_MESSAGE" value="add load body from file support" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

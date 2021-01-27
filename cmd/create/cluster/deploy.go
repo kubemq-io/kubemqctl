@@ -138,9 +138,9 @@ func (o *deployOptions) validate() error {
 		return err
 	}
 
-	if o.license.licenseData == "" && o.key == "" {
-		return fmt.Errorf("license key is required, get a key at https://account.kubemq.io/login/register")
-	}
+	//if o.license.licenseData == "" && o.key == "" {
+	//	return fmt.Errorf("license key is required, get a key at https://account.kubemq.io/login/register")
+	//}
 	return nil
 }
 
