@@ -37,7 +37,7 @@ func BuildRequest() ([]byte, error) {
 		Message:  "Set Request Data loading options:",
 		Options:  []string{"Empty Request data", "Enter Request Data", "Load from file"},
 		Default:  "Empty Request data",
-		Help:     "Set KubeMQ Target Request data loading options:",
+		Help:     "Set KubeMQ Target Request data loading options",
 	}
 	err = survey.AskOne(loadDataSelectionPrompt, &loadDataOptions)
 	if err != nil {

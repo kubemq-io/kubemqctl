@@ -137,6 +137,7 @@ func (o *QueueSendOptions) Run(ctx context.Context) error {
 			SetPolicyDelaySeconds(o.delay).
 			SetPolicyMaxReceiveCount(o.maxReceive).
 			SetPolicyMaxReceiveQueue(o.deadLetter)
+		fmt.Println("Sending Queue Message:")
 		res, err := msg.Send(ctx)
 		if err != nil {
 			return fmt.Errorf("sending queue message, %s", err.Error())
@@ -146,7 +147,7 @@ func (o *QueueSendOptions) Run(ctx context.Context) error {
 			if res.IsError {
 				return fmt.Errorf("sending queue message response, %s", res.Error)
 			}
-			fmt.Println("Sent:")
+
 			printQueueMessage(msg)
 		}
 	}

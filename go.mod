@@ -1,13 +1,15 @@
 module github.com/kubemq-io/kubemqctl
 
 require (
-	github.com/AlecAivazis/survey/v2 v2.1.1
+	github.com/AlecAivazis/survey/v2 v2.2.7
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.7.0
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-resty/resty v1.8.0
 	github.com/go-resty/resty/v2 v2.0.0
 	github.com/google/uuid v1.1.2
 	github.com/gorilla/websocket v1.4.0
+	github.com/json-iterator/go v1.1.8
 	github.com/kubemq-hub/builder v0.5.9
 	github.com/kubemq-io/kubemq-go v1.4.6
 	github.com/magiconair/properties v1.8.1 // indirect

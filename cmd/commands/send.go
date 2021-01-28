@@ -123,7 +123,7 @@ func (o *CommandsSendOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return fmt.Errorf("sending commands body, %s", err.Error())
 	}
-	fmt.Println("Getting Response:")
+	fmt.Println("Getting  Command Response:")
 	printCommandResponse(res)
 	return nil
 }

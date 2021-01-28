@@ -130,7 +130,7 @@ func (o *QueriesSendOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return fmt.Errorf("sending query body, %s", err.Error())
 	}
-	fmt.Println("Getting Response:")
+	fmt.Println("Getting Query Response:")
 	printQueryResponse(res)
 	return nil
 }
