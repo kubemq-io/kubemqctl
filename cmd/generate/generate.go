@@ -3,6 +3,7 @@ package generate
 import (
 	"context"
 	"github.com/kubemq-io/kubemqctl/cmd/generate/authentication"
+	"github.com/kubemq-io/kubemqctl/cmd/generate/authorization"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
@@ -11,6 +12,9 @@ import (
 var generateExamples = `
 	# Execute generate authentication commands
  	kubemqctl generate auth
+
+	# Execute generate authorization commands
+ 	kubemqctl generate az
 
 `
 var generateLong = `Generate various kubemq related artifacts`
@@ -28,5 +32,6 @@ func NewCmdGenerate(ctx context.Context, cfg *config.Config) *cobra.Command {
 		},
 	}
 	cmd.AddCommand(authentication.NewCmdAuthentication(ctx, cfg))
+	cmd.AddCommand(authorization.NewCmdAuthorization(ctx, cfg))
 	return cmd
 }

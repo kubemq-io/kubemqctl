@@ -22,11 +22,14 @@ type TokenOptions struct {
 }
 
 var tokenExamples = `
-	# Execute generate authentication jwt token
+	# Execute generate authentication JWT token
  	kubemqctl generate auth token
+
+	# Execute JWT token verification
+ 	kubemqctl generate auth token -v
 `
-var tokenLong = `Generate JWT basic token`
-var tokenShort = `Generate JWT basic token`
+var tokenLong = `Generate and validate JWT tokens`
+var tokenShort = `Generate and validate JWT tokens`
 
 func NewCmdToken(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &TokenOptions{

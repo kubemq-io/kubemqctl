@@ -8,8 +8,14 @@ import (
 )
 
 var authenticationExamples = `
-	# Execute generate authentication rsa certificates
+	# Execute generate authentication RSA certificates
  	kubemqctl generate auth certs
+
+	# Execute generate authentication JWT token
+ 	kubemqctl generate auth token
+
+	# Execute JWT token verification
+ 	kubemqctl generate auth token -v
 
 `
 var authenticationLong = `Generate and verify Authentication certificates and tokens`
@@ -18,7 +24,7 @@ var authenticationShort = `Generate and verify Authentication certificates and t
 func NewCmdAuthentication(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "authentication",
-		Aliases: []string{"auth"},
+		Aliases: []string{"auth", "at"},
 		Short:   authenticationShort,
 		Long:    authenticationLong,
 		Example: authenticationExamples,

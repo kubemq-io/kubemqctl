@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="add kubemq targets builder">
-      <change afterPath="$PROJECT_DIR$/cmd/generate/authentication/authentication.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/generate/authentication/certs.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/generate/authentication/jwt.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/generate/authentication/time_answer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/generate/authentication/token.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/generate/generate.go" afterDir="false" />
+    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/cmd/generate/authorization/authorization.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/generate/authorization/policy.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/generate/authorization/rule.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/queue/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/send.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/root/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root/root.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/targets/build.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/targets/build.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/generate/authentication/authentication.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/generate/authentication/authentication.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/generate/authentication/token.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/generate/authentication/token.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/generate/generate.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/generate/generate.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +66,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/generate" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/generate/authorization" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -80,11 +75,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\generate\authorization" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\generate" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\targets" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\events_store" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\events" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\commands" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\manage\connector" />
@@ -184,13 +179,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00047" summary="update readme">
-      <created>1575974641108</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1575974641108</updated>
     </task>
     <task id="LOCAL-00048" summary="refactor all deployment">
       <created>1579539930507</created>
@@ -528,7 +516,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611755898597</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="add authentication generation">
+      <created>1611831473257</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1611831473257</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -563,7 +558,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="update dashboard commands" />
     <MESSAGE value="update license flow" />
     <MESSAGE value="update new operator version 0.5.1" />
     <MESSAGE value="release v3.0.0" />
@@ -588,7 +582,8 @@
     <MESSAGE value="print reformat" />
     <MESSAGE value="add load body from file support" />
     <MESSAGE value="add kubemq targets builder" />
-    <option name="LAST_COMMIT_MESSAGE" value="add kubemq targets builder" />
+    <MESSAGE value="add authentication generation" />
+    <option name="LAST_COMMIT_MESSAGE" value="add authentication generation" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
