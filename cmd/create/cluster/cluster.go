@@ -49,7 +49,7 @@ func NewCmdCreate(ctx context.Context, cfg *config.Config) *cobra.Command {
 		},
 	}
 
-	o.deployOpts = defaultDeployOptions(cmd)
+	o.deployOpts = defaultDeployOptions(cmd, cfg)
 	cmd.PersistentFlags().BoolVarP(&o.isDryRun, "dry-run", "", false, "generate cluster configuration without execute")
 
 	return cmd

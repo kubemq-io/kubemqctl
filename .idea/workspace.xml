@@ -2,11 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cmd/generate/routing/route.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/config/access.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/config/connection.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/config/context.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/config/license.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/generate/authorization/authorization.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/generate/authorization/authorization.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/generate/authorization/policy.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/generate/routing/routing.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/generate/generate.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/generate/generate.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/cluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/cluster.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/deploy.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/deploy.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/config/config.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +68,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/generate" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/config" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -73,11 +77,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\config" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\generate" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\generate\authorization" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\targets" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\events_store" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\events" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\manage\connector" />
@@ -177,13 +181,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00049" summary="adding attributes to statefulset">
-      <created>1579607598447</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1579607598447</updated>
     </task>
     <task id="LOCAL-00050" summary="adding ingress setting to services">
       <created>1579788170622</created>
@@ -521,7 +518,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611835829919</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="add smart routing generator">
+      <created>1611837205437</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1611837205437</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -556,7 +560,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="update new operator version 0.5.1" />
     <MESSAGE value="release v3.0.0" />
     <MESSAGE value="update role to support k8s v1.12 which not support ingress networking" />
     <MESSAGE value="roll back to role changes" />
@@ -581,7 +584,8 @@
     <MESSAGE value="add kubemq targets builder" />
     <MESSAGE value="add authentication generation" />
     <MESSAGE value="add authorization policy generator" />
-    <option name="LAST_COMMIT_MESSAGE" value="add authorization policy generator" />
+    <MESSAGE value="add smart routing generator" />
+    <option name="LAST_COMMIT_MESSAGE" value="add smart routing generator" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

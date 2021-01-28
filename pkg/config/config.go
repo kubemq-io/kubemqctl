@@ -63,6 +63,7 @@ type Config struct {
 	ClientId           string
 	AuthTokenFile      string
 	LicenseData        string
+	LicenseKey         string
 }
 
 func (c *Config) Save() error {

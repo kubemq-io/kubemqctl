@@ -2,6 +2,7 @@ package cluster
 
 import (
 	"fmt"
+	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/kubemqcluster"
 	"github.com/spf13/cobra"
 	"io/ioutil"
@@ -34,9 +35,10 @@ type deployOptions struct {
 	store                 *deployStoreOptions
 	tls                   *deployTlsOptions
 	volume                *deployVolumeOptions
+	kubemqctlCfg          *config.Config
 }
 
-func defaultDeployOptions(cmd *cobra.Command) *deployOptions {
+func defaultDeployOptions(cmd *cobra.Command, cfg *config.Config) *deployOptions {
 	o := &deployOptions{
 		configData:            "",
 		configFilename:        "",
@@ -63,6 +65,7 @@ func defaultDeployOptions(cmd *cobra.Command) *deployOptions {
 		store:                 setStoreConfig(cmd),
 		tls:                   setTolsConfig(cmd),
 		volume:                setVolumeConfig(cmd),
+		kubemqctlCfg:          cfg,
 	}
 	cmd.PersistentFlags().StringVarP(&o.configFilename, "config-file", "c", "", "set kubemq config file")
 	cmd.PersistentFlags().StringVarP(&o.name, "name", "", "kubemq-cluster", "set kubemq cluster name")
@@ -176,6 +179,7 @@ func (o *deployOptions) complete() error {
 	if err := o.license.complete(); err != nil {
 		return err
 	}
+
 	if err := o.log.complete(); err != nil {
 		return err
 	}
@@ -206,6 +210,13 @@ func (o *deployOptions) complete() error {
 	}
 	if err := o.volume.complete(); err != nil {
 		return err
+	}
+	if o.license.licenseData == "" && o.kubemqctlCfg.LicenseData != "" {
+		o.license.licenseData = o.kubemqctlCfg.LicenseData
+	}
+
+	if o.key == "" && o.kubemqctlCfg.LicenseKey != "" {
+		o.key = o.kubemqctlCfg.LicenseKey
 	}
 	return nil
 }
