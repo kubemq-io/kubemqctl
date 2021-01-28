@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/kubemq-io/kubemqctl/cmd/generate/authentication"
 	"github.com/kubemq-io/kubemqctl/cmd/generate/authorization"
+	"github.com/kubemq-io/kubemqctl/cmd/generate/routing"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
@@ -16,6 +17,8 @@ var generateExamples = `
 	# Execute generate authorization commands
  	kubemqctl generate az
 
+	# Execute generate smart routing file
+ 	kubemqctl generate routes
 `
 var generateLong = `Generate various kubemq related artifacts`
 var generateShort = `Generate various kubemq related artifacts`
@@ -33,5 +36,6 @@ func NewCmdGenerate(ctx context.Context, cfg *config.Config) *cobra.Command {
 	}
 	cmd.AddCommand(authentication.NewCmdAuthentication(ctx, cfg))
 	cmd.AddCommand(authorization.NewCmdAuthorization(ctx, cfg))
+	cmd.AddCommand(routing.NewCmdRouting(ctx, cfg))
 	return cmd
 }
