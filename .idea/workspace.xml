@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cmd/config/access.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/config/connection.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/config/context.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/config/license.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/cluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/cluster.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/cluster/deploy.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/cluster/deploy.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Taskfile.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Taskfile.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,13 +173,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00050" summary="adding ingress setting to services">
-      <created>1579788170622</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1579788170622</updated>
     </task>
     <task id="LOCAL-00051" summary="adapt apply and describe">
       <created>1579880784456</created>
@@ -525,7 +510,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611837205437</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="refactor config">
+      <created>1611841801363</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1611841801363</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -560,7 +552,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="release v3.0.0" />
     <MESSAGE value="update role to support k8s v1.12 which not support ingress networking" />
     <MESSAGE value="roll back to role changes" />
     <MESSAGE value="adding service account for kubemq cluster statefulset creation" />
@@ -585,7 +576,8 @@
     <MESSAGE value="add authentication generation" />
     <MESSAGE value="add authorization policy generator" />
     <MESSAGE value="add smart routing generator" />
-    <option name="LAST_COMMIT_MESSAGE" value="add smart routing generator" />
+    <MESSAGE value="refactor config" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor config" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
