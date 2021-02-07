@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/go-resty/resty"
+	"github.com/go-resty/resty/v2"
 	"github.com/kubemq-io/kubemqctl/pkg/attach"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s"
@@ -75,7 +75,7 @@ func (o *QueueAttachOptions) Complete(args []string, transport string) error {
 		resp := &Response{}
 		queues := &Queues{}
 
-		r, err := resty.R().SetResult(resp).SetError(resp).Get(fmt.Sprintf("%s/v1/stats/queues", o.cfg.GetApiHttpURI()))
+		r, err := resty.New().R().SetResult(resp).SetError(resp).Get(fmt.Sprintf("%s/v1/stats/queues", o.cfg.GetApiHttpURI()))
 		if err != nil {
 			return err
 		}

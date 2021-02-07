@@ -87,3 +87,29 @@ func printItems(items []*kubemq.QueueMessage) {
 func printQueueMessage(msg *kubemq.QueueMessage) {
 	fmt.Println(newQueueMessageObject(msg))
 }
+
+type resultObj struct {
+	MessageID    string `json:"message_id"`
+	SentAt       string `json:"sent_at,omitempty"`
+	ExpirationAt string `json:"expiration_at,omitempty"`
+	DelayedTo    string `json:"delayed_to,omitempty"`
+	IsError      bool   `json:"is_error,omitempty"`
+	Error        string `json:"error,omitempty"`
+}
+
+func printQueueMessageResult(res *kubemq.SendQueueMessageResult) {
+	obj := &resultObj{
+		MessageID: res.MessageID,
+		SentAt:    time.Unix(0, res.SentAt).Format("2006-01-02 15:04:05.999"),
+		IsError:   res.IsError,
+		Error:     res.Error,
+	}
+	if res.ExpirationAt > 0 {
+		obj.ExpirationAt = time.Unix(0, res.ExpirationAt).Format("2006-01-02 15:04:05.999")
+	}
+	if res.DelayedTo > 0 {
+		obj.DelayedTo = time.Unix(0, res.DelayedTo).Format("2006-01-02 15:04:05.999")
+	}
+	data, _ := json.MarshalIndent(obj, "", "    ")
+	fmt.Println(string(data))
+}

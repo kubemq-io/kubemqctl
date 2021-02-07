@@ -10,7 +10,6 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/targets"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
-	"io/ioutil"
 	"time"
 )
 
@@ -23,7 +22,7 @@ type QueriesSendOptions struct {
 	timeout   int
 	cacheKey  string
 	cacheTTL  time.Duration
-	fileName  string
+	fileName  bool
 	build     bool
 }
 
@@ -67,7 +66,7 @@ func NewCmdQueriesSend(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd.PersistentFlags().StringVarP(&o.cacheKey, "cache-key", "c", "", "set query cache key")
 	cmd.PersistentFlags().IntVarP(&o.timeout, "timeout", "o", 30, "set query timeout")
 	cmd.PersistentFlags().DurationVarP(&o.cacheTTL, "cache-duration", "d", 10*time.Minute, "set cache duration timeout")
-	cmd.PersistentFlags().StringVarP(&o.fileName, "file", "f", "", "set load body from file")
+	cmd.PersistentFlags().BoolVarP(&o.fileName, "file", "f", false, "set load body from file")
 	cmd.PersistentFlags().BoolVarP(&o.build, "build", "b", false, "build kubemq targets request")
 	return cmd
 }
@@ -88,8 +87,8 @@ func (o *QueriesSendOptions) Complete(args []string, transport string) error {
 		o.body = string(data)
 		return nil
 	}
-	if o.fileName != "" {
-		data, err := ioutil.ReadFile(o.fileName)
+	if o.fileName {
+		data, err := targets.BuildFile()
 		if err != nil {
 			return err
 		}

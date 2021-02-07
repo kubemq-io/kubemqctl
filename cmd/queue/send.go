@@ -9,7 +9,6 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/targets"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
-	"io/ioutil"
 )
 
 type QueueSendOptions struct {
@@ -23,7 +22,7 @@ type QueueSendOptions struct {
 	metadata   string
 	deadLetter string
 	messages   int
-	fileName   string
+	fileName   bool
 	build      bool
 }
 
@@ -75,7 +74,7 @@ func NewCmdQueueSend(ctx context.Context, cfg *config.Config) *cobra.Command {
 	cmd.PersistentFlags().IntVarP(&o.messages, "messages", "m", 1, "set dead-letter max receive count")
 	cmd.PersistentFlags().StringVarP(&o.deadLetter, "dead-letter-queue", "q", "", "set dead-letter queue name")
 	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "", "", "set queue message metadata field")
-	cmd.PersistentFlags().StringVarP(&o.fileName, "file", "f", "", "set load message body from file")
+	cmd.PersistentFlags().BoolVarP(&o.fileName, "file", "f", false, "set load message body from file")
 	cmd.PersistentFlags().BoolVarP(&o.build, "build", "b", false, "build kubemq targets request")
 
 	return cmd
@@ -97,8 +96,8 @@ func (o *QueueSendOptions) Complete(args []string, transport string) error {
 		o.body = string(data)
 		return nil
 	}
-	if o.fileName != "" {
-		data, err := ioutil.ReadFile(o.fileName)
+	if o.fileName {
+		data, err := targets.BuildFile()
 		if err != nil {
 			return err
 		}
@@ -137,18 +136,15 @@ func (o *QueueSendOptions) Run(ctx context.Context) error {
 			SetPolicyDelaySeconds(o.delay).
 			SetPolicyMaxReceiveCount(o.maxReceive).
 			SetPolicyMaxReceiveQueue(o.deadLetter)
-		fmt.Println("Sending Queue Message:")
+		utils.Println("Sending Queue Message:")
+		printQueueMessage(msg)
 		res, err := msg.Send(ctx)
 		if err != nil {
-			return fmt.Errorf("sending queue message, %s", err.Error())
+			return fmt.Errorf("error sending queue message, %s", err.Error())
 		}
-
 		if res != nil {
-			if res.IsError {
-				return fmt.Errorf("sending queue message response, %s", res.Error)
-			}
-
-			printQueueMessage(msg)
+			utils.Println("Response:")
+			printQueueMessageResult(res)
 		}
 	}
 

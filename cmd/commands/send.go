@@ -10,7 +10,6 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/targets"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
-	"io/ioutil"
 	"time"
 )
 
@@ -21,7 +20,7 @@ type CommandsSendOptions struct {
 	body      string
 	metadata  string
 	timeout   int
-	fileName  string
+	fileName  bool
 	build     bool
 }
 
@@ -60,7 +59,7 @@ func NewCmdCommandsSend(ctx context.Context, cfg *config.Config) *cobra.Command 
 	}
 	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "m", "", "Set metadata body")
 	cmd.PersistentFlags().IntVarP(&o.timeout, "timeout", "o", 30, "Set command timeout")
-	cmd.PersistentFlags().StringVarP(&o.fileName, "file", "f", "", "set load body from file")
+	cmd.PersistentFlags().BoolVarP(&o.fileName, "file", "f", false, "set load body from file")
 	cmd.PersistentFlags().BoolVarP(&o.build, "build", "b", false, "build kubemq targets request")
 	return cmd
 }
@@ -81,8 +80,8 @@ func (o *CommandsSendOptions) Complete(args []string, transport string) error {
 		o.body = string(data)
 		return nil
 	}
-	if o.fileName != "" {
-		data, err := ioutil.ReadFile(o.fileName)
+	if o.fileName {
+		data, err := targets.BuildFile()
 		if err != nil {
 			return err
 		}

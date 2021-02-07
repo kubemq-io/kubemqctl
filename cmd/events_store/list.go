@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/go-resty/resty"
+	"github.com/go-resty/resty/v2"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
@@ -68,7 +68,7 @@ func (o *EventsStoreListOptions) Run(ctx context.Context) error {
 	resp := &Response{}
 	q := &Queues{}
 
-	r, err := resty.R().SetResult(resp).SetError(resp).Get(fmt.Sprintf("%s/v1/stats/events_stores", o.cfg.GetApiHttpURI()))
+	r, err := resty.New().R().SetResult(resp).SetError(resp).Get(fmt.Sprintf("%s/v1/stats/events_stores", o.cfg.GetApiHttpURI()))
 	if err != nil {
 		return err
 	}

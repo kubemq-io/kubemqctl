@@ -2,7 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/pkg/targets/file.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Taskfile.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Taskfile.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/commands/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/commands/send.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/events/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events/send.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/events_store/list.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/list.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/events_store/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/events_store/send.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/queries/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queries/send.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/queue/attach.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/attach.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/queue/helper.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/helper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/queue/list.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/list.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/queue/send.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/queue/send.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/transport.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,13 +186,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
-    </task>
-    <task id="LOCAL-00051" summary="adapt apply and describe">
-      <created>1579880784456</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1579880784456</updated>
     </task>
     <task id="LOCAL-00052" summary="add operator implementation">
       <created>1582032000023</created>
@@ -517,7 +523,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611841801363</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="release v3.5.0">
+      <created>1611841830489</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1611841830489</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -552,7 +565,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="update role to support k8s v1.12 which not support ingress networking" />
     <MESSAGE value="roll back to role changes" />
     <MESSAGE value="adding service account for kubemq cluster statefulset creation" />
     <MESSAGE value="fix for bad trim host name" />
@@ -577,7 +589,8 @@
     <MESSAGE value="add authorization policy generator" />
     <MESSAGE value="add smart routing generator" />
     <MESSAGE value="refactor config" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor config" />
+    <MESSAGE value="release v3.5.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="release v3.5.0" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

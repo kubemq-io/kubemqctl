@@ -11,7 +11,6 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/targets"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
-	"io/ioutil"
 	"time"
 )
 
@@ -23,7 +22,7 @@ type EventsStoreSendOptions struct {
 	metadata  string
 	messages  int
 	isStream  bool
-	fileName  string
+	fileName  bool
 	build     bool
 }
 
@@ -66,7 +65,7 @@ func NewCmdEventsStoreSend(ctx context.Context, cfg *config.Config) *cobra.Comma
 	cmd.PersistentFlags().StringVarP(&o.metadata, "metadata", "", "", "set body metadata field")
 	cmd.PersistentFlags().IntVarP(&o.messages, "messages", "m", 1, "set how many 'events store' messages to send")
 	cmd.PersistentFlags().BoolVarP(&o.isStream, "stream", "s", false, "set stream of all messages at once")
-	cmd.PersistentFlags().StringVarP(&o.fileName, "file", "f", "", "set load body from file")
+	cmd.PersistentFlags().BoolVarP(&o.fileName, "file", "f", false, "set load body from file")
 	cmd.PersistentFlags().BoolVarP(&o.build, "build", "b", false, "build kubemq targets request")
 	return cmd
 }
@@ -87,8 +86,8 @@ func (o *EventsStoreSendOptions) Complete(args []string, transport string) error
 		o.body = string(data)
 		return nil
 	}
-	if o.fileName != "" {
-		data, err := ioutil.ReadFile(o.fileName)
+	if o.fileName {
+		data, err := targets.BuildFile()
 		if err != nil {
 			return err
 		}

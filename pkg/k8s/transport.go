@@ -118,9 +118,23 @@ func GetRunningClusterPod(client *client.Client, ns, name string) (string, strin
 		return ns, randPort, nil
 	}
 
-	return "", "", fmt.Errorf("no running pods available in %s/%s.", ns, name)
+	return "", "", fmt.Errorf("no running pods available in %s/%s", ns, name)
 }
-
+func GetRunningDashboardPod(client *client.Client, ns, name string) (string, string, error) {
+	pods, err := client.GetPods(ns, name)
+	if err != nil {
+		return "", "", err
+	}
+	var list []string
+	for _, pod := range pods {
+		list = append(list, pod.Name)
+	}
+	if len(list) == 0 || len(list) != 1 {
+		return "", "", fmt.Errorf("no running pods available in %s/%s", ns, name)
+	} else {
+		return ns, list[0], nil
+	}
+}
 func GetDashboardTransport(ctx context.Context, cfg *config.Config, ns, name string) (string, string, error) {
 	if !cfg.AutoIntegrated {
 		return "3000", "8080", nil
@@ -130,7 +144,7 @@ func GetDashboardTransport(ctx context.Context, cfg *config.Config, ns, name str
 	if err != nil {
 		return "", "", err
 	}
-	podNameSpace, podName, err := GetRunningClusterPod(c, ns, name)
+	podNameSpace, podName, err := GetRunningDashboardPod(c, ns, name)
 	if err != nil {
 		return "", "", err
 	}
