@@ -7,21 +7,27 @@ Usage:
   kubemqctl [command]
 
 Available Commands:
-  cluster      Executes Kubemq cluster management commands
   commands     Execute Kubemq 'commands' RPC commands
   config       Run Kubemqctl configuration wizard command
+  create       Executes Kubemq create commands
+  delete       Executes delete commands
   events       Execute Kubemq 'events' Pub/Sub commands
   events_store Execute Kubemq 'events_store' Pub/Sub commands
+  generate     Generate various kubemq related artifacts
+  get          Executes Kubemq get commands
   help         Help about any command
+  manage       Executes Kubemq manage command
   queries      Execute Kubemq 'queries' RPC based commands
   queues       Execute Kubemq 'queues' commands
+  scale        Executes Kubemq scale commands
+  set          Executes set commands
 
 Flags:
-  -h, --help      help for kubemqctl
-      --version   version for kubemqctl
+      --config string   set kubemqctl configuration file (default "./.kubemqctl.yaml")
+  -h, --help            help for kubemqctl
+  -v, --version         version for kubemqctl
 
 Use "kubemqctl [command] --help" for more information about a command.
-
 ```
 ## Installation
 
