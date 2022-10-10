@@ -4,40 +4,14 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="release v3.5.1">
-      <change beforePath="$PROJECT_DIR$/.idea/kubetools.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kubetools.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Taskfile.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Taskfile.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/create.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/create.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/dashboard/dashboard.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/dashboard/deploy.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/dashboard/grafana.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/create/dashboard/prometheus.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/delete/dashboard/dashboard.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/delete/delete.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/delete/delete.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/generate/authentication/jwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/generate/authentication/jwt.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/generate/authentication/token.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/generate/authentication/token.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/get/dashboard/dashboard.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/get/dashboard/dashboard.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/get/dashboard/describe/describe.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/ingress.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/ingress.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/namespace.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/namespace.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/secret.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/secret.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/kubemqcluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/kubemqcluster.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/kubemqconnector.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/kubemqconnector.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/kubemqdashboard.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/kubemqdashboard.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/logs/tail.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/logs/tail.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/logs/watch.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/logs/watch.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/cluster_role.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/cluster_role.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/cluster_role_binding.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/cluster_role_binding.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/crd.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/crd.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/operator.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/operator.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/role.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/role.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/role_binding.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/role_binding.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/service_account.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/service_account.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/proxy.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/proxy.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/k8s/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/transport.go" afterDir="false" />
+    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="release v3.6.0">
+      <change beforePath="$PROJECT_DIR$/cmd/manage/cluster/dto.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/manage/cluster/handler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/manage/connector/dto.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/manage/connector/handler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/manage/context/handler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/manage/manage.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/root/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root/root.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +41,9 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="999b467b-7606-4679-82b6-fda09709e00b" />
   </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="true" />
@@ -571,7 +548,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="adding service account for kubemq cluster statefulset creation" />
     <MESSAGE value="fix for bad trim host name" />
     <MESSAGE value="update for v3.1.0 release" />
     <MESSAGE value="update for v3.1.1 release" />
@@ -596,7 +572,8 @@
     <MESSAGE value="refactor config" />
     <MESSAGE value="release v3.5.0" />
     <MESSAGE value="release v3.5.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="release v3.5.1" />
+    <MESSAGE value="release v3.6.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="release v3.6.0" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
