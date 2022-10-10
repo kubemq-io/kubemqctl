@@ -2,6 +2,7 @@ package client
 
 import (
 	"bytes"
+	"context"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client/v1alpha1"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/types"
 
@@ -117,7 +118,7 @@ func (c *Client) SwitchContext(contextName string) error {
 }
 
 func (c *Client) GetPods(ns string, name string) (map[string]apiv1.Pod, error) {
-	pods, err := c.ClientSet.CoreV1().Pods(ns).List(metav1.ListOptions{})
+	pods, err := c.ClientSet.CoreV1().Pods(ns).List(context.Background(), metav1.ListOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +132,21 @@ func (c *Client) GetPods(ns string, name string) (map[string]apiv1.Pod, error) {
 	}
 	return list, err
 }
-
+func (c *Client) GetServices(ns string, name string) (map[string]apiv1.Service, error) {
+	pods, err := c.ClientSet.CoreV1().Services(ns).List(context.Background(), metav1.ListOptions{})
+	if err != nil {
+		return nil, err
+	}
+	list := map[string]apiv1.Service{}
+	items := pods.Items
+	for i := 0; i < len(items); i++ {
+		item := items[i]
+		if item.Name == name {
+			list[fmt.Sprintf("%s/%s", item.Namespace, item.Name)] = item
+		}
+	}
+	return list, err
+}
 func (c *Client) ForwardPorts(ns string, name string, ports []string, stopChan chan struct{}, outCh chan string, errOutCh chan string) error {
 	restConfig, err := c.ClientConfig.ClientConfig()
 	if err != nil {

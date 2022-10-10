@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/kubemq-io/kubemqctl/cmd/create/cluster"
 	"github.com/kubemq-io/kubemqctl/cmd/create/connector"
-	"github.com/kubemq-io/kubemqctl/cmd/create/dashboard"
 	"github.com/kubemq-io/kubemqctl/cmd/create/operator"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
@@ -44,7 +43,6 @@ func NewCmdCreate(ctx context.Context, cfg *config.Config) *cobra.Command {
 	}
 	cmd.AddCommand(cluster.NewCmdCreate(ctx, cfg))
 	cmd.AddCommand(operator.NewCmdCreate(ctx, cfg))
-	cmd.AddCommand(dashboard.NewCmdCreate(ctx, cfg))
 	cmd.AddCommand(connector.NewCmdCreate(ctx, cfg))
 
 	return cmd

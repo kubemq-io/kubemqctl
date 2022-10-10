@@ -1,8 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="release v3.5.1">
+      <change beforePath="$PROJECT_DIR$/.idea/kubetools.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kubetools.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Taskfile.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Taskfile.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/create.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/create/create.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/dashboard/dashboard.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/dashboard/deploy.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/dashboard/grafana.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/create/dashboard/prometheus.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/delete/dashboard/dashboard.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/delete/delete.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/delete/delete.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/generate/authentication/jwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/generate/authentication/jwt.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/generate/authentication/token.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/generate/authentication/token.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/get/dashboard/dashboard.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/get/dashboard/dashboard.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/get/dashboard/describe/describe.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/ingress.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/ingress.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/namespace.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/namespace.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/secret.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/secret.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/kubemqcluster.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/kubemqcluster.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/kubemqconnector.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/kubemqconnector.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/kubemqdashboard.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/client/v1alpha1/kubemqdashboard.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/logs/tail.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/logs/tail.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/logs/watch.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/logs/watch.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/cluster_role.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/cluster_role.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/cluster_role_binding.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/cluster_role_binding.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/crd.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/crd.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/operator.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/operator.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/role.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/role.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/role_binding.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/role_binding.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/manager/operator/service_account.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/manager/operator/service_account.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/proxy.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/proxy.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/k8s/transport.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/k8s/transport.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,12 +68,18 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="true" />
+  </component>
   <component name="GoVcsConfiguration">
     <option name="GO_FMT" value="false" />
   </component>
   <component name="KubernetesApiPersistence">
-    <option name="context" value="docker-for-desktop" />
+    <option name="context" value="kind-kind" />
     <option name="namespace" value="default" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="1OdmsJ7UpfbJKnTEvPEFfIoGK0g" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -46,27 +87,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="DefaultGoTemplateProperty" value="Go File" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Markdown" />
-    <property name="configurable.Global.GOPATH.is.expanded" value="true" />
-    <property name="configurable.Module.GOPATH.is.expanded" value="false" />
-    <property name="configurable.Project.GOPATH.is.expanded" value="true" />
-    <property name="go.gopath.indexing.explicitly.defined" value="true" />
-    <property name="go.import.settings.migrated" value="true" />
-    <property name="go.sdk.automatically.set" value="true" />
-    <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/config" />
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "RunOnceActivity.go.vendoring.notification.had.been.shown": "true",
+    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "D:/Development/bitbucket/go/projects/kubemq/libs/k8s",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\config" />
@@ -83,7 +119,7 @@
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get\cluster" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.go test github.com/kubemq-io/kubemqctl/pkg/k8s/deployment (1)">
+  <component name="RunManager" selected="Go Build.go build kubetools">
     <configuration name="go build kubetools" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
       <module name="kubetools" />
       <working_directory value="$PROJECT_DIR$/" />
@@ -147,23 +183,6 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
-    <list>
-      <item itemvalue="Go Build.go build kubetools" />
-      <item itemvalue="Go Test.TestConfigMapConfig_Spec in github.com/kubemq-io/kubemqctl/pkg/k8s/deployment" />
-      <item itemvalue="Go Test.TestNamespaceConfig in github.com/kubemq-io/kubemqctl/pkg/k8s/deployment" />
-      <item itemvalue="Go Test.TestServiceConfig_Spec in github.com/kubemq-io/kubemqctl/pkg/k8s/deployment" />
-      <item itemvalue="Go Test.go test github.com/kubemq-io/kubemqctl/pkg/k8s/deployment (1)" />
-      <item itemvalue="Go Test.go test github.com/kubemq-io/kubemqctl/pkg/k8s/deployment" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Go Test.go test github.com/kubemq-io/kubemqctl/pkg/k8s/deployment (1)" />
-        <item itemvalue="Go Test.go test github.com/kubemq-io/kubemqctl/pkg/k8s/deployment" />
-        <item itemvalue="Go Test.TestConfigMapConfig_Spec in github.com/kubemq-io/kubemqctl/pkg/k8s/deployment" />
-        <item itemvalue="Go Test.TestServiceConfig_Spec in github.com/kubemq-io/kubemqctl/pkg/k8s/deployment" />
-        <item itemvalue="Go Test.TestNamespaceConfig in github.com/kubemq-io/kubemqctl/pkg/k8s/deployment" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="project-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -173,6 +192,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559390380192</updated>
+      <workItem from="1665402805773" duration="281000" />
     </task>
     <task id="LOCAL-00053" summary="add decode msg in attach">
       <created>1582032892547</created>
@@ -547,7 +567,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -580,6 +599,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="release v3.5.1" />
   </component>
   <component name="VgoProject">
-    <integration-enabled>true</integration-enabled>
+    <settings-migrated>true</settings-migrated>
   </component>
 </project>

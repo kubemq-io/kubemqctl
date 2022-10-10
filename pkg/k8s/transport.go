@@ -120,6 +120,21 @@ func GetRunningClusterPod(client *client.Client, ns, name string) (string, strin
 
 	return "", "", fmt.Errorf("no running pods available in %s/%s", ns, name)
 }
+
+func GetRunningClusterServices(client *client.Client, ns, name string) (map[string]int32, error) {
+	services, err := client.GetServices(ns, name)
+	if err != nil {
+		return nil, err
+	}
+	servicesMap := map[string]int32{}
+	for _, service := range services {
+		for _, a := range service.Spec.Ports {
+			servicesMap[service.Name] = a.Port
+
+		}
+	}
+	return servicesMap, nil
+}
 func GetRunningDashboardPod(client *client.Client, ns, name string) (string, string, error) {
 	pods, err := client.GetPods(ns, name)
 	if err != nil {

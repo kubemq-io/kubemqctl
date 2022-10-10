@@ -1,6 +1,7 @@
 package v1alpha1
 
 import (
+	"context"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/kubemqconnector"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/watch"
@@ -30,7 +31,7 @@ func (c *kubemqConnector) List(opts metav1.ListOptions) (*kubemqconnector.Kubemq
 		Namespace(c.ns).
 		Resource("kubemqconnectors").
 		VersionedParams(&opts, scheme.ParameterCodec).
-		Do().
+		Do(context.Background()).
 		Into(&result)
 
 	return &result, err
@@ -44,7 +45,7 @@ func (c *kubemqConnector) Get(clusterName string, opts metav1.GetOptions) (*kube
 		Resource("kubemqconnectors").
 		Name(clusterName).
 		VersionedParams(&opts, scheme.ParameterCodec).
-		Do().
+		Do(context.Background()).
 		Into(&result)
 
 	return &result, err
@@ -57,7 +58,7 @@ func (c *kubemqConnector) Create(cluster *kubemqconnector.KubemqConnector) (*kub
 		Namespace(c.ns).
 		Resource("kubemqconnectors").
 		Body(cluster).
-		Do().
+		Do(context.Background()).
 		Into(result)
 
 	return result, err
@@ -71,7 +72,7 @@ func (c *kubemqConnector) Update(cluster *kubemqconnector.KubemqConnector) (*kub
 		Name(cluster.Name).
 		Resource("kubemqconnectors").
 		Body(cluster).
-		Do().
+		Do(context.Background()).
 		Into(result)
 
 	return result, err
@@ -82,7 +83,7 @@ func (c *kubemqConnector) Delete(name string, opts *metav1.DeleteOptions) error 
 		Resource("kubemqconnectors").
 		Name(name).
 		Body(opts).
-		Do().
+		Do(context.Background()).
 		Error()
 
 	return err
@@ -99,5 +100,5 @@ func (c *kubemqConnector) Watch(opts metav1.ListOptions) (watch.Interface, error
 		Resource("kubemqconnectors").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
-		Watch()
+		Watch(context.Background())
 }

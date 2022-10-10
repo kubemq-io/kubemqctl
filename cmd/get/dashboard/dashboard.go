@@ -4,11 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/kubemq-io/kubemqctl/cmd/get/dashboard/describe"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/dashboard"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/cluster"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/pkg/browser"
 	"github.com/spf13/cobra"
@@ -20,11 +19,11 @@ type getOptions struct {
 }
 
 var getExamples = `
-	# Get status of Kubemq of dashboards
-	kubemqctl get dashboards
+	# Get KubeMQ web interface
+	kubemqctl get dashboard
 `
-var getLong = `Get information of Kubemq dashboard resources`
-var getShort = `Get information of Kubemq dashboard resources`
+var getLong = `Get access to KubeMQ dashboard`
+var getShort = `Get access to KubeMQ dashboard`
 
 func NewCmdGet(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &getOptions{
@@ -45,11 +44,11 @@ func NewCmdGet(ctx context.Context, cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Run(ctx))
 		},
 	}
-	cmd.AddCommand(describe.NewCmdDescribe(ctx, cfg))
 	return cmd
 }
 
 func (o *getOptions) Complete(args []string) error {
+
 	return nil
 }
 
@@ -59,55 +58,69 @@ func (o *getOptions) Validate() error {
 }
 
 func (o *getOptions) Run(ctx context.Context) error {
-	client, err := client.NewClient(o.cfg.KubeConfigPath)
+	namespace, clusterName := "", ""
+	c, err := client.NewClient(o.cfg.KubeConfigPath)
 	if err != nil {
 		return err
 	}
-	dashboardManager, err := dashboard.NewManager(client)
+	clusterManager, err := cluster.NewManager(c)
 	if err != nil {
 		return err
 	}
 
-	dashboards, err := dashboardManager.GetKubemqDashboardes()
+	clusters, err := clusterManager.GetKubemqClusters()
 	if err != nil {
 		return err
 	}
-	if len(dashboards.List()) == 0 {
-		return fmt.Errorf("no Kubemq dashboards were found")
-	}
-	var ns, name string
 
-	if len(dashboards.List()) == 1 {
-		ns, name = StringSplit(dashboards.List()[0])
+	if len(clusters.List()) == 0 {
+		return fmt.Errorf("no Kubemq clusters were found")
+	}
+	if len(clusters.List()) == 1 {
+		pair := clusters.List()[0]
+		namespace, clusterName = StringSplit(pair)
 	} else {
 		selection := ""
-		selected := &survey.Select{
-			Renderer:      survey.Renderer{},
-			Message:       "Select dashboard to launch",
-			Options:       dashboards.List(),
-			Default:       dashboards.List()[0],
-			PageSize:      0,
-			VimMode:       false,
-			FilterMessage: "",
-			Filter:        nil,
+		prompt := &survey.Select{
+			Renderer: survey.Renderer{},
+			Message:  "Show Dashboard for KubeMQ cluster:",
+			Options:  clusters.List(),
+			Default:  clusters.List()[0],
 		}
-		err = survey.AskOne(selected, &selection)
+		err = survey.AskOne(prompt, &selection)
 		if err != nil {
 			return err
 		}
-		ns, name = StringSplit(selection)
+		pair := strings.Split(selection, "/")
+		namespace = pair[0]
+		clusterName = pair[1]
 	}
 
-	grafnaPort, _, err := k8s.GetDashboardTransport(ctx, o.cfg, ns, name)
+	fmt.Printf("Opening Dashboard for Kubemq cluster: %s/%s\n", namespace, clusterName)
+	proxyOptions := &k8s.ProxyOptions{
+		KubeConfig:  o.cfg.KubeConfigPath,
+		Namespace:   namespace,
+		StatefulSet: clusterName,
+		Pod:         "",
+		Ports:       []string{"8080"},
+	}
+	errCh := make(chan error, 1)
+	err = k8s.SetConcurrentProxy(ctx, proxyOptions, errCh)
 	if err != nil {
 		return err
 	}
-	err = browser.OpenURL(fmt.Sprintf("http://localhost:%s/d/kubemqdashboard/kubemq-dashboard", grafnaPort))
+	err = browser.OpenURL("http://localhost:8080")
 	if err != nil {
 		return err
+
 	}
-	<-ctx.Done()
-	return nil
+	select {
+	case err := <-errCh:
+		return err
+	case <-ctx.Done():
+		return nil
+	}
+
 }
 
 func StringSplit(input string) (string, string) {

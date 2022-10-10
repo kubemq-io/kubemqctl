@@ -1,12 +1,13 @@
 package client
 
 import (
+	"context"
 	apiv1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func (c *Client) GetNamespace(name string) (*apiv1.Namespace, bool, error) {
-	ns, err := c.ClientSet.CoreV1().Namespaces().Get(name, metav1.GetOptions{})
+	ns, err := c.ClientSet.CoreV1().Namespaces().Get(context.Background(), name, metav1.GetOptions{})
 	if err == nil && ns != nil {
 		return ns, true, nil
 	}
@@ -26,12 +27,12 @@ func (c *Client) GetNamespace(name string) (*apiv1.Namespace, bool, error) {
 }
 
 func (c *Client) CheckAndCreateNamespace(namespace *apiv1.Namespace) (*apiv1.Namespace, bool, error) {
-	ns, err := c.ClientSet.CoreV1().Namespaces().Get(namespace.Name, metav1.GetOptions{})
+	ns, err := c.ClientSet.CoreV1().Namespaces().Get(context.Background(), namespace.Name, metav1.GetOptions{})
 	if err == nil && ns != nil {
 		return ns, false, nil
 	}
 
-	createNs, err := c.ClientSet.CoreV1().Namespaces().Create(namespace)
+	createNs, err := c.ClientSet.CoreV1().Namespaces().Create(context.Background(), namespace, metav1.CreateOptions{})
 	if err != nil {
 		return nil, false, err
 	}
@@ -40,7 +41,7 @@ func (c *Client) CheckAndCreateNamespace(namespace *apiv1.Namespace) (*apiv1.Nam
 }
 func (c *Client) CreateIfNotPresentNamespace(namespace string) error {
 
-	ns, err := c.ClientSet.CoreV1().Namespaces().Get(namespace, metav1.GetOptions{})
+	ns, err := c.ClientSet.CoreV1().Namespaces().Get(context.Background(), namespace, metav1.GetOptions{})
 	if err == nil && ns != nil {
 		return nil
 	}
@@ -53,7 +54,7 @@ func (c *Client) CreateIfNotPresentNamespace(namespace string) error {
 		Spec:   apiv1.NamespaceSpec{},
 		Status: apiv1.NamespaceStatus{},
 	}
-	_, err = c.ClientSet.CoreV1().Namespaces().Create(ns)
+	_, err = c.ClientSet.CoreV1().Namespaces().Create(context.Background(), ns, metav1.CreateOptions{})
 	if err != nil {
 		return err
 	}
@@ -61,7 +62,7 @@ func (c *Client) CreateIfNotPresentNamespace(namespace string) error {
 	return nil
 }
 func (c *Client) GetNamespaceList() ([]string, error) {
-	list, err := c.ClientSet.CoreV1().Namespaces().List(metav1.ListOptions{})
+	list, err := c.ClientSet.CoreV1().Namespaces().List(context.Background(), metav1.ListOptions{})
 	if err != nil {
 		return nil, err
 	}

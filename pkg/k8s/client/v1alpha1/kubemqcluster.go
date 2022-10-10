@@ -1,6 +1,7 @@
 package v1alpha1
 
 import (
+	"context"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/kubemqcluster"
 	autoscalingv1 "k8s.io/api/autoscaling/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -33,7 +34,7 @@ func (c *kubemqCluster) List(opts metav1.ListOptions) (*kubemqcluster.KubemqClus
 		Namespace(c.ns).
 		Resource("kubemqclusters").
 		VersionedParams(&opts, scheme.ParameterCodec).
-		Do().
+		Do(context.Background()).
 		Into(&result)
 
 	return &result, err
@@ -47,7 +48,7 @@ func (c *kubemqCluster) Get(clusterName string, opts metav1.GetOptions) (*kubemq
 		Resource("kubemqclusters").
 		Name(clusterName).
 		VersionedParams(&opts, scheme.ParameterCodec).
-		Do().
+		Do(context.Background()).
 		Into(&result)
 
 	return &result, err
@@ -60,7 +61,7 @@ func (c *kubemqCluster) Create(cluster *kubemqcluster.KubemqCluster) (*kubemqclu
 		Namespace(c.ns).
 		Resource("kubemqclusters").
 		Body(cluster).
-		Do().
+		Do(context.Background()).
 		Into(result)
 
 	return result, err
@@ -74,7 +75,7 @@ func (c *kubemqCluster) Update(cluster *kubemqcluster.KubemqCluster) (*kubemqclu
 		Name(cluster.Name).
 		Resource("kubemqclusters").
 		Body(cluster).
-		Do().
+		Do(context.Background()).
 		Into(result)
 
 	return result, err
@@ -85,7 +86,7 @@ func (c *kubemqCluster) Delete(name string, opts *metav1.DeleteOptions) error {
 		Resource("kubemqclusters").
 		Name(name).
 		Body(opts).
-		Do().
+		Do(context.Background()).
 		Error()
 
 	return err
@@ -102,7 +103,7 @@ func (c *kubemqCluster) Watch(opts metav1.ListOptions) (watch.Interface, error) 
 		Resource("kubemqclusters").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
-		Watch()
+		Watch(context.Background())
 }
 
 func (c *kubemqCluster) GetScale(clusterName string, options metav1.GetOptions) (result *autoscalingv1.Scale, err error) {
@@ -113,7 +114,7 @@ func (c *kubemqCluster) GetScale(clusterName string, options metav1.GetOptions) 
 		Name(clusterName).
 		SubResource("scale").
 		VersionedParams(&options, scheme.ParameterCodec).
-		Do().
+		Do(context.Background()).
 		Into(result)
 	return
 }
@@ -127,7 +128,7 @@ func (c *kubemqCluster) UpdateScale(clusterName string, scale *autoscalingv1.Sca
 		Name(clusterName).
 		SubResource("scale").
 		Body(scale).
-		Do().
+		Do(context.Background()).
 		Into(result)
 	return
 }

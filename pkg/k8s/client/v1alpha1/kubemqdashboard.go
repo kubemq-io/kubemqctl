@@ -1,6 +1,7 @@
 package v1alpha1
 
 import (
+	"context"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/kubemqdashboard"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/watch"
@@ -30,7 +31,7 @@ func (c *kubemqDashboard) List(opts metav1.ListOptions) (*kubemqdashboard.Kubemq
 		Namespace(c.ns).
 		Resource("kubemqdashboards").
 		VersionedParams(&opts, scheme.ParameterCodec).
-		Do().
+		Do(context.Background()).
 		Into(&result)
 
 	return &result, err
@@ -44,7 +45,7 @@ func (c *kubemqDashboard) Get(clusterName string, opts metav1.GetOptions) (*kube
 		Resource("kubemqdashboards").
 		Name(clusterName).
 		VersionedParams(&opts, scheme.ParameterCodec).
-		Do().
+		Do(context.Background()).
 		Into(&result)
 
 	return &result, err
@@ -57,7 +58,7 @@ func (c *kubemqDashboard) Create(cluster *kubemqdashboard.KubemqDashboard) (*kub
 		Namespace(c.ns).
 		Resource("kubemqdashboards").
 		Body(cluster).
-		Do().
+		Do(context.Background()).
 		Into(result)
 
 	return result, err
@@ -71,7 +72,7 @@ func (c *kubemqDashboard) Update(cluster *kubemqdashboard.KubemqDashboard) (*kub
 		Name(cluster.Name).
 		Resource("kubemqdashboards").
 		Body(cluster).
-		Do().
+		Do(context.Background()).
 		Into(result)
 
 	return result, err
@@ -82,7 +83,7 @@ func (c *kubemqDashboard) Delete(name string, opts *metav1.DeleteOptions) error 
 		Resource("kubemqdashboards").
 		Name(name).
 		Body(opts).
-		Do().
+		Do(context.Background()).
 		Error()
 
 	return err
@@ -99,5 +100,5 @@ func (c *kubemqDashboard) Watch(opts metav1.ListOptions) (watch.Interface, error
 		Resource("kubemqdashboards").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
-		Watch()
+		Watch(context.Background())
 }

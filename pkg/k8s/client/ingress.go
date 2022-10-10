@@ -1,6 +1,7 @@
 package client
 
 import (
+	"context"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	net "k8s.io/api/networking/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -9,14 +10,14 @@ import (
 
 func (c *Client) DeleteIngressForStatefulSet(name string) error {
 	pair := strings.Split(name, "/")
-	ingressList, err := c.ClientSet.NetworkingV1beta1().Ingresses(pair[0]).List(metav1.ListOptions{})
+	ingressList, err := c.ClientSet.NetworkingV1beta1().Ingresses(pair[0]).List(context.Background(), metav1.ListOptions{})
 	if err != nil {
 		return err
 	}
 
 	for _, ingress := range ingressList.Items {
 		if strings.Contains(ingress.Name, pair[1]) {
-			err := c.ClientSet.NetworkingV1beta1().Ingresses(pair[0]).Delete(ingress.Name, metav1.NewDeleteOptions(0))
+			err := c.ClientSet.NetworkingV1beta1().Ingresses(pair[0]).Delete(context.Background(), ingress.Name, metav1.DeleteOptions{})
 			if err != nil {
 				utils.Printlnf("Ingress %s/%s not deleted. Error: %s", ingress.Namespace, ingress.Namespace, utils.Title(err.Error()))
 				continue
@@ -33,18 +34,18 @@ func (c *Client) CreateOrUpdateIngress(ingress *net.Ingress) (*net.Ingress, bool
 		Name:      name,
 		Namespace: ns,
 	}
-	oldIngress, err := c.ClientSet.NetworkingV1beta1().Ingresses(ingress.Namespace).Get(ingress.Name, metav1.GetOptions{})
+	oldIngress, err := c.ClientSet.NetworkingV1beta1().Ingresses(ingress.Namespace).Get(context.Background(), ingress.Name, metav1.GetOptions{})
 	if err == nil && oldIngress != nil {
 		ingress.ResourceVersion = oldIngress.ResourceVersion
 
-		newIngress, err := c.ClientSet.NetworkingV1beta1().Ingresses(ingress.Namespace).Update(ingress)
+		newIngress, err := c.ClientSet.NetworkingV1beta1().Ingresses(ingress.Namespace).Update(context.Background(), ingress, metav1.UpdateOptions{})
 		if err != nil {
 			return nil, true, err
 		}
 		return newIngress, true, nil
 	}
 
-	createdIngress, err := c.ClientSet.NetworkingV1beta1().Ingresses(ingress.Namespace).Create(ingress)
+	createdIngress, err := c.ClientSet.NetworkingV1beta1().Ingresses(ingress.Namespace).Create(context.Background(), ingress, metav1.CreateOptions{})
 	if err != nil {
 		return nil, false, err
 	}
@@ -53,7 +54,7 @@ func (c *Client) CreateOrUpdateIngress(ingress *net.Ingress) (*net.Ingress, bool
 
 func (c *Client) GetIngress(ns string, stsName string) ([]*net.Ingress, error) {
 	ingressList := []*net.Ingress{}
-	list, err := c.ClientSet.NetworkingV1beta1().Ingresses(ns).List(metav1.ListOptions{})
+	list, err := c.ClientSet.NetworkingV1beta1().Ingresses(ns).List(context.Background(), metav1.ListOptions{})
 	if err != nil {
 		return nil, err
 	}

@@ -70,3 +70,54 @@ func SetProxy(ctx context.Context, opts *ProxyOptions) error {
 	}
 
 }
+func SetConcurrentProxy(ctx context.Context, opts *ProxyOptions, errCh chan error) error {
+
+	c, err := client.NewClient(opts.KubeConfig)
+	if err != nil {
+		return err
+	}
+	if opts.Pod == "" {
+		opts.Namespace, opts.Pod, err = GetRunningClusterPod(c, opts.Namespace, opts.StatefulSet)
+		if err != nil {
+			return err
+		}
+	}
+
+	stopCh := make(chan struct{})
+	outCh, errOutCh := make(chan string, 1), make(chan string, 1)
+	err = c.ForwardPorts(opts.Namespace, opts.Pod, opts.Ports, stopCh, outCh, errOutCh)
+	if err != nil {
+		return err
+	}
+
+	select {
+	case <-outCh:
+
+	case errstr := <-errOutCh:
+		return fmt.Errorf(errstr)
+
+	case <-time.After(30 * time.Second):
+		return fmt.Errorf("timeout during setting of proxy layer to kubernetes cluster")
+
+	case <-ctx.Done():
+		close(stopCh)
+		return nil
+	}
+
+	go func() {
+		for {
+			select {
+			case <-outCh:
+
+			case errstr := <-errOutCh:
+				errCh <- fmt.Errorf(errstr)
+				return
+			case <-ctx.Done():
+				close(stopCh)
+				return
+			}
+		}
+	}()
+
+	return nil
+}

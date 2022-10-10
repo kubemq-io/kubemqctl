@@ -5,7 +5,6 @@ import (
 	"github.com/kubemq-io/kubemqctl/cmd/delete/cluster"
 	"github.com/kubemq-io/kubemqctl/cmd/delete/components"
 	"github.com/kubemq-io/kubemqctl/cmd/delete/connector"
-	"github.com/kubemq-io/kubemqctl/cmd/delete/dashboard"
 	"github.com/kubemq-io/kubemqctl/cmd/delete/operator"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
@@ -48,7 +47,6 @@ func NewCmdDelete(ctx context.Context, cfg *config.Config) *cobra.Command {
 	}
 	cmd.AddCommand(cluster.NewCmdDelete(ctx, cfg))
 	cmd.AddCommand(operator.NewCmdDelete(ctx, cfg))
-	cmd.AddCommand(dashboard.NewCmdDelete(ctx, cfg))
 	cmd.AddCommand(connector.NewCmdDelete(ctx, cfg))
 	cmd.AddCommand(components.NewCmdDelete(ctx, cfg))
 	return cmd

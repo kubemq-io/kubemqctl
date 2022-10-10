@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/google/uuid"
 	"io/ioutil"
 	"strconv"
