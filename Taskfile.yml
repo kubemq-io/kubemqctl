@@ -13,6 +13,9 @@ tasks:
   lint:
     cmds:
       - golangci-lint run --disable gocritic --enable misspell --enable gosec
+  build:
+    cmds:
+      - go build -o {{.BINARY_NAME}}.exe -ldflags "-X main.version={{.VERSION}}"
   default:
     cmds:
       - go mod tidy
