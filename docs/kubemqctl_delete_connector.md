@@ -1,28 +1,28 @@
-## kubemqctl delete cluster
+## kubemqctl delete connector
 
-Delete Kubemq cluster
+Delete Kubemq connector
 
 ### Synopsis
 
-Delete one or more Kubemq clusters
+Delete one or more Kubemq connectors
 
 ```
-kubemqctl delete cluster [flags]
+kubemqctl delete connector [flags]
 ```
 
 ### Examples
 
 ```
 
- 	# Delete Kubemq cluster
-	kubemqctl delete cluster
+ 	# Delete Kubemq connector
+	kubemqctl delete connector
 
 ```
 
 ### Options
 
 ```
-  -h, --help   help for cluster
+  -h, --help   help for connector
 ```
 
 ### Options inherited from parent commands

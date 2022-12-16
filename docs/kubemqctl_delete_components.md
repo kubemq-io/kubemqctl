@@ -1,28 +1,28 @@
-## kubemqctl delete cluster
+## kubemqctl delete components
 
-Delete Kubemq cluster
+Delete Kubemq components
 
 ### Synopsis
 
-Delete one or more Kubemq clusters
+Delete one or more Kubemq components
 
 ```
-kubemqctl delete cluster [flags]
+kubemqctl delete components [flags]
 ```
 
 ### Examples
 
 ```
 
- 	# Delete Kubemq cluster
-	kubemqctl delete cluster
+ 	# Delete components
+	kubemqctl delete components
 
 ```
 
 ### Options
 
 ```
-  -h, --help   help for cluster
+  -h, --help   help for components
 ```
 
 ### Options inherited from parent commands

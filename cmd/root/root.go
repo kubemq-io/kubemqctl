@@ -26,6 +26,7 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
+	"github.com/spf13/cobra/doc"
 )
 
 var (
@@ -84,7 +85,7 @@ func Execute(version string, args []string) {
 	rootCmd.AddCommand(install.NewCmdInstall(ctx, cfg))
 	rootCmd.AddCommand(build.NewCmdBuild(ctx, cfg))
 
-	//_ = doc.GenMarkdownTree(rootCmd, "./docs")
+	_ = doc.GenMarkdownTree(rootCmd, "./docs")
 
 	utils.CheckErr(rootCmd.Execute())
 }
