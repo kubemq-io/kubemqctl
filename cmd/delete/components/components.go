@@ -3,12 +3,12 @@ package components
 import (
 	"context"
 	"fmt"
+
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	client2 "github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/cluster"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/connector"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/dashboard"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/operator"
 	operatorTypes "github.com/kubemq-io/kubemqctl/pkg/k8s/types/operator"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
@@ -24,15 +24,17 @@ var deleteExamples = `
  	# Delete components
 	kubemqctl delete components
 `
-var deleteLong = `Delete one or more Kubemq components`
-var deleteShort = `Delete Kubemq components`
+
+var (
+	deleteLong  = `Delete one or more Kubemq components`
+	deleteShort = `Delete Kubemq components`
+)
 
 func NewCmdDelete(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &DeleteOptions{
 		cfg: cfg,
 	}
 	cmd := &cobra.Command{
-
 		Use:     "components",
 		Aliases: []string{"comp", "cm", "cmp"},
 		Short:   deleteShort,
@@ -55,80 +57,9 @@ func (o *DeleteOptions) Complete(args []string) error {
 }
 
 func (o *DeleteOptions) Validate() error {
-
 	return nil
 }
-func (o *DeleteOptions) runDashboard(ctx context.Context, client *client2.Client) error {
-	dashboardManager, err := dashboard.NewManager(client)
-	if err != nil {
-		return err
-	}
-	operatorManager, err := operator.NewManager(client)
-	if err != nil {
-		return err
-	}
-	dashboards, err := dashboardManager.GetKubemqDashboardes()
-	if err != nil {
-		return err
-	}
-	if len(dashboards.List()) == 0 {
-		return nil
-	}
 
-	selection := []string{}
-	multiSelected := &survey.MultiSelect{
-		Renderer:      survey.Renderer{},
-		Message:       "Select Kubemq dashboards to delete",
-		Options:       dashboards.List(),
-		Default:       nil,
-		Help:          "Select Kubemq dashboards to delete",
-		PageSize:      0,
-		VimMode:       false,
-		FilterMessage: "",
-		Filter:        nil,
-	}
-	err = survey.AskOne(multiSelected, &selection)
-	if err != nil {
-		return err
-	}
-
-	areYouSure := false
-	promptConfirm := &survey.Confirm{
-		Renderer: survey.Renderer{},
-		Message:  "Are you sure ?",
-		Default:  false,
-		Help:     "Confirm Kubemq dashboard deletion",
-	}
-	err = survey.AskOne(promptConfirm, &areYouSure)
-	if err != nil {
-		return err
-	}
-	if !areYouSure {
-		return nil
-	}
-	for _, selected := range selection {
-		dashboard := dashboards.Dashboard(selected)
-		if !operatorManager.IsKubemqOperatorExists(dashboard.Namespace) {
-			operatorDeployment, err := operatorTypes.CreateDeployment("kubemq-operator", dashboard.Namespace)
-			if err != nil {
-				return err
-			}
-			_, _, err = operatorManager.CreateOrUpdateKubemqOperator(operatorDeployment)
-			if err != nil {
-				return err
-			}
-			utils.Printlnf("Kubemq operator %s/kubemq-operator created.", dashboard.Namespace)
-		} else {
-			utils.Printlnf("Kubemq operator %s/kubemq-operator exists", dashboard.Namespace)
-		}
-		err := dashboardManager.DeleteKubemqDashboard(dashboard)
-		if err != nil {
-			return err
-		}
-		utils.Printlnf("Kubemq dashboard %s deleted.", selected)
-	}
-	return nil
-}
 func (o *DeleteOptions) runCluster(ctx context.Context, client *client2.Client) error {
 	clusterManager, err := cluster.NewManager(client)
 	if err != nil {
@@ -276,7 +207,6 @@ func (o *DeleteOptions) runConnector(ctx context.Context, client *client2.Client
 }
 
 func (o *DeleteOptions) runOperator(ctx context.Context, client *client2.Client) error {
-
 	operatorManager, err := operator.NewManager(client)
 	if err != nil {
 		return err
@@ -337,8 +267,8 @@ func (o *DeleteOptions) runOperator(ctx context.Context, client *client2.Client)
 
 	return nil
 }
-func (o *DeleteOptions) Run(ctx context.Context) error {
 
+func (o *DeleteOptions) Run(ctx context.Context) error {
 	client, err := client2.NewClient(o.cfg.KubeConfigPath)
 	if err != nil {
 		return err
@@ -351,10 +281,7 @@ func (o *DeleteOptions) Run(ctx context.Context) error {
 	if err := o.runConnector(ctx, client); err != nil {
 		return err
 	}
-	utils.Printlnf("Getting Kubemq dashboards to delete...")
-	if err := o.runDashboard(ctx, client); err != nil {
-		return err
-	}
+
 	utils.Printlnf("Getting Kubemq operators to delete...")
 	if err := o.runOperator(ctx, client); err != nil {
 		return err

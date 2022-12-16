@@ -3,11 +3,17 @@ package client
 import (
 	"bytes"
 	"context"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/client/v1alpha1"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/types"
-
 	"errors"
 	"fmt"
+	"net/http"
+	"net/url"
+	"os"
+	"path/filepath"
+	"strings"
+
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/client/v1beta1"
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/types"
+
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 
 	apiv1 "k8s.io/api/core/v1"
@@ -22,22 +28,16 @@ import (
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 	"k8s.io/client-go/tools/portforward"
 	"k8s.io/client-go/transport/spdy"
-	"net/http"
-	"net/url"
-	"os"
-	"path/filepath"
-	"strings"
 )
 
 type Client struct {
 	ClientSet          *kubernetes.Clientset
 	ClientConfig       clientcmd.ClientConfig
 	ClientApiExtension *apiextension.Clientset
-	ClientV1Alpha1     *v1alpha1.V1Alpha1Client
+	ClientV1Beta1      *v1beta1.V1Beta1Client
 }
 
 func NewClient(kubeConfigPath string) (*Client, error) {
-
 	var kubeconfig string
 	if kubeConfigPath != "" {
 		kubeconfig = kubeConfigPath
@@ -68,7 +68,7 @@ func NewClient(kubeConfigPath string) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	clientV1Alpha1, err := v1alpha1.NewForConfig(restConfig)
+	clientV1Beta1, err := v1beta1.NewForConfig(restConfig)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func NewClient(kubeConfigPath string) (*Client, error) {
 		ClientSet:          clientset,
 		ClientConfig:       clientConfig,
 		ClientApiExtension: clientExtension,
-		ClientV1Alpha1:     clientV1Alpha1,
+		ClientV1Beta1:      clientV1Beta1,
 	}
 	kubeCfg, _ := c.ClientConfig.ConfigAccess().GetStartingConfig()
 	utils.Printlnf("Current Kubernetes cluster context connection: %s", kubeCfg.CurrentContext)
@@ -132,6 +132,7 @@ func (c *Client) GetPods(ns string, name string) (map[string]apiv1.Pod, error) {
 	}
 	return list, err
 }
+
 func (c *Client) GetServices(ns string, name string) (map[string]apiv1.Service, error) {
 	pods, err := c.ClientSet.CoreV1().Services(ns).List(context.Background(), metav1.ListOptions{})
 	if err != nil {
@@ -147,6 +148,7 @@ func (c *Client) GetServices(ns string, name string) (map[string]apiv1.Service, 
 	}
 	return list, err
 }
+
 func (c *Client) ForwardPorts(ns string, name string, ports []string, stopChan chan struct{}, outCh chan string, errOutCh chan string) error {
 	restConfig, err := c.ClientConfig.ClientConfig()
 	if err != nil {
@@ -175,21 +177,19 @@ func (c *Client) ForwardPorts(ns string, name string, ports []string, stopChan c
 			errOutCh <- errOut.String()
 			close(stopChan)
 		} else if len(out.String()) != 0 {
-
 			outCh <- out.String()
 		}
-
 	}()
 
 	go func() {
 		if err = forwarder.ForwardPorts(); err != nil { // Locks until stopChan is closed.
 			errOutCh <- err.Error()
-
 		}
 	}()
 
 	return nil
 }
+
 func (c *Client) ForwardPortsToService(ns string, name string, ports []string, stopChan chan struct{}, outCh chan string, errOutCh chan string) error {
 	restConfig, err := c.ClientConfig.ClientConfig()
 	if err != nil {
@@ -218,16 +218,13 @@ func (c *Client) ForwardPortsToService(ns string, name string, ports []string, s
 			errOutCh <- errOut.String()
 			close(stopChan)
 		} else if len(out.String()) != 0 {
-
 			outCh <- out.String()
 		}
-
 	}()
 
 	go func() {
 		if err = forwarder.ForwardPorts(); err != nil { // Locks until stopChan is closed.
 			errOutCh <- err.Error()
-
 		}
 	}()
 

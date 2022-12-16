@@ -2,6 +2,7 @@ package operator
 
 import (
 	"fmt"
+
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/operator"
 	appsv1 "k8s.io/api/apps/v1"
@@ -32,6 +33,7 @@ func NewManager(c *client.Client) (*Manager, error) {
 		roleBindingManager:        &roleBindingManager{c},
 	}, nil
 }
+
 func (m *Manager) checkAndCreateNamespace(ns string) error {
 	newNs := &apiv1.Namespace{
 		TypeMeta: metav1.TypeMeta{
@@ -142,6 +144,7 @@ func (m *Manager) CreateOrUpdateKubemqOperator(operatorDeployment *operator.Depl
 	}
 	return newBundle, isBundleUpdated, nil
 }
+
 func (m *Manager) DeleteKubemqOperatorDeployment(deployment *appsv1.Deployment) error {
 	err := m.DeleteOperator(deployment)
 	if err != nil {
@@ -150,6 +153,7 @@ func (m *Manager) DeleteKubemqOperatorDeployment(deployment *appsv1.Deployment) 
 
 	return nil
 }
+
 func (m *Manager) RemoveAll() error {
 	//
 	//err := m.DeleteOperator(deployment.Deployment)
@@ -192,6 +196,7 @@ func (m *Manager) RemoveAll() error {
 
 	return nil
 }
+
 func (m *Manager) IsKubemqOperatorExists(namespace string) bool {
 	_, err := m.GetOperator("kubemq-operator", namespace)
 	return err == nil
@@ -233,6 +238,7 @@ func (m *Manager) GetKubemqOperator(name, namespace string) (*operator.Deploymen
 	bundle.ClusterServiceAccount, _ = m.GetServiceAccount("kubemq-cluster", namespace)
 	return bundle, nil
 }
+
 func (m *Manager) GetKubemqOperatorsBundle() (*Operators, error) {
 	nsList, err := m.GetNamespaceList()
 	if err != nil {
@@ -251,6 +257,7 @@ func (m *Manager) GetKubemqOperatorsBundle() (*Operators, error) {
 	}
 	return newOperators(list), nil
 }
+
 func (m *Manager) GetKubemqOperatorsDeployments() ([]*appsv1.Deployment, error) {
 	nsList, err := m.GetNamespaceList()
 	if err != nil {

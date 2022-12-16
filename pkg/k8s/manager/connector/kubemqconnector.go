@@ -2,8 +2,9 @@ package connector
 
 import (
 	"fmt"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/kubemqconnector"
 	"sort"
+
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/kubemqconnector"
 )
 
 type KubemqConnectors struct {
@@ -30,9 +31,11 @@ func (c *KubemqConnectors) SetItems(items []*kubemqconnector.KubemqConnector) *K
 	sort.Strings(c.list)
 	return c
 }
+
 func (c *KubemqConnectors) Connector(name string) *kubemqconnector.KubemqConnector {
 	return c.m[name]
 }
+
 func (c *KubemqConnectors) Items() []*kubemqconnector.KubemqConnector {
 	return c.items
 }

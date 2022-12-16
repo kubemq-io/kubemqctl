@@ -2,6 +2,7 @@ package operator
 
 import (
 	"context"
+
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 	rbac "k8s.io/api/rbac/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -34,7 +35,6 @@ func (m *clusterRoleManager) DeleteClusterRole(role *rbac.ClusterRole) error {
 		return m.ClientSet.RbacV1().ClusterRoles().Delete(context.Background(), role.Name, metav1.DeleteOptions{})
 	}
 	return nil
-
 }
 
 func (m *clusterRoleManager) GetClusterRole(name string) (*rbac.ClusterRole, error) {

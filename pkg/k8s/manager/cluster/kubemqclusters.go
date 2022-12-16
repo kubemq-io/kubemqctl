@@ -2,9 +2,9 @@ package cluster
 
 import (
 	"fmt"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/kubemqcluster"
-
 	"sort"
+
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/kubemqcluster"
 )
 
 type KubemqClusters struct {
@@ -20,6 +20,7 @@ func newKubemqClusters() *KubemqClusters {
 		list:  []string{},
 	}
 }
+
 func (k *KubemqClusters) SetItems(items []*kubemqcluster.KubemqCluster) *KubemqClusters {
 	k.items = items
 	for i := 0; i < len(items); i++ {
@@ -30,9 +31,11 @@ func (k *KubemqClusters) SetItems(items []*kubemqcluster.KubemqCluster) *KubemqC
 	sort.Strings(k.list)
 	return k
 }
+
 func (k *KubemqClusters) Cluster(name string) *kubemqcluster.KubemqCluster {
 	return k.m[name]
 }
+
 func (k *KubemqClusters) Items() []*kubemqcluster.KubemqCluster {
 	return k.items
 }

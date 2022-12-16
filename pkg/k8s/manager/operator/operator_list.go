@@ -2,8 +2,9 @@ package operator
 
 import (
 	"fmt"
-	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/operator"
 	"sort"
+
+	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/operator"
 )
 
 type Operators struct {
@@ -30,6 +31,7 @@ func newOperators(items []*operator.Deployment) *Operators {
 func (o *Operators) Deployment(name string) *operator.Deployment {
 	return o.m[name]
 }
+
 func (o *Operators) List() []string {
 	return o.list
 }

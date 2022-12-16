@@ -17,17 +17,17 @@ func NewManager(c *client.Client) (*Manager, error) {
 }
 
 func (m *Manager) CreateOrUpdateKubemqConnector(connector *kubemqconnector.KubemqConnector) (*kubemqconnector.KubemqConnector, bool, error) {
-	found, err := m.client.ClientV1Alpha1.KubemqConnector(connector.Namespace).Get(connector.Name, metav1.GetOptions{})
+	found, err := m.client.ClientV1Beta1.KubemqConnector(connector.Namespace).Get(connector.Name, metav1.GetOptions{})
 	if err == nil && found != nil {
 		connector.ResourceVersion = found.ResourceVersion
-		updatedUpdate, err := m.client.ClientV1Alpha1.KubemqConnector(connector.Namespace).Update(connector)
+		updatedUpdate, err := m.client.ClientV1Beta1.KubemqConnector(connector.Namespace).Update(connector)
 		if err != nil {
 			return nil, true, err
 		}
 		return updatedUpdate, true, nil
 	}
 
-	newDashboard, err := m.client.ClientV1Alpha1.KubemqConnector(connector.Namespace).Create(connector)
+	newDashboard, err := m.client.ClientV1Beta1.KubemqConnector(connector.Namespace).Create(connector)
 	if err != nil {
 		return nil, false, err
 	}
@@ -38,12 +38,11 @@ func (m *Manager) DeleteKubemqConnector(connector *kubemqconnector.KubemqConnect
 	if connector == nil {
 		return nil
 	}
-	return m.client.ClientV1Alpha1.KubemqConnector(connector.Namespace).Delete(connector.Name, metav1.NewDeleteOptions(0))
-
+	return m.client.ClientV1Beta1.KubemqConnector(connector.Namespace).Delete(connector.Name, metav1.NewDeleteOptions(0))
 }
 
 func (m *Manager) GetConnector(name, namespace string) (*kubemqconnector.KubemqConnector, error) {
-	connector, err := m.client.ClientV1Alpha1.KubemqConnector(namespace).Get(name, metav1.GetOptions{})
+	connector, err := m.client.ClientV1Beta1.KubemqConnector(namespace).Get(name, metav1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +51,7 @@ func (m *Manager) GetConnector(name, namespace string) (*kubemqconnector.KubemqC
 
 func (m *Manager) GetKubemqConnectors() (*KubemqConnectors, error) {
 	var list []*kubemqconnector.KubemqConnector
-	values, err := m.client.ClientV1Alpha1.KubemqConnector("").List(metav1.ListOptions{})
+	values, err := m.client.ClientV1Beta1.KubemqConnector("").List(metav1.ListOptions{})
 	if err != nil {
 		return nil, err
 	}

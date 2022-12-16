@@ -1,4 +1,4 @@
-package v1alpha1
+package v1beta1
 
 import (
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/types"
@@ -11,12 +11,11 @@ type KubemqClustersGetter interface {
 	KubemqClusters(namespace string) KubemqClusterInterface
 }
 
-type V1Alpha1Client struct {
+type V1Beta1Client struct {
 	restClient rest.Interface
 }
 
-func NewForConfig(c *rest.Config) (*V1Alpha1Client, error) {
-
+func NewForConfig(c *rest.Config) (*V1Beta1Client, error) {
 	config := *c
 	config.ContentConfig.GroupVersion = &schema.GroupVersion{Group: types.GroupName, Version: types.GroupVersion}
 	config.APIPath = "/apis"
@@ -26,23 +25,17 @@ func NewForConfig(c *rest.Config) (*V1Alpha1Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &V1Alpha1Client{restClient: client}, nil
+	return &V1Beta1Client{restClient: client}, nil
 }
 
-func (c *V1Alpha1Client) KubemqClusters(namespace string) KubemqClusterInterface {
+func (c *V1Beta1Client) KubemqClusters(namespace string) KubemqClusterInterface {
 	return &kubemqCluster{
 		client: c.restClient,
 		ns:     namespace,
 	}
 }
-func (c *V1Alpha1Client) KubemqDashboard(namespace string) KubemqDashboardInterface {
-	return &kubemqDashboard{
-		client: c.restClient,
-		ns:     namespace,
-	}
-}
 
-func (c *V1Alpha1Client) KubemqConnector(namespace string) KubemqConnectorInterface {
+func (c *V1Beta1Client) KubemqConnector(namespace string) KubemqConnectorInterface {
 	return &kubemqConnector{
 		client: c.restClient,
 		ns:     namespace,

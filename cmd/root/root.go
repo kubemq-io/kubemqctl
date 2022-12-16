@@ -2,8 +2,13 @@ package root
 
 import (
 	"context"
+	"os"
+
+	"github.com/kubemq-io/kubemqctl/cmd/build"
+
 	"github.com/kubemq-io/kubemqctl/cmd/generate"
 	"github.com/kubemq-io/kubemqctl/cmd/get"
+	"github.com/kubemq-io/kubemqctl/cmd/install"
 	"github.com/kubemq-io/kubemqctl/cmd/scale"
 	"github.com/kubemq-io/kubemqctl/cmd/set"
 	"github.com/spf13/viper"
@@ -21,17 +26,17 @@ import (
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
 	"github.com/spf13/cobra"
-
-	"os"
 )
 
-var cfg *config.Config
-var Version string
-var configFile string
-var rootCmd = &cobra.Command{
-	Use:       "kubemqctl",
-	ValidArgs: []string{"config", "commands", "queries", "queues", "events", "events_store", "create", "get", "delete", "scale"},
-}
+var (
+	cfg        *config.Config
+	Version    string
+	configFile string
+	rootCmd    = &cobra.Command{
+		Use:       "kubemqctl",
+		ValidArgs: []string{"config", "commands", "queries", "queues", "events", "events_store", "create", "get", "delete", "scale"},
+	}
+)
 
 func loadConfig() {
 	configEnv := os.Getenv("KUBEMQCTL_CONFIG")
@@ -56,8 +61,8 @@ func loadConfig() {
 		utils.CheckErr(err)
 	}
 }
-func Execute(version string, args []string) {
 
+func Execute(version string, args []string) {
 	rootCmd.Version = version
 	_ = rootCmd.PersistentFlags().Parse(args)
 	loadConfig()
@@ -76,10 +81,12 @@ func Execute(version string, args []string) {
 	rootCmd.AddCommand(scale.NewCmdScale(ctx, cfg))
 	rootCmd.AddCommand(set.NewCmdSet(ctx, cfg))
 	rootCmd.AddCommand(generate.NewCmdGenerate(ctx, cfg))
+	rootCmd.AddCommand(install.NewCmdInstall(ctx, cfg))
+	rootCmd.AddCommand(build.NewCmdBuild(ctx, cfg))
+
 	//_ = doc.GenMarkdownTree(rootCmd, "./docs")
 
 	utils.CheckErr(rootCmd.Execute())
-
 }
 
 func exists(name string) bool {
@@ -90,6 +97,7 @@ func exists(name string) bool {
 	}
 	return true
 }
+
 func init() {
 	rootCmd.PersistentFlags().StringVarP(&configFile, "config", "", "./.kubemqctl.yaml", "set kubemqctl configuration file")
 }

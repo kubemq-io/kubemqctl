@@ -1,13 +1,14 @@
-package v1alpha1
+package v1beta1
 
 import (
 	"context"
+	"time"
+
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/types/kubemqconnector"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
-	"time"
 )
 
 type KubemqConnectorInterface interface {
@@ -77,6 +78,7 @@ func (c *kubemqConnector) Update(cluster *kubemqconnector.KubemqConnector) (*kub
 
 	return result, err
 }
+
 func (c *kubemqConnector) Delete(name string, opts *metav1.DeleteOptions) error {
 	err := c.client.Delete().
 		Namespace(c.ns).
@@ -88,6 +90,7 @@ func (c *kubemqConnector) Delete(name string, opts *metav1.DeleteOptions) error 
 
 	return err
 }
+
 func (c *kubemqConnector) Watch(opts metav1.ListOptions) (watch.Interface, error) {
 	opts.Watch = true
 	var timeout time.Duration

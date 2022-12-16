@@ -2,9 +2,10 @@ package logs
 
 import (
 	"context"
+	"strings"
+
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/manager/operator"
-	"strings"
 
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 
@@ -40,8 +41,11 @@ var logsExamples = `
 	# Stream logs of specific container
 	kubemqctl get operator logs -c kubemq-operator-0
 `
-var logsLong = `Logs command allows to stream pods logs with powerful filtering capabilities`
-var logsShort = `Stream logs of Kubemq operator pods command`
+
+var (
+	logsLong  = `Logs command allows to stream pods logs with powerful filtering capabilities`
+	logsShort = `Stream logs of Kubemq operator pods command`
+)
 
 func NewCmdLogs(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &LogsOptions{
@@ -61,7 +65,6 @@ func NewCmdLogs(ctx context.Context, cfg *config.Config) *cobra.Command {
 		},
 	}
 	cmd := &cobra.Command{
-
 		Use:     "logs",
 		Aliases: []string{"log", "l"},
 		Short:   logsShort,
@@ -76,8 +79,8 @@ func NewCmdLogs(ctx context.Context, cfg *config.Config) *cobra.Command {
 		},
 	}
 	cmd.PersistentFlags().DurationVarP(&o.Options.Since, "since", "s", 0, "Set since duration time")
-	cmd.PersistentFlags().StringVarP(&o.Options.Namespace, "namespace", "n", "", "Set default namespace")
-	cmd.PersistentFlags().StringVarP(&o.Options.ContainerQuery, "container", "c", "", "Set container regex")
+	cmd.PersistentFlags().StringVarP(&o.Options.Namespace, "namespace", "n", "kubemq", "Set default namespace")
+	cmd.PersistentFlags().StringVarP(&o.Options.ContainerQuery, "container", "c", "kubemq-operator", "Set container regex")
 	cmd.PersistentFlags().StringArrayVarP(&o.Options.Include, "include", "i", []string{}, "Set strings to include")
 	cmd.PersistentFlags().StringArrayVarP(&o.Options.Exclude, "exclude", "e", []string{}, "Set strings to exclude")
 	cmd.PersistentFlags().StringVarP(&o.Options.Selector, "label", "l", "", "Set label selector")

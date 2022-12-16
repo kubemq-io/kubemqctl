@@ -2,6 +2,7 @@ package operator
 
 import (
 	"context"
+
 	"github.com/kubemq-io/kubemqctl/pkg/k8s/client"
 	appsv1 "k8s.io/api/apps/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
