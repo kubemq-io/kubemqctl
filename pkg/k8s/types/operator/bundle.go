@@ -2,6 +2,7 @@ package operator
 
 import (
 	"fmt"
+
 	appsv1 "k8s.io/api/apps/v1"
 	apiv1 "k8s.io/api/core/v1"
 	rbac "k8s.io/api/rbac/v1"
@@ -25,10 +26,6 @@ func CreateDeployment(name, namespace string) (*Deployment, error) {
 	kubemqClusterCrd, err := CreateKubemqClustersCRD().Get()
 	if err != nil {
 		return nil, fmt.Errorf("error create operator bundle, kubemq cluster crd error: %s", err.Error())
-	}
-	kubemqDashboardCrd, err := CreateKubemqDashboardCRD().Get()
-	if err != nil {
-		return nil, fmt.Errorf("error create operator bundle, kubemq dashboard crd error: %s", err.Error())
 	}
 	kubemqConnectorCrd, err := CreateKubemqConnectorCRD().Get()
 	if err != nil {
@@ -71,7 +68,7 @@ func CreateDeployment(name, namespace string) (*Deployment, error) {
 	return &Deployment{
 		Name:                   name,
 		Namespace:              namespace,
-		CRDs:                   []*v1beta1.CustomResourceDefinition{kubemqClusterCrd, kubemqDashboardCrd, kubemqConnectorCrd},
+		CRDs:                   []*v1beta1.CustomResourceDefinition{kubemqClusterCrd, kubemqConnectorCrd},
 		Deployment:             operator,
 		ClusterRole:            clusterRole,
 		ClusterRoleBinding:     clusterRoleBinding,
