@@ -2,6 +2,7 @@ package config
 
 import (
 	"context"
+
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/kubemq-io/kubemqctl/pkg/config"
 	"github.com/kubemq-io/kubemqctl/pkg/utils"
@@ -16,8 +17,11 @@ var connectionExamples = `
 	# Execute connection configuration
 	# kubemqctl config connection
 `
-var connectionLong = `Config connection command allows to set Kubemqctl connection`
-var connectionShort = `Config connection command allows to set Kubemqctl connection`
+
+var (
+	connectionLong  = `Config connection command allows to set Kubemqctl connection`
+	connectionShort = `Config connection command allows to set Kubemqctl connection`
+)
 
 func NewCmdConnection(ctx context.Context, cfg *config.Config) *cobra.Command {
 	o := &ConnectionOptions{
@@ -64,7 +68,8 @@ func runConnectionSelection(cfg *config.Config) error {
 		Message:  "Select Connection Type:",
 		Options: []string{
 			"Kubernetes cluster",
-			"Direct"},
+			"Direct",
+		},
 		Default: "Kubernetes cluster",
 		Help:    "Select the location of Kubemq server",
 	}
@@ -85,6 +90,10 @@ func runConnectionSelection(cfg *config.Config) error {
 		if err != nil {
 			return err
 		}
+		cfg.GrpcPort = 50000
+		cfg.RestPort = 9090
+		cfg.ApiPort = 8080
+		cfg.Host = "localhost"
 	case "Direct":
 		cfg.AutoIntegrated = false
 		promptHost := &survey.Input{
