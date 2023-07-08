@@ -39,6 +39,7 @@ func NewCmdAccess(ctx context.Context, cfg *config.Config) *cobra.Command {
 			utils.CheckErr(o.Validate())
 			utils.CheckErr(o.Run(ctx))
 		},
+		
 	}
 
 	return cmd

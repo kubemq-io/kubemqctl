@@ -4,10 +4,33 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="fix for CRD v1alpha1">
+    <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="add web command">
+      <change afterPath="$PROJECT_DIR$/assets/assets/images/404-illustration.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/assets/images/aggregate.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/assets/images/bridge.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/assets/images/bridges.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/assets/images/cluster.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/assets/images/replicate.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/assets/images/sources.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/assets/images/targets.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/assets/images/transform.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/css/app.61de9e03.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/css/chunk-vendors.df9c6bdf.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/favicon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/logo.48e246cb.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/ship.db351c58.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/js/app.12a44601.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/js/app.12a44601.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/js/chunk-vendors.e628f4d0.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/js/chunk-vendors.e628f4d0.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/js/error.2be50e59.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/js/error.2be50e59.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/server.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Taskfile.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Taskfile.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/config/connection.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/config/connection.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/build/build.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/build/build.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/config/access.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/config/access.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_build.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_build.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_commands.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_commands.md" afterDir="false" />
@@ -71,11 +94,18 @@
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_set_cluster_proxy.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_set_cluster_proxy.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_set_context.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_set_context.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/config/config.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -100,9 +130,6 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
-  </component>
-  <component name="GithubDefaultAccount">
-    <option name="defaultAccountId" value="c4da468c-fa25-42e2-9d5b-cd617732b7e6" />
   </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="true" />
@@ -136,28 +163,29 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
     "go.import.settings.migrated": "true",
-    "last_opened_file_path": "D:/Development/bitbucket/go/projects/kubemq/products/kubemqctl",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/liorn",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "watcher.settings",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\products\kubemqctl\web\assets" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\products\kubemqctl\cmd\build" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\products\kubemqctl\cmd\install" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\products\kubemqctl\cmd\create" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\products\kubemqctl\pkg" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\config" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\products\kubemqctl" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\manage\connector" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\set\cluster" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\pkg\k8s\manager\operator" />
       <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\scale\cluster" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\kubemqctl\cmd\get\cluster" />
     </key>
   </component>
   <component name="RunManager" selected="Go Build.go build kubetools">
@@ -621,8 +649,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="-v3.1.1 - update task file" />
-    <MESSAGE value="update manager" />
     <MESSAGE value="release v3.2.0" />
     <MESSAGE value="release v3.2.1" />
     <MESSAGE value="update to create connector" />
@@ -646,7 +672,9 @@
     <MESSAGE value="add install and build commands" />
     <MESSAGE value="add docs" />
     <MESSAGE value="fix for CRD v1alpha1" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix for CRD v1alpha1" />
+    <MESSAGE value="v3.7.2 fix for changing config" />
+    <MESSAGE value="add web command" />
+    <option name="LAST_COMMIT_MESSAGE" value="add web command" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

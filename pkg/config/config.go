@@ -23,6 +23,7 @@ var DefaultConfig = &Config{
 	ClientId:           "",
 	AuthTokenFile:      "",
 	LicenseData:        "",
+	WebPort:            55000,
 }
 
 func exists(name string) bool {
@@ -64,6 +65,7 @@ type Config struct {
 	AuthTokenFile      string
 	LicenseData        string
 	LicenseKey         string
+	WebPort            int
 }
 
 func (c *Config) Save() error {
