@@ -4,7 +4,7 @@ version: '3'
 
 vars:
   BINARY_NAME: kubemqctl
-  VERSION: v3.7.2
+  VERSION: v4.0.0
 
 tasks:
   check_update:
@@ -16,6 +16,10 @@ tasks:
   build:
     cmds:
       - go build -o {{.BINARY_NAME}}.exe -ldflags "-X main.version={{.VERSION}}"
+  web:
+    cmds:
+      -  task: build
+      - ./kubemqctl web
   default:
     cmds:
       - go mod tidy

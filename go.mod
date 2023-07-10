@@ -10,6 +10,7 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/websocket v1.5.0
 	github.com/json-iterator/go v1.1.12
+	github.com/kubemq-io/k8s v1.6.0
 	github.com/kubemq-io/kubemq-go v1.7.9
 	github.com/labstack/echo/v4 v4.10.2
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8
@@ -92,6 +93,7 @@ require (
 	k8s.io/klog/v2 v2.80.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20221012153701-172d655c2280 // indirect
 	k8s.io/utils v0.0.0-20221107191617-1a15be271d1d // indirect
+	sigs.k8s.io/controller-runtime v0.7.0 // indirect
 	sigs.k8s.io/json v0.0.0-20220713155537-f223a00ba0e2 // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.2.3 // indirect
 	sigs.k8s.io/yaml v1.3.0 // indirect

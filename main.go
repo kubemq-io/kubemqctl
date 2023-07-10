@@ -7,12 +7,15 @@ import (
 	"os"
 )
 
-//go:embed assets/*
-var staticAssets embed.FS
+//go:embed assets-web/*
+var staticAssetsWeb embed.FS
 
+//go:embed assets-builder/*
+var staticAssetsBuilder embed.FS
 var version string
 
 func main() {
-	web.StaticAssets = staticAssets
+	web.StaticAssetsWeb = staticAssetsWeb
+	web.StaticAssetsBuilder = staticAssetsBuilder
 	root.Execute(version, os.Args)
 }

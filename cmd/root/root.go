@@ -4,7 +4,7 @@ import (
 	"context"
 	"os"
 
-	"github.com/kubemq-io/kubemqctl/cmd/build"
+	"github.com/kubemq-io/kubemqctl/cmd/web"
 
 	"github.com/kubemq-io/kubemqctl/cmd/generate"
 	"github.com/kubemq-io/kubemqctl/cmd/get"
@@ -83,7 +83,7 @@ func Execute(version string, args []string) {
 	rootCmd.AddCommand(set.NewCmdSet(ctx, cfg))
 	rootCmd.AddCommand(generate.NewCmdGenerate(ctx, cfg))
 	rootCmd.AddCommand(install.NewCmdInstall(ctx, cfg))
-	rootCmd.AddCommand(build.NewCmdBuild(ctx, cfg))
+	rootCmd.AddCommand(web.NewCmdWeb(ctx, cfg))
 
 	_ = doc.GenMarkdownTree(rootCmd, "./docs")
 

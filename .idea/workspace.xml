@@ -5,34 +5,79 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8625628f-58a4-4251-94ed-56c0019ec746" name="Default Changelist" comment="add web command">
-      <change afterPath="$PROJECT_DIR$/assets/assets/images/404-illustration.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/assets/images/aggregate.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/assets/images/bridge.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/assets/images/bridges.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/assets/images/cluster.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/assets/images/replicate.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/assets/images/sources.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/assets/images/targets.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/assets/images/transform.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/css/app.61de9e03.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/css/chunk-vendors.df9c6bdf.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/favicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/img/logo.48e246cb.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/img/ship.db351c58.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/js/app.12a44601.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/js/app.12a44601.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/js/chunk-vendors.e628f4d0.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/js/chunk-vendors.e628f4d0.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/js/error.2be50e59.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/js/error.2be50e59.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/server.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-builder/css/chunk-vendors.a0b72353.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-builder/js/chunk-vendors.467486f1.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-builder/js/error.16137d81.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-builder/js/error.16137d81.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/200.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/404.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/auto.fa8841cf.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/color.473bc8ca.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/default.0a75b613.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/default.96239637.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/entry.2ba0262c.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/entry.6b624577.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/error-404.23f2309d.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/error-404.9f010993.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/error-500.aa16ed4d.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/error-500.c57e6048.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/error-component.525d5645.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/index.48150ff2.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/index.5d05934e.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/index.9f777885.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/logo.442619e3.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/primeicons.131bc3bf.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/primeicons.3824be50.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/primeicons.5e10f102.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/primeicons.90a58d3a.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/_nuxt/primeicons.ce852338.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/build/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets-web/kubemq-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/api/builder/builder.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/api/builder/builder_request.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/api/builder/builder_response.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/api/builder/cluster.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/api/builder/cluster_dto.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/api/builder/community.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/api/builder/connector.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/api/builder/deploy-cluster.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/api/builder/deploy.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/api/builder/init.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/api/builder/install.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/api/builder/manifest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/api/builder/operator.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/api/builder/repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/api/builder/templates.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/api/response.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/api/service.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/build/build.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/build/build.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/config/access.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/config/access.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Taskfile.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Taskfile.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/assets/images/404-illustration.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets-builder/assets/images/404-illustration.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/assets/images/aggregate.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets-builder/assets/images/aggregate.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/assets/images/bridge.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets-builder/assets/images/bridge.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/assets/images/bridges.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets-builder/assets/images/bridges.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/assets/images/cluster.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets-builder/assets/images/cluster.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/assets/images/replicate.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets-builder/assets/images/replicate.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/assets/images/sources.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets-builder/assets/images/sources.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/assets/images/targets.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets-builder/assets/images/targets.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/assets/images/transform.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets-builder/assets/images/transform.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/app.61de9e03.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets-builder/css/app.cf674d73.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/chunk-vendors.df9c6bdf.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/assets-builder/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/favicon.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets-builder/favicon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/img/logo.48e246cb.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/img/ship.db351c58.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets-builder/img/ship.db351c58.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/assets-builder/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/app.12a44601.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/app.12a44601.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/chunk-vendors.e628f4d0.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets-builder/js/chunk-vendors.467486f1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/chunk-vendors.e628f4d0.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/error.2be50e59.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/error.2be50e59.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/build/build.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/web/web.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/root/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root/root.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/kubemqctl_build.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_build.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_commands.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_commands.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_commands_attach.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_commands_attach.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_commands_receive.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_commands_receive.md" afterDir="false" />
@@ -95,7 +140,7 @@
       <change beforePath="$PROJECT_DIR$/docs/kubemqctl_set_context.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kubemqctl_set_context.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/web/server.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,6 +167,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SET_USER_NAME_GLOBALLY" value="false" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -164,7 +210,7 @@
     "git-widget-placeholder": "master",
     "go.import.settings.migrated": "true",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/liorn",
+    "last_opened_file_path": "D:/Development/bitbucket/go/projects/kubemq/products/kubemqctl/assets-web/builder",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
@@ -174,11 +220,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\products\kubemqctl\web\assets" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\products\kubemqctl\cmd\build" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\products\kubemqctl\cmd\install" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\products\kubemqctl\cmd\create" />
-      <recent name="D:\Development\bitbucket\go\projects\kubemq\products\kubemqctl\pkg" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\products\kubemqctl\assets-web\builder" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\products\kubemqctl\assets-builder" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\products\kubemqctl\assets" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\products\kubemqctl\assets\builder" />
+      <recent name="D:\Development\bitbucket\go\projects\kubemq\products\kubemqctl\web\api" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Development\bitbucket\go\projects\kubemq\products\kubemqctl" />
